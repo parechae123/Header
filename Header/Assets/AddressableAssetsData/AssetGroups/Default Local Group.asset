@@ -1,0 +1,85 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
+  m_Name: Default Local Group
+  m_EditorClassIdentifier: 
+  m_GroupName: Default Local Group
+  m_Data:
+    m_SerializedData: []
+  m_GUID: 2c470aee28d213248b7eba9a93cb50c6
+  m_SerializeEntries:
+  - m_GUID: 1b37111c4b2fb384ba4e55e4365c32f8
+    m_Address: Assets/@Resources
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - PreLoad
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 9d326964a6e98de4091ef3d5709d00f9
+    m_Address: Assets/@Resources/Circle 3.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - PreLoad
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: d8d4ebc998dc9194db1cc6ce292790c7
+    m_Address: Assets/@Resources/Circle 2.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - PreLoad
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 34426daae35056844a958b8b02b69d9d
+    m_Address: Assets/@Resources/Circle 1.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - PreLoad
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 47e0924f49f795041a638862e1559bca
+    m_Address: Assets/@Resources/Circle.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - PreLoad
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 6516c797977018f43bb7581103a0261a
+    m_Address: Assets/@Resources/Circle 4.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - PreLoad
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 184c0d21df7353249a212594e4fa0048
+    m_Address: Assets/@Resources/Circle 5.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Load
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: c32d422349fd1bb46a20cb0b7edb00bf
+    m_Address: Assets/@Resources/Circle 6.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Load
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: f907bf41fc6b565428974a9b87326e1d
+    m_Address: Assets/@Resources/Circle 7.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Load
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: ea9553ac6ead7e34985f5bd3791d5a60
+    m_Address: TestIlust
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - LoadingIlusts
+    FlaggedDuringContentUpdateRestriction: 0
+  m_ReadOnly: 0
+  m_Settings: {fileID: 11400000, guid: 489b40023fd66be419d08d79841125b1, type: 2}
+  m_SchemaSet:
+    m_Schemas:
+    - {fileID: 11400000, guid: 384788502cd8f134dad15cd395861399, type: 2}
+    - {fileID: 11400000, guid: b1cb4e52bc0726840b5c008b4f08fc3a, type: 2}
