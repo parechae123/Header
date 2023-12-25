@@ -18,6 +18,9 @@ public class Managers : MonoBehaviour
     private PoolManager pool = new PoolManager();
     public PoolManager Pool { get { return instance?.pool; } }
 
+    private UIManager ui = new UIManager();
+    public UIManager UI { get { return instance?.ui; } }
+
 
     public static void Init()
     {

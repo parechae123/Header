@@ -16,11 +16,11 @@ public class ResourceManager
     //데이터 순수성을 위해 읽기전용 프로퍼티 작성
     public bool isResourceLoadDone { get { return loadDone; } }
     #region 리소스등록
-    public void RegistAllResource(DataDefines.ResourceDefine[] ResourceDefines,Action<string,int,int> CB,Action<bool> isDone)
+    public void RegistAllResource(DataDefines.ResourceDefine[] ResourceDefines,Action<string,int,int> CB,Action<bool,bool> isDone)
     {
+        //FLOW : isDone의 첫번째 = 일러스트,두번째 = 모든 리소스
         if (!isResourceLoadDone)
         {
-            //TODO : 데이터 타입 추가시 Switch문 수정필요
             string loadingName = string.Empty;
             int loadCount = 0;
             int totalCount = 0;
@@ -32,6 +32,7 @@ public class ResourceManager
                 if (loadCount >= totalCount)
                 {
                     loadCount = 0;
+                    isDone.Invoke(true, false);
                     for (int i = 0; i < ResourceDefines.Length; i++)
                     {
                         switch (ResourceDefines[i].Type)
@@ -47,7 +48,7 @@ public class ResourceManager
                                     if (loadCount == totalCount)
                                     {
                                         loadDone = true;
-                                        isDone.Invoke(true);
+                                        isDone.Invoke(true,true);
                                     }
                                 });
                                 break;
@@ -62,7 +63,7 @@ public class ResourceManager
                                     if (loadCount == totalCount)
                                     {
                                         loadDone = true;
-                                        isDone.Invoke(true);
+                                        isDone.Invoke(true,true);
                                     }
                                 });
                                 break;
@@ -77,7 +78,7 @@ public class ResourceManager
                                     if (loadCount == totalCount)
                                     {
                                         loadDone = true;
-                                        isDone.Invoke(true);
+                                        isDone.Invoke(true,true);
                                     }
                                 });
                                 break;
@@ -153,7 +154,6 @@ public class ResourceManager
             _resources.Add(key, op.Result);
             callback?.Invoke(op.Result);
         };
-
     }
     public void LoadAllAsync<T>(string label, Action<string, int> callback) where T : UnityEngine.Object
     {
@@ -163,6 +163,13 @@ public class ResourceManager
         OpHandle.Completed += (op) =>
         {
             int totalCount = op.Result.Count;
+            if (op.Result.Count == 0)
+            {
+                Debug.Log("해당 라벨에 이름이 없음");
+                callback?.Invoke("해당 라벨에 값이 없습니다", 0);
+                
+                return;
+            }
             foreach (var result in op.Result)
             {
                 if (result.PrimaryKey.Contains(".sprite"))

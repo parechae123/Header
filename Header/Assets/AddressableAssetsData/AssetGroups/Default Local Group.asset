@@ -24,58 +24,52 @@ MonoBehaviour:
     - PreLoad
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 9d326964a6e98de4091ef3d5709d00f9
-    m_Address: Assets/@Resources/Circle 3.prefab
+    m_Address: TesIMG3
     m_ReadOnly: 0
     m_SerializedLabels:
     - PreLoad
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: d8d4ebc998dc9194db1cc6ce292790c7
-    m_Address: Assets/@Resources/Circle 2.prefab
+    m_Address: TesIMG2
     m_ReadOnly: 0
     m_SerializedLabels:
     - PreLoad
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 34426daae35056844a958b8b02b69d9d
-    m_Address: Assets/@Resources/Circle 1.prefab
+    m_Address: TesIMG
     m_ReadOnly: 0
     m_SerializedLabels:
     - PreLoad
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 47e0924f49f795041a638862e1559bca
-    m_Address: Assets/@Resources/Circle.prefab
+    m_Address: TesIMG8
     m_ReadOnly: 0
     m_SerializedLabels:
     - PreLoad
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 6516c797977018f43bb7581103a0261a
-    m_Address: Assets/@Resources/Circle 4.prefab
+    m_Address: TesIMG4
     m_ReadOnly: 0
     m_SerializedLabels:
     - PreLoad
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 184c0d21df7353249a212594e4fa0048
-    m_Address: Assets/@Resources/Circle 5.prefab
+    m_Address: TesIMG5
     m_ReadOnly: 0
     m_SerializedLabels:
     - Load
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: c32d422349fd1bb46a20cb0b7edb00bf
-    m_Address: Assets/@Resources/Circle 6.prefab
+    m_Address: TesIMG6
     m_ReadOnly: 0
     m_SerializedLabels:
     - Load
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: f907bf41fc6b565428974a9b87326e1d
-    m_Address: Assets/@Resources/Circle 7.prefab
+    m_Address: TesIMG7
     m_ReadOnly: 0
     m_SerializedLabels:
     - Load
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: ea9553ac6ead7e34985f5bd3791d5a60
-    m_Address: TestIlust
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - LoadingIlusts
     FlaggedDuringContentUpdateRestriction: 0
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: 489b40023fd66be419d08d79841125b1, type: 2}
