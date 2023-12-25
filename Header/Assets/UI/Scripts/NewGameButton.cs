@@ -7,7 +7,7 @@ public class NewGameButton : MonoBehaviour
 {
     [SerializeField] private DataDefines.ResourceDefine[] labelNames;
     [SerializeField] private Button newGameBTN;
-
+    (byte, byte) IlustMinMax;
     // Start is called before the first frame update
     void Start()
     {
@@ -19,6 +19,10 @@ public class NewGameButton : MonoBehaviour
         Managers.instance.Resource.RegistAllResource(labelNames, (ResourceName, resourceCount, TotalCount) =>
         {
             Debug.Log(ResourceName+"를 로딩중입니다" + resourceCount + "/" + TotalCount);
+            if (ResourceName.Contains("LoadingIlust"))
+            {
+                IlustMinMax.Item2++;
+            }
         }
         , (IluDone,DataDone) =>
         {
@@ -33,7 +37,8 @@ public class NewGameButton : MonoBehaviour
                 }
                 else
                 {
-                    Managers.instance.UI.LoadingIlust.sprite = null;
+                    //FLOW : 로딩 일러스트 파일면은 LoadingIlust_숫자로 명명 , IlustMinMax를 파일 갯수에 맞춰서 수정해줘야함
+                    Managers.instance.UI.LoadingIlust.sprite = Managers.instance.Resource.Load<Sprite>("LoadingIlust_" + Random.Range(IlustMinMax.Item1, IlustMinMax.Item2));
                     Debug.Log("일러스트 로딩끝");
                 }
             }

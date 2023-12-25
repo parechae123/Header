@@ -12,9 +12,9 @@ public class UIManager
         {
             if (sceneMainCanvas == null)
             {
-                RectTransform tempTR = GameObject.Find("Canvas").transform as RectTransform;
-
-                sceneMainCanvas = tempTR == null ? new GameObject("Canvas").AddComponent<Canvas>().transform as RectTransform: tempTR;
+                GameObject targetTempOBJ = GameObject.Find("Canvas");
+                RectTransform tempTR = targetTempOBJ == null ? new GameObject("Canvas").AddComponent<Canvas>().transform as RectTransform : targetTempOBJ.transform as RectTransform;
+                sceneMainCanvas = tempTR;
             }
             return sceneMainCanvas; 
         } 

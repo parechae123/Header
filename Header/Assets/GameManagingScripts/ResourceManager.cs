@@ -28,9 +28,12 @@ public class ResourceManager
             var OpHandle = Addressables.LoadResourceLocationsAsync(string.Empty);
             LoadAllAsync<Sprite>("LoadingIlusts", (iluName,ilusTotal) =>
             {
+                totalCount = ilusTotal;
                 loadCount++;
+                CB.Invoke(iluName, loadCount, ilusTotal);
                 if (loadCount >= totalCount)
                 {
+                    totalCount = 0;
                     loadCount = 0;
                     isDone.Invoke(true, false);
                     for (int i = 0; i < ResourceDefines.Length; i++)

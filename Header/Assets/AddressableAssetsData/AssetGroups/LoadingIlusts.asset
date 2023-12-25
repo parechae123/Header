@@ -1,0 +1,37 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
+  m_Name: LoadingIlusts
+  m_EditorClassIdentifier: 
+  m_GroupName: LoadingIlusts
+  m_Data:
+    m_SerializedData: []
+  m_GUID: e101081f62183f24cb1c17854192e0fe
+  m_SerializeEntries:
+  - m_GUID: e8c21bcfe3dfeb545a60895958568512
+    m_Address: LoadingIlust_1
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - LoadingIlusts
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: dbe5345f1ee4bfe4e891944d5aacd237
+    m_Address: LoadingIlust_0
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - LoadingIlusts
+    FlaggedDuringContentUpdateRestriction: 0
+  m_ReadOnly: 0
+  m_Settings: {fileID: 11400000, guid: 489b40023fd66be419d08d79841125b1, type: 2}
+  m_SchemaSet:
+    m_Schemas:
+    - {fileID: 11400000, guid: 35c4dd5213b56d14b9919bee7c5a87ef, type: 2}
+    - {fileID: 11400000, guid: df41eec83030abf47b0cc969f10e74ba, type: 2}
