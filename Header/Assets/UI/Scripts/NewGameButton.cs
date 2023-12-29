@@ -38,7 +38,7 @@ public class NewGameButton : MonoBehaviour
                 else
                 {
                     //FLOW : 로딩 일러스트 파일면은 LoadingIlust_숫자로 명명 , IlustMinMax를 파일 갯수에 맞춰서 수정해줘야함
-                    Managers.instance.UI.LoadingIlust.sprite = Managers.instance.Resource.Load<Sprite>("LoadingIlust_" + Random.Range(IlustMinMax.Item1, IlustMinMax.Item2));
+                    Managers.instance.UI.loadingUIProps.LoadingIlust.sprite = Managers.instance.Resource.Load<Sprite>("LoadingIlust_" + Random.Range(IlustMinMax.Item1, IlustMinMax.Item2));
                     Debug.Log("일러스트 로딩끝");
                 }
             }

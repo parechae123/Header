@@ -20,7 +20,8 @@ MonoBehaviour:
   - m_GUID: 1b37111c4b2fb384ba4e55e4365c32f8
     m_Address: Assets/@Resources
     m_ReadOnly: 0
-    m_SerializedLabels: []
+    m_SerializedLabels:
+    - LoadingIlusts
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 9d326964a6e98de4091ef3d5709d00f9
     m_Address: TesIMG3

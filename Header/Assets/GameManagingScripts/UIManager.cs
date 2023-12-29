@@ -5,10 +5,15 @@ using UnityEngine.UI;
 
 public class UIManager
 {
+    public LoadingUI loadingUIProps;
+}
+
+public class LoadingUI
+{
     private RectTransform sceneMainCanvas;
-    private RectTransform SceneMainCanvas 
-    { 
-        get 
+    private RectTransform SceneMainCanvas
+    {
+        get
         {
             if (sceneMainCanvas == null)
             {
@@ -16,13 +21,13 @@ public class UIManager
                 RectTransform tempTR = targetTempOBJ == null ? new GameObject("Canvas").AddComponent<Canvas>().transform as RectTransform : targetTempOBJ.transform as RectTransform;
                 sceneMainCanvas = tempTR;
             }
-            return sceneMainCanvas; 
-        } 
+            return sceneMainCanvas;
+        }
     }
-    private Image loadingIlust =null;
-    public Image LoadingIlust 
-    { 
-        get 
+    private Image loadingIlust = null;
+    public Image LoadingIlust
+    {
+        get
         {
             if (loadingIlust == null)
             {
@@ -34,7 +39,8 @@ public class UIManager
                 tempIluTR.sizeDelta = Vector2.zero;
                 tempIluTR.anchoredPosition = Vector2.zero;
             }
-            return loadingIlust; 
-        } 
+            return loadingIlust;
+        }
     }
+    private Slider loadingSlider = null;
 }
