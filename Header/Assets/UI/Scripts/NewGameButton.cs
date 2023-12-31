@@ -33,7 +33,6 @@ public class NewGameButton : MonoBehaviour
     }
     public void OnClickBTN()
     {
-        //TODO : 로딩에 넣어야됨
         loadToHideThings.SetAsFirstSibling();
         Managers.instance.Resource.RegistAllResource(labelNames, (ResourceName, resourceCount, TotalCount) =>
         {
@@ -47,7 +46,7 @@ public class NewGameButton : MonoBehaviour
         }
             , (IluDone, DataDone) =>
             {
-                //TODO : 로딩 끝날때 실행될 함수, Iludone == 일러스트 로딩,DataDOne == 모든 데이터 등록 완료시
+                //MAINTANCE : 로딩 끝날때 실행될 함수, Iludone == 일러스트 로딩,DataDOne == 모든 데이터 등록 완료시
 
                 if (IluDone)
                 {
@@ -85,6 +84,4 @@ public class NewGameButton : MonoBehaviour
 
         // 로딩이 완료되면 실행될 코드를 여기에 추가합니다.
     }
-
-
 }

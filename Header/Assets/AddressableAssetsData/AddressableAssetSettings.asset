@@ -15,7 +15,7 @@ MonoBehaviour:
   m_DefaultGroup: 2c470aee28d213248b7eba9a93cb50c6
   m_currentHash:
     serializedVersion: 2
-    Hash: 759718c2e34a6837338336e76a687c06
+    Hash: 269cc4b6b50c15e65eaf53da3e7fb050
   m_OptimizeCatalogSize: 0
   m_BuildRemoteCatalog: 0
   m_BundleLocalCatalog: 0
@@ -91,6 +91,7 @@ MonoBehaviour:
     - PreLoad
     - Load
     - LoadingIlusts
+    - TopViewPlayerAnimations
   m_SchemaTemplates: []
   m_GroupTemplateObjects:
   - {fileID: 11400000, guid: c6ef9c20331d5e649a2617b27fb0ed50, type: 2}

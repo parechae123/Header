@@ -12,14 +12,21 @@ public class Managers : MonoBehaviour
     private GameManager game = new GameManager();
     public GameManager Game { get { return instance?.game; } }
 
+
     private ResourceManager resource = new ResourceManager();
     public ResourceManager Resource { get { return instance?.resource; } }
+
 
     private PoolManager pool = new PoolManager();
     public PoolManager Pool { get { return instance?.pool; } }
 
+
     private UIManager ui = new UIManager();
     public UIManager UI { get { return instance?.ui; } }
+
+
+    private GridManager grid = new GridManager();
+    public GridManager Grid { get { return instance?.grid; } }
 
 
     public static void Init()
