@@ -19,11 +19,19 @@ public class TopViewPlayer : MonoBehaviour
     {
         if (isMoveAble)
         {
-            moveDirection.x = Input.GetAxisRaw("Horizontal") != 0&& Input.GetAxisRaw("Vertical") == 0 ? Input.GetAxisRaw("Horizontal") : 0;
-            lastMoveDir.x = moveDirection.x;
-            moveDirection.y = Input.GetAxisRaw("Vertical") != 0 && Input.GetAxisRaw("Horizontal") == 0 ? Input.GetAxisRaw("Vertical") : 0;
-            lastMoveDir.y = moveDirection.y;
 
+            if (Input.GetAxisRaw("Horizontal") != 0&& Input.GetAxisRaw("Vertical") != 0)
+            {
+                moveDirection.x = Input.GetAxisRaw("Horizontal") != 0? Input.GetAxisRaw("Horizontal") : 0;
+                moveDirection.y = Input.GetAxisRaw("Vertical") != 0? Input.GetAxisRaw("Vertical") : 0;
+                moveDirection = moveDirection - lastMoveDir;
+            }
+            else
+            {
+                moveDirection.x = Input.GetAxisRaw("Horizontal") != 0 && Input.GetAxisRaw("Vertical") == 0 ? Input.GetAxisRaw("Horizontal") : 0;
+                moveDirection.y = Input.GetAxisRaw("Vertical") != 0 && Input.GetAxisRaw("Horizontal") == 0 ? Input.GetAxisRaw("Vertical") : 0;
+                lastMoveDir = moveDirection;
+            }
             transform.position += moveDirection * moveSpeed * Time.deltaTime;
         }
     }
