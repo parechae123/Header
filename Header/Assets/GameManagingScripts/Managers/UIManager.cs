@@ -20,6 +20,16 @@ public class UIManager
             return loadingUIProps;
         }
     }
+    private TopViewSceneUI topViewSceneUIs;
+    public TopViewSceneUI TopViewSceneUIs
+    {
+        get 
+        { 
+            if(topViewSceneUIs == null)topViewSceneUIs = new TopViewSceneUI();
+            return topViewSceneUIs;
+        }
+    }
+
 }
 
 public class LoadingUI
@@ -98,8 +108,9 @@ public class LoadingUI
                     tempLoadingSlider.fillRect.offsetMax = new Vector2(tempLoadingSlider.fillRect.offsetMax.x, 0);
                     tempLoadingSlider.fillRect.offsetMin = new Vector2(tempLoadingSlider.fillRect.offsetMin.x, 0);
                     tempLoadingSlider.fillRect.anchorMin = new Vector2(0, 0); // 부모의 왼쪽 하단을 기준으로
-                    tempLoadingSlider.fillRect.anchorMax = new Vector2(0, 1); // 부모의 왼쪽 상단을 기준으로
+                    tempLoadingSlider.fillRect.anchorMax = new Vector2(1, 1); // 부모의 왼쪽 상단을 기준으로
                     tempLoadingSlider.fillRect.pivot = new Vector2(0, 0.5f); // 부모의 왼쪽 중간을 기준으로
+                    tempLoadingSlider.fillRect.sizeDelta = Vector2.zero;
                     tempLoadingSlider.fillRect.anchoredPosition = Vector2.zero;
 
                     tempSliderTR.SetParent(SceneMainCanvas);
@@ -118,4 +129,62 @@ public class LoadingUI
             return loadingSlider;
         }
     }
+}
+public class TopViewSceneUI
+{
+    private RectTransform interactionKeyPanel;
+    private RectTransform InteractionKeyPanel 
+    {  
+        get 
+        {
+            if (interactionKeyPanel == null)
+            {
+                Image UIBackGround = new GameObject { name = "interactionKeyPanel" }.AddComponent<Image>();
+                Canvas tempCanvas= Managers.instance.UI.LoadingUIProps.SceneMainCanvas.GetComponent<Canvas>();
+                interactionKeyPanel = UIBackGround.rectTransform;
+                interactionKeyPanel.SetParent(tempCanvas.transform as RectTransform);
+
+                //UIBackGround.sprite = 변경할 에셋 이름;
+                //TODO : 키 인터렉션 안내판넬 받으면 UIBackGround 변수의 sprite 변경해주어야함
+                interactionKeyPanel.anchorMin = new Vector2(0.30f, 0.40f);
+                interactionKeyPanel.anchorMax = new Vector2(0.70f, 0.80f);
+                interactionKeyPanel.sizeDelta = Vector2.zero;
+                interactionKeyPanel.anchoredPosition = Vector2.zero;
+            }
+            return interactionKeyPanel;
+        } 
+    }
+    private Text interactionKeyTextTitle;
+    private Text InteractionKeyTextTitle 
+    {  
+        get 
+        {
+            if (interactionKeyTextTitle == null)
+            {
+                interactionKeyTextTitle = new GameObject { name = "interactionKeyTextTitle" }.AddComponent<Text>();
+                //TODO : 폰트누락,사이즈 조절필요 중앙정렬 해야함
+                interactionKeyTextTitle.rectTransform.SetParent(InteractionKeyPanel);
+                interactionKeyTextTitle.rectTransform.anchorMin = new Vector2(0, 0);
+                interactionKeyTextTitle.rectTransform.anchorMax = new Vector2(1, 1);
+                interactionKeyTextTitle.rectTransform.sizeDelta = Vector2.zero;
+            }
+            return interactionKeyTextTitle;
+        } 
+    }
+    public void KeyInteractionOnOFF(bool OnOFF)
+    {
+        if (OnOFF)
+        {
+            InteractionKeyTextTitle.text = "스페이스바 키를 눌러 인터렉션 하세요";
+            InteractionKeyTextTitle.fontSize = 25;
+
+
+        }
+        else
+        {
+            
+        }
+        InteractionKeyPanel.gameObject.SetActive(OnOFF);
+    }
+
 }

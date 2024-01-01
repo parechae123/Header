@@ -32,6 +32,14 @@ namespace InteractionDefines
         public byte y = 128;
         public byte z = 128;
     }
+    [System.Serializable]
+    public class InteractionInstallerProps
+    {
+        public Vector2Int interactionPosition;
+        public InteractionDetailPosition detail;
+        public InteractionTypes interactionTypes;
+    }
+
     public enum InteractionTypes
     {
         //MAINTANCE : 인터렉션 종류 추가 시 여기에 정의 필요

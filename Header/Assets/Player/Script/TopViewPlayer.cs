@@ -10,11 +10,14 @@ public class TopViewPlayer : MonoBehaviour
     public float moveSpeed = 3;
     public string playerAnimState;
     private Animator anim;
-    [SerializeField] float playerFootCorrectionValue;
+    [SerializeField] Vector3 playerColliderCenter;
+    [SerializeField]Vector2Int playerConvertedLastPos;
+    [SerializeField]Vector2Int playerConvertedNowPos;
+
     void Start()
     {
         anim = transform.GetChild(0).GetComponent<Animator>();
-        playerFootCorrectionValue = transform.GetChild(0).GetComponent<SpriteRenderer>().bounds.size.y;
+        playerColliderCenter = GetComponent<Collider2D>().bounds.center;
     }
 
     // Update is called once per frame
@@ -37,15 +40,26 @@ public class TopViewPlayer : MonoBehaviour
             }
             transform.position += moveDirection * moveSpeed * Time.deltaTime;
             SetPlayerState();
-            anim.Play(playerAnimState, 0);
-            if (anim.GetCurrentAnimatorStateInfo(0).IsName(playerAnimState))
+            if (!anim.GetCurrentAnimatorStateInfo(0).IsName(playerAnimState))
             {
-                
+                anim.Play(playerAnimState, 0);
             }
+
             if (Input.GetKeyDown(KeyCode.Space))
             {
-                Managers.instance.Grid.GridCheck(new Vector2Int((int)transform.position.x,(int)transform.position.y));
-                //TODO : 플레이어 다리위치로 위치 보정해주어야함
+                Managers.instance.Grid.GridCheck(transform.position+playerColliderCenter);
+                //플레이어 다리위치로 위치 보정
+            }
+            if (VectorToIntPos(transform.position + playerColliderCenter) != playerConvertedLastPos)
+            {
+                if (Managers.instance.Grid.InteractionInitOutIt(transform.position + playerColliderCenter, ref playerConvertedLastPos))
+                {
+
+                }
+                else
+                {
+
+                }
             }
         }
     }
@@ -63,5 +77,12 @@ public class TopViewPlayer : MonoBehaviour
         {
             playerAnimState = "Walk_Idle";
         }
+
     }
+    Vector2Int VectorToIntPos(Vector3 tempVec)
+    {
+        Vector2Int temVecInt = new Vector2Int(Mathf.RoundToInt(tempVec.x), Mathf.RoundToInt(tempVec.y));
+        return temVecInt;
+    }
+
 }
