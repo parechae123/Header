@@ -4,20 +4,29 @@ using UnityEngine;
 
 public class TopViewPlayer : MonoBehaviour
 {
+    public static TopViewPlayer Instance;
     Vector3 lastMoveDir = Vector3.zero;
     Vector3 moveDirection = Vector3.zero;
-    private bool isMoveAble = true;
+    public bool isMoveAble = true;
     public float moveSpeed = 3;
     public string playerAnimState;
     private Animator anim;
+
+    HashSet<Vector2Int> interactionTiles;
     [SerializeField] Vector3 playerColliderCenter;
     [SerializeField]Vector2Int playerConvertedLastPos;
     [SerializeField]Vector2Int playerConvertedNowPos;
-
+    
+    private void Awake()
+    {
+        Instance = this;
+    }
     void Start()
     {
         anim = transform.GetChild(0).GetComponent<Animator>();
         playerColliderCenter = GetComponent<Collider2D>().bounds.center;
+        Managers.instance.UI.DialogCall.DialogSetting();
+        interactionTiles = Managers.instance.Grid.isInteractionAreThere;
     }
 
     // Update is called once per frame
@@ -52,7 +61,7 @@ public class TopViewPlayer : MonoBehaviour
             }
             if (VectorToIntPos(transform.position + playerColliderCenter) != playerConvertedLastPos)
             {
-                if (Managers.instance.Grid.InteractionInitOutIt(transform.position + playerColliderCenter, ref playerConvertedLastPos))
+                if (InteractionInitOutIt(transform.position + playerColliderCenter, ref playerConvertedLastPos))
                 {
 
                 }
@@ -61,6 +70,10 @@ public class TopViewPlayer : MonoBehaviour
 
                 }
             }
+        }
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            Managers.instance.UI.CloseUIStack();
         }
     }
     public void SetPlayerState()
@@ -84,5 +97,28 @@ public class TopViewPlayer : MonoBehaviour
         Vector2Int temVecInt = new Vector2Int(Mathf.RoundToInt(tempVec.x), Mathf.RoundToInt(tempVec.y));
         return temVecInt;
     }
+    public bool InteractionInitOutIt(Vector3 plrPos, ref Vector2Int lastPos)
+    {
+        Vector2Int tempBigPos = VectorToIntPos(plrPos);
+        if (interactionTiles.Contains(tempBigPos))
+        {
+            if (interactionTiles.Contains(lastPos))
+            {
+                Managers.instance.Grid.interactionGrid[lastPos].OutIt();
+            }
+            Managers.instance.Grid.interactionGrid[tempBigPos].Init();
+            lastPos = tempBigPos;
+            return true;
+        }
+        else
+        {
+            if (interactionTiles.Contains(lastPos))
+            {
+                Managers.instance.Grid.interactionGrid[lastPos].OutIt();
+                lastPos = tempBigPos;
+            }
+            return false;
+        }
 
+    }
 }

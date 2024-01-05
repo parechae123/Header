@@ -39,6 +39,51 @@ public class UIManager
             return dialogCall;
         } 
     }
+
+    private Stack<Transform> UIStack = new Stack<Transform>();
+    public List<Transform> MoveAbleCheckerList = new List<Transform>();
+    public void RegistUIStack(Transform target)
+    {
+        UIStack.Push(target);
+    }
+    public void CloseUIStack()
+    {
+        if (UIStack.Count > 0)
+        {
+            UIStack.Pop().gameObject.SetActive(false);
+            TopViewPlayer.Instance.isMoveAble = MoveAbleChecker();
+        }
+    }
+    public void CheckerRegist(Transform tr)
+    {
+        MoveAbleCheckerList.Add(tr);
+    }
+
+    private bool MoveAbleChecker()
+    {
+        for (int i = 0; i < MoveAbleCheckerList.Count; i++)
+        {
+            if (MoveAbleCheckerList[i].gameObject.activeSelf)
+            {
+                return false;
+            }
+        }
+        return true;
+    }
+    public void TargetUIOnOff(Transform target,bool isTurnOn)
+    {
+        // TODO : 특정 UI 닫기버튼 누를때 연결해주어야 할 함수 끌때 isTurnOn을 false 열때는 true
+        target.gameObject.SetActive(isTurnOn );
+        if (isTurnOn)
+        {
+            RegistUIStack(target);
+        }
+        else
+        {
+            UIStack.TryPop(out target);
+        }
+        TopViewPlayer.Instance.isMoveAble = MoveAbleChecker();
+    }
 }
 
 public class LoadingUI
@@ -116,8 +161,8 @@ public class LoadingUI
                     tempLoadingSlider.fillRect.SetParent(tempSliderTR);
                     tempLoadingSlider.fillRect.offsetMax = new Vector2(tempLoadingSlider.fillRect.offsetMax.x, 0);
                     tempLoadingSlider.fillRect.offsetMin = new Vector2(tempLoadingSlider.fillRect.offsetMin.x, 0);
-                    tempLoadingSlider.fillRect.anchorMin = new Vector2(0, 0); // 부모의 왼쪽 하단을 기준으로
-                    tempLoadingSlider.fillRect.anchorMax = new Vector2(1, 1); // 부모의 왼쪽 상단을 기준으로
+                    tempLoadingSlider.fillRect.anchorMin = Vector2.zero; // 부모의 왼쪽 하단을 기준으로
+                    tempLoadingSlider.fillRect.anchorMax = Vector2.one; // 부모의 왼쪽 상단을 기준으로
                     tempLoadingSlider.fillRect.pivot = new Vector2(0, 0.5f); // 부모의 왼쪽 중간을 기준으로
                     tempLoadingSlider.fillRect.sizeDelta = Vector2.zero;
                     tempLoadingSlider.fillRect.anchoredPosition = Vector2.zero;
@@ -155,8 +200,8 @@ public class TopViewSceneUI
 
                 //UIBackGround.sprite = 변경할 에셋 이름;
                 //TODO : 키 인터렉션 안내판넬 받으면 UIBackGround 변수의 sprite 변경해주어야함
-                interactionKeyPanel.anchorMin = new Vector2(0.4f, 0.55f);
-                interactionKeyPanel.anchorMax = new Vector2(0.6f, 0.65f);
+                interactionKeyPanel.anchorMin = new Vector2(0.4f, 0.25f);
+                interactionKeyPanel.anchorMax = new Vector2(0.6f, 0.35f);
                 interactionKeyPanel.sizeDelta = Vector2.zero;
                 interactionKeyPanel.anchoredPosition = Vector2.zero;
             }
@@ -171,12 +216,12 @@ public class TopViewSceneUI
             if (interactionKeyTextTitle == null)
             {
                 interactionKeyTextTitle = new GameObject { name = "interactionKeyTextTitle" }.AddComponent<Text>();
-                //TODO : 폰트누락,사이즈 조절필요 중앙정렬 해야함
+
                 interactionKeyTextTitle.rectTransform.SetParent(InteractionKeyPanel);
-                interactionKeyTextTitle.rectTransform.anchorMin = new Vector2(0, 0);
-                interactionKeyTextTitle.rectTransform.anchorMax = new Vector2(1, 1);
+                interactionKeyTextTitle.rectTransform.anchorMin = Vector2.zero;
+                interactionKeyTextTitle.rectTransform.anchorMax = Vector2.one;
                 interactionKeyTextTitle.rectTransform.sizeDelta = Vector2.zero;
-                interactionKeyTextTitle.rectTransform.anchoredPosition = new Vector2(0, 0);
+                interactionKeyTextTitle.rectTransform.anchoredPosition = Vector2.zero;
                 interactionKeyTextTitle.fontSize = 25;
                 interactionKeyTextTitle.color = Color.black;
                 interactionKeyTextTitle.font = Managers.instance.Resource.Load<Font>("InGameFont");
@@ -189,14 +234,11 @@ public class TopViewSceneUI
     {
         if (OnOFF)
         {
+            InteractionKeyPanel.anchoredPosition = Camera.main.WorldToViewportPoint(TopViewPlayer.Instance.transform.position);
             InteractionKeyTextTitle.text = "스페이스바 키를 눌러 인터렉션 하세요";
             InteractionKeyTextTitle.fontSize = 25;
 
 
-        }
-        else
-        {
-            
         }
         InteractionKeyPanel.gameObject.SetActive(OnOFF);
     }
@@ -206,7 +248,7 @@ public class TopViewSceneUI
 public class DialogSystem
 {
     private RectTransform fullDialogPanel;
-    private RectTransform FullDialogPanel
+    public RectTransform FullDialogPanel
     {
         get
         {
@@ -240,7 +282,7 @@ public class DialogSystem
 
                 //UIBackGround.sprite = 변경할 에셋 이름;
                 //TODO : 키 인터렉션 안내판넬 받으면 UIBackGround 변수의 sprite 변경해주어야함
-                dialogPanel.anchorMin = new Vector2(0,0);
+                dialogPanel.anchorMin = Vector2.zero;
                 dialogPanel.anchorMax = new Vector2(1f, 1f-(1f / 4f));
                 dialogPanel.sizeDelta = Vector2.zero;
                 dialogPanel.anchoredPosition = Vector2.zero;
@@ -281,10 +323,10 @@ public class DialogSystem
                 nameText = new GameObject { name = "nameText" }.AddComponent<Text>();
                 //TODO : 폰트누락,사이즈 조절필요 중앙정렬 해야함
                 nameText.rectTransform.SetParent(NamePanel);
-                nameText.rectTransform.anchorMin = new Vector2(0, 0);
-                nameText.rectTransform.anchorMax = new Vector2(1, 1);
+                nameText.rectTransform.anchorMin = Vector2.zero;
+                nameText.rectTransform.anchorMax = Vector2.one;
                 nameText.rectTransform.sizeDelta = Vector2.zero;
-                nameText.rectTransform.anchoredPosition = new Vector2(0, 0);
+                nameText.rectTransform.anchoredPosition = Vector2.zero;
                 nameText.fontSize = 25;
                 nameText.color = Color.black;
                 nameText.font = Managers.instance.Resource.Load<Font>("InGameFont");
@@ -303,10 +345,10 @@ public class DialogSystem
                 dialogText = new GameObject { name = "dialogText" }.AddComponent<Text>();
                 //TODO : 폰트누락,사이즈 조절필요 중앙정렬 해야함
                 dialogText.rectTransform.SetParent(DialogPanel);
-                dialogText.rectTransform.anchorMin = new Vector2(0, 0);
-                dialogText.rectTransform.anchorMax = new Vector2(1, 1);
+                dialogText.rectTransform.anchorMin = Vector2.zero;
+                dialogText.rectTransform.anchorMax = Vector2.one;
                 dialogText.rectTransform.sizeDelta = Vector2.zero;
-                dialogText.rectTransform.anchoredPosition = new Vector2(0, 0);
+                dialogText.rectTransform.anchoredPosition = Vector2.zero;
                 dialogText.fontSize = 25;
                 dialogText.color = Color.black;
                 dialogText.font = Managers.instance.Resource.Load<Font>("InGameFont");
@@ -316,11 +358,18 @@ public class DialogSystem
             return dialogText;
         }
     }
-
-    public void DialogTextSetting()
+    public void DialogTextChanger(string talkerName,string dialog, string talkerIMGName)
+    {
+        NameText.text = talkerName;
+        //TODO : 화자 일러스트 출력 이미지 UI와 데이터값 파싱하는 함수 구현필요
+        DialogText.text = dialog;
+    }
+    public void DialogSetting()
     {
         DialogText.text = "테스트12";
         NameText.text = "테스트12";
+        Managers.instance.UI.CheckerRegist(fullDialogPanel);
+        fullDialogPanel.gameObject.SetActive(false);
     }
 
 }

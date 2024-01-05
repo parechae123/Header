@@ -24,7 +24,7 @@ public class DialogInteraction : Interactions
     }
     public override void Interaction()
     {
-        Managers.instance.UI.DialogCall.DialogTextSetting();
+        Managers.instance.UI.TargetUIOnOff(Managers.instance.UI.DialogCall.FullDialogPanel,true);
         InteractionKeyUI(false);
 
     }

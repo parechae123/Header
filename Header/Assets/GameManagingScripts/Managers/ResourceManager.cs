@@ -12,6 +12,7 @@ using DataDefines;
 public class ResourceManager
 {
     Dictionary<string, UnityEngine.Object> _resources = new Dictionary<string, Object>();
+    
     private bool loadDone = false;
     //데이터 순수성을 위해 읽기전용 프로퍼티 작성
     public bool isResourceLoadDone { get { return loadDone; } }
