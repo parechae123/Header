@@ -85,6 +85,21 @@ public class ResourceManager
                                     }
                                 });
                                 break;
+                            case ResourceType.Fonts:
+                                OpHandle = Addressables.LoadResourceLocationsAsync(ResourceDefines[i].LabelName, typeof(Font));
+                                totalCount += OpHandle.Result.Count;
+                                LoadAllAsync<Font>(ResourceDefines[i].LabelName, (loadResource, total) =>
+                                {
+                                    loadingName = loadResource;
+                                    loadCount++;
+                                    CB.Invoke(loadResource, loadCount, totalCount);
+                                    if (loadCount == totalCount)
+                                    {
+                                        loadDone = true;
+                                        isDone.Invoke(true, true);
+                                    }
+                                });
+                                break;
                         }
                     }
                 }
@@ -102,6 +117,15 @@ public class ResourceManager
         if (typeof(T) == typeof(Sprite))
         {
             key = key + ".sprite";
+            if (_resources.TryGetValue(key, out Object temp))
+            {
+                return temp as T;
+            }
+            // FLOW : 어드레서블의 키값(태그 아닌 단일객체)를 가져와서 지정한 타입으로 반환
+        }
+        if (typeof(T) == typeof(Font))
+        {
+            key = key + ".font";
             if (_resources.TryGetValue(key, out Object temp))
             {
                 return temp as T;

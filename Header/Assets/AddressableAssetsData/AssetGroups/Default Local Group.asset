@@ -71,6 +71,12 @@ MonoBehaviour:
     m_SerializedLabels:
     - Load
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: eac237e49d6915446b5b0ab408de15b6
+    m_Address: InGameFont
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Font
+    FlaggedDuringContentUpdateRestriction: 0
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: 489b40023fd66be419d08d79841125b1, type: 2}
   m_SchemaSet:

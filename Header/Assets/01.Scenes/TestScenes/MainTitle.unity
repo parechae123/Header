@@ -1194,6 +1194,8 @@ MonoBehaviour:
     Type: 0
   - LabelName: TopViewPlayerAnimations
     Type: 1
+  - LabelName: Font
+    Type: 3
   newGameBTN: {fileID: 996982120}
 --- !u!1 &1570171201
 GameObject:
