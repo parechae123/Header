@@ -58,6 +58,11 @@ public class UIManager
     {
         MoveAbleCheckerList.Add(tr);
     }
+    public void ResetUI()
+    {
+        UIStack.Clear();
+        MoveAbleCheckerList.Clear();
+    }
 
     private bool MoveAbleChecker()
     {
@@ -258,7 +263,7 @@ public class DialogSystem
                 Canvas tempCanvas = Managers.instance.UI.LoadingUIProps.SceneMainCanvas.GetComponent<Canvas>();
                 fullDialogPanel = UIBackGround.rectTransform;
                 fullDialogPanel.SetParent(tempCanvas.transform as RectTransform);
-
+                UIBackGround.sprite = Managers.instance.Resource.Load<Sprite>("dialogue_panel");
                 //UIBackGround.sprite = 변경할 에셋 이름;
                 //TODO : 키 인터렉션 안내판넬 받으면 UIBackGround 변수의 sprite 변경해주어야함
                 fullDialogPanel.anchorMin = new Vector2(0.05f, 0.05f);
@@ -267,6 +272,26 @@ public class DialogSystem
                 fullDialogPanel.anchoredPosition = Vector2.zero;
             }
             return fullDialogPanel;
+        }
+    }
+    private Image dialogCharactorIMG;
+    private Image DialogCharactorIMG
+    {
+        get
+        {
+            if (dialogCharactorIMG == null)
+            {
+                dialogCharactorIMG = new GameObject { name = "dialogueCharactorIlust" }.AddComponent<Image>();
+                dialogCharactorIMG.rectTransform.SetParent(FullDialogPanel);
+                dialogCharactorIMG.sprite = Managers.instance.Resource.Load<Sprite>("dialogue_protraitpanel");
+                //UIBackGround.sprite = 변경할 에셋 이름;
+                //TODO : 키 인터렉션 안내판넬 받으면 UIBackGround 변수의 sprite 변경해주어야함
+                dialogCharactorIMG.rectTransform.anchorMin = new Vector2(0, 1);
+                dialogCharactorIMG.rectTransform.anchorMax = new Vector2(0.12f, 1.9f);
+                dialogCharactorIMG.rectTransform.sizeDelta = Vector2.zero;
+                dialogCharactorIMG.rectTransform.anchoredPosition = Vector2.zero;
+            }
+            return dialogCharactorIMG;
         }
     }
     private RectTransform dialogPanel;
@@ -279,7 +304,7 @@ public class DialogSystem
                 Image UIBackGround = new GameObject { name = "dialogPanel" }.AddComponent<Image>();
                 dialogPanel = UIBackGround.rectTransform;
                 dialogPanel.SetParent(FullDialogPanel);
-
+                UIBackGround.color = Color.clear;
                 //UIBackGround.sprite = 변경할 에셋 이름;
                 //TODO : 키 인터렉션 안내판넬 받으면 UIBackGround 변수의 sprite 변경해주어야함
                 dialogPanel.anchorMin = Vector2.zero;
@@ -300,7 +325,7 @@ public class DialogSystem
                 Image UIBackGround = new GameObject { name = "dialogNamePanel" }.AddComponent<Image>();
                 namePanel = UIBackGround.rectTransform;
                 namePanel.SetParent(FullDialogPanel);
-
+                UIBackGround.sprite = Managers.instance.Resource.Load<Sprite>("dialogue_namebar");
                 //UIBackGround.sprite = 변경할 에셋 이름;
                 //TODO : 키 인터렉션 안내판넬 받으면 UIBackGround 변수의 sprite 변경해주어야함
                 UIBackGround.color = Color.gray;
@@ -352,7 +377,7 @@ public class DialogSystem
                 dialogText.fontSize = 25;
                 dialogText.color = Color.black;
                 dialogText.font = Managers.instance.Resource.Load<Font>("InGameFont");
-                dialogText.alignment = TextAnchor.UpperLeft; ;
+                dialogText.alignment = TextAnchor.MiddleCenter; ;
                 dialogText.horizontalOverflow = HorizontalWrapMode.Overflow;
             }
             return dialogText;
@@ -366,8 +391,9 @@ public class DialogSystem
     }
     public void DialogSetting()
     {
+        DialogCharactorIMG.IsActive();
         DialogText.text = "테스트12";
-        NameText.text = "테스트12";
+        NameText.text = "테스트12"; 
         Managers.instance.UI.CheckerRegist(fullDialogPanel);
         fullDialogPanel.gameObject.SetActive(false);
     }
