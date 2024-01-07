@@ -99,6 +99,8 @@ MonoBehaviour:
     - UI
     - DialogDatatSheet
     - Video
+    - Texture
+    - Texture2D
   m_SchemaTemplates: []
   m_GroupTemplateObjects:
   - {fileID: 11400000, guid: c6ef9c20331d5e649a2617b27fb0ed50, type: 2}

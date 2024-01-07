@@ -27,7 +27,31 @@ MonoBehaviour:
     m_Address: BackGroundVideoTexture
     m_ReadOnly: 0
     m_SerializedLabels:
+    - Texture
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 0fb645e9fb8ab354d8f5befe7efdf305
+    m_Address: intro
+    m_ReadOnly: 0
+    m_SerializedLabels:
     - Video
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 52acdd5a2342d864fb341fbf0ef4bc24
+    m_Address: background_1
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Texture2D
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 34416c37a6255024985cef11770a54a3
+    m_Address: background_2
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Texture2D
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: d0767854412194b4d8579c68e66d7f30
+    m_Address: intro_over
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Texture2D
     FlaggedDuringContentUpdateRestriction: 0
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: 489b40023fd66be419d08d79841125b1, type: 2}

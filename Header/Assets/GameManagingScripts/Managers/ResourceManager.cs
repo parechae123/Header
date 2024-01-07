@@ -120,7 +120,22 @@ public class ResourceManager
                             case ResourceType.Video:
                                 OpHandle = Addressables.LoadResourceLocationsAsync(ResourceDefines[i].LabelName, typeof(VideoClip));
                                 totalCount += OpHandle.Result.Count;
-                                LoadAllAsync<RenderTexture>(ResourceDefines[i].LabelName, (loadResource, total) =>
+                                LoadAllAsync<VideoClip>(ResourceDefines[i].LabelName, (loadResource, total) =>
+                                {
+                                    loadingName = loadResource;
+                                    loadCount++;
+                                    CB.Invoke(loadResource, loadCount, totalCount);
+                                    if (loadCount == totalCount)
+                                    {
+                                        loadDone = true;
+                                        isDone.Invoke(true, true);
+                                    }
+                                });
+                                break;
+                            case ResourceType.Texture2D:
+                                OpHandle = Addressables.LoadResourceLocationsAsync(ResourceDefines[i].LabelName, typeof(Texture2D));
+                                totalCount += OpHandle.Result.Count;
+                                LoadAllAsync<Texture2D>(ResourceDefines[i].LabelName, (loadResource, total) =>
                                 {
                                     loadingName = loadResource;
                                     loadCount++;

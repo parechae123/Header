@@ -17,8 +17,8 @@ public class UIManager
     private LoadingUI loadingUIProps;
     public LoadingUI LoadingUIProps
     {
-        get 
-        { 
+        get
+        {
             if (loadingUIProps == null)
             {
                 loadingUIProps = new LoadingUI();
@@ -29,20 +29,20 @@ public class UIManager
     private TopViewSceneUI topViewSceneUIs;
     public TopViewSceneUI TopViewSceneUIs
     {
-        get 
-        { 
-            if(topViewSceneUIs == null)topViewSceneUIs = new TopViewSceneUI();
+        get
+        {
+            if (topViewSceneUIs == null) topViewSceneUIs = new TopViewSceneUI();
             return topViewSceneUIs;
         }
     }
     private DialogSystem dialogCall;
-    public DialogSystem DialogCall 
-    { 
-        get 
+    public DialogSystem DialogCall
+    {
+        get
         {
-            if (dialogCall == null)dialogCall = new DialogSystem();
+            if (dialogCall == null) dialogCall = new DialogSystem();
             return dialogCall;
-        } 
+        }
     }
 
     private Stack<Transform> UIStack = new Stack<Transform>();
@@ -80,10 +80,10 @@ public class UIManager
         }
         return true;
     }
-    public void TargetUIOnOff(Transform target,bool isTurnOn)
+    public void TargetUIOnOff(Transform target, bool isTurnOn)
     {
         // TODO : 특정 UI 닫기버튼 누를때 연결해주어야 할 함수 끌때 isTurnOn을 false 열때는 true
-        target.gameObject.SetActive(isTurnOn );
+        target.gameObject.SetActive(isTurnOn);
         if (isTurnOn)
         {
             RegistUIStack(target);
@@ -128,7 +128,7 @@ public class LoadingUI
                 {
                     loadingIlust = new GameObject("LoadingIlust").AddComponent<Image>();
                     RectTransform tempIluTR = loadingIlust.transform as RectTransform;
-                    
+
                     tempIluTR.SetParent(SceneMainCanvas);
                     tempIluTR.anchorMin = Vector2.zero;
                     tempIluTR.anchorMax = Vector2.one;
@@ -142,7 +142,7 @@ public class LoadingUI
         }
     }
     private Slider loadingSlider = null;
-    public Slider LoadingSlider 
+    public Slider LoadingSlider
     {
         get
         {
@@ -197,14 +197,14 @@ public class LoadingUI
 public class TopViewSceneUI
 {
     private RectTransform interactionKeyPanel;
-    private RectTransform InteractionKeyPanel 
-    {  
-        get 
+    private RectTransform InteractionKeyPanel
+    {
+        get
         {
             if (interactionKeyPanel == null)
             {
                 Image UIBackGround = new GameObject { name = "interactionKeyPanel" }.AddComponent<Image>();
-                Canvas tempCanvas= Managers.instance.UI.LoadingUIProps.SceneMainCanvas.GetComponent<Canvas>();
+                Canvas tempCanvas = Managers.instance.UI.LoadingUIProps.SceneMainCanvas.GetComponent<Canvas>();
                 interactionKeyPanel = UIBackGround.rectTransform;
                 interactionKeyPanel.SetParent(tempCanvas.transform as RectTransform);
 
@@ -216,12 +216,12 @@ public class TopViewSceneUI
                 interactionKeyPanel.anchoredPosition = Vector2.zero;
             }
             return interactionKeyPanel;
-        } 
+        }
     }
     private Text interactionKeyTextTitle;
-    private Text InteractionKeyTextTitle 
-    {  
-        get 
+    private Text InteractionKeyTextTitle
+    {
+        get
         {
             if (interactionKeyTextTitle == null)
             {
@@ -238,7 +238,7 @@ public class TopViewSceneUI
                 interactionKeyTextTitle.alignment = TextAnchor.MiddleCenter;
             }
             return interactionKeyTextTitle;
-        } 
+        }
     }
     public void KeyInteractionOnOFF(bool OnOFF)
     {
@@ -302,7 +302,7 @@ public class DialogSystem
                 dialogCharactorIMG.rectTransform.anchorMax = Vector2.one;
                 dialogCharactorIMG.rectTransform.sizeDelta = Vector2.zero;
                 dialogCharactorIMG.rectTransform.anchoredPosition = Vector2.zero;
-                
+
 
             }
             return dialogCharactorIMG;
@@ -322,7 +322,7 @@ public class DialogSystem
                 //UIBackGround.sprite = 변경할 에셋 이름;
                 //TODO : 키 인터렉션 안내판넬 받으면 UIBackGround 변수의 sprite 변경해주어야함
                 dialogPanel.anchorMin = Vector2.zero;
-                dialogPanel.anchorMax = new Vector2(1f, 1f-(1f / 4f));
+                dialogPanel.anchorMax = new Vector2(1f, 1f - (1f / 4f));
                 dialogPanel.sizeDelta = Vector2.zero;
                 dialogPanel.anchoredPosition = Vector2.zero;
             }
@@ -343,8 +343,8 @@ public class DialogSystem
                 //UIBackGround.sprite = 변경할 에셋 이름;
                 //TODO : 키 인터렉션 안내판넬 받으면 UIBackGround 변수의 sprite 변경해주어야함
                 UIBackGround.color = Color.gray;
-                namePanel.anchorMin = new Vector2(0f, 3f/4f);
-                namePanel.anchorMax = new Vector2(1f/6f, 1);
+                namePanel.anchorMin = new Vector2(0f, 3f / 4f);
+                namePanel.anchorMax = new Vector2(1f / 6f, 1);
                 namePanel.sizeDelta = Vector2.zero;
                 namePanel.anchoredPosition = Vector2.zero;
             }
@@ -399,7 +399,6 @@ public class DialogSystem
 
     private Queue<DataDefines.DialogDatas> dataQueue = new Queue<DialogDatas>();
 
-    private RawImage dialogueBackGround;
     private VideoPlayer backGroundVideo;
     public VideoPlayer BackGroundVideo
     {
@@ -408,18 +407,20 @@ public class DialogSystem
             if (backGroundVideo == null)
             {
                 backGroundVideo = DialogueBackGround.AddComponent<VideoPlayer>();
+                backGroundVideo.isLooping = true;
                 backGroundVideo.targetTexture = Managers.instance.Resource.Load<RenderTexture>("BackGroundVideoTexture");
             }
             return backGroundVideo;
         }
     }
-    public RawImage DialogueBackGround 
-    { 
-        get 
-        { 
+    private RawImage dialogueBackGround;
+    public RawImage DialogueBackGround
+    {
+        get
+        {
             if (dialogueBackGround == null)
             {
-                dialogueBackGround = new GameObject { name = "DialogueBackGroundPanel" }.AddComponent<RawImage>();;
+                dialogueBackGround = new GameObject { name = "DialogueBackGroundPanel" }.AddComponent<RawImage>();
                 dialogueBackGround.texture = BackGroundVideo.targetTexture;
                 dialogueBackGround.rectTransform.SetParent(Managers.instance.UI.LoadingUIProps.SceneMainCanvas);
                 dialogueBackGround.rectTransform.anchorMin = Vector2.zero;
@@ -428,8 +429,8 @@ public class DialogSystem
                 dialogueBackGround.rectTransform.anchoredPosition = Vector2.zero;
                 dialogueBackGround.rectTransform.SetAsLastSibling();
             }
-            return dialogueBackGround; 
-        } 
+            return dialogueBackGround;
+        }
     }
 
     #endregion
@@ -438,15 +439,15 @@ public class DialogSystem
         dataQueue.Clear();
         TextAsset tempTextAsset = Managers.instance.Resource.Load<TextAsset>("DialogueData");
         List<DialogDatas> tempData = JsonConvert.DeserializeObject<List<DialogDatas>>(tempTextAsset.text);
-        foreach (DialogDatas data in tempData) 
+        foreach (DialogDatas data in tempData)
         {
-            int tempDialogArray = data.EventName -(data.EventName % 10000);
+            int tempDialogArray = data.EventName - (data.EventName % 10000);
             tempDialogArray = tempDialogArray / 10000;
-            if (tempDialogArray ==  EventNumber)
+            if (tempDialogArray == EventNumber)
             {
                 dataQueue.Enqueue(data);
             }
-            else if(EventNumber < tempDialogArray)
+            else if (EventNumber < tempDialogArray)
             {
                 break;
             }
@@ -468,7 +469,22 @@ public class DialogSystem
         //TODO : 사운드 출력 함수 구문 추가필요
         DialogText.text = dialogData.dialogue;
         DialogCharactorIMG.sprite = Managers.instance.Resource.Load<Sprite>(dialogData.Portrait);
-        BackGroundVideo.clip = Managers.instance.Resource.Load<VideoClip>(dialogData.Background);
+        VideoClip tempVideo = Managers.instance.Resource.Load<VideoClip>(dialogData.Background);
+        if (tempVideo != null)
+        {
+            BackGroundVideo.enabled = true;
+            BackGroundVideo.clip = tempVideo;
+            DialogueBackGround.texture = Managers.instance.Resource.Load<Texture>("BackGroundVideoTexture");
+            BackGroundVideo.Play();
+        }
+        else
+        {
+            BackGroundVideo.enabled = false;
+            DialogueBackGround.texture = Managers.instance.Resource.Load<Texture2D>(dialogData.Background);
+        }
+
+        Debug.Log("백그라운드" + dialogData.Background);
+
     }
     #region DialogChangers
     public void DialogTextChanger()
@@ -513,8 +529,8 @@ public class DialogSystem
     {
         DialogCharactorIMG.IsActive();
         DialogText.text = "테스트12";
-        NameText.text = "테스트12"; 
-        Managers.instance.UI.CheckerRegist(fullDialogPanel);
+        NameText.text = "테스트12";
+        Managers.instance.UI.CheckerRegist(DialogueBackGround.rectTransform);
         DialogueBackGround.gameObject.SetActive(false);
     }
 

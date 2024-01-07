@@ -42,14 +42,14 @@
  {
   "EventName": 10006,
   "Portrait": "heather_portrait",
-  "Background": "inro_ver2",
+  "Background": "intro_ver2",
   "Name": "None",
   "sound": "None"
  },
  {
   "EventName": 10007,
   "Portrait": "heather_portrait",
-  "Background": "inro_ver2",
+  "Background": "intro_ver2",
   "Name": "헤더",
   "sound": "None",
   "dialogue": "아` 택배사에 전화하는거 까먹었다."
@@ -57,7 +57,7 @@
  {
   "EventName": 10008,
   "Portrait": "heather_portrait",
-  "Background": "inro_ver2",
+  "Background": "intro_ver2",
   "Name": "헤더",
   "sound": "None",
   "dialogue": "분명 3주전에 온다고 그랬는데' 아직도 안왔잖아?"
@@ -65,7 +65,7 @@
  {
   "EventName": 10009,
   "Portrait": "heather_portrait",
-  "Background": "inro_ver2",
+  "Background": "intro_ver2",
   "Name": "헤더",
   "sound": "None",
   "dialogue": "(…...)"
@@ -73,7 +73,7 @@
  {
   "EventName": 10010,
   "Portrait": "heather_portrait",
-  "Background": "inro_ver2",
+  "Background": "intro_ver2",
   "Name": "헤더",
   "sound": "None",
   "dialogue": "뭐… 언젠가는 오겠지."
@@ -81,7 +81,7 @@
  {
   "EventName": 10011,
   "Portrait": "heather_portrait",
-  "Background": "inro_ver2",
+  "Background": "intro_ver2",
   "Name": "헤더",
   "sound": "None",
   "dialogue": "(…...)"
