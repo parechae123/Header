@@ -1,0 +1,368 @@
+[
+ {
+  "EventName": 10001,
+  "Portrait": "heather_portrait",
+  "Background": "None",
+  "Name": "헤더",
+  "sound": "Clock single(반복재생)",
+  "dialogue": "(오늘은 어제보다도 조용하네.)"
+ },
+ {
+  "EventName": 10002,
+  "Portrait": "heather_portrait",
+  "Background": "None",
+  "Name": "헤더",
+  "sound": "None",
+  "dialogue": "(…...)"
+ },
+ {
+  "EventName": 10003,
+  "Portrait": "heather_portrait",
+  "Background": "None",
+  "Name": "헤더",
+  "sound": "None",
+  "dialogue": "(…...)"
+ },
+ {
+  "EventName": 10004,
+  "Portrait": "heather_portrait",
+  "Background": "None",
+  "Name": "헤더",
+  "sound": "None",
+  "dialogue": "(…...)"
+ },
+ {
+  "EventName": 10005,
+  "Portrait": "heather_portrait",
+  "Background": "None",
+  "Name": "헤더",
+  "sound": "None",
+  "dialogue": "(….지루해.)"
+ },
+ {
+  "EventName": 10006,
+  "Portrait": "heather_portrait",
+  "Background": "inro_ver2",
+  "Name": "None",
+  "sound": "None"
+ },
+ {
+  "EventName": 10007,
+  "Portrait": "heather_portrait",
+  "Background": "inro_ver2",
+  "Name": "헤더",
+  "sound": "None",
+  "dialogue": "아` 택배사에 전화하는거 까먹었다."
+ },
+ {
+  "EventName": 10008,
+  "Portrait": "heather_portrait",
+  "Background": "inro_ver2",
+  "Name": "헤더",
+  "sound": "None",
+  "dialogue": "분명 3주전에 온다고 그랬는데' 아직도 안왔잖아?"
+ },
+ {
+  "EventName": 10009,
+  "Portrait": "heather_portrait",
+  "Background": "inro_ver2",
+  "Name": "헤더",
+  "sound": "None",
+  "dialogue": "(…...)"
+ },
+ {
+  "EventName": 10010,
+  "Portrait": "heather_portrait",
+  "Background": "inro_ver2",
+  "Name": "헤더",
+  "sound": "None",
+  "dialogue": "뭐… 언젠가는 오겠지."
+ },
+ {
+  "EventName": 10011,
+  "Portrait": "heather_portrait",
+  "Background": "inro_ver2",
+  "Name": "헤더",
+  "sound": "None",
+  "dialogue": "(…...)"
+ },
+ {
+  "EventName": 10012,
+  "Portrait": "heather_portrait",
+  "Background": "background_1",
+  "Name": "헤더",
+  "sound": "None",
+  "dialogue": "(이 가게를 물려받았을때만 해도 이렇게 지루하진 않았는데.)"
+ },
+ {
+  "EventName": 10013,
+  "Portrait": "heather_portrait",
+  "Background": "background_1",
+  "Name": "헤더",
+  "sound": "None",
+  "dialogue": "(나름 장사도 잘되고 재미도 있었지.)"
+ },
+ {
+  "EventName": 10014,
+  "Portrait": "heather_portrait",
+  "Background": "background_1",
+  "Name": "헤더",
+  "sound": "None",
+  "dialogue": "(근데 부모님 돌아가시고 나서 부터 그냥저냥 흘러가더니` 결국은…)"
+ },
+ {
+  "EventName": 10015,
+  "Portrait": "heather_portrait",
+  "Background": "background_1",
+  "Name": "헤더",
+  "sound": "None",
+  "dialogue": "(…...)"
+ },
+ {
+  "EventName": 10016,
+  "Portrait": "heather_portrait",
+  "Background": "intro",
+  "Name": "헤더",
+  "sound": "None",
+  "dialogue": "우리 마을은 부자가 많은 동네가 아니니까` 전구는 사치품 같아 보이긴 해."
+ },
+ {
+  "EventName": 10017,
+  "Portrait": "heather_close_portrait",
+  "Background": "intro",
+  "Name": "헤더",
+  "sound": "None",
+  "dialogue": "….계속 이런식이면 가게 문을 닫아야 할지도 모르겠어."
+ },
+ {
+  "EventName": 10018,
+  "Portrait": "heather_portrait",
+  "Background": "intro",
+  "Name": "헤더",
+  "sound": "None",
+  "dialogue": "가게 문을 닫게 되면 어떻게 될까?"
+ },
+ {
+  "EventName": 10019,
+  "Portrait": "heather_portrait",
+  "Background": "intro",
+  "Name": "헤더",
+  "sound": "None",
+  "dialogue": "…..."
+ },
+ {
+  "EventName": 10020,
+  "Portrait": "heather_close_portrait",
+  "Background": "intro",
+  "Name": "헤더",
+  "sound": "None",
+  "dialogue": "….그런날이 오면 침대에서 한발자국도 나가지 말아야지."
+ },
+ {
+  "EventName": 10021,
+  "Portrait": "heather_close_portrait",
+  "Background": "intro",
+  "Name": "헤더",
+  "sound": "None",
+  "dialogue": "어차피 밤 낮 구분도 못하는데` 그냥 잠만 자는거야."
+ },
+ {
+  "EventName": 10022,
+  "Portrait": "heather_close_portrait",
+  "Background": "intro",
+  "Name": "헤더",
+  "sound": "None",
+  "dialogue": "그럼 지금보다 덜 지루할지도 모르지."
+ },
+ {
+  "EventName": 10023,
+  "Portrait": "heather_portrait",
+  "Background": "intro",
+  "Name": "헤더",
+  "sound": "Clock Chimes",
+  "dialogue": "…..."
+ },
+ {
+  "EventName": 10024,
+  "Portrait": "heather_portrait",
+  "Background": "intro",
+  "Name": "헤더",
+  "sound": "None",
+  "dialogue": "헛소리 그만하고 문이나 닫아야지."
+ },
+ {
+  "EventName": 10025,
+  "portrait": "None_portrait",
+  "Background": "intro_over",
+  "Name": "None",
+  "sound": "None"
+ },
+ {
+  "EventName": 10026,
+  "Portrait": "heather_portrait",
+  "Background": "intro_over",
+  "Name": "헤더",
+  "sound": "Crash Glass1",
+  "dialogue": "(…...)"
+ },
+ {
+  "EventName": 10027,
+  "Portrait": "heather_portrait",
+  "Background": "intro_over",
+  "Name": "헤더",
+  "sound": "None",
+  "dialogue": "(……?)"
+ },
+ {
+  "EventName": 10028,
+  "Portrait": "heather_portrait",
+  "Background": "intro_over",
+  "Name": "헤더",
+  "sound": "Anxiety(배경음 계속 재생)",
+  "dialogue": "(뭐가 떨어진건가?)"
+ },
+ {
+  "EventName": 10029,
+  "Portrait": "heather_portrait",
+  "Background": "intro_over",
+  "Name": "헤더",
+  "sound": "Crash Glass1",
+  "dialogue": "(뭐지? 왜 계속 소리가…)"
+ },
+ {
+  "EventName": 10030,
+  "Portrait": "heather_portrait",
+  "Background": "intro_over",
+  "Name": "헤더",
+  "sound": "walking1",
+  "dialogue": "(…도둑인가?)"
+ },
+ {
+  "EventName": 10031,
+  "Portrait": "heather_portrait",
+  "Background": "intro_over",
+  "Name": "헤더",
+  "sound": "None",
+  "dialogue": "(….이제 갔나봐.)"
+ },
+ {
+  "EventName": 10032,
+  "Portrait": "heather_portrait",
+  "Background": "intro_over",
+  "Name": "헤더",
+  "sound": "None",
+  "dialogue": "(그런데 왜 앞이 안보이지?)"
+ },
+ {
+  "EventName": 10033,
+  "Portrait": "heather_portrait",
+  "Background": "intro_over",
+  "Name": "헤더",
+  "sound": "None",
+  "dialogue": "(나 분명 눈을 떴는데.)"
+ },
+ {
+  "EventName": 10034,
+  "Portrait": "heather_portrait",
+  "Background": "intro_over",
+  "Name": "헤더",
+  "sound": "clothes",
+  "dialogue": "(눈을 떴어…눈을 떴는데...?)"
+ },
+ {
+  "EventName": 10035,
+  "Portrait": "heather_portrait",
+  "Background": "intro_over",
+  "Name": "헤더",
+  "sound": "walking2",
+  "dialogue": "(뭔가…없어…)"
+ },
+ {
+  "EventName": 10036,
+  "Portrait": "heather_portrait",
+  "Background": "intro_over",
+  "Name": "헤더",
+  "sound": "None",
+  "dialogue": "(뭔가…없는데…)"
+ },
+ {
+  "EventName": 10037,
+  "Portrait": "heather_portrait",
+  "Background": "intro_over",
+  "Name": "헤더",
+  "sound": "None",
+  "dialogue": "(…...)"
+ },
+ {
+  "EventName": 10038,
+  "Portrait": "heather_portrait",
+  "Background": "intro_over",
+  "Name": "헤더",
+  "sound": "walking2",
+  "dialogue": "(…...)"
+ },
+ {
+  "EventName": 10039,
+  "Portrait": "heather_portrait",
+  "Background": "intro_over",
+  "Name": "헤더",
+  "sound": "None",
+  "dialogue": "(…...)"
+ },
+ {
+  "EventName": 10040,
+  "Portrait": "heather_portrait",
+  "Background": "intro_over",
+  "Name": "헤더",
+  "sound": "glass_touch",
+  "dialogue": "(…!)"
+ },
+ {
+  "EventName": 10041,
+  "Portrait": "heather_portrait",
+  "Background": "intro_over",
+  "Name": "헤더",
+  "sound": "screw",
+  "dialogue": "...찾았다."
+ },
+ {
+  "EventName": 10042,
+  "Portrait": "heather_portrait",
+  "Background": "intro_over",
+  "Name": "헤더",
+  "sound": "None",
+  "dialogue": "(윽` 왜 이렇게 밝지? 분명 불을 안켰는데…)"
+ },
+ {
+  "EventName": 10043,
+  "Portrait": "heather_portrait",
+  "Background": "background_2",
+  "Name": "헤더",
+  "sound": "Crash Glass2",
+  "dialogue": "(…..?)"
+ },
+ {
+  "EventName": 10044,
+  "Portrait": "heather_portrait",
+  "Background": "background_2",
+  "Name": "헤더",
+  "sound": "None",
+  "dialogue": "(얘` 넌 또 누구…)"
+ },
+ {
+  "EventName": 10045,
+  "Portrait": "girl_sur_portrait1",
+  "Background": "background_2",
+  "Name": "소녀",
+  "sound": "None",
+  "dialogue": "으…"
+ },
+ {
+  "EventName": 10046,
+  "Portrait": "girl_sur_portrait2",
+  "Background": "background_2",
+  "Name": "소녀",
+  "sound": "None",
+  "dialogue": "으아아아아아아악!!!!!"
+ }
+]

@@ -48,6 +48,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: d4778cec32da41048920ad5141e622da, type: 2}
   - {fileID: 11400000, guid: acd5a59d2d4c45241976b2d8540ff6c0, type: 2}
   - {fileID: 11400000, guid: cc7333302423707479b348f25f114db3, type: 2}
+  - {fileID: 11400000, guid: 6e009e9e6e389ea4494478c3b021ad84, type: 2}
+  - {fileID: 11400000, guid: 39f84a1d372a70c408fb233378669daa, type: 2}
   m_BuildSettings:
     m_CompileScriptsInVirtualMode: 0
     m_CleanupStreamingAssetsAfterBuilds: 1
@@ -95,6 +97,8 @@ MonoBehaviour:
     - TopViewPlayerAnimations
     - Font
     - UI
+    - DialogDatatSheet
+    - Video
   m_SchemaTemplates: []
   m_GroupTemplateObjects:
   - {fileID: 11400000, guid: c6ef9c20331d5e649a2617b27fb0ed50, type: 2}

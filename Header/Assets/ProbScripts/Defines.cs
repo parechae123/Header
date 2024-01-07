@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Newtonsoft.Json;
+using System;
 
 public class Defines
 {
@@ -19,25 +20,35 @@ namespace DataDefines
     public enum ResourceType
     {
         // MAINTANCE : 리소스 타입 추가할때 여기서 Enum 추가작업 필요
-        GameObject, Sprites,DataSheets,Fonts
+        GameObject, Sprites,DataSheets,Fonts,RenderTexture,Video
+    }
+    [System.Serializable]
+    public class DialogDatas
+    {
+        public int EventName;
+        public string Portrait;
+        public string Background;
+        public string Name;
+        public string sound;
+        public string dialogue;
     }
 }
 namespace InteractionDefines
 {
+    [System.Serializable]
     public class InteractionDetailPosition
     {
-        public Vector3 size = new Vector3(1, 1, 1);
-        //128,128,128 == 그리드의 정중앙
-        public byte x = 128;
-        public byte y = 128;
-        public byte z = 128;
+        public Vector2Int installedInteractionPosition = Vector2Int.zero;
+        public bool interactionRemoveSelf = false;
     }
+
     [System.Serializable]
     public class InteractionInstallerProps
     {
         public Vector2Int interactionPosition;
         public InteractionDetailPosition detail;
         public InteractionTypes interactionTypes;
+        public short keyNumber;
     }
 
     public enum InteractionTypes

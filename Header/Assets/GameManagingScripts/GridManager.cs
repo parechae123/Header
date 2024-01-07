@@ -1,5 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Security.Cryptography;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class GridManager
@@ -7,21 +9,26 @@ public class GridManager
     public Dictionary<Vector2Int,Interactions> interactionGrid = new Dictionary<Vector2Int,Interactions>();
     public HashSet<Vector2Int> isInteractionAreThere = new HashSet<Vector2Int>();
 
-    public void AddInteraction(Vector2Int tempBigPos,InteractionDefines.InteractionTypes tempTypes)
+    public void AddInteraction(InteractionDefines.InteractionInstallerProps tempInteractionData)
     {
-        isInteractionAreThere.Add(tempBigPos);
-        switch (tempTypes)
+        isInteractionAreThere.Add(tempInteractionData.interactionPosition);
+        switch (tempInteractionData.interactionTypes)
         {
             case InteractionDefines.InteractionTypes.None:
                 Debug.LogError("인터렉션 추가자에서 타입등록을 해주세요");
                 break;
             case InteractionDefines.InteractionTypes.DialogInteraction:
-                interactionGrid.Add(tempBigPos, new DialogInteraction());
+                interactionGrid.Add(tempInteractionData.interactionPosition, new DialogInteraction { detail = tempInteractionData.detail,interactionKeyNumber = tempInteractionData.keyNumber});
                 break;
             case InteractionDefines.InteractionTypes.ToBattleScene:
-                interactionGrid.Add(tempBigPos, new ToBattleSceneInteraction());
+                interactionGrid.Add(tempInteractionData.interactionPosition, new ToBattleSceneInteraction { detail = tempInteractionData.detail, interactionKeyNumber = tempInteractionData.keyNumber });
                 break;
         }
+    }    
+    public void RemoveInteraction(Vector2Int RemovePosition)
+    {
+        isInteractionAreThere.Remove(RemovePosition);
+        interactionGrid.Remove(RemovePosition);
     }
     public void GridCheck(Vector3 plrPos)
     {

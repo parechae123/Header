@@ -5,7 +5,12 @@ using Unity.VisualScripting;
 using UnityEditor.Rendering;
 using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.XR;
+using Newtonsoft.Json;
+using DataDefines;
+using InteractionDefines;
+using UnityEditor;
+using System.Diagnostics.Tracing;
+using UnityEngine.Video;
 
 public class UIManager
 {
@@ -252,6 +257,7 @@ public class TopViewSceneUI
 
 public class DialogSystem
 {
+    #region 다이얼로그 변수
     private RectTransform fullDialogPanel;
     public RectTransform FullDialogPanel
     {
@@ -260,9 +266,8 @@ public class DialogSystem
             if (fullDialogPanel == null)
             {
                 Image UIBackGround = new GameObject { name = "dialogPanel" }.AddComponent<Image>();
-                Canvas tempCanvas = Managers.instance.UI.LoadingUIProps.SceneMainCanvas.GetComponent<Canvas>();
                 fullDialogPanel = UIBackGround.rectTransform;
-                fullDialogPanel.SetParent(tempCanvas.transform as RectTransform);
+                fullDialogPanel.SetParent(DialogueBackGround.rectTransform);
                 UIBackGround.sprite = Managers.instance.Resource.Load<Sprite>("dialogue_panel");
                 //UIBackGround.sprite = 변경할 에셋 이름;
                 //TODO : 키 인터렉션 안내판넬 받으면 UIBackGround 변수의 sprite 변경해주어야함
@@ -281,15 +286,24 @@ public class DialogSystem
         {
             if (dialogCharactorIMG == null)
             {
-                dialogCharactorIMG = new GameObject { name = "dialogueCharactorIlust" }.AddComponent<Image>();
-                dialogCharactorIMG.rectTransform.SetParent(FullDialogPanel);
-                dialogCharactorIMG.sprite = Managers.instance.Resource.Load<Sprite>("dialogue_protraitpanel");
+                Image TempParent = new GameObject { name = "dialogueCharactorIlustPanel" }.AddComponent<Image>();
+                TempParent.sprite = Managers.instance.Resource.Load<Sprite>("dialogue_protraitpanel");
+                TempParent.rectTransform.SetParent(FullDialogPanel);
                 //UIBackGround.sprite = 변경할 에셋 이름;
                 //TODO : 키 인터렉션 안내판넬 받으면 UIBackGround 변수의 sprite 변경해주어야함
-                dialogCharactorIMG.rectTransform.anchorMin = new Vector2(0, 1);
-                dialogCharactorIMG.rectTransform.anchorMax = new Vector2(0.12f, 1.9f);
+                TempParent.rectTransform.anchorMin = new Vector2(0, 1);
+                TempParent.rectTransform.anchorMax = new Vector2(0.12f, 1.9f);
+                TempParent.rectTransform.sizeDelta = Vector2.zero;
+                TempParent.rectTransform.anchoredPosition = Vector2.zero;
+                dialogCharactorIMG = new GameObject { name = "dialogueCharactorIlust" }.AddComponent<Image>();
+
+                dialogCharactorIMG.rectTransform.SetParent(TempParent.rectTransform);
+                dialogCharactorIMG.rectTransform.anchorMin = Vector2.zero;
+                dialogCharactorIMG.rectTransform.anchorMax = Vector2.one;
                 dialogCharactorIMG.rectTransform.sizeDelta = Vector2.zero;
                 dialogCharactorIMG.rectTransform.anchoredPosition = Vector2.zero;
+                
+
             }
             return dialogCharactorIMG;
         }
@@ -337,7 +351,6 @@ public class DialogSystem
             return namePanel;
         }
     }
-
     private Text nameText;
     private Text NameText
     {
@@ -383,19 +396,126 @@ public class DialogSystem
             return dialogText;
         }
     }
-    public void DialogTextChanger(string talkerName,string dialog, string talkerIMGName)
+
+    private Queue<DataDefines.DialogDatas> dataQueue = new Queue<DialogDatas>();
+
+    private RawImage dialogueBackGround;
+    private VideoPlayer backGroundVideo;
+    public VideoPlayer BackGroundVideo
     {
-        NameText.text = talkerName;
-        //TODO : 화자 일러스트 출력 이미지 UI와 데이터값 파싱하는 함수 구현필요
-        DialogText.text = dialog;
+        get
+        {
+            if (backGroundVideo == null)
+            {
+                backGroundVideo = DialogueBackGround.AddComponent<VideoPlayer>();
+                backGroundVideo.targetTexture = Managers.instance.Resource.Load<RenderTexture>("BackGroundVideoTexture");
+            }
+            return backGroundVideo;
+        }
     }
+    public RawImage DialogueBackGround 
+    { 
+        get 
+        { 
+            if (dialogueBackGround == null)
+            {
+                dialogueBackGround = new GameObject { name = "DialogueBackGroundPanel" }.AddComponent<RawImage>();;
+                dialogueBackGround.texture = BackGroundVideo.targetTexture;
+                dialogueBackGround.rectTransform.SetParent(Managers.instance.UI.LoadingUIProps.SceneMainCanvas);
+                dialogueBackGround.rectTransform.anchorMin = Vector2.zero;
+                dialogueBackGround.rectTransform.anchorMax = Vector2.one;
+                dialogueBackGround.rectTransform.sizeDelta = Vector2.zero;
+                dialogueBackGround.rectTransform.anchoredPosition = Vector2.zero;
+                dialogueBackGround.rectTransform.SetAsLastSibling();
+            }
+            return dialogueBackGround; 
+        } 
+    }
+
+    #endregion
+    public void SetDialogueData(int EventNumber)
+    {
+        dataQueue.Clear();
+        TextAsset tempTextAsset = Managers.instance.Resource.Load<TextAsset>("DialogueData");
+        List<DialogDatas> tempData = JsonConvert.DeserializeObject<List<DialogDatas>>(tempTextAsset.text);
+        foreach (DialogDatas data in tempData) 
+        {
+            int tempDialogArray = data.EventName -(data.EventName % 10000);
+            tempDialogArray = tempDialogArray / 10000;
+            if (tempDialogArray ==  EventNumber)
+            {
+                dataQueue.Enqueue(data);
+            }
+            else if(EventNumber < tempDialogArray)
+            {
+                break;
+            }
+        }
+        DialogTextChanger();
+        Debug.Log(tempData.Count);
+    }
+    public void DialogNextOnly()
+    {
+        DataDefines.DialogDatas dialogData = dataQueue.Dequeue();
+        if (dialogData.Name.Contains("None"))
+        {
+            NameText.text = string.Empty;
+        }
+        else
+        {
+            NameText.text = dialogData.Name;
+        }
+        //TODO : 사운드 출력 함수 구문 추가필요
+        DialogText.text = dialogData.dialogue;
+        DialogCharactorIMG.sprite = Managers.instance.Resource.Load<Sprite>(dialogData.Portrait);
+        BackGroundVideo.clip = Managers.instance.Resource.Load<VideoClip>(dialogData.Background);
+    }
+    #region DialogChangers
+    public void DialogTextChanger()
+    {
+        if (dataQueue.Count > 0)
+        {
+            DialogNextOnly();
+        }
+        else
+        {
+            Managers.instance.UI.TargetUIOnOff(DialogueBackGround.rectTransform, false);
+        }
+    }
+    public void DialogTextChanger(Vector2Int RemoveInteractionPosition)
+    {
+        if (dataQueue.Count > 0)
+        {
+            DialogNextOnly();
+        }
+        else
+        {
+            Managers.instance.Grid.RemoveInteraction(RemoveInteractionPosition);
+            Managers.instance.UI.TargetUIOnOff(DialogueBackGround.rectTransform, false);
+        }
+    }
+    public void DialogTextChanger(Vector2Int RemoveInteractionPosition, InteractionInstallerProps AddInteraction)
+    {
+        if (dataQueue.Count > 0)
+        {
+            DialogNextOnly();
+        }
+        else
+        {
+            Managers.instance.Grid.RemoveInteraction(RemoveInteractionPosition);
+            Managers.instance.Grid.AddInteraction(AddInteraction);
+            //TODO : 인터렉션 삭제하는 코드 넣어줘야함
+            Managers.instance.UI.TargetUIOnOff(DialogueBackGround.rectTransform, false);
+        }
+    }
+    #endregion
     public void DialogSetting()
     {
         DialogCharactorIMG.IsActive();
         DialogText.text = "테스트12";
         NameText.text = "테스트12"; 
         Managers.instance.UI.CheckerRegist(fullDialogPanel);
-        fullDialogPanel.gameObject.SetActive(false);
+        DialogueBackGround.gameObject.SetActive(false);
     }
 
 }

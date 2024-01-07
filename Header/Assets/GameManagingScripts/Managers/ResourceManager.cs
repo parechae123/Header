@@ -8,6 +8,7 @@ using UnityEngine.AddressableAssets;
 using UnityEngine.ResourceManagement.AsyncOperations;
 using Object = UnityEngine.Object;
 using DataDefines;
+using UnityEngine.Video;
 
 public class ResourceManager
 {
@@ -90,6 +91,36 @@ public class ResourceManager
                                 OpHandle = Addressables.LoadResourceLocationsAsync(ResourceDefines[i].LabelName, typeof(Font));
                                 totalCount += OpHandle.Result.Count;
                                 LoadAllAsync<Font>(ResourceDefines[i].LabelName, (loadResource, total) =>
+                                {
+                                    loadingName = loadResource;
+                                    loadCount++;
+                                    CB.Invoke(loadResource, loadCount, totalCount);
+                                    if (loadCount == totalCount)
+                                    {
+                                        loadDone = true;
+                                        isDone.Invoke(true, true);
+                                    }
+                                });
+                                break;
+                            case ResourceType.RenderTexture:
+                                OpHandle = Addressables.LoadResourceLocationsAsync(ResourceDefines[i].LabelName, typeof(RenderTexture));
+                                totalCount += OpHandle.Result.Count;
+                                LoadAllAsync<RenderTexture>(ResourceDefines[i].LabelName, (loadResource, total) =>
+                                {
+                                    loadingName = loadResource;
+                                    loadCount++;
+                                    CB.Invoke(loadResource, loadCount, totalCount);
+                                    if (loadCount == totalCount)
+                                    {
+                                        loadDone = true;
+                                        isDone.Invoke(true, true);
+                                    }
+                                });
+                                break;
+                            case ResourceType.Video:
+                                OpHandle = Addressables.LoadResourceLocationsAsync(ResourceDefines[i].LabelName, typeof(VideoClip));
+                                totalCount += OpHandle.Result.Count;
+                                LoadAllAsync<RenderTexture>(ResourceDefines[i].LabelName, (loadResource, total) =>
                                 {
                                     loadingName = loadResource;
                                     loadCount++;

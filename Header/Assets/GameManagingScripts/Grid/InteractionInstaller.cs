@@ -10,7 +10,7 @@ public class InteractionInstaller : MonoBehaviour
     {
         for (int i = 0; i < interactionInstaller.Length; i++)
         {
-            Managers.instance.Grid.AddInteraction(interactionInstaller[i].interactionPosition, interactionInstaller[i].interactionTypes);
+            Managers.instance.Grid.AddInteraction(interactionInstaller[i]);
 
         }
     }

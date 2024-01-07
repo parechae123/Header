@@ -1,0 +1,67 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
+  m_Name: UIPortrait
+  m_EditorClassIdentifier: 
+  m_GroupName: UIPortrait
+  m_Data:
+    m_SerializedData: []
+  m_GUID: 618bb9fe3bf5e4343aff702ee7b0303c
+  m_SerializeEntries:
+  - m_GUID: d77b4f2807327234e8ac6d41a312f491
+    m_Address: girl_portrait
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - UI
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 44b81ec7915c53a48ba62aeef593ba8d
+    m_Address: girl_sur_portrait1
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - UI
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 85152b5581a32af419454e60f5036947
+    m_Address: girl_sur_portrait2
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - UI
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 51d4c57f7e5368842b5e25c9c70ddac0
+    m_Address: heather_bulb_portrait
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - UI
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: f171e20696efe9f4ebf86ae38b189ed9
+    m_Address: heather_close_portrait
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - UI
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: cebd1dbf66a2599468abef296479b0e4
+    m_Address: heather_portrait
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - UI
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: f3639678c3e209d44a66008c45ce2e1d
+    m_Address: None_portrait
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - UI
+    FlaggedDuringContentUpdateRestriction: 0
+  m_ReadOnly: 0
+  m_Settings: {fileID: 11400000, guid: 489b40023fd66be419d08d79841125b1, type: 2}
+  m_SchemaSet:
+    m_Schemas:
+    - {fileID: 11400000, guid: ddc5d7c2b05e3074d9553ed584c8fd01, type: 2}
+    - {fileID: 11400000, guid: 26db82d56f3f8e3418c6ecdb4d8df47c, type: 2}

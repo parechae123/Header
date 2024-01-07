@@ -1200,6 +1200,12 @@ MonoBehaviour:
     Type: 2
   - LabelName: UI
     Type: 1
+  - LabelName: DialogDatatSheet
+    Type: 2
+  - LabelName: Video
+    Type: 5
+  - LabelName: Texture
+    Type: 4
   newGameBTN: {fileID: 996982120}
 --- !u!1 &1570171201
 GameObject:

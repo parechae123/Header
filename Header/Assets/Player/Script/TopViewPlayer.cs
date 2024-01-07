@@ -53,12 +53,6 @@ public class TopViewPlayer : MonoBehaviour
             {
                 anim.Play(playerAnimState, 0);
             }
-
-            if (Input.GetKeyDown(KeyCode.Space))
-            {
-                Managers.instance.Grid.GridCheck(transform.position+playerColliderCenter);
-                //플레이어 다리위치로 위치 보정
-            }
             if (VectorToIntPos(transform.position + playerColliderCenter) != playerConvertedLastPos)
             {
                 if (InteractionInitOutIt(transform.position + playerColliderCenter, ref playerConvertedLastPos))
@@ -74,6 +68,11 @@ public class TopViewPlayer : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Escape))
         {
             Managers.instance.UI.CloseUIStack();
+        }
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            Managers.instance.Grid.GridCheck(transform.position + playerColliderCenter);
+            //플레이어 다리위치로 위치 보정
         }
     }
     public void SetPlayerState()

@@ -77,6 +77,12 @@ MonoBehaviour:
     m_SerializedLabels:
     - Font
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 22bc5e8d5f56eaa40a945c2329ddfb32
+    m_Address: DialogueData
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - DialogDatatSheet
+    FlaggedDuringContentUpdateRestriction: 0
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: 489b40023fd66be419d08d79841125b1, type: 2}
   m_SchemaSet:

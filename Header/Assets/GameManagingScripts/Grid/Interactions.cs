@@ -7,6 +7,8 @@ using UnityEngine;
 public abstract class Interactions
 {
     public InteractionDefines.InteractionDetailPosition detail;
+
+    public short interactionKeyNumber;
     public abstract void Init();
     public abstract void Interaction();
     public abstract void OutIt();
@@ -24,9 +26,23 @@ public class DialogInteraction : Interactions
     }
     public override void Interaction()
     {
-        Managers.instance.UI.TargetUIOnOff(Managers.instance.UI.DialogCall.FullDialogPanel,true);
-        InteractionKeyUI(false);
-
+        if (!Managers.instance.UI.DialogCall.DialogueBackGround.gameObject.activeSelf)
+        {
+            Managers.instance.UI.TargetUIOnOff(Managers.instance.UI.DialogCall.DialogueBackGround.rectTransform, true);
+            Managers.instance.UI.DialogCall.SetDialogueData(interactionKeyNumber);
+            InteractionKeyUI(false);
+        }
+        else
+        {
+            if (detail.interactionRemoveSelf)
+            {
+                Managers.instance.UI.DialogCall.DialogTextChanger(detail.installedInteractionPosition);
+            }
+            else
+            {
+                Managers.instance.UI.DialogCall.DialogTextChanger();
+            }
+        }
     }
     public override void OutIt()
     {
