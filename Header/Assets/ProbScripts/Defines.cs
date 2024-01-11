@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Newtonsoft.Json;
 using System;
+using UnityEngine.UI;
 
 public class Defines
 {
@@ -55,5 +56,86 @@ namespace InteractionDefines
     {
         //MAINTANCE : 인터렉션 종류 추가 시 여기에 정의 필요
         None, DialogInteraction,ToBattleScene
+    }
+}
+namespace HeaderPadDefines
+{
+    [System.Serializable]
+    public class BlockObjects
+    {
+        public BlockStatus blockCondition;
+        public BlockStatus SettedBlockCondition;
+        public SpriteRenderer targetIMG;
+        public short BlockHP;
+        public void OnColideBlock()
+        {
+            switch (blockCondition)
+            {
+                case BlockStatus.Destroyed:
+                    break;
+                case BlockStatus.Emptied:
+                    blockCondition = BlockStatus.Destroyed;
+                    targetIMG.transform.GetComponent<PolygonCollider2D>().enabled = false;
+                    targetIMG.sprite = Managers.instance.Resource.Load<Sprite>("HeaderBlock_Destroyed");
+                    //TODO : 볼 충돌시 갱신되는 모든걸 여기에 넣으면될듯,EX : 데미지
+                    break;
+                case BlockStatus.FIlled:
+                    blockCondition = BlockStatus.Emptied;
+                    targetIMG.sprite = Managers.instance.Resource.Load<Sprite>("HeaderBlock_Emptied");
+                    break;
+                case BlockStatus.FilledCoin:
+                    blockCondition = BlockStatus.Emptied;
+                    targetIMG.sprite = Managers.instance.Resource.Load<Sprite>("HeaderBlock_Emptied");
+                    break;
+                case BlockStatus.BoombBlock:
+                    if (BlockHP>= 0)
+                    {
+                        //targetIMG.sprite = Managers.instance.Resource.Load<Sprite>("HeaderBlock_Emptied"+BlockHP);
+                        BlockHP--;
+                    }
+                    else
+                    {
+                        blockCondition = BlockStatus.Emptied;
+                        targetIMG.transform.GetComponent<PolygonCollider2D>().enabled = false;
+                        targetIMG.sprite = Managers.instance.Resource.Load<Sprite>("HeaderBlock_Destroyed");
+                        
+                    }
+                    break;
+            }
+        }
+        public void OnResetBlocks()
+        {
+            if (SettedBlockCondition != BlockStatus.Destroyed)
+            {
+                switch (SettedBlockCondition)
+                {
+                    case BlockStatus.Emptied:
+                        targetIMG.sprite = Managers.instance.Resource.Load<Sprite>("HeaderBlock_Emptied");
+                        break;
+                    case BlockStatus.FIlled:
+                        targetIMG.sprite = Managers.instance.Resource.Load<Sprite>("HeaderBlock_FIlled");
+                        break;
+                    case BlockStatus.FilledCoin:
+                        targetIMG.sprite = Managers.instance.Resource.Load<Sprite>("HeaderBlock_FilledCoin");
+                        break;
+                    case BlockStatus.BoombBlock:
+                        targetIMG.sprite = Managers.instance.Resource.Load<Sprite>("HeaderBlock_BoombBlock");
+                        break;
+                }
+                targetIMG.transform.GetComponent<PolygonCollider2D>().enabled = true;
+            }
+        }
+    }
+    [System.Serializable]
+    public class BallStat
+    {
+        public float ballBouncienss;
+        public float ballFriction;
+        public float weight; //무게 mass에 넣어줘야함
+
+    }
+    public enum BlockStatus
+    {
+        Destroyed,Emptied,FIlled,FilledCoin,BoombBlock
     }
 }

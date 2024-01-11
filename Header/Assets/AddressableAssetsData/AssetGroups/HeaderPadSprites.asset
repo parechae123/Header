@@ -1,0 +1,55 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
+  m_Name: HeaderPadSprites
+  m_EditorClassIdentifier: 
+  m_GroupName: HeaderPadSprites
+  m_Data:
+    m_SerializedData: []
+  m_GUID: 57fe113604f16b24195e6edbdc141b1d
+  m_SerializeEntries:
+  - m_GUID: e13b422281b2faf4387706e59cf63636
+    m_Address: HeaderBlock_Emptied
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - UI
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 2d423c1fd1258c9479f5766344a2d4ff
+    m_Address: HeaderBlock_FIlled
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - UI
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 3d26e571ee7bfa141b0aa2d939cb4d66
+    m_Address: HeaderBlock_Destroyed
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - UI
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: d5a72a383ec24334c9a74fc4cd30754e
+    m_Address: HeaderBlock_FilledCoin
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - UI
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 0c9f346cc961b364bb021a14c176b351
+    m_Address: HeaderBlock_BoombBlock
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - UI
+    FlaggedDuringContentUpdateRestriction: 0
+  m_ReadOnly: 0
+  m_Settings: {fileID: 11400000, guid: 489b40023fd66be419d08d79841125b1, type: 2}
+  m_SchemaSet:
+    m_Schemas:
+    - {fileID: 11400000, guid: c1acc4d61a7a8244d91279977f80d177, type: 2}
+    - {fileID: 11400000, guid: f79839115a24b1c4b98c1df8ea71d0f2, type: 2}

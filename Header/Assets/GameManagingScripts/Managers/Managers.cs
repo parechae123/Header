@@ -29,6 +29,7 @@ public class Managers : MonoBehaviour
     public GridManager Grid { get { return instance?.grid; } }
 
 
+
     public static void Init()
     {
         if (s_instance == null)
