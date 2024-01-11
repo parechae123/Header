@@ -129,6 +129,7 @@ namespace HeaderPadDefines
     [System.Serializable]
     public class BallStat
     {
+        public string ballName;
         public float ballBouncienss;
         public float ballFriction;
         public float weight; //무게 mass에 넣어줘야함

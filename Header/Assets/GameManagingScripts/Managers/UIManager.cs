@@ -14,36 +14,10 @@ using UnityEngine.Video;
 
 public class UIManager
 {
-    private LoadingUI loadingUIProps;
-    public LoadingUI LoadingUIProps
-    {
-        get
-        {
-            if (loadingUIProps == null)
-            {
-                loadingUIProps = new LoadingUI();
-            }
-            return loadingUIProps;
-        }
-    }
-    private TopViewSceneUI topViewSceneUIs;
-    public TopViewSceneUI TopViewSceneUIs
-    {
-        get
-        {
-            if (topViewSceneUIs == null) topViewSceneUIs = new TopViewSceneUI();
-            return topViewSceneUIs;
-        }
-    }
-    private DialogSystem dialogCall;
-    public DialogSystem DialogCall
-    {
-        get
-        {
-            if (dialogCall == null) dialogCall = new DialogSystem();
-            return dialogCall;
-        }
-    }
+    public LoadingUI LoadingUIProps = new LoadingUI();
+    public TopViewSceneUI TopViewSceneUIs = new TopViewSceneUI();
+    public DialogSystem DialogCall = new DialogSystem();
+    public BattleUI BattleUICall = new BattleUI();
 
     private Stack<Transform> UIStack = new Stack<Transform>();
     public List<Transform> MoveAbleCheckerList = new List<Transform>();
@@ -532,6 +506,142 @@ public class DialogSystem
         NameText.text = "테스트12";
         Managers.instance.UI.CheckerRegist(DialogueBackGround.rectTransform);
         DialogueBackGround.gameObject.SetActive(false);
+    }
+
+}
+public class BattleUI
+{
+    #region 플레이어 관련 변수
+    private Image playerStatusUI;
+    public Image PlayerStatusUI 
+    { 
+        get 
+        { 
+            if (playerStatusUI == null) 
+            { 
+                playerStatusUI = new GameObject("PlayerStatusPanel").AddComponent<Image>();
+                playerStatusUI.rectTransform.SetParent(Managers.instance.UI.LoadingUIProps.SceneMainCanvas);
+                playerStatusUI.rectTransform.anchorMax = new Vector2(0.172000006f, 1f);
+                playerStatusUI.rectTransform.anchorMin = Vector2.zero;
+                playerStatusUI.rectTransform.sizeDelta = Vector2.zero;
+                playerStatusUI.rectTransform.anchoredPosition = Vector2.zero;
+                playerStatusUI.sprite = Managers.instance.Resource.Load<Sprite>("battle_panel");
+            }
+            return playerStatusUI;
+        }
+    }
+    private Image playerPortrait;
+    public Image PlayerPortrait
+    { 
+        get 
+        { 
+            if (playerPortrait == null) 
+            {
+                playerPortrait = new GameObject("PlayerStatusPanel").AddComponent<Image>();
+                playerPortrait.rectTransform.SetParent(PlayerStatusUI.rectTransform);
+                playerPortrait.rectTransform.anchorMax = new Vector2(0.899999976f, 0.847f);
+                playerPortrait.rectTransform.anchorMin = new Vector2(0.100000001f, 0.597f);
+                playerPortrait.rectTransform.sizeDelta = Vector2.zero;
+                playerPortrait.rectTransform.anchoredPosition = Vector2.zero;
+                playerPortrait.sprite = Managers.instance.Resource.Load<Sprite>("battle_portrait");
+            }
+            return playerStatusUI;
+        }
+    }
+
+    private Slider playerHpBar = null;
+    public Slider PlayerHPBar
+    {
+        get
+        {
+            if (playerHpBar == null)
+            {
+                Slider tempPlayerHPbar = new GameObject("PlayerHPBar").AddComponent<Slider>();
+                tempPlayerHPbar.wholeNumbers = false;
+                tempPlayerHPbar.maxValue = 100;
+                //TODO : player 체력 구현하면 여기에 넣어줘야함
+                RectTransform tempHpTR = tempPlayerHPbar.transform as RectTransform;
+
+
+                RectTransform tempHandleArea = new GameObject("HandleArea").AddComponent<RectTransform>();
+                tempHandleArea.SetParent(tempHpTR);
+                tempHandleArea.anchorMin = Vector2.zero; // 부모의 왼쪽 하단을 기준으로
+                tempHandleArea.anchorMax = Vector2.one; // 부모의 왼쪽 상단을 기준으로
+                tempHandleArea.pivot = new Vector2(0.5f, 0.5f); // 부모의 왼쪽 중간을 기준으로
+                tempHandleArea.sizeDelta = Vector2.zero;
+                tempHandleArea.anchoredPosition = Vector2.zero;
+                Image handle = new GameObject("handle").AddComponent<Image>();
+                handle.color = Color.white;
+                handle.rectTransform.SetParent(tempHandleArea);
+                handle.rectTransform.anchorMax = Vector2.up;
+                handle.rectTransform.anchorMin = Vector2.zero;
+                handle.rectTransform.pivot = Vector2.one / 2f;
+                handle.rectTransform.sizeDelta = Vector2.right* 50;
+                tempPlayerHPbar.handleRect = handle.rectTransform;
+                handle.rectTransform.SetAsLastSibling();
+
+                Image BackGround = new GameObject("BackGround").AddComponent<Image>();
+                BackGround.color = new Color(0.9137256f, 0.3333333f, 0.3019608f, 1);
+                BackGround.rectTransform.SetParent(tempHpTR);
+                BackGround.rectTransform.anchorMax = new Vector2(1f, 0.75f);
+                BackGround.rectTransform.anchorMin = new Vector2(0f, 0.25f);
+                BackGround.rectTransform.sizeDelta = Vector2.zero;
+                BackGround.rectTransform.pivot = Vector2.one / 2f;
+                BackGround.rectTransform.SetAsFirstSibling();
+                
+                
+                RectTransform tempFillArea = new GameObject("FillArea").AddComponent<RectTransform>();
+                tempFillArea.SetParent(tempHpTR);
+                tempFillArea.anchorMin = new Vector2(0f, 0.25f); // 부모의 왼쪽 하단을 기준으로
+                tempFillArea.anchorMax = new Vector2(1f, 0.75f); // 부모의 왼쪽 상단을 기준으로
+                tempFillArea.pivot = new Vector2(0.5f, 0.5f); // 부모의 왼쪽 중간을 기준으로
+                tempFillArea.sizeDelta = Vector2.zero;
+                tempFillArea.anchoredPosition = Vector2.zero;
+                Image tempIMG = new GameObject("FillRect").AddComponent<Image>();
+                tempIMG.rectTransform.SetParent(tempFillArea);
+                tempIMG.rectTransform.sizeDelta = Vector2.zero;
+                tempIMG.color = Color.white;
+                tempPlayerHPbar.fillRect = tempIMG.rectTransform;
+
+                // Slider의 부모-자식 관계 설정  
+
+
+
+                tempHpTR.SetParent(PlayerStatusUI.rectTransform);
+                tempHpTR.SetAsLastSibling();
+                tempHpTR.anchorMin = new Vector2(0.1f, 0.88f);
+                tempHpTR.anchorMax = new Vector2(0.9f, 0.93f);
+                tempHpTR.sizeDelta = Vector2.zero;
+                tempHpTR.anchoredPosition = Vector2.zero;
+                tempPlayerHPbar.interactable = false;
+                tempPlayerHPbar.enabled = false;
+                tempPlayerHPbar.enabled = true;
+                playerHpBar = tempPlayerHPbar;
+                Debug.Log("체력바 세팅 끝");
+            }
+            return playerHpBar;
+        }
+    }
+    #endregion
+
+
+    private Image enemyStatusUI;
+    public Image EnemyStatusUI
+    { 
+        get 
+        { 
+            if (enemyStatusUI == null) 
+            {
+                enemyStatusUI = new GameObject("EnemyStatusPanel").AddComponent<Image>();
+                playerStatusUI.rectTransform.SetParent(Managers.instance.UI.LoadingUIProps.SceneMainCanvas);
+                playerStatusUI.rectTransform.anchorMax = Vector2.one;
+                playerStatusUI.rectTransform.anchorMin = new Vector2(0.828000009f, 0f);
+                playerStatusUI.rectTransform.sizeDelta = Vector2.zero;
+                playerStatusUI.rectTransform.anchoredPosition = Vector2.zero;
+                enemyStatusUI.sprite = Managers.instance.Resource.Load<Sprite>("battle_panel");
+            }
+            return enemyStatusUI;
+        }
     }
 
 }
