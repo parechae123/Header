@@ -21,4 +21,12 @@ public class PlayerDataManager
             }
         }
     }
+    public void PlayerBeforeBallPick()
+    {
+        Debug.Log("이전 공");
+    }
+    public void PlayerNextBallPick()
+    {
+        Debug.Log("다음 공");
+    }
 }

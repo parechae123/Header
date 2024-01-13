@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: cd8caf83c2d5cb44ba1c82b2083203ee
+guid: eac237e49d6915446b5b0ab408de15b6
 TrueTypeFontImporter:
   externalObjects: {}
   serializedVersion: 4
@@ -9,7 +9,7 @@ TrueTypeFontImporter:
   characterPadding: 1
   includeFontData: 1
   fontNames:
-  - BM JUA_TTF
+  - 'HS??? '
   fallbackFontReferences: []
   customCharacters: 
   fontRenderingMode: 0

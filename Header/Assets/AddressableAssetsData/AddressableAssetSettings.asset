@@ -51,6 +51,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 6e009e9e6e389ea4494478c3b021ad84, type: 2}
   - {fileID: 11400000, guid: 39f84a1d372a70c408fb233378669daa, type: 2}
   - {fileID: 11400000, guid: 0ca68b348fc198742ad70682a36e5a0e, type: 2}
+  - {fileID: 11400000, guid: 67ec71c3496e71643a3bb47563ced260, type: 2}
   m_BuildSettings:
     m_CompileScriptsInVirtualMode: 0
     m_CleanupStreamingAssetsAfterBuilds: 1
@@ -102,6 +103,7 @@ MonoBehaviour:
     - Video
     - Texture
     - Texture2D
+    - InGameSprites
   m_SchemaTemplates: []
   m_GroupTemplateObjects:
   - {fileID: 11400000, guid: c6ef9c20331d5e649a2617b27fb0ed50, type: 2}

@@ -362,7 +362,7 @@ public class DialogSystem
                 dialogText.rectTransform.sizeDelta = Vector2.zero;
                 dialogText.rectTransform.anchoredPosition = Vector2.zero;
                 dialogText.fontSize = 25;
-                dialogText.color = Color.black;
+                dialogText.color = Color.white;
                 dialogText.font = Managers.instance.Resource.Load<Font>("InGameFont");
                 dialogText.alignment = TextAnchor.MiddleCenter; ;
                 dialogText.horizontalOverflow = HorizontalWrapMode.Overflow;
@@ -513,12 +513,12 @@ public class BattleUI
 {
     #region 플레이어 관련 변수
     private Image playerStatusUI;
-    public Image PlayerStatusUI 
-    { 
-        get 
-        { 
-            if (playerStatusUI == null) 
-            { 
+    private Image PlayerStatusUI
+    {
+        get
+        {
+            if (playerStatusUI == null)
+            {
                 playerStatusUI = new GameObject("PlayerStatusPanel").AddComponent<Image>();
                 playerStatusUI.rectTransform.SetParent(Managers.instance.UI.LoadingUIProps.SceneMainCanvas);
                 playerStatusUI.rectTransform.anchorMax = new Vector2(0.172000006f, 1f);
@@ -531,11 +531,11 @@ public class BattleUI
         }
     }
     private Image playerPortrait;
-    public Image PlayerPortrait
-    { 
-        get 
-        { 
-            if (playerPortrait == null) 
+    private Image PlayerPortrait
+    {
+        get
+        {
+            if (playerPortrait == null)
             {
                 playerPortrait = new GameObject("PlayerStatusPanel").AddComponent<Image>();
                 playerPortrait.rectTransform.SetParent(PlayerStatusUI.rectTransform);
@@ -550,7 +550,7 @@ public class BattleUI
     }
 
     private Slider playerHpBar = null;
-    public Slider PlayerHPBar
+    private Slider PlayerHPBar
     {
         get
         {
@@ -576,7 +576,7 @@ public class BattleUI
                 handle.rectTransform.anchorMax = Vector2.up;
                 handle.rectTransform.anchorMin = Vector2.zero;
                 handle.rectTransform.pivot = Vector2.one / 2f;
-                handle.rectTransform.sizeDelta = Vector2.right* 50;
+                handle.rectTransform.sizeDelta = Vector2.right * 50;
                 tempPlayerHPbar.handleRect = handle.rectTransform;
                 handle.rectTransform.SetAsLastSibling();
 
@@ -588,8 +588,8 @@ public class BattleUI
                 BackGround.rectTransform.sizeDelta = Vector2.zero;
                 BackGround.rectTransform.pivot = Vector2.one / 2f;
                 BackGround.rectTransform.SetAsFirstSibling();
-                
-                
+
+
                 RectTransform tempFillArea = new GameObject("FillArea").AddComponent<RectTransform>();
                 tempFillArea.SetParent(tempHpTR);
                 tempFillArea.anchorMin = new Vector2(0f, 0.25f); // 부모의 왼쪽 하단을 기준으로
@@ -622,26 +622,391 @@ public class BattleUI
             return playerHpBar;
         }
     }
-    #endregion
-
-
-    private Image enemyStatusUI;
-    public Image EnemyStatusUI
+    private Image weaponImage;
+    private Image WeaponImage
+    {
+        get 
+        { 
+            if (weaponImage == null) 
+            {
+                weaponImage = new GameObject("weaponIMG").AddComponent<Image>();
+                weaponImage.rectTransform.SetParent(PlayerStatusUI.rectTransform);
+                weaponImage.sprite = Managers.instance.Resource.Load<Sprite>("Bullet_Basic");
+                weaponImage.rectTransform.anchorMin = new Vector2(0.330525041f, 0.483485878f);
+                weaponImage.rectTransform.anchorMax = new Vector2(0.669326663f, 0.582539618f);
+                weaponImage.rectTransform.sizeDelta = Vector2.zero;
+                weaponImage.rectTransform.anchoredPosition = Vector2.zero;
+            }
+            return weaponImage;
+        }
+    }
+    private Image weaponNamePannel;
+    private Image WeaponNamePannel 
     { 
         get 
         { 
-            if (enemyStatusUI == null) 
+            if (weaponNamePannel == null)
+            {
+                weaponNamePannel = new GameObject("WeaponNamePannel").AddComponent<Image>();
+                weaponNamePannel.rectTransform.SetParent(PlayerStatusUI.rectTransform);
+                weaponNamePannel.sprite = Managers.instance.Resource.Load<Sprite>("select_panel");
+                weaponNamePannel.rectTransform.anchorMin = new Vector2(0.23300001f, 0.390000015f);
+                weaponNamePannel.rectTransform.anchorMax = new Vector2(0.771000028f, 0.474000037f);
+                weaponNamePannel.rectTransform.sizeDelta = Vector2.zero;
+                weaponNamePannel.rectTransform.anchoredPosition = Vector2.zero;
+            }
+            return weaponNamePannel;
+        } 
+    }
+
+    private Text playerWeaponName;
+    private Text PlayerWeaponName
+    {
+        get
+        {
+            if (playerWeaponName == null)
+            {
+                playerWeaponName = new GameObject("playerWeaponName").AddComponent<Text>();
+                playerWeaponName.rectTransform.SetParent(WeaponNamePannel.rectTransform);
+                playerWeaponName.rectTransform.anchorMin = Vector2.zero;
+                playerWeaponName.rectTransform.anchorMax = Vector2.one;
+                playerWeaponName.rectTransform.sizeDelta = Vector2.zero;
+                playerWeaponName.rectTransform.anchoredPosition = Vector2.zero;
+                playerWeaponName.alignment = TextAnchor.MiddleCenter;
+                playerWeaponName.color = Color.black;
+                playerWeaponName.fontSize = 36;
+                playerWeaponName.font = Managers.instance.Resource.Load<Font>("InGameFont");
+
+            }
+            return playerWeaponName;
+        }
+    }
+
+    private Button weaponBeforeBTN;
+    private Button WeaponBeforeBTN
+    {
+        get 
+        {
+            if (weaponBeforeBTN == null)
+            {
+                weaponBeforeBTN = new GameObject("weaponNextBTN").AddComponent<Button>();
+                Image tempIMG = weaponBeforeBTN.AddComponent<Image>();
+                weaponBeforeBTN.targetGraphic = tempIMG;
+                tempIMG.rectTransform.SetParent(WeaponNamePannel.rectTransform);
+                tempIMG.rectTransform.anchorMin = new Vector2(-0.300000012f, 0.253313094f);
+                tempIMG.rectTransform.anchorMax = new Vector2(-0.0799999982f, 0.709656298f);
+                tempIMG.rectTransform.anchoredPosition = Vector2.zero;
+                tempIMG.rectTransform.sizeDelta = Vector2.zero;
+                tempIMG.sprite = Managers.instance.Resource.Load<Sprite>("select_arrow_panel_L");
+            }
+            return weaponBeforeBTN;
+        }
+    }
+    private Button weaponNextBTN;
+    private Button WeaponNextBTN
+    {
+        get 
+        {
+            if (weaponNextBTN == null)
+            {
+                weaponNextBTN = new GameObject("weaponNextBTN").AddComponent<Button>();
+                Image tempIMG = weaponNextBTN.AddComponent<Image>();
+                weaponNextBTN.targetGraphic = tempIMG;
+                tempIMG.rectTransform.SetParent(WeaponNamePannel.rectTransform);
+                tempIMG.rectTransform.anchorMin = new Vector2(1.08000004f, 0.253313124f);
+                tempIMG.rectTransform.anchorMax = new Vector2(1.29999995f, 0.709656298f);
+                tempIMG.rectTransform.anchoredPosition = Vector2.zero;
+                tempIMG.rectTransform.sizeDelta = Vector2.zero;
+                tempIMG.sprite = Managers.instance.Resource.Load<Sprite>("select_arrow_panel_R");
+            }
+            return weaponNextBTN;
+        }
+    }
+
+    
+
+    #endregion
+
+    #region 적 statusUI관련 변수
+
+    private Image enemyStatusUI;
+    private Image EnemyStatusUI
+    {
+        get
+        {
+            if (enemyStatusUI == null)
             {
                 enemyStatusUI = new GameObject("EnemyStatusPanel").AddComponent<Image>();
-                playerStatusUI.rectTransform.SetParent(Managers.instance.UI.LoadingUIProps.SceneMainCanvas);
-                playerStatusUI.rectTransform.anchorMax = Vector2.one;
-                playerStatusUI.rectTransform.anchorMin = new Vector2(0.828000009f, 0f);
-                playerStatusUI.rectTransform.sizeDelta = Vector2.zero;
-                playerStatusUI.rectTransform.anchoredPosition = Vector2.zero;
+                enemyStatusUI.rectTransform.SetParent(Managers.instance.UI.LoadingUIProps.SceneMainCanvas);
+                enemyStatusUI.rectTransform.anchorMax = Vector2.one;
+                enemyStatusUI.rectTransform.anchorMin = new Vector2(0.828000009f, 0f);
+                enemyStatusUI.rectTransform.sizeDelta = Vector2.zero;
+                enemyStatusUI.rectTransform.anchoredPosition = Vector2.zero;
                 enemyStatusUI.sprite = Managers.instance.Resource.Load<Sprite>("battle_panel");
             }
             return enemyStatusUI;
         }
     }
+    private Image enemyPortrait;
+    private Image EnemyPortrait
+    {
+        get
+        {
+            if (enemyPortrait == null)
+            {
+                enemyPortrait = new GameObject("EnemyStatusPanel").AddComponent<Image>();
+                enemyPortrait.rectTransform.SetParent(EnemyStatusUI.rectTransform);
+                enemyPortrait.rectTransform.anchorMax = new Vector2(0.899999976f, 0.847f);
+                enemyPortrait.rectTransform.anchorMin = new Vector2(0.100000001f, 0.597f);
+                enemyPortrait.rectTransform.sizeDelta = Vector2.zero;
+                enemyPortrait.rectTransform.anchoredPosition = Vector2.zero;
+                enemyPortrait.sprite = Managers.instance.Resource.Load<Sprite>("battle_portrait_crasher");
+            }
+            return enemyStatusUI;
+        }
+    }
 
+    private Slider enemyHpBar = null;
+    private Slider EnemyHPBar
+    {
+        get
+        {
+            if (enemyHpBar == null)
+            {
+                Slider tempEnemyHPbar = new GameObject("EnemyHPBar").AddComponent<Slider>();
+                tempEnemyHPbar.wholeNumbers = false;
+                tempEnemyHPbar.maxValue = 100;
+                //TODO : enemy 체력 구현하면 여기에 넣어줘야함
+                RectTransform tempHpTR = tempEnemyHPbar.transform as RectTransform;
+
+
+                RectTransform tempHandleArea = new GameObject("HandleArea").AddComponent<RectTransform>();
+                tempHandleArea.SetParent(tempHpTR);
+                tempHandleArea.anchorMin = Vector2.zero; // 부모의 왼쪽 하단을 기준으로
+                tempHandleArea.anchorMax = Vector2.one; // 부모의 왼쪽 상단을 기준으로
+                tempHandleArea.pivot = new Vector2(0.5f, 0.5f); // 부모의 왼쪽 중간을 기준으로
+                tempHandleArea.sizeDelta = Vector2.zero;
+                tempHandleArea.anchoredPosition = Vector2.zero;
+                Image handle = new GameObject("handle").AddComponent<Image>();
+                handle.color = Color.white;
+                handle.rectTransform.SetParent(tempHandleArea);
+                handle.rectTransform.anchorMax = Vector2.up;
+                handle.rectTransform.anchorMin = Vector2.zero;
+                handle.rectTransform.pivot = Vector2.one / 2f;
+                handle.rectTransform.sizeDelta = Vector2.right * 50;
+                tempEnemyHPbar.handleRect = handle.rectTransform;
+                handle.rectTransform.SetAsLastSibling();
+
+                Image BackGround = new GameObject("BackGround").AddComponent<Image>();
+                BackGround.color = new Color(0.9137256f, 0.3333333f, 0.3019608f, 1);
+                BackGround.rectTransform.SetParent(tempHpTR);
+                BackGround.rectTransform.anchorMax = new Vector2(1f, 0.75f);
+                BackGround.rectTransform.anchorMin = new Vector2(0f, 0.25f);
+                BackGround.rectTransform.sizeDelta = Vector2.zero;
+                BackGround.rectTransform.pivot = Vector2.one / 2f;
+                BackGround.rectTransform.SetAsFirstSibling();
+
+
+                RectTransform tempFillArea = new GameObject("FillArea").AddComponent<RectTransform>();
+                tempFillArea.SetParent(tempHpTR);
+                tempFillArea.anchorMin = new Vector2(0f, 0.25f); // 부모의 왼쪽 하단을 기준으로
+                tempFillArea.anchorMax = new Vector2(1f, 0.75f); // 부모의 왼쪽 상단을 기준으로
+                tempFillArea.pivot = new Vector2(0.5f, 0.5f); // 부모의 왼쪽 중간을 기준으로
+                tempFillArea.sizeDelta = Vector2.zero;
+                tempFillArea.anchoredPosition = Vector2.zero;
+                Image tempIMG = new GameObject("FillRect").AddComponent<Image>();
+                tempIMG.rectTransform.SetParent(tempFillArea);
+                tempIMG.rectTransform.sizeDelta = Vector2.zero;
+                tempIMG.color = Color.white;
+                tempEnemyHPbar.fillRect = tempIMG.rectTransform;
+
+                // Slider의 부모-자식 관계 설정  
+
+
+
+                tempHpTR.SetParent(EnemyStatusUI.rectTransform);
+                tempHpTR.SetAsLastSibling();
+                tempHpTR.anchorMin = new Vector2(0.1f, 0.88f);
+                tempHpTR.anchorMax = new Vector2(0.9f, 0.93f);
+                tempHpTR.sizeDelta = Vector2.zero;
+                tempHpTR.anchoredPosition = Vector2.zero;
+                tempEnemyHPbar.interactable = false;
+                tempEnemyHPbar.enabled = false;
+                tempEnemyHPbar.enabled = true;
+                enemyHpBar = tempEnemyHPbar;
+                Debug.Log("체력바 세팅 끝");
+            }
+            return enemyHpBar;
+        }
+    }
+    private Image enemyWeaponImage;
+    private Image EnemyWeaponImage
+    {
+        get
+        {
+            if (enemyWeaponImage == null)
+            {
+                enemyWeaponImage = new GameObject("EnemyWeaponImage").AddComponent<Image>();
+                enemyWeaponImage.rectTransform.SetParent(EnemyStatusUI.rectTransform);
+                enemyWeaponImage.sprite = Managers.instance.Resource.Load<Sprite>("hammer");
+                enemyWeaponImage.rectTransform.anchorMin = new Vector2(0.330525041f, 0.483485878f);
+                enemyWeaponImage.rectTransform.anchorMax = new Vector2(0.669326663f, 0.582539618f);
+                enemyWeaponImage.rectTransform.sizeDelta = Vector2.zero;
+                enemyWeaponImage.rectTransform.anchoredPosition = Vector2.zero;
+            }
+            return enemyWeaponImage;
+        }
+    }
+    private Image enemyWeaponNamePannel;
+    private Image EnemyWeaponNamePannel
+    {
+        get
+        {
+            if (enemyWeaponNamePannel == null)
+            {
+                enemyWeaponNamePannel = new GameObject("EnemyWeaponNamePannel").AddComponent<Image>();
+                enemyWeaponNamePannel.rectTransform.SetParent(EnemyStatusUI.rectTransform);
+                enemyWeaponNamePannel.sprite = Managers.instance.Resource.Load<Sprite>("select_panel");
+                enemyWeaponNamePannel.rectTransform.anchorMin = new Vector2(0.23300001f, 0.390000015f);
+                enemyWeaponNamePannel.rectTransform.anchorMax = new Vector2(0.771000028f, 0.474000037f);
+                enemyWeaponNamePannel.rectTransform.sizeDelta = Vector2.zero;
+                enemyWeaponNamePannel.rectTransform.anchoredPosition = Vector2.zero;
+            }
+            return enemyWeaponNamePannel;
+        }
+    }
+    private Text enemyWeaponName;
+    private Text EnemyWeaponName
+    {
+        get 
+        {
+            if (enemyWeaponName == null)
+            {
+                enemyWeaponName = new GameObject("enemyWeaponName").AddComponent<Text>();
+                enemyWeaponName.rectTransform.SetParent(EnemyWeaponNamePannel.rectTransform);
+                enemyWeaponName.rectTransform.anchorMin = Vector2.zero;
+                enemyWeaponName.rectTransform.anchorMax = Vector2.one;
+                enemyWeaponName.rectTransform.sizeDelta = Vector2.zero;
+                enemyWeaponName.rectTransform.anchoredPosition = Vector2.zero;
+                enemyWeaponName.alignment = TextAnchor.MiddleCenter;
+                enemyWeaponName.color = Color.black;
+                enemyWeaponName.fontSize = 36;
+                enemyWeaponName.font = Managers.instance.Resource.Load<Font>("InGameFont");
+
+            }
+            return enemyWeaponName;
+        }
+    }
+    #endregion
+    private Image scoreBoardPannel;
+    private Image ScoreBoardPannel 
+    { 
+        get 
+        { 
+            if (scoreBoardPannel == null)
+            {
+                scoreBoardPannel = new GameObject("ScoreBoardPannel").AddComponent<Image>();
+                scoreBoardPannel.sprite = Managers.instance.Resource.Load<Sprite>("score_panel");
+                scoreBoardPannel.rectTransform.SetParent(Managers.instance.UI.LoadingUIProps.SceneMainCanvas);
+                scoreBoardPannel.rectTransform.anchorMin = new Vector2(0.398604751f, 0.872544408f);
+                scoreBoardPannel.rectTransform.anchorMax = new Vector2(0.604237199f, 0.987735808f);
+                scoreBoardPannel.rectTransform.anchoredPosition = Vector2.zero;
+                scoreBoardPannel.rectTransform.sizeDelta= Vector2.zero;
+
+            }
+            return scoreBoardPannel;
+        }
+    }
+    private Text scoreBoardText;
+    private Text ScoreBoardText
+    {
+        get 
+        { 
+            if(scoreBoardText == null)
+            {
+                scoreBoardText = new GameObject("enemyWeaponName").AddComponent<Text>();
+                scoreBoardText.rectTransform.SetParent(ScoreBoardPannel.rectTransform);
+                scoreBoardText.rectTransform.anchorMin = Vector2.zero;
+                scoreBoardText.rectTransform.anchorMax = Vector2.one;
+                scoreBoardText.rectTransform.sizeDelta = Vector2.zero;
+                scoreBoardText.rectTransform.anchoredPosition = Vector2.zero;
+                scoreBoardText.alignment = TextAnchor.MiddleCenter;
+                scoreBoardText.color = Color.black;
+                scoreBoardText.fontSize = 84;
+                scoreBoardText.font = Managers.instance.Resource.Load<Font>("InGameFont");
+            }
+            return scoreBoardText;
+        }
+    }
+    #region 관련 함수
+    public void SettingPlayerBattleUI()
+    {
+        //TODO : 매니저의 인스턴스 선언 후 해당구문 수정필요,아래의 Enabled는 테스트코드로 해당 작업 시 삭제필요
+        //PlayerHPBar.value = ;
+        //PlayerHPBar.maxValue = ;
+        //PlayerPortrait.sprite = ;
+        //WeaponImage =
+        PlayerHPBar.enabled = true;
+        WeaponImage.enabled = true;
+        PlayerPortrait.enabled = true;
+        PlayerWeaponName.text = "무기이름";
+        WeaponBeforeBTN.onClick.AddListener(Managers.instance.PlayerDataManager.PlayerBeforeBallPick);
+        WeaponNextBTN.onClick.AddListener(Managers.instance.PlayerDataManager.PlayerNextBallPick);
+        UpdateScore(0,0);
+        EnemyUISetting();
+    }
+    public void HPBarUpdate(bool isPlayer,float maxHP,float nowHP)
+    {
+        if (isPlayer)
+        {
+            PlayerHPBar.maxValue = maxHP;
+            PlayerHPBar.value = nowHP;
+        }
+        else
+        {
+            EnemyHPBar.maxValue = maxHP;
+            EnemyHPBar.value = nowHP;
+        }
+    }
+    public void ChangePortrait(bool isPlayer,string spriteName)
+    {
+        if (isPlayer)
+        {
+            PlayerPortrait.sprite = Managers.instance.Resource.Load<Sprite>(spriteName);
+        }
+        else
+        {
+            EnemyPortrait.sprite = Managers.instance.Resource.Load<Sprite>(spriteName);
+        }
+    }
+    public void ChangeWeaponUI(bool isPlayer,string spriteName,string weaponKoreanName)
+    {
+        if (isPlayer)
+        {
+            WeaponImage.sprite = Managers.instance.Resource.Load<Sprite>(spriteName);
+            PlayerWeaponName.text = weaponKoreanName;
+        }
+        else
+        {
+            EnemyWeaponImage.sprite = Managers.instance.Resource.Load<Sprite>(spriteName);
+            EnemyWeaponName.text = weaponKoreanName;
+        }
+    }
+    public void UpdateScore(int PlayerScore,int EnemyScore)
+    {
+        ScoreBoardText.text = PlayerScore + " : " + EnemyScore;
+    }
+
+
+
+    private void EnemyUISetting()
+    {
+        EnemyHPBar.enabled = true;
+        EnemyWeaponImage.enabled = true;
+        EnemyPortrait.enabled = true;
+        EnemyWeaponImage.enabled = true;
+        EnemyWeaponNamePannel.enabled = true;
+        EnemyWeaponName.text = "무기이름";
+    }
+    #endregion
 }

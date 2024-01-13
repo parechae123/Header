@@ -21,31 +21,31 @@ MonoBehaviour:
     m_Address: HeaderBlock_Emptied
     m_ReadOnly: 0
     m_SerializedLabels:
-    - UI
+    - InGameSprites
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 2d423c1fd1258c9479f5766344a2d4ff
     m_Address: HeaderBlock_FIlled
     m_ReadOnly: 0
     m_SerializedLabels:
-    - UI
+    - InGameSprites
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 3d26e571ee7bfa141b0aa2d939cb4d66
     m_Address: HeaderBlock_Destroyed
     m_ReadOnly: 0
     m_SerializedLabels:
-    - UI
+    - InGameSprites
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: d5a72a383ec24334c9a74fc4cd30754e
     m_Address: HeaderBlock_FilledCoin
     m_ReadOnly: 0
     m_SerializedLabels:
-    - UI
+    - InGameSprites
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 0c9f346cc961b364bb021a14c176b351
     m_Address: HeaderBlock_BoombBlock
     m_ReadOnly: 0
     m_SerializedLabels:
-    - UI
+    - InGameSprites
     FlaggedDuringContentUpdateRestriction: 0
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: 489b40023fd66be419d08d79841125b1, type: 2}
