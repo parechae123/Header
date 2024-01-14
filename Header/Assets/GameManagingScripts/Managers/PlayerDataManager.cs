@@ -21,6 +21,10 @@ public class PlayerDataManager
             }
         }
     }
+    public void CheckWeaponNextBeforeButton()
+    {
+        Managers.instance.UI.BattleUICall.WeaponButtonCheck(playerOwnBalls.Count > 1 ? true: false);
+    }
     public void PlayerBeforeBallPick()
     {
         Debug.Log("ÀÌÀü °ø");

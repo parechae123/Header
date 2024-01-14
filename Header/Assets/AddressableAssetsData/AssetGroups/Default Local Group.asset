@@ -95,12 +95,6 @@ MonoBehaviour:
     m_SerializedLabels:
     - Font
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: adf178f5a875d314286f374b0de98093
-    m_Address: score_panel
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - UI
-    FlaggedDuringContentUpdateRestriction: 0
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: 489b40023fd66be419d08d79841125b1, type: 2}
   m_SchemaSet:

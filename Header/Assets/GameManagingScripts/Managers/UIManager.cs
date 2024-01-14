@@ -722,7 +722,64 @@ public class BattleUI
             return weaponNextBTN;
         }
     }
+    private Image girlPortrait;
+    private Image GirlPortrait
+    {
+        get 
+        {
+            if (girlPortrait == null)
+            {
+                girlPortrait = new GameObject("BattleSceneGirlPortrait").AddComponent<Image>();
+                girlPortrait.rectTransform.SetParent(PlayerStatusUI.rectTransform);
+                girlPortrait.rectTransform.anchorMax = new Vector2(0.784737825f, 0.217769772f);
+                girlPortrait.rectTransform.anchorMin = new Vector2(0.216160953f, 0.0475479327f);
+                girlPortrait.rectTransform.anchoredPosition= Vector2.zero;
+                girlPortrait.rectTransform.sizeDelta= Vector2.zero;
+                girlPortrait.sprite = Managers.instance.Resource.Load<Sprite>("battle_portrait_girl");
+            }
+            return girlPortrait; 
+        }
+    }
+    private Image girlChatBubble;
+    private Image GirlChatBubble
+    {
+        get 
+        {
+            if (girlChatBubble == null)
+            {
+                girlChatBubble = new GameObject("girlChatBubble").AddComponent<Image>();
+                girlChatBubble.rectTransform.SetParent(PlayerStatusUI.rectTransform);
+                girlChatBubble.rectTransform.anchorMax = new Vector2(0.86668098f, 0.371693075f);
+                girlChatBubble.rectTransform.anchorMin = new Vector2(0.132425845f, 0.226054743f);
+                girlChatBubble.rectTransform.anchoredPosition= Vector2.zero;
+                girlChatBubble.rectTransform.sizeDelta= Vector2.zero;
+                girlChatBubble.sprite = Managers.instance.Resource.Load<Sprite>("chatbubble ");
+            }
+            return girlChatBubble; 
+        }
+    }
+    private Text girlText;
+    private Text GirlText
+    {
+        get 
+        {
+            if (girlText == null)
+            {
+                girlText = new GameObject("girlChatText").AddComponent<Text>();
+                girlText.rectTransform.SetParent(GirlChatBubble.rectTransform);
+                girlText.rectTransform.anchorMin = Vector2.zero;
+                girlText.rectTransform.anchorMax = Vector2.one;
+                girlText.rectTransform.sizeDelta = Vector2.zero;
+                girlText.rectTransform.anchoredPosition = Vector2.zero;
 
+                girlText.font = Managers.instance.Resource.Load<Font>("InGameFont");
+                girlText.alignment = TextAnchor.MiddleCenter;
+                girlText.color = Color.black;
+                girlText.fontSize = 36;
+            }
+            return girlText; 
+        }
+    }
     
 
     #endregion
@@ -946,6 +1003,8 @@ public class BattleUI
         //PlayerHPBar.maxValue = ;
         //PlayerPortrait.sprite = ;
         //WeaponImage =
+        GirlText.enabled = true;
+        GirlPortrait.enabled = true;
         PlayerHPBar.enabled = true;
         WeaponImage.enabled = true;
         PlayerPortrait.enabled = true;
@@ -992,6 +1051,13 @@ public class BattleUI
             EnemyWeaponName.text = weaponKoreanName;
         }
     }
+
+    public void WeaponButtonCheck(bool isZero)
+    {
+        WeaponNextBTN.interactable = isZero;
+        weaponBeforeBTN.interactable = isZero;
+    }
+
     public void UpdateScore(int PlayerScore,int EnemyScore)
     {
         ScoreBoardText.text = PlayerScore + " : " + EnemyScore;

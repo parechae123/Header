@@ -73,7 +73,9 @@ public class NewGameButton : MonoBehaviour
     {
         // 비동기적으로 씬을 로드합니다.
         AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(sceneNumber, LoadSceneMode.Single);
-
+        //HEOYOON : 임시 총알 테스팅코드
+        Managers.instance.PlayerDataManager.AddBall
+            (new HeaderPadDefines.BallStat { ballBouncienss = 0.5f, ballFriction = 0.7f, ballName = "Bullet_Basic", weight = 1, ballKoreanName = "기본공" ,ballStartForce = 25});
         // 씬 로딩이 완료될 때까지 대기합니다.
         while (!asyncLoad.isDone)
         {

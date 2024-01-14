@@ -130,6 +130,8 @@ namespace HeaderPadDefines
     public class BallStat
     {
         public string ballName;
+        public string ballKoreanName;
+        public float ballStartForce;
         public float ballBouncienss;
         public float ballFriction;
         public float weight; //무게 mass에 넣어줘야함

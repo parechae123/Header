@@ -10,12 +10,12 @@ using static UnityEngine.RuleTile.TilingRuleOutput;
 
 public class ShoterController : MonoBehaviour
 {
-    private LineRenderer lineRenderer;
+    public bool isReadyFire = false;
+    public LineRenderer lineRenderer;
     private int numPoints = 50;
     private float timeInterval = 0.1f;
-    private float initialVelocity = 10f;
     private float gravity = -9.8f;
-    private Vector2 normalizedRelValue;
+    [SerializeField]private Vector2 normalizedRelValue;
 
     public static ShoterController Instance;
     private BallScript targetBall;
@@ -25,15 +25,30 @@ public class ShoterController : MonoBehaviour
         {
             if (targetBall == null)
             {
-                targetBall = new GameObject("ShotBall").AddComponent<BallScript>();
-                targetBall.transform.parent = transform;
-                targetBall.transform.position = Vector3.zero;
+                BallScript tempTarget = GameObject.Find("Bullet").GetComponent<BallScript>();
+                if (tempTarget != null )
+                {
+                    targetBall = tempTarget;
+                }
+                else
+                {
+                    targetBall = new GameObject("Bullet").AddComponent<BallScript>();
+                }
             }
             return targetBall;
         }
     }
     private PhysicsMaterial2D refPhyMat;
-    private BallStat nowBallStat;
+    [SerializeField]private BallStat nowBallStat;
+    private BallStat NowBallStat
+    {
+        get { return nowBallStat; }
+        set 
+        {
+            Managers.instance.UI.BattleUICall.ChangeWeaponUI(true, value.ballName, value.ballKoreanName);
+            nowBallStat = value;
+        }
+    }
     Queue<HeaderPadDefines.BallStat> ballStatQueue = new Queue<HeaderPadDefines.BallStat>();
     private void Awake()
     {
@@ -48,23 +63,37 @@ public class ShoterController : MonoBehaviour
         lineRenderer.startWidth = 0.2f;
         lineRenderer.endWidth = 1;
         lineRenderer.positionCount = numPoints;
+        ReloadBalls(Managers.instance.PlayerDataManager.playerOwnBalls);
     }
     private void Update()
     {
-        normalizedRelValue = pos();
-        for (int i = 0; i < numPoints; i++)
+        if (isReadyFire)
         {
-            float time = i * timeInterval;
-            Vector2 tempVec = normalizedRelValue * initialVelocity;
-            float x = tempVec.x * time;
-            float y = (tempVec.y * time) + (0.5f * gravity * time * time);
+            normalizedRelValue = pos();
+            TargetBall.transform.rotation = Quaternion.Euler(0,0,Rot());
+            for (int i = 0; i < numPoints; i++)
+            {
+                float time = i * timeInterval;
+                Vector2 tempVec = normalizedRelValue * NowBallStat.ballStartForce;
+                float x = tempVec.x * time;
+                float y = (tempVec.y * time) + (0.5f * (gravity * NowBallStat.weight) * time * time);
 
-            lineRenderer.SetPosition(i, new Vector3(x, y, 0f)+transform.position);
+                lineRenderer.SetPosition(i, new Vector3(x, y, 0f) + transform.position);
+            }
+            if (Input.GetMouseButtonDown(0)&& !UnityEngine.EventSystems.EventSystem.current.IsPointerOverGameObject())
+            {
+                TargetBall.BallFire(normalizedRelValue, NowBallStat.ballStartForce);
+            }
+        }
+        if (TargetBall.transform.position.y < -10)
+        {
+            SetBall();
         }
     }
 
     public void ReloadBalls(List<BallStat> EquipedBalls)
     {
+        Managers.instance.PlayerDataManager.CheckWeaponNextBeforeButton();
         Debug.Log(EquipedBalls[0].ballBouncienss);
         EquipedBalls.Shuffle();
         Debug.Log(EquipedBalls[0].ballBouncienss);
@@ -80,8 +109,8 @@ public class ShoterController : MonoBehaviour
     {
         if (ballStatQueue.Count>0)
         {
-            nowBallStat = ballStatQueue.Dequeue();
-            TargetBall.Ballsetting(SettingValue(nowBallStat.ballBouncienss, nowBallStat.ballFriction), nowBallStat.weight);
+            NowBallStat = ballStatQueue.Dequeue();
+            TargetBall.Ballsetting(SettingValue(NowBallStat.ballBouncienss, NowBallStat.ballFriction), NowBallStat.weight);
             
         }
         else
@@ -95,12 +124,16 @@ public class ShoterController : MonoBehaviour
         refPhyMat.friction = friction;
         return refPhyMat;
     }
+    float Rot()
+    {
+        float tempF = MathF.Atan2(normalizedRelValue.y, normalizedRelValue.x) * Mathf.Rad2Deg;
+        return tempF;
+    }
     Vector2 pos()
     {
         Vector2 tempVec = Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, 0));
         tempVec.x = tempVec.x - transform.position.x;
         tempVec.y = tempVec.y - transform.position.y;
-        Debug.Log(tempVec.normalized);
         return tempVec.normalized;
     }
 }
