@@ -995,16 +995,8 @@ MonoBehaviour:
   sceneNumber: 1
   loadToHideThings: {fileID: 421666108}
   labelNames:
-  - LabelName: PreLoad
-    Type: 0
-  - LabelName: Load
-    Type: 0
-  - LabelName: TopViewPlayerAnimations
-    Type: 1
   - LabelName: Font
     Type: 3
-  - LabelName: DIalogSheets
-    Type: 2
   - LabelName: UI
     Type: 1
   - LabelName: DialogDatatSheet
@@ -1017,6 +1009,8 @@ MonoBehaviour:
     Type: 6
   - LabelName: InGameSprites
     Type: 1
+  - LabelName: Texture2D
+    Type: 6
   newGameBTN: {fileID: 996982120}
 --- !u!1 &1570171201
 GameObject:

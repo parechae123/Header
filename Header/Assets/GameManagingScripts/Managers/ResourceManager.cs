@@ -239,7 +239,8 @@ public class ResourceManager
             int totalCount = op.Result.Count;
             if (op.Result.Count == 0)
             {
-                Debug.Log("해당 라벨에 이름이 없음");
+                Debug.LogError( label+" : "+"해당 라벨에 이름이 없음");
+                
                 callback?.Invoke("해당 라벨에 값이 없습니다", 0);
                 
                 return;

@@ -21,12 +21,13 @@ public class NewGameButton : MonoBehaviour
     }
     private void Update()
     {
-        if (LoadingPercent.Count != 0)
+        if (LoadingPercent.Count > 0)
         {
             Debug.Log("슬라이더 업데이트중");
             Vector2 tempValue = LoadingPercent.Dequeue();
             Managers.instance.UI.LoadingUIProps.LoadingSlider.maxValue = tempValue.x;
             Managers.instance.UI.LoadingUIProps.LoadingSlider.value = tempValue.y;
+
 /*            Managers.instance.UI.LoadingUIProps.LoadingSlider.enabled = false;
             Managers.instance.UI.LoadingUIProps.LoadingSlider.enabled = true;*/
         }
@@ -39,11 +40,17 @@ public class NewGameButton : MonoBehaviour
         loadToHideThings.SetAsFirstSibling();
         Managers.instance.Resource.RegistAllResource(labelNames, (ResourceName, resourceCount, TotalCount) =>
         {
-            Debug.Log(ResourceName + "를 로딩중입니다" + resourceCount + "/" + TotalCount);
-            LoadingPercent.Enqueue(new Vector2(TotalCount, resourceCount));
+            //Debug.Log(ResourceName + "를 로딩중입니다" + resourceCount + "/" + TotalCount);
+            Debug.Log("토탈" + TotalCount);
+            Debug.Log("현재" + resourceCount);
+            Debug.Log(ResourceName);
             if (ResourceName.Contains("LoadingIlust"))
             {
                 IlustMinMax.Item2++;
+            }
+            else
+            {
+                LoadingPercent.Enqueue(new Vector2(TotalCount, resourceCount));
             }
 
         }
@@ -72,6 +79,10 @@ public class NewGameButton : MonoBehaviour
     IEnumerator LoadSceneAsyncCoroutine()
     {
         // 비동기적으로 씬을 로드합니다.
+        while (LoadingPercent.Count>0) 
+        { 
+            yield return null;
+        }
         AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(sceneNumber, LoadSceneMode.Single);
         //HEOYOON : 임시 총알 테스팅코드
         Managers.instance.PlayerDataManager.AddBall
@@ -80,7 +91,6 @@ public class NewGameButton : MonoBehaviour
         while (!asyncLoad.isDone)
         {
             // 로딩 퍼센트를 얻거나 로딩 상태를 확인할 수 있습니다.
-            LoadingPercent.Enqueue(new Vector2(0.9f, asyncLoad.progress));
             Debug.Log("비동기 신 로딩중");
             // 로딩 중 UI 업데이트 등을 수행할 수 있습니다.
 

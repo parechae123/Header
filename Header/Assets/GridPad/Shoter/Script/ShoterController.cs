@@ -6,7 +6,6 @@ using UnityEngine;
 using UnityEngine.Rendering;
 using MoreLinq.Extensions;
 using System;
-using static UnityEngine.RuleTile.TilingRuleOutput;
 
 public class ShoterController : MonoBehaviour
 {
@@ -16,7 +15,7 @@ public class ShoterController : MonoBehaviour
     private float timeInterval = 0.1f;
     private float gravity = -9.8f;
     [SerializeField]private Vector2 normalizedRelValue;
-
+    [SerializeField]private UnityEngine.Transform testTR;
     public static ShoterController Instance;
     private BallScript targetBall;
     private BallScript TargetBall
@@ -61,7 +60,7 @@ public class ShoterController : MonoBehaviour
         Managers.instance.UI.BattleUICall.SettingPlayerBattleUI();
         lineRenderer = transform.AddComponent<LineRenderer>();
         lineRenderer.startWidth = 0.2f;
-        lineRenderer.endWidth = 1;
+        lineRenderer.endWidth = 0.3f;
         lineRenderer.positionCount = numPoints;
         ReloadBalls(Managers.instance.PlayerDataManager.playerOwnBalls);
     }
@@ -74,11 +73,35 @@ public class ShoterController : MonoBehaviour
             for (int i = 0; i < numPoints; i++)
             {
                 float time = i * timeInterval;
+                float time2 = (i + 1) * timeInterval;
                 Vector2 tempVec = normalizedRelValue * NowBallStat.ballStartForce;
                 float x = tempVec.x * time;
                 float y = (tempVec.y * time) + (0.5f * (gravity * NowBallStat.weight) * time * time);
+                float x2 = tempVec.x * time2;
+                float y2 = (tempVec.y * time2) + (0.5f * (gravity * NowBallStat.weight) * time2 * time2);
 
-                lineRenderer.SetPosition(i, new Vector3(x, y, 0f) + transform.position);
+                Vector3 firstPos = new Vector3(x, y) + transform.position;
+                Vector3 secondPos = new Vector3(x2, y2) + transform.position;
+                float nowAndNextDistance = Vector2.Distance(firstPos, secondPos);
+                lineRenderer.SetPosition(i, firstPos);
+                RaycastHit2D colInfo = Physics2D.Raycast(firstPos,secondPos-firstPos, nowAndNextDistance, 1);
+                if (colInfo)
+                {
+                    testTR.position = colInfo.point;
+                    Debug.Log("Ãæµ¹ÇØÂÇ"+colInfo.point);
+                    lineRenderer.SetPosition(i+1, colInfo.point);
+                    for (int E = i+2; E < lineRenderer.positionCount; E++)
+                    {
+                        if (E< lineRenderer.positionCount)
+                        {
+                            lineRenderer.SetPosition(E, Vector2.Reflect(secondPos - firstPos, colInfo.normal));
+                        }
+
+                    }
+                    break;
+                }
+
+
             }
             if (Input.GetMouseButtonDown(0)&& !UnityEngine.EventSystems.EventSystem.current.IsPointerOverGameObject())
             {

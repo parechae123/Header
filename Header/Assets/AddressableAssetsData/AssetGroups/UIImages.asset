@@ -17,19 +17,13 @@ MonoBehaviour:
     m_SerializedData: []
   m_GUID: ade93e37d35b93248ab28e5ae460640c
   m_SerializeEntries:
-  - m_GUID: 486943b129d03774a96c9af7a11655a7
-    m_Address: dialogue_namebar
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - UI
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 8a1b2f5ce5520b548ab3a93aad26487f
+  - m_GUID: f255e5f3445caf54bbe4a2c57f83d7cf
     m_Address: dialogue_nextpage_button
     m_ReadOnly: 0
     m_SerializedLabels:
     - UI
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 7188c87978f1ef34095de17b2aac97e1
+  - m_GUID: fa761cefe6496b24cad8596a6a9ed5ac
     m_Address: dialogue_panel
     m_ReadOnly: 0
     m_SerializedLabels:
@@ -73,6 +67,24 @@ MonoBehaviour:
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: adf178f5a875d314286f374b0de98093
     m_Address: score_panel
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - UI
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: ac79239370422314eab14ec62917b2db
+    m_Address: HPbar
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - UI
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 3860b75a011e16b4c8224d8244bbd7e4
+    m_Address: HP_icon
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - UI
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: fb40a65a751242e4aa92e77d81f6ba65
+    m_Address: dialogue_namebar
     m_ReadOnly: 0
     m_SerializedLabels:
     - UI

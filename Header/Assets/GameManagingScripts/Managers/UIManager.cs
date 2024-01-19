@@ -265,8 +265,8 @@ public class DialogSystem
                 TempParent.rectTransform.SetParent(FullDialogPanel);
                 //UIBackGround.sprite = 변경할 에셋 이름;
                 //TODO : 키 인터렉션 안내판넬 받으면 UIBackGround 변수의 sprite 변경해주어야함
-                TempParent.rectTransform.anchorMin = new Vector2(0, 1);
-                TempParent.rectTransform.anchorMax = new Vector2(0.12f, 1.9f);
+                TempParent.rectTransform.anchorMin = new Vector2(0.02f, 1);
+                TempParent.rectTransform.anchorMax = new Vector2(0.14f, 2.1f);
                 TempParent.rectTransform.sizeDelta = Vector2.zero;
                 TempParent.rectTransform.anchoredPosition = Vector2.zero;
                 dialogCharactorIMG = new GameObject { name = "dialogueCharactorIlust" }.AddComponent<Image>();
@@ -578,15 +578,19 @@ public class BattleUI
                 handle.rectTransform.pivot = Vector2.one / 2f;
                 handle.rectTransform.sizeDelta = Vector2.right * 50;
                 tempPlayerHPbar.handleRect = handle.rectTransform;
+                handle.color = Color.white;
+                handle.sprite = Managers.instance.Resource.Load<Sprite>("HP_icon");
                 handle.rectTransform.SetAsLastSibling();
 
                 Image BackGround = new GameObject("BackGround").AddComponent<Image>();
-                BackGround.color = new Color(0.9137256f, 0.3333333f, 0.3019608f, 1);
+                BackGround.sprite = Managers.instance.Resource.Load<Sprite>("HPbar");
                 BackGround.rectTransform.SetParent(tempHpTR);
                 BackGround.rectTransform.anchorMax = new Vector2(1f, 0.75f);
                 BackGround.rectTransform.anchorMin = new Vector2(0f, 0.25f);
                 BackGround.rectTransform.sizeDelta = Vector2.zero;
                 BackGround.rectTransform.pivot = Vector2.one / 2f;
+                BackGround.color = Color.grey;
+                BackGround.sprite = Managers.instance.Resource.Load<Sprite>("HPbar");
                 BackGround.rectTransform.SetAsFirstSibling();
 
 
@@ -598,9 +602,13 @@ public class BattleUI
                 tempFillArea.sizeDelta = Vector2.zero;
                 tempFillArea.anchoredPosition = Vector2.zero;
                 Image tempIMG = new GameObject("FillRect").AddComponent<Image>();
+                tempIMG.color = Color.white;
+                tempIMG.sprite = Managers.instance.Resource.Load<Sprite>("HPbar");
+
+
+
                 tempIMG.rectTransform.SetParent(tempFillArea);
                 tempIMG.rectTransform.sizeDelta = Vector2.zero;
-                tempIMG.color = Color.white;
                 tempPlayerHPbar.fillRect = tempIMG.rectTransform;
 
                 // Slider의 부모-자식 관계 설정  
@@ -614,9 +622,11 @@ public class BattleUI
                 tempHpTR.sizeDelta = Vector2.zero;
                 tempHpTR.anchoredPosition = Vector2.zero;
                 tempPlayerHPbar.interactable = false;
-                tempPlayerHPbar.enabled = false;
                 tempPlayerHPbar.enabled = true;
+                tempHandleArea.SetAsLastSibling();
+                tempPlayerHPbar.SetDirection(Slider.Direction.RightToLeft,true);
                 playerHpBar = tempPlayerHPbar;
+
                 Debug.Log("체력바 세팅 끝");
             }
             return playerHpBar;
@@ -845,22 +855,24 @@ public class BattleUI
                 tempHandleArea.sizeDelta = Vector2.zero;
                 tempHandleArea.anchoredPosition = Vector2.zero;
                 Image handle = new GameObject("handle").AddComponent<Image>();
-                handle.color = Color.white;
                 handle.rectTransform.SetParent(tempHandleArea);
                 handle.rectTransform.anchorMax = Vector2.up;
                 handle.rectTransform.anchorMin = Vector2.zero;
                 handle.rectTransform.pivot = Vector2.one / 2f;
                 handle.rectTransform.sizeDelta = Vector2.right * 50;
                 tempEnemyHPbar.handleRect = handle.rectTransform;
-                handle.rectTransform.SetAsLastSibling();
+                handle.color = Color.white;
+                handle.sprite = Managers.instance.Resource.Load<Sprite>("HP_icon");
+
 
                 Image BackGround = new GameObject("BackGround").AddComponent<Image>();
-                BackGround.color = new Color(0.9137256f, 0.3333333f, 0.3019608f, 1);
                 BackGround.rectTransform.SetParent(tempHpTR);
                 BackGround.rectTransform.anchorMax = new Vector2(1f, 0.75f);
                 BackGround.rectTransform.anchorMin = new Vector2(0f, 0.25f);
                 BackGround.rectTransform.sizeDelta = Vector2.zero;
                 BackGround.rectTransform.pivot = Vector2.one / 2f;
+                BackGround.color = Color.grey;
+                BackGround.sprite = Managers.instance.Resource.Load<Sprite>("HPbar");
                 BackGround.rectTransform.SetAsFirstSibling();
 
 
@@ -875,6 +887,7 @@ public class BattleUI
                 tempIMG.rectTransform.SetParent(tempFillArea);
                 tempIMG.rectTransform.sizeDelta = Vector2.zero;
                 tempIMG.color = Color.white;
+                tempIMG.sprite = Managers.instance.Resource.Load<Sprite>("HPbar");
                 tempEnemyHPbar.fillRect = tempIMG.rectTransform;
 
                 // Slider의 부모-자식 관계 설정  
@@ -888,9 +901,10 @@ public class BattleUI
                 tempHpTR.sizeDelta = Vector2.zero;
                 tempHpTR.anchoredPosition = Vector2.zero;
                 tempEnemyHPbar.interactable = false;
-                tempEnemyHPbar.enabled = false;
                 tempEnemyHPbar.enabled = true;
+                tempEnemyHPbar.SetDirection(Slider.Direction.RightToLeft, true);
                 enemyHpBar = tempEnemyHPbar;
+                tempHandleArea.SetAsLastSibling();
                 Debug.Log("체력바 세팅 끝");
             }
             return enemyHpBar;
