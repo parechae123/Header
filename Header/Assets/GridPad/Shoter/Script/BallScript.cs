@@ -8,6 +8,7 @@ public class BallScript : MonoBehaviour
     [SerializeField]private Collider2D[] pauseCollector;
     public float ballBouncienss;
     public float ballFriction;
+    public float ballRadios;
     private Rigidbody2D ballRB;
     private Rigidbody2D BallRB
     {
@@ -89,6 +90,7 @@ public class BallScript : MonoBehaviour
         ShoterController.Instance.lineRenderer.enabled = true;
         BallRB.simulated = false;
         BallCol.enabled = false;
+        ballRadios = BallCol.bounds.size.x;
         BallRB.gravityScale = Weight;
         transform.localPosition = Vector3.zero;
         BallRB.velocity = Vector2.zero;
@@ -114,6 +116,15 @@ public class BallScript : MonoBehaviour
         {
             Managers.instance.Grid.OnColide(collision.transform.position);
         }
+    }
+    public void BallToTarget(Vector2 targetPos)
+    {
+        BallRB.velocity = Vector2.zero;
+        BallRB.velocity = CarculateVelocity(targetPos);
+    }
+    Vector2 CarculateVelocity(Vector2 targetPos)
+    {
+        return (((targetPos - (Vector2)transform.position).normalized) * (Vector2.Distance(targetPos, transform.position) * (9.8f * BallRB.gravityScale)));
     }
 }
 

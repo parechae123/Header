@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class HeaderPadSetter : MonoBehaviour
 {
+
     private void Awake()
     {
         for (int i = 0; i < transform.childCount; i++)
@@ -12,4 +13,5 @@ public class HeaderPadSetter : MonoBehaviour
             transform.GetChild(i).AddComponent<BlockCtroler>();
         }
     }
+
 }

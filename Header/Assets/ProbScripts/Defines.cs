@@ -67,6 +67,8 @@ namespace HeaderPadDefines
         public BlockStatus SettedBlockCondition;
         public SpriteRenderer targetIMG;
         public short BlockHP;
+        public delegate void blockEvent();
+        public event blockEvent BE;
         public void OnColideBlock()
         {
             switch (blockCondition)
@@ -98,9 +100,12 @@ namespace HeaderPadDefines
                         blockCondition = BlockStatus.Emptied;
                         targetIMG.transform.GetComponent<PolygonCollider2D>().enabled = false;
                         targetIMG.sprite = Managers.instance.Resource.Load<Sprite>("HeaderBlock_Destroyed");
-                        
                     }
                     break;
+            }
+            if (BE != null)
+            {
+                BE();
             }
         }
         public void OnResetBlocks()
@@ -120,8 +125,10 @@ namespace HeaderPadDefines
                         break;
                     case BlockStatus.BoombBlock:
                         targetIMG.sprite = Managers.instance.Resource.Load<Sprite>("HeaderBlock_BoombBlock");
+                        BlockHP = 2;
                         break;
                 }
+                blockCondition = SettedBlockCondition;
                 targetIMG.transform.GetComponent<PolygonCollider2D>().enabled = true;
             }
         }
@@ -139,6 +146,6 @@ namespace HeaderPadDefines
     }
     public enum BlockStatus
     {
-        Destroyed,Emptied,FIlled,FilledCoin,BoombBlock
+        Destroyed,Emptied,FIlled,FilledCoin,BoombBlock,MovePlatform
     }
 }

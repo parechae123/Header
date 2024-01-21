@@ -1,3 +1,4 @@
+using HeaderPadDefines;
 using System.Collections;
 using System.Collections.Generic;
 using System.Security.Cryptography;
@@ -89,9 +90,13 @@ public class GridManager
             return battleGridData; 
         } 
     }
-    public void AddBattleGridData(Vector2 pos,HeaderPadDefines.BlockObjects data)
+    public void AddBattleGridData(Vector2 pos,HeaderPadDefines.BlockObjects data,BlockObjects.blockEvent anyEvent = null)
     {
         BattleGridData.Add(pos, data);
+        if (anyEvent != null)
+        {
+            data.BE += anyEvent;
+        }
         Debug.Log(BattleGridData[pos].blockCondition);
     }
     public void OnReset()

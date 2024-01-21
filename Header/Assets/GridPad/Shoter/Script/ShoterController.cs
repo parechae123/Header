@@ -12,13 +12,15 @@ public class ShoterController : MonoBehaviour
     public bool isReadyFire = false;
     public LineRenderer lineRenderer;
     private int numPoints = 50;
+    private float ballRadios;
     private float timeInterval = 0.1f;
     private float gravity = -9.8f;
-    [SerializeField]private Vector2 normalizedRelValue;
-    [SerializeField]private UnityEngine.Transform testTR;
+    [SerializeField] private Vector2 normalizedRelValue;
+    [SerializeField] private UnityEngine.Transform testTR;
+    [SerializeField] LayerMask layerBallCollision;
     public static ShoterController Instance;
     private BallScript targetBall;
-    private BallScript TargetBall
+    public BallScript TargetBall
     {
         get
         {
@@ -84,19 +86,44 @@ public class ShoterController : MonoBehaviour
                 Vector3 secondPos = new Vector3(x2, y2) + transform.position;
                 float nowAndNextDistance = Vector2.Distance(firstPos, secondPos);
                 lineRenderer.SetPosition(i, firstPos);
-                RaycastHit2D colInfo = Physics2D.Raycast(firstPos,secondPos-firstPos, nowAndNextDistance, 1);
+                RaycastHit2D colInfo = Physics2D.Raycast(firstPos,secondPos-firstPos, nowAndNextDistance, layerBallCollision);
                 if (colInfo)
                 {
                     testTR.position = colInfo.point;
                     Debug.Log("충돌해쪄"+colInfo.point);
                     lineRenderer.SetPosition(i+1, colInfo.point);
+                    float reflectedBallVelocity = nowBallStat.ballBouncienss * (Vector2.Distance(firstPos, secondPos)/timeInterval);
+                    Vector2 normalizedRefVector = (Vector2.Reflect(secondPos - firstPos, colInfo.normal)).normalized;
+                    Vector2 refTempVec = reflectedBallVelocity * normalizedRefVector;
                     for (int E = i+2; E < lineRenderer.positionCount; E++)
                     {
+                        float timeScaler = (E-i)*timeInterval;
+
                         if (E< lineRenderer.positionCount)
                         {
-                            lineRenderer.SetPosition(E, Vector2.Reflect(secondPos - firstPos, colInfo.normal));
-                        }
+                            Debug.Log("리플렉션 값 노멀라이즈"+Vector2.Reflect(secondPos - firstPos, colInfo.normal).normalized);
+                            Debug.Log("거기에 충돌위치를 곁드린"+(Vector2.Reflect(secondPos - firstPos, colInfo.normal) + colInfo.point));
+                            float reflectedX = refTempVec.x * timeScaler;
+                            float reflectedY = (refTempVec.y * timeScaler) + (0.5f * (gravity * NowBallStat.weight) * timeScaler * timeScaler);
+                            lineRenderer.SetPosition(E, colInfo.point+new Vector2(reflectedX,reflectedY));
+                            if (E-1!= i)
+                            {
+                                float reflectedNowNextDistance = Vector2.Distance(lineRenderer.GetPosition(E), lineRenderer.GetPosition(E - 1));
+                                RaycastHit2D reflectedColl = Physics2D.Raycast(lineRenderer.GetPosition(E - 1), lineRenderer.GetPosition(E) - lineRenderer.GetPosition(E - 1), reflectedNowNextDistance, layerBallCollision);
+                                if (reflectedColl)
+                                {
+                                    if (reflectedColl.point != colInfo.point)
+                                    {
+                                        for (int o = E; o < lineRenderer.positionCount; o++)
+                                        {
+                                            lineRenderer.SetPosition(o, reflectedColl.point);
+                                        }
+                                        break;
 
+                                    }
+                                }
+                            }
+                        }
                     }
                     break;
                 }
