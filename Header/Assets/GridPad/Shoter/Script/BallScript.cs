@@ -117,14 +117,25 @@ public class BallScript : MonoBehaviour
             Managers.instance.Grid.OnColide(collision.transform.position);
         }
     }
-    public void BallToTarget(Vector2 targetPos)
+    public void BallToTarget(Vector2 targetPos,float Speed)
     {
         BallRB.velocity = Vector2.zero;
-        BallRB.velocity = CarculateVelocity(targetPos);
+        BallRB.velocity = CarculateVelocity(targetPos,Speed);
     }
-    Vector2 CarculateVelocity(Vector2 targetPos)
+    Vector2 CarculateVelocity(Vector2 targetPos, float Speed)
     {
-        return (((targetPos - (Vector2)transform.position).normalized) * (Vector2.Distance(targetPos, transform.position) * (9.8f * BallRB.gravityScale)));
+        return (targetPos - (Vector2)transform.position).normalized * (Vector2.Distance(targetPos, transform.position) * (Speed * BallRB.gravityScale));
+    }
+    public void BallParaBola(Vector2 targetPos)
+    {
+        BallRB.velocity = Vector2.zero;
+        Vector2 tempVec = CarculateDirection(targetPos) * Vector2.Distance(transform.position, targetPos);
+        tempVec += ((BallRB.gravityScale*Vector2.up) * 9.8f)/2;
+        BallRB.velocity = tempVec;
+    }
+    private Vector2 CarculateDirection(Vector2 targetPos)
+    {
+        return (targetPos - (Vector2)transform.position).normalized;
     }
 }
 
