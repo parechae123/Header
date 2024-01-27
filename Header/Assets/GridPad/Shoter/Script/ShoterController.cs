@@ -139,6 +139,14 @@ public class ShoterController : MonoBehaviour
         {
             SetBall();
         }
+        if (Input.GetKeyDown(KeyCode.G))
+        {
+            Managers.instance.UI.BattleUICall.WeaponAnim(true, "Bullet_Basic", "");
+        }
+        if (Input.GetKeyDown(KeyCode.H))
+        {
+            Managers.instance.UI.BattleUICall.WeaponAnim(false, "Bullet_Basic", "");
+        }
     }
 
     public void ReloadBalls(List<BallStat> EquipedBalls)

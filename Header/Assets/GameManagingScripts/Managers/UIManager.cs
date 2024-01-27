@@ -10,6 +10,7 @@ using DataDefines;
 using InteractionDefines;
 using UnityEditor;
 using System.Diagnostics.Tracing;
+using DG.Tweening;
 using UnityEngine.Video;
 
 public class UIManager
@@ -632,6 +633,27 @@ public class BattleUI
             return playerHpBar;
         }
     }
+    private Image weaponImagePanel;
+    private Image WeaponImagePanel
+    {
+        get 
+        { 
+            if (weaponImagePanel == null) 
+            {
+                weaponImagePanel = new GameObject("weaponIMGPanel").AddComponent<Image>();
+                weaponImagePanel.rectTransform.SetParent(PlayerStatusUI.rectTransform);
+                weaponImagePanel.sprite = null;
+                weaponImagePanel.color = new Color(0, 0, 0, 0);
+                weaponImagePanel.rectTransform.anchorMin = new Vector2(0.330525041f, 0.483485878f);
+                weaponImagePanel.rectTransform.anchorMax = new Vector2(0.669326663f, 0.582539618f);
+                weaponImagePanel.rectTransform.sizeDelta = Vector2.zero;
+                weaponImagePanel.rectTransform.anchoredPosition = Vector2.zero;
+                WeaponImagePanel.AddComponent<RectMask2D>();
+            }
+            return weaponImagePanel;
+        }
+    }
+    public Animator weaponIMGAnim;
     private Image weaponImage;
     private Image WeaponImage
     {
@@ -640,14 +662,33 @@ public class BattleUI
             if (weaponImage == null) 
             {
                 weaponImage = new GameObject("weaponIMG").AddComponent<Image>();
-                weaponImage.rectTransform.SetParent(PlayerStatusUI.rectTransform);
+                weaponImage.rectTransform.SetParent(WeaponImagePanel.rectTransform);
                 weaponImage.sprite = Managers.instance.Resource.Load<Sprite>("Bullet_Basic");
-                weaponImage.rectTransform.anchorMin = new Vector2(0.330525041f, 0.483485878f);
-                weaponImage.rectTransform.anchorMax = new Vector2(0.669326663f, 0.582539618f);
+                WeaponImagePrev.enabled = true;
+                weaponImage.rectTransform.anchorMin = Vector2.zero;
+                weaponImage.rectTransform.anchorMax = Vector2.one;
                 weaponImage.rectTransform.sizeDelta = Vector2.zero;
                 weaponImage.rectTransform.anchoredPosition = Vector2.zero;
             }
             return weaponImage;
+        }
+    }
+    private Image weaponImagePrev;
+    private Image WeaponImagePrev
+    {
+        get 
+        { 
+            if (weaponImagePrev == null) 
+            {
+                weaponImagePrev = new GameObject("weaponIMGPrev").AddComponent<Image>();
+                weaponImagePrev.rectTransform.SetParent(WeaponImagePanel.rectTransform);
+                weaponImagePrev.sprite = Managers.instance.Resource.Load<Sprite>("Bullet_Basic");
+                weaponImagePrev.rectTransform.anchorMin = Vector2.left;
+                weaponImagePrev.rectTransform.anchorMax = Vector2.up;
+                weaponImagePrev.rectTransform.sizeDelta = Vector2.zero;
+                weaponImagePrev.rectTransform.anchoredPosition = Vector2.zero;
+            }
+            return weaponImagePrev;
         }
     }
     private Image weaponNamePannel;
@@ -1027,6 +1068,48 @@ public class BattleUI
         WeaponNextBTN.onClick.AddListener(Managers.instance.PlayerDataManager.PlayerNextBallPick);
         UpdateScore(0,0);
         EnemyUISetting();
+    }
+    public void WeaponAnim(bool isMoveRight,string ballName,string PrevBallName)
+    {
+        WeaponImagePrev.rectTransform.DOComplete();
+        WeaponImage.rectTransform.DOComplete();
+        WeaponImage.sprite = Managers.instance.Resource.Load<Sprite>(ballName);
+        WeaponImagePrev.sprite = Managers.instance.Resource.Load<Sprite>(PrevBallName);
+        if (isMoveRight)
+        {
+            WeaponImage.rectTransform.anchorMin = Vector2.left;
+            WeaponImage.rectTransform.anchorMax = Vector2.up;
+            WeaponImage.rectTransform.anchoredPosition = Vector2.zero;
+            WeaponImage.rectTransform.sizeDelta = Vector2.zero;
+
+            WeaponImagePrev.rectTransform.anchorMin = Vector2.zero;
+            WeaponImagePrev.rectTransform.anchorMax = Vector2.one;
+            WeaponImagePrev.rectTransform.anchoredPosition = Vector2.zero;
+            WeaponImagePrev.rectTransform.sizeDelta = Vector2.zero;
+
+            WeaponImage.rectTransform.DOAnchorMax(Vector2.one, 0.7f);
+            WeaponImage.rectTransform.DOAnchorMin(Vector2.zero, 0.7f);
+            WeaponImagePrev.rectTransform.DOAnchorMax(Vector2.one + Vector2.right, 0.7f);
+            WeaponImagePrev.rectTransform.DOAnchorMin(Vector2.right, 0.7f);
+        }
+        else
+        {
+            WeaponImagePrev.rectTransform.anchorMin = Vector2.zero;
+            WeaponImagePrev.rectTransform.anchorMax = Vector2.one;
+            WeaponImagePrev.rectTransform.anchoredPosition = Vector2.zero;
+            WeaponImagePrev.rectTransform.sizeDelta = Vector2.zero;
+
+            WeaponImage.rectTransform.anchorMin = Vector2.right;
+            WeaponImage.rectTransform.anchorMax = Vector2.one + Vector2.right;
+            WeaponImage.rectTransform.anchoredPosition = Vector2.zero;
+            WeaponImage.rectTransform.sizeDelta = Vector2.zero;
+
+            WeaponImage.rectTransform.DOAnchorMax(Vector2.one, 0.7f);
+            WeaponImage.rectTransform.DOAnchorMin(Vector2.zero, 0.7f);
+            WeaponImagePrev.rectTransform.DOAnchorMax(Vector2.up, 0.7f);
+            WeaponImagePrev.rectTransform.DOAnchorMin(Vector2.left, 0.7f);
+
+        }
     }
     public void HPBarUpdate(bool isPlayer,float maxHP,float nowHP)
     {
