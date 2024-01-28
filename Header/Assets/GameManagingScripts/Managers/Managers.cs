@@ -28,7 +28,7 @@ public class Managers : MonoBehaviour
     private GridManager grid = new GridManager();
     public GridManager Grid { get { return instance?.grid; } }
 
-    private PlayerDataManager playerDataManager = new PlayerDataManager();
+    [SerializeField]private PlayerDataManager playerDataManager = new PlayerDataManager();
     public PlayerDataManager PlayerDataManager { get {  return instance?.playerDataManager; } }
 
     public static void Init()

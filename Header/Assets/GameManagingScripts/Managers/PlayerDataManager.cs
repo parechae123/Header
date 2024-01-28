@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using HeaderPadDefines;
 
+[System.Serializable]
 public class PlayerDataManager
 {
     public List<BallStat> playerOwnBalls = new List<BallStat>();
@@ -23,14 +24,15 @@ public class PlayerDataManager
     }
     public void CheckWeaponNextBeforeButton()
     {
-        Managers.instance.UI.BattleUICall.WeaponButtonCheck(playerOwnBalls.Count > 1 ? true: false);
+        Managers.instance.UI.BattleUICall.WeaponButtonCheck(playerOwnBalls.Count > 1 ? false: true);
     }
     public void PlayerBeforeBallPick()
     {
-        Debug.Log("이전 공");
+        ShoterController.Instance.SetBallOnBehind();
+        
     }
     public void PlayerNextBallPick()
     {
-        Debug.Log("다음 공");
+        ShoterController.Instance.SetBallOnNext();
     }
 }

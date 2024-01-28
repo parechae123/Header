@@ -653,7 +653,6 @@ public class BattleUI
             return weaponImagePanel;
         }
     }
-    public Animator weaponIMGAnim;
     private Image weaponImage;
     private Image WeaponImage
     {
@@ -1069,13 +1068,13 @@ public class BattleUI
         UpdateScore(0,0);
         EnemyUISetting();
     }
-    public void WeaponAnim(bool isMoveRight,string ballName,string PrevBallName)
+    public void WeaponAnim(bool isMoveRight,string ballName,string ballKRName,string PrevBallName)
     {
         WeaponImagePrev.rectTransform.DOComplete();
         WeaponImage.rectTransform.DOComplete();
         WeaponImage.sprite = Managers.instance.Resource.Load<Sprite>(ballName);
         WeaponImagePrev.sprite = Managers.instance.Resource.Load<Sprite>(PrevBallName);
-        if (isMoveRight)
+        if (!isMoveRight)
         {
             WeaponImage.rectTransform.anchorMin = Vector2.left;
             WeaponImage.rectTransform.anchorMax = Vector2.up;
@@ -1108,8 +1107,8 @@ public class BattleUI
             WeaponImage.rectTransform.DOAnchorMin(Vector2.zero, 0.7f);
             WeaponImagePrev.rectTransform.DOAnchorMax(Vector2.up, 0.7f);
             WeaponImagePrev.rectTransform.DOAnchorMin(Vector2.left, 0.7f);
-
         }
+        ChangeWeaponUI(true, ballName, ballKRName);
     }
     public void HPBarUpdate(bool isPlayer,float maxHP,float nowHP)
     {
@@ -1151,8 +1150,8 @@ public class BattleUI
 
     public void WeaponButtonCheck(bool isZero)
     {
-        WeaponNextBTN.interactable = isZero;
-        weaponBeforeBTN.interactable = isZero;
+        WeaponNextBTN.interactable = !isZero;
+        weaponBeforeBTN.interactable = !isZero;
     }
 
     public void UpdateScore(int PlayerScore,int EnemyScore)

@@ -84,6 +84,11 @@ public class BallScript : MonoBehaviour
             }
         }
     }
+
+    public void ChangeBallSprite(string ballName)
+    {
+        IMG.sprite = Managers.instance.Resource.Load<Sprite>(ballName);
+    } 
     public void Ballsetting(PhysicsMaterial2D phyMat, float Weight)
     {
         ShoterController.Instance.isReadyFire = true; 
@@ -101,6 +106,7 @@ public class BallScript : MonoBehaviour
     }
     public void BallFire(Vector2 FireToward,float FireForce)
     {
+        Managers.instance.UI.BattleUICall.WeaponButtonCheck(true);
         ShoterController.Instance.isReadyFire = false;
         ShoterController.Instance.lineRenderer.enabled = false;
         BallRB.simulated = true;
