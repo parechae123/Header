@@ -148,6 +148,11 @@ public class ShoterController : MonoBehaviour
                     lineRenderer.SetPosition(i, transform.position);
                 }
                 fireForce = 0;
+                Managers.instance.UI.BattleUICall.SetBallSliderPos(transform.position, false);
+            }
+            else if (Input.GetMouseButtonDown(0) && !UnityEngine.EventSystems.EventSystem.current.IsPointerOverGameObject())
+            {
+                Managers.instance.UI.BattleUICall.SetBallSliderPos(transform.position, true);
             }
             else if(Input.GetMouseButton(0) && !UnityEngine.EventSystems.EventSystem.current.IsPointerOverGameObject())
             {
@@ -159,7 +164,9 @@ public class ShoterController : MonoBehaviour
                 {
                     fireForce = NowBallStat.ballStartForce;
                 }
+                Managers.instance.UI.BattleUICall.UpdateBallForce(NowBallStat.ballStartForce, fireForce);
             }
+
             else if (UnityEngine.EventSystems.EventSystem.current.IsPointerOverGameObject())
             {
                 if (fireForce != 0)

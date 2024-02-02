@@ -19,6 +19,7 @@ public class UIManager
     public TopViewSceneUI TopViewSceneUIs = new TopViewSceneUI();
     public DialogSystem DialogCall = new DialogSystem();
     public BattleUI BattleUICall = new BattleUI();
+    public ShopUI ShopUICall = new ShopUI();
 
     private Stack<Transform> UIStack = new Stack<Transform>();
     public List<Transform> MoveAbleCheckerList = new List<Transform>();
@@ -1049,6 +1050,101 @@ public class BattleUI
             return scoreBoardText;
         }
     }
+    private RectTransform ballForceSliderParent;
+    private RectTransform BallForceSliderParent
+    {
+        get 
+        {
+            if(ballForceSliderParent == null)
+            {
+                ballForceSliderParent = new GameObject("BallForceParent").AddComponent<RectTransform>();
+                ballForceSliderParent.SetParent(Managers.instance.UI.LoadingUIProps.SceneMainCanvas);
+                ballForceSliderParent.anchorMin = new Vector2(0, 0);
+                ballForceSliderParent.anchorMax = new Vector2(1, 1);
+                ballForceSliderParent.sizeDelta = Vector2.zero;
+                ballForceSliderParent.anchoredPosition = Vector2.zero;
+            }
+            return ballForceSliderParent;
+        }
+    }
+
+    private Slider ballForceSlider = null;
+    private Slider BallForceSlider
+    {
+        get
+        {
+            if (ballForceSlider == null)
+            {
+                Slider tempBallForceBar = new GameObject("EnemyHPBar").AddComponent<Slider>();
+                tempBallForceBar.wholeNumbers = false;
+                tempBallForceBar.maxValue = 100;
+                //TODO : 슬라이드바 UI 추가시 여기에 작업
+                RectTransform tempHpTR = tempBallForceBar.transform as RectTransform;
+
+
+                RectTransform tempHandleArea = new GameObject("HandleArea").AddComponent<RectTransform>();
+                tempHandleArea.SetParent(tempHpTR);
+                tempHandleArea.anchorMin = Vector2.zero; // 부모의 왼쪽 하단을 기준으로
+                tempHandleArea.anchorMax = Vector2.one; // 부모의 왼쪽 상단을 기준으로
+                tempHandleArea.pivot = new Vector2(0.5f, 0.5f); // 부모의 왼쪽 중간을 기준으로
+                tempHandleArea.sizeDelta = Vector2.zero;
+                tempHandleArea.anchoredPosition = Vector2.zero;
+                Image handle = new GameObject("handle").AddComponent<Image>();
+                handle.rectTransform.SetParent(tempHandleArea);
+                handle.rectTransform.anchorMax = Vector2.up;
+                handle.rectTransform.anchorMin = Vector2.zero;
+                handle.rectTransform.pivot = Vector2.one / 2f;
+                handle.rectTransform.sizeDelta = Vector2.right * 50;
+                tempBallForceBar.handleRect = handle.rectTransform;
+                handle.color = Color.white;
+                handle.sprite = Managers.instance.Resource.Load<Sprite>("HP_icon");
+
+
+                Image BackGround = new GameObject("BackGround").AddComponent<Image>();
+                BackGround.rectTransform.SetParent(tempHpTR);
+                BackGround.rectTransform.anchorMax = new Vector2(1f, 0.75f);
+                BackGround.rectTransform.anchorMin = new Vector2(0f, 0.25f);
+                BackGround.rectTransform.sizeDelta = Vector2.zero;
+                BackGround.rectTransform.pivot = Vector2.one / 2f;
+                BackGround.color = Color.grey;
+                BackGround.sprite = Managers.instance.Resource.Load<Sprite>("HPbar");
+                BackGround.rectTransform.SetAsFirstSibling();
+
+
+                RectTransform tempFillArea = new GameObject("FillArea").AddComponent<RectTransform>();
+                tempFillArea.SetParent(tempHpTR);
+                tempFillArea.anchorMin = new Vector2(0f, 0.25f); // 부모의 왼쪽 하단을 기준으로
+                tempFillArea.anchorMax = new Vector2(1f, 0.75f); // 부모의 왼쪽 상단을 기준으로
+                tempFillArea.pivot = new Vector2(0.5f, 0.5f); // 부모의 왼쪽 중간을 기준으로
+                tempFillArea.sizeDelta = Vector2.zero;
+                tempFillArea.anchoredPosition = Vector2.zero;
+                Image tempIMG = new GameObject("FillRect").AddComponent<Image>();
+                tempIMG.rectTransform.SetParent(tempFillArea);
+                tempIMG.rectTransform.sizeDelta = Vector2.zero;
+                tempIMG.color = Color.white;
+                tempIMG.sprite = Managers.instance.Resource.Load<Sprite>("HPbar");
+                tempBallForceBar.fillRect = tempIMG.rectTransform;
+
+                // Slider의 부모-자식 관계 설정  
+
+
+
+                tempHpTR.SetParent(BallForceSliderParent);
+                tempHpTR.SetAsLastSibling();
+                tempHpTR.anchorMin = new Vector2(0.45f, 0.48f);
+                tempHpTR.anchorMax = new Vector2(0.55f, 0.52f);
+                tempHpTR.sizeDelta = Vector2.zero;
+                tempHpTR.anchoredPosition = Vector2.zero;
+                tempBallForceBar.interactable = false;
+                tempBallForceBar.enabled = true;
+                tempBallForceBar.SetDirection(Slider.Direction.RightToLeft, true);
+                ballForceSlider = tempBallForceBar;
+                tempHandleArea.SetAsLastSibling();
+                Debug.Log("포스바 세팅 끝");
+            }
+            return ballForceSlider;
+        }
+    }
     #region 관련 함수
     public void SettingPlayerBattleUI()
     {
@@ -1158,7 +1254,24 @@ public class BattleUI
     {
         ScoreBoardText.text = PlayerScore + " : " + EnemyScore;
     }
-
+    public void SetBallSliderPos(Vector3 ShooterPosition,bool isSetActive)
+    {
+        if (isSetActive)
+        {
+            Vector3 tempVec = Camera.main.WorldToScreenPoint(ShooterPosition-Vector3.up);
+            BallForceSliderParent.position = tempVec;
+        }
+        BallForceSliderParent.gameObject.SetActive(isSetActive);
+        
+    }
+    public void UpdateBallForce(float max ,float value)
+    {
+        if (BallForceSlider.maxValue != max)
+        {
+            BallForceSlider.maxValue = max;
+        }
+        ballForceSlider.value = value;
+    }
 
 
     private void EnemyUISetting()
@@ -1170,5 +1283,31 @@ public class BattleUI
         EnemyWeaponNamePannel.enabled = true;
         EnemyWeaponName.text = "무기이름";
     }
+    #endregion
+}
+public class ShopUI
+{
+    #region 변수
+    private Image shopPanel;
+    public Image ShopPanel
+    {
+        get 
+        { 
+            if (shopPanel == null)
+            {
+                shopPanel = new GameObject("ShopPanel").AddComponent<Image>();
+                shopPanel.rectTransform.SetParent(Managers.instance.UI.LoadingUIProps.SceneMainCanvas);
+                shopPanel.rectTransform.anchoredPosition = Vector3.zero;
+                shopPanel.rectTransform.anchorMax = Vector2.one;
+                shopPanel.rectTransform.anchorMin = Vector2.zero;
+                shopPanel.rectTransform.sizeDelta = Vector2.zero;
+                shopPanel.sprite = Managers.instance.Resource.Load<Sprite>("");
+                shopPanel.rectTransform.SetAsLastSibling();
+                //TODO : ShopPanel이 업로드시 해당 키값 작성 요망
+            }
+            return shopPanel;
+        }
+    }
+
     #endregion
 }

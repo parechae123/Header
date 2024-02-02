@@ -3102,6 +3102,7 @@ MonoBehaviour:
   layerBallCollision:
     serializedVersion: 2
     m_Bits: 9
+  fireForce: 0
   nowBallStat:
     ballName: 
     ballKoreanName: 
