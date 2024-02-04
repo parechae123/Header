@@ -7,10 +7,28 @@ using HeaderPadDefines;
 public class PlayerDataManager
 {
     public List<BallStat> playerOwnBalls = new List<BallStat>();
+    private int playerMoney;
+    public int PlayerMoney
+    {
+        get 
+        {
+            return playerMoney;
+        }
+        set 
+        {
+            Managers.instance.UI.ShopUICall.MoneyUpdate(value);
+            playerMoney = value;
+        }
+    }
+    
 
-    public void AddBall(BallStat balls)
+    public void AddBall(BallStat balls,bool isCalledItOnShop = false)
     {
         playerOwnBalls.Add(balls);
+        if (isCalledItOnShop)
+        {
+            Managers.instance.UI.ShopUICall.CreateBulbIcons(playerOwnBalls);
+        }
     }
     public void RemoveBall(BallStat ball)
     { 
@@ -21,6 +39,7 @@ public class PlayerDataManager
                 playerOwnBalls.Remove(item);
             }
         }
+        Managers.instance.UI.ShopUICall.CreateBulbIcons(playerOwnBalls);
     }
     public void CheckWeaponNextBeforeButton()
     {

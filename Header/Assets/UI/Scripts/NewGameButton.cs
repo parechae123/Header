@@ -91,6 +91,11 @@ public class NewGameButton : MonoBehaviour
                     (new HeaderPadDefines.BallStat { ballBouncienss = 0.5f, ballFriction = 0.7f, ballName = "Bullet_Basic", weight = 1, ballKoreanName = "기본공 테스트1" ,ballStartForce = 25});
          Managers.instance.PlayerDataManager.AddBall
                     (new HeaderPadDefines.BallStat { ballBouncienss = 0.5f, ballFriction = 0.7f, ballName = "Bullet_Basic123", weight = 1, ballKoreanName = "기본공 테스트2" ,ballStartForce = 25});
+        for (int i = 3; i < 17; i++)
+        {
+            Managers.instance.PlayerDataManager.AddBall
+           (new HeaderPadDefines.BallStat { ballBouncienss = 0.5f, ballFriction = 0.7f, ballName = "Bullet_Basic"+i, weight = 1, ballKoreanName = "기본공 테스트" + i, ballStartForce = 25 });
+        }
         // 씬 로딩이 완료될 때까지 대기합니다.
         while (!asyncLoad.isDone)
         {

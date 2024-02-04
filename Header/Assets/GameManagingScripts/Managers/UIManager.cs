@@ -12,6 +12,8 @@ using UnityEditor;
 using System.Diagnostics.Tracing;
 using DG.Tweening;
 using UnityEngine.Video;
+using UnityEditor.Build.Pipeline.Interfaces;
+using HeaderPadDefines;
 
 public class UIManager
 {
@@ -82,7 +84,10 @@ public class LoadingUI
             if (sceneMainCanvas == null)
             {
                 GameObject targetTempOBJ = GameObject.Find("Canvas");
+                
                 RectTransform tempTR = targetTempOBJ == null ? new GameObject("Canvas").AddComponent<Canvas>().transform as RectTransform : targetTempOBJ.transform as RectTransform;
+                tempTR.GetComponent<Canvas>().renderMode = RenderMode.ScreenSpaceCamera;
+                tempTR.gameObject.layer = 5;
                 sceneMainCanvas = tempTR;
             }
             return sceneMainCanvas;
@@ -1287,6 +1292,14 @@ public class BattleUI
 }
 public class ShopUI
 {
+    public bool IsShopActivate
+    {
+        get { return ShopPanel.gameObject.activeSelf; }
+        set 
+        { 
+            ShopPanel.gameObject.SetActive(value);
+        }
+    }
     #region 변수
     private Image shopPanel;
     public Image ShopPanel
@@ -1308,6 +1321,320 @@ public class ShopUI
             return shopPanel;
         }
     }
+    private Image shopInnerPanel;
+    public Image ShopInnerShopPanel
+    {
+        get
+        {
+            if (shopInnerPanel == null)
+            {
+                shopInnerPanel = new GameObject("ShopInnerPanel").AddComponent<Image>();
+                shopInnerPanel.rectTransform.SetParent(ShopPanel.rectTransform);
+                shopInnerPanel.rectTransform.anchoredPosition = Vector3.zero;
+                shopInnerPanel.rectTransform.anchorMax = new Vector2(0.99f, 0.98f);
+                shopInnerPanel.rectTransform.anchorMin = new Vector2(0.01f, 0.02f);
+                shopInnerPanel.rectTransform.sizeDelta = Vector2.zero;
+                shopInnerPanel.sprite = Managers.instance.Resource.Load<Sprite>("");
+                //TODO : ShopPanel이 업로드시 해당 키값 작성 요망
+            }
+            return shopInnerPanel;
+        }
+    }
+    private Image shopPlayerStatusWindowPanel;
+    public Image ShopPlayerStatusWindowPanel
+    {
+        get
+        {
+            if (shopPlayerStatusWindowPanel == null)
+            {
+                shopPlayerStatusWindowPanel = new GameObject("ShopPlayerPanel").AddComponent<Image>();
+                shopPlayerStatusWindowPanel.rectTransform.SetParent(ShopInnerShopPanel.rectTransform);
+                shopPlayerStatusWindowPanel.rectTransform.anchoredPosition = Vector3.zero;
+                shopPlayerStatusWindowPanel.rectTransform.anchorMax = new Vector2(0.322f, 1f);
+                shopPlayerStatusWindowPanel.rectTransform.anchorMin = Vector2.zero;
+                shopPlayerStatusWindowPanel.rectTransform.sizeDelta = Vector2.zero;
+                shopPlayerStatusWindowPanel.sprite = Managers.instance.Resource.Load<Sprite>("");
+                //TODO : ShopPanel이 업로드시 해당 키값 작성 요망
+            }
+            return shopPlayerStatusWindowPanel;
+        }
+    }
 
+    private Image merchantPortrait;
+    public Image MerchantPortrait
+    {
+        get
+        {
+            if (merchantPortrait == null)
+            {
+                merchantPortrait = new GameObject("MerchantPortrait").AddComponent<Image>();
+                merchantPortrait.rectTransform.SetParent(ShopPlayerStatusWindowPanel.rectTransform);
+                merchantPortrait.rectTransform.anchoredPosition = Vector3.zero;
+                merchantPortrait.rectTransform.anchorMax = new Vector2(0.505f, 0.981f);
+                merchantPortrait.rectTransform.anchorMin = new Vector2(0.019f, 0.649f); 
+                merchantPortrait.rectTransform.sizeDelta = Vector2.zero;
+                merchantPortrait.color = Color.red;
+                merchantPortrait.sprite = Managers.instance.Resource.Load<Sprite>("");
+                //TODO : ShopPanel이 업로드시 해당 키값 작성 요망
+            }
+            return merchantPortrait;
+        }
+    }
+    private Image merchantDialogPanel;
+    public Image MerchantDialogPanel
+    {
+        get
+        {
+            if (merchantDialogPanel == null)
+            {
+                merchantDialogPanel = new GameObject("merchantDialogPanel").AddComponent<Image>();
+                merchantDialogPanel.rectTransform.SetParent(ShopPlayerStatusWindowPanel.rectTransform);
+                merchantDialogPanel.rectTransform.anchoredPosition = Vector3.zero;
+                merchantDialogPanel.rectTransform.anchorMax = new Vector2(0.971f, 0.971f);
+                merchantDialogPanel.rectTransform.anchorMin = new Vector2(0.511f, 0.675f);
+                merchantDialogPanel.rectTransform.sizeDelta = Vector2.zero;
+                merchantDialogPanel.color = Color.red;
+                merchantDialogPanel.sprite = Managers.instance.Resource.Load<Sprite>("");
+                //TODO : ShopPanel이 업로드시 해당 키값 작성 요망
+            }
+            return merchantDialogPanel;
+        }
+    }
+    private Image playerBagPanel;
+    public Image PlayerBagPanel
+    {
+        get
+        {
+            if (playerBagPanel == null)
+            {
+                playerBagPanel = new GameObject("PlayerBagPanel").AddComponent<Image>();
+                playerBagPanel.rectTransform.SetParent(ShopPlayerStatusWindowPanel.rectTransform);
+                playerBagPanel.rectTransform.anchoredPosition = Vector3.zero;
+                playerBagPanel.rectTransform.anchorMax = new Vector2(0.971f, 0.624f);
+                playerBagPanel.rectTransform.anchorMin = new Vector2(0.019f, 0.0252f);
+                playerBagPanel.rectTransform.sizeDelta = Vector2.zero;
+                playerBagPanel.color = Color.red;
+                playerBagPanel.sprite = Managers.instance.Resource.Load<Sprite>("");
+                //TODO : ShopPanel이 업로드시 해당 키값 작성 요망
+            }
+            return playerBagPanel;
+        }
+    }
+    private Image playerMoneyPanel;
+    public Image PlayerMoneyPanel
+    {
+        get
+        {
+            if (playerMoneyPanel == null)
+            {
+                playerMoneyPanel = new GameObject("PlayerMoneyPanel").AddComponent<Image>();
+                playerMoneyPanel.rectTransform.SetParent(PlayerBagPanel.rectTransform);
+                playerMoneyPanel.rectTransform.anchoredPosition = Vector3.zero;
+                playerMoneyPanel.rectTransform.anchorMax = Vector2.one;
+                playerMoneyPanel.rectTransform.anchorMin = new Vector2(0,0.5f);
+                playerMoneyPanel.rectTransform.sizeDelta = Vector2.zero;
+                playerMoneyPanel.color = Color.red;
+                playerMoneyPanel.sprite = Managers.instance.Resource.Load<Sprite>("");
+                //TODO : ShopPanel이 업로드시 해당 키값 작성 요망
+            }
+            return playerMoneyPanel;
+        }
+    }
+    private Image playerInventoryPanel;
+    public Image PlayerInventoryPanel
+    {
+        get
+        {
+            if (playerInventoryPanel == null)
+            {
+                playerInventoryPanel = new GameObject("PlayerInventoryPanel").AddComponent<Image>();
+                ScrollRect tempScrollRect = playerInventoryPanel.AddComponent<ScrollRect>();
+                playerInventoryPanel.rectTransform.SetParent(PlayerBagPanel.rectTransform);
+                playerInventoryPanel.rectTransform.anchoredPosition = Vector3.zero;
+                playerInventoryPanel.rectTransform.anchorMax = new Vector2(1, 0.5f);
+                playerInventoryPanel.rectTransform.anchorMin = new Vector2(0,0);
+                playerInventoryPanel.rectTransform.sizeDelta = Vector2.zero;
+                playerInventoryPanel.color = Color.red;
+                playerInventoryPanel.sprite = Managers.instance.Resource.Load<Sprite>("");
+
+
+                // Scroll Rect에 Content 연결
+                RectTransform ViewPortTR = new GameObject("ViewPort").AddComponent<RectTransform>();
+                ViewPortTR.AddComponent<Image>();
+                Mask tempMask  = ViewPortTR.AddComponent<Mask>();
+
+                ViewPortTR.SetParent(tempScrollRect.transform, false);
+                ViewPortTR.anchorMax = Vector2.one;
+                ViewPortTR.anchorMin = Vector2.zero;
+                ViewPortTR.sizeDelta = Vector2.zero;
+                tempScrollRect.viewport = ViewPortTR;
+                Image BackGroundIMG = new GameObject("BackGround").AddComponent<Image>();
+                BackGroundIMG.rectTransform.SetParent(ViewPortTR);
+                BackGroundIMG.rectTransform.SetAsFirstSibling();
+                BackGroundIMG.rectTransform.anchorMax = Vector2.one;
+                BackGroundIMG.rectTransform.anchorMin = Vector2.zero;
+                BackGroundIMG.rectTransform.sizeDelta = Vector2.zero;
+                BackGroundIMG.rectTransform.anchoredPosition = Vector2.zero;
+                BackGroundIMG.sprite = Managers.instance.Resource.Load<Sprite>("");
+
+                Image ContentImage = new GameObject("Content").AddComponent<Image>();
+                
+
+                ContentImage.rectTransform.anchorMax = Vector2.one;
+                ContentImage.rectTransform.anchorMin = Vector2.zero;
+                ContentImage.rectTransform.sizeDelta = Vector2.zero;
+                ContentImage.transform.SetParent(ViewPortTR, false);
+                tempScrollRect.content = ContentImage.rectTransform;
+                GridLayoutGroup tempGroup = ContentImage.AddComponent<GridLayoutGroup>();
+                tempGroup.startAxis = GridLayoutGroup.Axis.Horizontal;
+                tempGroup.startCorner = GridLayoutGroup.Corner.UpperLeft;
+                tempGroup.childAlignment = TextAnchor.MiddleLeft;
+                tempGroup.constraint = GridLayoutGroup.Constraint.FixedRowCount;
+                tempGroup.constraintCount = 2;
+                float resolutionPercentX = Screen.currentResolution.width/1920;
+                float resolutionPercentY = Screen.currentResolution.height/1080;
+
+                tempGroup.cellSize = new Vector2(resolutionPercentX*90, resolutionPercentY*90);
+                tempGroup.spacing = new Vector2(tempGroup.cellSize.x*2, ContentImage.rectTransform.rect.size.y/20);
+                invenGrid = tempGroup;
+
+                // Scrollbar를 추가하고 연결 (옵션)
+                Scrollbar tempScrollbar = new GameObject("Scrollbar_Horizontal").AddComponent<Scrollbar>();
+                RectTransform ScrollbarTransform = tempScrollbar.transform as RectTransform;
+                tempScrollbar.AddComponent<Image>();
+
+                tempScrollbar.transform.SetParent(tempScrollRect.transform, false);
+                ScrollbarTransform.anchorMax = new Vector2(1,0.1f);
+                ScrollbarTransform.anchorMin = Vector2.zero;
+                ScrollbarTransform.sizeDelta = Vector2.zero;
+                tempScrollRect.horizontal = true;
+                tempScrollRect.horizontalScrollbar = tempScrollbar;
+
+
+                Image ScrollHandle = new GameObject("ScrollBarHandle").AddComponent<Image>();
+                ScrollHandle.color = Color.red;
+                tempScrollRect.horizontalScrollbar.handleRect = ScrollHandle.rectTransform;
+                ScrollHandle.rectTransform.SetParent(ScrollbarTransform);
+                ScrollHandle.rectTransform.anchorMax = Vector2.one;
+                ScrollHandle.rectTransform.anchorMin = Vector2.zero;
+                ScrollHandle.rectTransform.sizeDelta = Vector2.zero;
+                ScrollHandle.rectTransform.anchoredPosition = Vector2.zero;
+                ContentImage.enabled = false;
+                tempScrollRect.vertical = false;
+                tempScrollRect.enabled = false;
+                tempScrollRect.enabled = true;
+
+
+                // UI 텍스트를 Content에 추가 (예시)
+                playerInventoryPanel = ContentImage;
+                //TODO : ShopPanel이 업로드시 해당 키값 작성 요망
+            }
+            return playerInventoryPanel;
+        }
+    }
+    private GridLayoutGroup invenGrid;
+
+
+    private Image playerMoneyIMG;
+    public Image PlayerMoneyIMG
+    {
+        get
+        {
+            if (playerMoneyIMG == null)
+            {
+                playerMoneyIMG = new GameObject("PlayerMoneyIMG").AddComponent<Image>();
+                playerMoneyIMG.rectTransform.SetParent(PlayerMoneyPanel.rectTransform);
+                playerMoneyIMG.rectTransform.anchoredPosition = Vector3.zero;
+                playerMoneyIMG.rectTransform.anchorMax = new Vector2(0.298f, 0.65f);
+                playerMoneyIMG.rectTransform.anchorMin = new Vector2(0.055f, 0.225f);
+                playerMoneyIMG.rectTransform.sizeDelta = Vector2.zero;
+                playerMoneyIMG.color = Color.yellow;
+                playerMoneyIMG.sprite = Managers.instance.Resource.Load<Sprite>("");
+                //TODO : ShopPanel이 업로드시 해당 키값 작성 요망
+            }
+            return playerMoneyIMG;
+        }
+    }
+    private Text goldAmountText;
+    public Text GoldAmountText
+    {
+        get
+        {
+            if (goldAmountText == null)
+            {
+                goldAmountText = new GameObject { name = "GoldAmountText" }.AddComponent<Text>();
+                goldAmountText.rectTransform.SetParent(PlayerMoneyPanel.rectTransform);
+                goldAmountText.rectTransform.anchorMin = new Vector2(0.400000006f, 0.224999994f);
+                goldAmountText.rectTransform.anchorMax = Vector2.one;
+                goldAmountText.rectTransform.sizeDelta = Vector2.zero;
+                goldAmountText.rectTransform.anchoredPosition = Vector2.zero;
+                goldAmountText.fontSize = 70;
+                goldAmountText.color = Color.black;
+                goldAmountText.font = Managers.instance.Resource.Load<Font>("InGameFont");
+                goldAmountText.alignment = TextAnchor.LowerLeft;
+                goldAmountText.horizontalOverflow = HorizontalWrapMode.Wrap;
+
+            }
+            return goldAmountText;
+        }
+    }
+    private List<(Image, Text)> Inventory = new List<(Image, Text)>();
     #endregion
+    public void CreateBulbIcons(List<BallStat> ballList)
+    {
+
+        for (int i = 0; i < ballList.Count; i++)
+        {
+            if (Inventory.Count<=i)
+            {
+                Inventory.Add((null,null));
+            }
+            if (Inventory[i].Item1 == null|| Inventory[i].Item2 == null)
+            {
+                Inventory[i] = (new GameObject(ballList[i].ballName+"ShopIcon").AddComponent<Image>(),new GameObject().AddComponent<Text>());
+                Inventory[i].Item1.rectTransform.SetParent(PlayerInventoryPanel.rectTransform);
+                Inventory[i].Item2.rectTransform.SetParent(Inventory[i].Item1.rectTransform);
+
+                Inventory[i].Item2.rectTransform.anchorMax = new Vector2(3,1);
+                Inventory[i].Item2.rectTransform.anchorMin = Vector2.right;
+                Inventory[i].Item2.rectTransform.anchoredPosition = Vector2.zero;
+                Inventory[i].Item2.rectTransform.sizeDelta = Vector2.zero;
+                Inventory[i].Item1.sprite = Managers.instance.Resource.Load<Sprite>(ballList[i].ballName);
+                Inventory[i].Item2.font = Managers.instance.Resource.Load<Font>("InGameFont");
+                Inventory[i].Item2.fontSize = 30;
+                Inventory[i].Item2.color = Color.black;
+                Inventory[i].Item2.text = ballList[i].ballKoreanName+"이거 갯수로 바꿔야함";
+                if (PlayerInventoryPanel.rectTransform.rect.size.x < (invenGrid.cellSize.x+invenGrid.spacing.x)*((Inventory.Count+1)/2))
+                {
+                    PlayerInventoryPanel.rectTransform.sizeDelta += (invenGrid.cellSize.x + invenGrid.spacing.x) * Vector2.right;
+                }
+            }
+            else if(Inventory[i].Item1.sprite.name != ballList[i].ballName)
+            {
+                Inventory[i].Item1.sprite = Managers.instance.Resource.Load<Sprite>(ballList[i].ballName);
+                Inventory[i].Item2.text = ballList[i].ballKoreanName + "이거 갯수로 바꿔야함";
+                Debug.Log("공이름과 이미지 이름 불일치");
+            }
+            if (Inventory[i].Item2.text != ballList[i].ballKoreanName + "이거 갯수로 바꿔야함")
+            {
+                Inventory[i].Item2.text = ballList[i].ballKoreanName + "이거 갯수로 바꿔야함";
+            }
+        }
+        shopPanel.gameObject.SetActive(IsShopActivate);
+    }
+    public void MoneyUpdate(int money)
+    {
+        GoldAmountText.text = money.ToString();
+        shopPanel.gameObject.SetActive(IsShopActivate);
+    }
+    public void ShopUISetting()
+    {
+        MerchantPortrait.enabled = true;
+        MerchantDialogPanel.enabled = true;
+        PlayerInventoryPanel.enabled = true;
+        PlayerMoneyIMG.enabled = true;
+        MoneyUpdate(Managers.instance.PlayerDataManager.PlayerMoney);
+        ShopPanel.gameObject.SetActive(false);
+        CreateBulbIcons(Managers.instance.PlayerDataManager.playerOwnBalls);
+    }
 }
