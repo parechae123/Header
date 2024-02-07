@@ -24,10 +24,39 @@ public class PlayerDataManager
 
     public void AddBall(BallStat balls,bool isCalledItOnShop = false)
     {
-        playerOwnBalls.Add(balls);
+        if (playerOwnBalls.Count > 0)
+        {
+            for (int i = 0; playerOwnBalls.Count >= i; i++)
+            {
+                if (playerOwnBalls.Count> i)
+                {
+                    if (playerOwnBalls[i].ballName == balls.ballName)
+                    {
+                        playerOwnBalls[i].amount += 1;
+                        break;
+                    }
+                    else if (playerOwnBalls[i].ballName != balls.ballName && i == playerOwnBalls.Count)
+                    {
+                        playerOwnBalls.Add(balls);
+                        break;
+                    }
+                }
+                else
+                {
+                    playerOwnBalls.Add(balls);
+                    break;
+                }
+
+            }
+        }
+        else
+        {
+            playerOwnBalls.Add(balls);
+        }
+
         if (isCalledItOnShop)
         {
-            Managers.instance.UI.ShopUICall.CreateBulbIcons(playerOwnBalls);
+            Managers.instance.UI.ShopUICall.UpdateInvenBulb(playerOwnBalls);
         }
     }
     public void RemoveBall(BallStat ball)
@@ -39,7 +68,7 @@ public class PlayerDataManager
                 playerOwnBalls.Remove(item);
             }
         }
-        Managers.instance.UI.ShopUICall.CreateBulbIcons(playerOwnBalls);
+        Managers.instance.UI.ShopUICall.UpdateInvenBulb(playerOwnBalls);
     }
     public void CheckWeaponNextBeforeButton()
     {

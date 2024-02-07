@@ -14,6 +14,8 @@ using DG.Tweening;
 using UnityEngine.Video;
 using UnityEditor.Build.Pipeline.Interfaces;
 using HeaderPadDefines;
+using UnityEngine.Analytics;
+using Unity.VisualScripting.Antlr3.Runtime.Tree;
 
 public class UIManager
 {
@@ -1295,8 +1297,8 @@ public class ShopUI
     public bool IsShopActivate
     {
         get { return ShopPanel.gameObject.activeSelf; }
-        set 
-        { 
+        set
+        {
             ShopPanel.gameObject.SetActive(value);
         }
     }
@@ -1304,8 +1306,8 @@ public class ShopUI
     private Image shopPanel;
     public Image ShopPanel
     {
-        get 
-        { 
+        get
+        {
             if (shopPanel == null)
             {
                 shopPanel = new GameObject("ShopPanel").AddComponent<Image>();
@@ -1371,7 +1373,7 @@ public class ShopUI
                 merchantPortrait.rectTransform.SetParent(ShopPlayerStatusWindowPanel.rectTransform);
                 merchantPortrait.rectTransform.anchoredPosition = Vector3.zero;
                 merchantPortrait.rectTransform.anchorMax = new Vector2(0.505f, 0.981f);
-                merchantPortrait.rectTransform.anchorMin = new Vector2(0.019f, 0.649f); 
+                merchantPortrait.rectTransform.anchorMin = new Vector2(0.019f, 0.649f);
                 merchantPortrait.rectTransform.sizeDelta = Vector2.zero;
                 merchantPortrait.color = Color.red;
                 merchantPortrait.sprite = Managers.instance.Resource.Load<Sprite>("");
@@ -1431,7 +1433,7 @@ public class ShopUI
                 playerMoneyPanel.rectTransform.SetParent(PlayerBagPanel.rectTransform);
                 playerMoneyPanel.rectTransform.anchoredPosition = Vector3.zero;
                 playerMoneyPanel.rectTransform.anchorMax = Vector2.one;
-                playerMoneyPanel.rectTransform.anchorMin = new Vector2(0,0.5f);
+                playerMoneyPanel.rectTransform.anchorMin = new Vector2(0, 0.75f);
                 playerMoneyPanel.rectTransform.sizeDelta = Vector2.zero;
                 playerMoneyPanel.color = Color.red;
                 playerMoneyPanel.sprite = Managers.instance.Resource.Load<Sprite>("");
@@ -1451,8 +1453,8 @@ public class ShopUI
                 ScrollRect tempScrollRect = playerInventoryPanel.AddComponent<ScrollRect>();
                 playerInventoryPanel.rectTransform.SetParent(PlayerBagPanel.rectTransform);
                 playerInventoryPanel.rectTransform.anchoredPosition = Vector3.zero;
-                playerInventoryPanel.rectTransform.anchorMax = new Vector2(1, 0.5f);
-                playerInventoryPanel.rectTransform.anchorMin = new Vector2(0,0);
+                playerInventoryPanel.rectTransform.anchorMax = new Vector2(1, 0.75f);
+                playerInventoryPanel.rectTransform.anchorMin = new Vector2(0, 0);
                 playerInventoryPanel.rectTransform.sizeDelta = Vector2.zero;
                 playerInventoryPanel.color = Color.red;
                 playerInventoryPanel.sprite = Managers.instance.Resource.Load<Sprite>("");
@@ -1461,7 +1463,7 @@ public class ShopUI
                 // Scroll Rect에 Content 연결
                 RectTransform ViewPortTR = new GameObject("ViewPort").AddComponent<RectTransform>();
                 ViewPortTR.AddComponent<Image>();
-                Mask tempMask  = ViewPortTR.AddComponent<Mask>();
+                Mask tempMask = ViewPortTR.AddComponent<Mask>();
 
                 ViewPortTR.SetParent(tempScrollRect.transform, false);
                 ViewPortTR.anchorMax = Vector2.one;
@@ -1477,63 +1479,68 @@ public class ShopUI
                 BackGroundIMG.rectTransform.anchoredPosition = Vector2.zero;
                 BackGroundIMG.sprite = Managers.instance.Resource.Load<Sprite>("");
 
-                Image ContentImage = new GameObject("Content").AddComponent<Image>();
-                
-
-                ContentImage.rectTransform.anchorMax = Vector2.one;
-                ContentImage.rectTransform.anchorMin = Vector2.zero;
-                ContentImage.rectTransform.sizeDelta = Vector2.zero;
-                ContentImage.transform.SetParent(ViewPortTR, false);
-                tempScrollRect.content = ContentImage.rectTransform;
-                GridLayoutGroup tempGroup = ContentImage.AddComponent<GridLayoutGroup>();
-                tempGroup.startAxis = GridLayoutGroup.Axis.Horizontal;
-                tempGroup.startCorner = GridLayoutGroup.Corner.UpperLeft;
-                tempGroup.childAlignment = TextAnchor.MiddleLeft;
-                tempGroup.constraint = GridLayoutGroup.Constraint.FixedRowCount;
-                tempGroup.constraintCount = 2;
-                float resolutionPercentX = Screen.currentResolution.width/1920;
-                float resolutionPercentY = Screen.currentResolution.height/1080;
-
-                tempGroup.cellSize = new Vector2(resolutionPercentX*90, resolutionPercentY*90);
-                tempGroup.spacing = new Vector2(tempGroup.cellSize.x*2, ContentImage.rectTransform.rect.size.y/20);
-                invenGrid = tempGroup;
-
-                // Scrollbar를 추가하고 연결 (옵션)
-                Scrollbar tempScrollbar = new GameObject("Scrollbar_Horizontal").AddComponent<Scrollbar>();
-                RectTransform ScrollbarTransform = tempScrollbar.transform as RectTransform;
-                tempScrollbar.AddComponent<Image>();
-
-                tempScrollbar.transform.SetParent(tempScrollRect.transform, false);
-                ScrollbarTransform.anchorMax = new Vector2(1,0.1f);
-                ScrollbarTransform.anchorMin = Vector2.zero;
-                ScrollbarTransform.sizeDelta = Vector2.zero;
-                tempScrollRect.horizontal = true;
-                tempScrollRect.horizontalScrollbar = tempScrollbar;
-
-
-                Image ScrollHandle = new GameObject("ScrollBarHandle").AddComponent<Image>();
-                ScrollHandle.color = Color.red;
-                tempScrollRect.horizontalScrollbar.handleRect = ScrollHandle.rectTransform;
-                ScrollHandle.rectTransform.SetParent(ScrollbarTransform);
-                ScrollHandle.rectTransform.anchorMax = Vector2.one;
-                ScrollHandle.rectTransform.anchorMin = Vector2.zero;
-                ScrollHandle.rectTransform.sizeDelta = Vector2.zero;
-                ScrollHandle.rectTransform.anchoredPosition = Vector2.zero;
-                ContentImage.enabled = false;
-                tempScrollRect.vertical = false;
-                tempScrollRect.enabled = false;
-                tempScrollRect.enabled = true;
-
-
                 // UI 텍스트를 Content에 추가 (예시)
-                playerInventoryPanel = ContentImage;
+                playerInventoryPanel = BackGroundIMG;
                 //TODO : ShopPanel이 업로드시 해당 키값 작성 요망
             }
             return playerInventoryPanel;
         }
     }
-    private GridLayoutGroup invenGrid;
+    Button nextBTN;
+    Button NextBTN 
+    { 
+        get 
+        {
+            if (nextBTN== null)
+            {
+                Button tempNextBTN = new GameObject("WeaponNextBTN").AddComponent<Button>();
+                RectTransform NextBTRT = tempNextBTN.transform.AddComponent<RectTransform>();
+                NextBTRT.SetParent(PlayerInventoryPanel.rectTransform);
+                Image tempNextBTNIMG = NextBTRT.AddComponent<Image>();
+                tempNextBTN.targetGraphic = tempNextBTNIMG;
+                float percent = PlayerInventoryPanel.rectTransform.rect.size.x / PlayerInventoryPanel.rectTransform.rect.size.y;
+                Vector2 BeforeBTNStartPos = new Vector2(0f, 0.4f);
+                Vector2 tempSize = new Vector2(0.1f, 0.1f * percent);
+                tempNextBTNIMG.sprite = Managers.instance.Resource.Load<Sprite>("select_arrow_panel_R");
+                BeforeBTNStartPos = new Vector2(1f, BeforeBTNStartPos.y + tempSize.y);
+                NextBTRT.anchorMin = BeforeBTNStartPos - tempSize;
+                NextBTRT.anchorMax = BeforeBTNStartPos;
+                NextBTRT.anchoredPosition = Vector2.zero;
+                NextBTRT.sizeDelta = Vector2.zero;
+                tempNextBTN.onClick.AddListener(InvenNextBTN);
+                nextBTN = tempNextBTN;
+            }
+            return nextBTN;
+        }
+    }
+    Button beforeBTN;
+    Button BeforeBTN
+    {
+        get 
+        {
+            if (beforeBTN == null)
+            {
+                Button tempBeforeBTN = new GameObject("WeaponBeforeBTN").AddComponent<Button>();
+                RectTransform BeforeBTRT = tempBeforeBTN.transform.AddComponent<RectTransform>();
+                Image tempBeforeBTNIMG = BeforeBTRT.AddComponent<Image>();
+                tempBeforeBTN.targetGraphic = tempBeforeBTNIMG;
+                tempBeforeBTNIMG.sprite = Managers.instance.Resource.Load<Sprite>("select_arrow_panel_R");
 
+
+                BeforeBTRT.SetParent(PlayerInventoryPanel.rectTransform);
+                float percent = PlayerInventoryPanel.rectTransform.rect.size.x / PlayerInventoryPanel.rectTransform.rect.size.y;
+                Vector2 BeforeBTNStartPos = new Vector2(0f, 0.4f);
+                Vector2 tempSize = new Vector2(0.1f, 0.1f * percent);
+                BeforeBTRT.anchorMin = BeforeBTNStartPos;
+                BeforeBTRT.anchorMax = BeforeBTNStartPos + tempSize;
+                BeforeBTRT.anchoredPosition = Vector2.zero;
+                BeforeBTRT.sizeDelta = Vector2.zero;
+                tempBeforeBTN.onClick.AddListener(InvenBeforeBTN);
+                beforeBTN = tempBeforeBTN;
+            }
+            return beforeBTN;
+        }
+    }
 
     private Image playerMoneyIMG;
     public Image PlayerMoneyIMG
@@ -1545,8 +1552,10 @@ public class ShopUI
                 playerMoneyIMG = new GameObject("PlayerMoneyIMG").AddComponent<Image>();
                 playerMoneyIMG.rectTransform.SetParent(PlayerMoneyPanel.rectTransform);
                 playerMoneyIMG.rectTransform.anchoredPosition = Vector3.zero;
-                playerMoneyIMG.rectTransform.anchorMax = new Vector2(0.298f, 0.65f);
-                playerMoneyIMG.rectTransform.anchorMin = new Vector2(0.055f, 0.225f);
+                Vector2 startPos = new Vector2(0.055f, 0.225f);
+                Vector2 tempSize = new Vector2(0.15f, 0.15f * (PlayerMoneyPanel.rectTransform.rect.size.x / PlayerMoneyPanel.rectTransform.rect.size.y));
+                playerMoneyIMG.rectTransform.anchorMax = startPos + tempSize;
+                playerMoneyIMG.rectTransform.anchorMin = startPos;
                 playerMoneyIMG.rectTransform.sizeDelta = Vector2.zero;
                 playerMoneyIMG.color = Color.yellow;
                 playerMoneyIMG.sprite = Managers.instance.Resource.Load<Sprite>("");
@@ -1578,49 +1587,185 @@ public class ShopUI
             return goldAmountText;
         }
     }
-    private List<(Image, Text)> Inventory = new List<(Image, Text)>();
-    #endregion
-    public void CreateBulbIcons(List<BallStat> ballList)
+    private (Image, Text)[] inventoryIcons = new (Image, Text)[6];
+    public (Image, Text)[] InventoryIcons 
     {
-
-        for (int i = 0; i < ballList.Count; i++)
+        get 
         {
-            if (Inventory.Count<=i)
+            if (inventoryIcons.Length == 0) 
             {
-                Inventory.Add((null,null));
+                inventoryIcons = new (Image, Text)[6];
             }
-            if (Inventory[i].Item1 == null|| Inventory[i].Item2 == null)
+            for (int i = 0; i < inventoryIcons.Length; i++)
             {
-                Inventory[i] = (new GameObject(ballList[i].ballName+"ShopIcon").AddComponent<Image>(),new GameObject().AddComponent<Text>());
-                Inventory[i].Item1.rectTransform.SetParent(PlayerInventoryPanel.rectTransform);
-                Inventory[i].Item2.rectTransform.SetParent(Inventory[i].Item1.rectTransform);
-
-                Inventory[i].Item2.rectTransform.anchorMax = new Vector2(3,1);
-                Inventory[i].Item2.rectTransform.anchorMin = Vector2.right;
-                Inventory[i].Item2.rectTransform.anchoredPosition = Vector2.zero;
-                Inventory[i].Item2.rectTransform.sizeDelta = Vector2.zero;
-                Inventory[i].Item1.sprite = Managers.instance.Resource.Load<Sprite>(ballList[i].ballName);
-                Inventory[i].Item2.font = Managers.instance.Resource.Load<Font>("InGameFont");
-                Inventory[i].Item2.fontSize = 30;
-                Inventory[i].Item2.color = Color.black;
-                Inventory[i].Item2.text = ballList[i].ballKoreanName+"이거 갯수로 바꿔야함";
-                if (PlayerInventoryPanel.rectTransform.rect.size.x < (invenGrid.cellSize.x+invenGrid.spacing.x)*((Inventory.Count+1)/2))
+                if (inventoryIcons[i].Item1 == null || inventoryIcons[i].Item2 == null)
                 {
-                    PlayerInventoryPanel.rectTransform.sizeDelta += (invenGrid.cellSize.x + invenGrid.spacing.x) * Vector2.right;
+                    if (inventoryIcons[i].Item1 == null)
+                    {
+                        float xAixs = (float)i %2f ==0f ? 0.27f: 0.62f;
+                        //i가 홀수일때 x는 오른쪽에 위치하도록,짝수 혹은 0일때 왼쪽에 위치하도록
+                        float yAixs = xAixs == 0.27f? ((float)i / 2f) / 3f : (((float)i - 1f) / 2f) / 3f;
+                        Vector2 maxValue = new Vector2(xAixs,0.93f-yAixs);
+                        float percent = PlayerInventoryPanel.rectTransform.rect.size.x / PlayerInventoryPanel.rectTransform.rect.size.y;
+                        Vector2 IconSize = new Vector2(0.11f, 0.11f* percent);
+                        //i를 2로 나눴을때 1이 나오면 y가 중앙에 위치하도록 설정,그렇지 않으면 x에서 구한 홀수 짝수를 이용해 값을 구함
+                        inventoryIcons[i].Item1 = new GameObject("WeaponIconImage" + i).AddComponent<Image>();
+                        inventoryIcons[i].Item1.rectTransform.SetParent(PlayerInventoryPanel.rectTransform);
+                        inventoryIcons[i].Item1.rectTransform.anchorMin = maxValue - (Vector2.up * IconSize.y);
+                        inventoryIcons[i].Item1.rectTransform.anchorMax = maxValue+ (Vector2.right * IconSize.x);
+                        inventoryIcons[i].Item1.rectTransform.anchoredPosition = Vector2.zero;
+                        inventoryIcons[i].Item1.rectTransform.sizeDelta = Vector2.zero;
+                    }
+                    else
+                    {
+                        float xAixs = (float)i % 2f == 0f ? 0f : 0.5f;
+                        //i가 홀수일때 x는 오른쪽에 위치하도록,짝수 혹은 0일때 왼쪽에 위치하도록
+                        float yAixs = xAixs == 0 ? ((float)i / 2f) / 3f : (((float)i - 1f) / 2f) / 3f;
+                        Vector2 maxValue = new Vector2(xAixs, 1 - yAixs);
+                        //i를 2로 나눴을때 1이 나오면 y가 중앙에 위치하도록 설정,그렇지 않으면 x에서 구한 홀수 짝수를 이용해 값을 구함
+                        inventoryIcons[i].Item1.rectTransform.SetParent(PlayerInventoryPanel.rectTransform);
+                        inventoryIcons[i].Item1.rectTransform.anchorMin = maxValue - (Vector2.one * 0.11f);
+                        inventoryIcons[i].Item1.rectTransform.anchorMax = maxValue;
+                        inventoryIcons[i].Item1.rectTransform.anchoredPosition = Vector2.zero;
+                        inventoryIcons[i].Item1.rectTransform.sizeDelta = Vector2.zero;
+                    }
+                    if (inventoryIcons[i].Item2 == null)
+                    {
+                        inventoryIcons[i].Item2 = new GameObject("WeaponAmountText"+i).AddComponent<Text>();
+                        inventoryIcons[i].Item2.font = Managers.instance.Resource.Load<Font>("InGameFont");
+                        inventoryIcons[i].Item2.fontSize = 40;
+                        inventoryIcons[i].Item2.alignment = TextAnchor.LowerLeft;
+
+                        inventoryIcons[i].Item2.rectTransform.SetParent(inventoryIcons[i].Item1.rectTransform);
+                        inventoryIcons[i].Item2.rectTransform.anchorMax = Vector2.one + Vector2.right;
+                        inventoryIcons[i].Item2.rectTransform.anchorMin = Vector2.right;
+                        inventoryIcons[i].Item2.rectTransform.anchoredPosition = Vector2.zero;
+                        inventoryIcons[i].Item2.rectTransform.sizeDelta = Vector2.zero;
+                    }
+                    else
+                    {
+                        inventoryIcons[i].Item2.rectTransform.SetParent(inventoryIcons[i].Item1.rectTransform);
+                        inventoryIcons[i].Item2.rectTransform.anchorMax = Vector2.one+ Vector2.right;
+                        inventoryIcons[i].Item2.rectTransform.anchorMin = Vector2.right;
+                        inventoryIcons[i].Item2.rectTransform.anchoredPosition= Vector2.zero;
+                        inventoryIcons[i].Item2.rectTransform.sizeDelta= Vector2.zero;
+
+                    }
                 }
             }
-            else if(Inventory[i].Item1.sprite.name != ballList[i].ballName)
+
+            return inventoryIcons;
+        }    
+    }
+    private List<(Sprite, string)> Inventory = new List<(Sprite, string)>();
+    int invenPage;
+    int NowPage
+    {
+        set
+        {
+            if (value <=0)
             {
-                Inventory[i].Item1.sprite = Managers.instance.Resource.Load<Sprite>(ballList[i].ballName);
-                Inventory[i].Item2.text = ballList[i].ballKoreanName + "이거 갯수로 바꿔야함";
-                Debug.Log("공이름과 이미지 이름 불일치");
+                BeforeBTN.interactable = false;
             }
-            if (Inventory[i].Item2.text != ballList[i].ballKoreanName + "이거 갯수로 바꿔야함")
+            else 
             {
-                Inventory[i].Item2.text = ballList[i].ballKoreanName + "이거 갯수로 바꿔야함";
+                BeforeBTN.interactable = true;
+            }
+            if (value < 0)
+            {
+                invenPage = 0;
+            }
+            else
+            {
+                SetInvenIMG(value);
+                invenPage = value;
             }
         }
-        shopPanel.gameObject.SetActive(IsShopActivate);
+    }
+    #endregion
+    public void InvenBeforeBTN()
+    {
+        NowPage = invenPage -1;
+    }
+    public void InvenNextBTN()
+    {
+        NowPage = invenPage + 1;
+    }
+    public void UpdateInvenBulb(List<BallStat> ballList)
+    {
+        (Sprite, string) tempSet;
+        for (int i = 0; i < ballList.Count; i++)
+        {
+            if (i >= Inventory.Count|| Inventory.Count == 0)
+            {
+                tempSet.Item1 = Managers.instance.Resource.Load<Sprite>(ballList[i].ballName);
+                tempSet.Item2 = ballList[i].amount.ToString();
+                Inventory.Add(tempSet);
+                if (i<= InventoryIcons.Length)
+                {
+                    NowPage = 0;
+                }
+            }
+            else if (Inventory[i].Item1.name != ballList[i].ballName || ballList[i].amount.ToString() != Inventory[i].Item2.ToString())
+            {
+                if (Inventory[i].Item1.name != ballList[i].ballName || ballList[i].amount.ToString() != Inventory[i].Item2.ToString())
+                {
+                    tempSet.Item1 = Managers.instance.Resource.Load<Sprite>(ballList[i].ballName);
+                    tempSet.Item2 = ballList[i].amount.ToString();
+                    Inventory[i] = tempSet;
+                    if (i <= InventoryIcons.Length)
+                    {
+                        NowPage = 0;
+                    }
+                }
+                else if (Inventory[i].Item1.name != ballList[i].ballName)
+                {
+                    tempSet.Item1 = Managers.instance.Resource.Load<Sprite>(ballList[i].ballName);
+                    tempSet.Item2 = Inventory[i].Item2;
+                    Inventory[i] = tempSet;
+                    if (i <= InventoryIcons.Length)
+                    {
+                        NowPage = 0;
+                    }
+                }
+                else if (ballList[i].amount.ToString() != Inventory[i].Item2.ToString())
+                {
+                    tempSet.Item1 = Inventory[i].Item1;
+                    tempSet.Item2 = ballList[i].amount.ToString();
+                    Inventory[i] = tempSet;
+                    if (i <= InventoryIcons.Length)
+                    {
+                        NowPage = 0;
+                    }
+                }
+            }
+        }
+    }
+    private void SetInvenIMG(int targetPage)
+    {
+        int caculatePage = 1 + targetPage;
+        int arrayUI = 0;
+        for (int i = targetPage*6; i <= (caculatePage*5)+targetPage; i++)
+        {
+            if (Inventory.Count>i)
+            {
+                NextBTN.interactable = true;
+                InventoryIcons[arrayUI].Item1.sprite = Inventory[i].Item1;
+                InventoryIcons[arrayUI].Item2.text = Inventory[i].Item2;
+                InventoryIcons[arrayUI].Item1.gameObject.SetActive(true);
+                InventoryIcons[arrayUI].Item2.gameObject.SetActive(true);
+            }
+            else
+            {
+                NextBTN.interactable = false;
+                InventoryIcons[arrayUI].Item1.sprite = null;
+                InventoryIcons[arrayUI].Item2.text = string.Empty;
+                InventoryIcons[arrayUI].Item1.gameObject.SetActive(false);
+                InventoryIcons[arrayUI].Item2.gameObject.SetActive(false);
+                
+            }
+            arrayUI++;
+        }
     }
     public void MoneyUpdate(int money)
     {
@@ -1635,6 +1780,8 @@ public class ShopUI
         PlayerMoneyIMG.enabled = true;
         MoneyUpdate(Managers.instance.PlayerDataManager.PlayerMoney);
         ShopPanel.gameObject.SetActive(false);
-        CreateBulbIcons(Managers.instance.PlayerDataManager.playerOwnBalls);
+        UpdateInvenBulb(Managers.instance.PlayerDataManager.playerOwnBalls);
+        NextBTN.enabled = true;
+        BeforeBTN.enabled = true;
     }
 }
