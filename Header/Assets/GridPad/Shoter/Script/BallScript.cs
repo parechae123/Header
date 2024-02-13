@@ -9,8 +9,8 @@ public class BallScript : MonoBehaviour
     public float ballBouncienss;
     public float ballFriction;
     public float ballRadios;
-    private Rigidbody2D ballRB;
-    private Rigidbody2D BallRB
+    protected Rigidbody2D ballRB;
+    protected Rigidbody2D BallRB
     {
         get 
         {
@@ -52,7 +52,7 @@ public class BallScript : MonoBehaviour
             return ballCol;
         }
     }
-    private SpriteRenderer img;
+    protected SpriteRenderer img;
     public SpriteRenderer IMG
     {
         get
@@ -73,7 +73,7 @@ public class BallScript : MonoBehaviour
         }
     }
 
-    private void Update()
+    protected void Update()
     {
         if (BallRB.velocity == Vector2.zero)
         {
@@ -116,7 +116,7 @@ public class BallScript : MonoBehaviour
         FireToward.y += 0.5f * BallRB.gravityScale * BallRB.mass * Mathf.Pow(Time.fixedDeltaTime, 2);
         BallRB.velocity = FireToward;
     }
-    private void OnCollisionEnter2D(Collision2D collision)
+    protected void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.layer == 3) 
         {
@@ -139,7 +139,7 @@ public class BallScript : MonoBehaviour
         tempVec += ((BallRB.gravityScale*Vector2.up) * 9.8f)/2;
         BallRB.velocity = tempVec;
     }
-    private Vector2 CarculateDirection(Vector2 targetPos)
+    protected Vector2 CarculateDirection(Vector2 targetPos)
     {
         return (targetPos - (Vector2)transform.position).normalized;
     }

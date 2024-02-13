@@ -575,7 +575,7 @@ MonoBehaviour:
       installedInteractionPosition: {x: 0, y: -1}
       interactionRemoveSelf: 1
     interactionTypes: 1
-    keyNumber: 1
+    keyNumber: 2
   - interactionPosition: {x: 0, y: -2}
     detail:
       installedInteractionPosition: {x: 0, y: -2}

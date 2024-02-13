@@ -143,7 +143,13 @@ namespace HeaderPadDefines
         public float ballFriction;
         public float weight; //무게 mass에 넣어줘야함
         public int amount = 1;
-
+        public string flavorText;
+    }
+    [System.Serializable]
+    public class ExtraBallStat : BallStat
+    {
+        public float SkillValueOne;
+        public float SkillValueTwo;
     }
     public enum BlockStatus
     {

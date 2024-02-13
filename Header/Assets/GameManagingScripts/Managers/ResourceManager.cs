@@ -9,10 +9,12 @@ using UnityEngine.ResourceManagement.AsyncOperations;
 using Object = UnityEngine.Object;
 using DataDefines;
 using UnityEngine.Video;
+using HeaderPadDefines;
 
 public class ResourceManager
 {
     Dictionary<string, UnityEngine.Object> _resources = new Dictionary<string, Object>();
+    public Dictionary<string,ExtraBallStat> _weaponDictionary = new Dictionary<string,ExtraBallStat>();
     
     private bool loadDone = false;
     //데이터 순수성을 위해 읽기전용 프로퍼티 작성

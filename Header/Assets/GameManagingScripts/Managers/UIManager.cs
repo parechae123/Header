@@ -430,9 +430,9 @@ public class DialogSystem
             {
                 dataQueue.Enqueue(data);
             }
-            else if (EventNumber < tempDialogArray)
+            else if (EventNumber != tempDialogArray)
             {
-                break;
+                continue;
             }
         }
         DialogTextChanger();
@@ -1524,7 +1524,7 @@ public class ShopUI
                 RectTransform BeforeBTRT = tempBeforeBTN.transform.AddComponent<RectTransform>();
                 Image tempBeforeBTNIMG = BeforeBTRT.AddComponent<Image>();
                 tempBeforeBTN.targetGraphic = tempBeforeBTNIMG;
-                tempBeforeBTNIMG.sprite = Managers.instance.Resource.Load<Sprite>("select_arrow_panel_R");
+                tempBeforeBTNIMG.sprite = Managers.instance.Resource.Load<Sprite>("select_arrow_panel_L");
 
 
                 BeforeBTRT.SetParent(PlayerInventoryPanel.rectTransform);
@@ -1682,6 +1682,29 @@ public class ShopUI
             }
         }
     }
+    private Image shoppingPanel;
+    public Image ShoppingPanel
+    {
+        get
+        {
+            if (shoppingPanel == null)
+            {
+                shoppingPanel = new GameObject("shoppingPanel").AddComponent<Image>();
+                shoppingPanel.rectTransform.SetParent(ShopInnerShopPanel.rectTransform);
+                shoppingPanel.rectTransform.anchorMax = Vector2.one;
+                shoppingPanel.rectTransform.anchorMin = new Vector2(0.33f,0f);
+                shoppingPanel.rectTransform.sizeDelta = Vector2.zero;
+                shoppingPanel.rectTransform.anchoredPosition = Vector2.zero;
+            }
+            return shopInnerPanel;
+        }
+    }
+    private Button[] shopWeaponItems;
+    
+    public void SetWeaponBuyButtons()
+    {
+        shopWeaponItems = new Button[shopWeaponItems.Length];
+    }
     #endregion
     public void InvenBeforeBTN()
     {
@@ -1783,5 +1806,6 @@ public class ShopUI
         UpdateInvenBulb(Managers.instance.PlayerDataManager.playerOwnBalls);
         NextBTN.enabled = true;
         BeforeBTN.enabled = true;
+        ShoppingPanel.enabled = true;
     }
 }

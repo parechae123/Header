@@ -15,7 +15,7 @@ MonoBehaviour:
   m_DefaultGroup: 2c470aee28d213248b7eba9a93cb50c6
   m_currentHash:
     serializedVersion: 2
-    Hash: 00000000000000000000000000000000
+    Hash: 275b07dda6ad7809105bd0e6cecf922e
   m_OptimizeCatalogSize: 0
   m_BuildRemoteCatalog: 0
   m_BundleLocalCatalog: 0
@@ -95,7 +95,7 @@ MonoBehaviour:
     - LoadingIlusts
     - Font
     - UI
-    - DialogDatatSheet
+    - DatatSheet
     - Video
     - Texture
     - Texture2D

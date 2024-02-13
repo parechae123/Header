@@ -1333,7 +1333,7 @@ MonoBehaviour:
     Type: 3
   - LabelName: UI
     Type: 1
-  - LabelName: DialogDatatSheet
+  - LabelName: DatatSheet
     Type: 2
   - LabelName: Video
     Type: 5
