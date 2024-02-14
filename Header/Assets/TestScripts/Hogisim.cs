@@ -25,7 +25,7 @@ public class Hogisim : MonoBehaviour
 
         JObject tempJson = JObject.Parse(WeaponTest.text);
         JToken tempJToken = tempJson["Weapon_Table"];
-        WeaponArrayTest = tempJToken.ToObject<List<TestWeaponClass>>(); 
+        WeaponArrayTest = tempJToken.ToObject<List<TestWeaponClass>>();
     }
 
     // Update is called once per frame

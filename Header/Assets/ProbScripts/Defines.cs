@@ -143,6 +143,7 @@ namespace HeaderPadDefines
         public float ballFriction;
         public float weight; //무게 mass에 넣어줘야함
         public int amount = 1;
+        public int price = 10;
         public string flavorText;
     }
     [System.Serializable]

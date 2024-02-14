@@ -1,7 +1,7 @@
 {
 "Weapon_Table":[
  {
-  "ballName": "Stone_Bulb",
+  "ballName": "stone_bulb",
   "ballKoreanName": "석재 전구",
   "ballStartForce": 0,
   "ballBouncienss": 0,
@@ -12,7 +12,7 @@
   "flavorText": "일반 전구보다 더 단단한 전구. 벽돌에 부딪혀도 한번더 튕길수 있다."
  },
  {
-  "ballName": "Hp_Bulb",
+  "ballName": "hp_bulb",
   "ballKoreanName": "체력 전구",
   "ballStartForce": 0,
   "ballBouncienss": 0,
@@ -23,7 +23,7 @@
   "flavorText": "파괴한 적 개체의 개수의 10% 만큼 체력을 회복한다."
  },
  {
-  "ballName": "Metal_Bulb",
+  "ballName": "metal_bulb",
   "ballKoreanName": "금속 전구",
   "ballStartForce": 0,
   "ballBouncienss": 0,
@@ -34,7 +34,7 @@
   "flavorText": "처음 닿고 나면 세개의 금속 파편으로 흩어지는 전구"
  },
  {
-  "ballName": "Crash_Bulb",
+  "ballName": "crash_bulb",
   "ballKoreanName": "금이 간 전구",
   "ballStartForce": 0,
   "ballBouncienss": 0,
@@ -45,7 +45,7 @@
   "flavorText": "내구성이 약해 던지는 도중 깨진다. 깨지는 순간 유리파편으로 다중 데미지를 입힐수 있다."
  },
  {
-  "ballName": "Torch_Bulb",
+  "ballName": "torch_bulb",
   "ballKoreanName": "횃불 전구",
   "ballStartForce": 0,
   "ballBouncienss": 0,
@@ -56,7 +56,7 @@
   "flavorText": "굳이 왜 합쳤는지 모르겠는 전구. 얼음을 녹이는데 유용하다."
  },
  {
-  "ballName": "Cotton_Bulb",
+  "ballName": "cotton_bulb",
   "ballKoreanName": "솜 전구",
   "ballStartForce": 0,
   "ballBouncienss": 0,
@@ -67,7 +67,7 @@
   "flavorText": "솜으로 이루어져 있어 깨질 위험이 덜하다. 위력은 약하지만 소리를 막는 기능이 있다."
  },
  {
-  "ballName": "Ink_Bulb",
+  "ballName": "ink_bulb",
   "ballKoreanName": "잉크 전구",
   "ballStartForce": 0,
   "ballBouncienss": 0,
@@ -78,7 +78,7 @@
   "flavorText": "빛을 발하는 전구와는 정반대인 전구. 깨뜨리면 잠시동안 앞이 보이지 않게 된다."
  },
  {
-  "ballName": "Mirror_Bulb",
+  "ballName": "mirror_bulb",
   "ballKoreanName": "거울 전구",
   "ballStartForce": 0,
   "ballBouncienss": 0,
@@ -89,7 +89,7 @@
   "flavorText": "적의 공격을 그대로 따라한다. 단, 특수 공격은 따라 할수 없다."
  },
  {
-  "ballName": "Funny_Bulb",
+  "ballName": "funny_bulb",
   "ballKoreanName": "웃긴 전구",
   "ballStartForce": 0,
   "ballBouncienss": 0,
@@ -100,7 +100,7 @@
   "flavorText": "웃음이 난다. 별 쓸모는 없어보인다."
  },
  {
-  "ballName": "Most_Perfect_Bulb",
+  "ballName": "most_perfect_bulb",
   "ballKoreanName": "가장 완벽한 전구",
   "ballStartForce": 0,
   "ballBouncienss": 0,
@@ -111,7 +111,7 @@
   "flavorText": "가장 완벽한 \"구\"로 이루어져있다. 약한 몬스터는 이 완벽함에 두려움을 느끼고 명중률이 떨어진다."
  },
  {
-  "ballName": "Aim_Bulb",
+  "ballName": "aim_bulb",
   "ballKoreanName": "조준 전구",
   "ballStartForce": 0,
   "ballBouncienss": 0,
@@ -122,7 +122,7 @@
   "flavorText": "한개의 적 개체를 정확하게 명중시킨다."
  },
  {
-  "ballName": "Gold_Bulb",
+  "ballName": "gold_bulb",
   "ballKoreanName": "황금 전구",
   "ballStartForce": 0,
   "ballBouncienss": 0,
@@ -133,7 +133,7 @@
   "flavorText": "엄청 비싸보이는 전구, 다음 적의 공격을 황금으로 만들어 무겁게 하고 적의 공격은 튕기지 않게 된다"
  },
  {
-  "ballName": "Shine_Bulb",
+  "ballName": "shine_bulb",
   "ballKoreanName": "광택 전구",
   "ballStartForce": 0,
   "ballBouncienss": 0,
@@ -144,7 +144,7 @@
   "flavorText": "거울로된 메인 전구를 하나 발사한다, 해당 전구가 파괴되기 전 까지 유지되는 서브 대칭 전구를 하나 생성한다 이때 대칭전구는 충돌판정이 있더라도 메인전구와 무조건 대칭된다."
  },
  {
-  "ballName": "Nine_Bulb",
+  "ballName": "nine_bulb",
   "ballKoreanName": "전9",
   "ballStartForce": 0,
   "ballBouncienss": 0,
@@ -155,7 +155,7 @@
   "flavorText": "(일회용 전구) 9번 튕기는 전구, 만드는데 꽤나 오래 걸려 스테이지당 한 개씩만 가져갈 수 있다. "
  },
  {
-  "ballName": "Deco_Bulb",
+  "ballName": "deco_bulb",
   "ballKoreanName": "장식용 전구",
   "ballStartForce": 0,
   "ballBouncienss": 0,

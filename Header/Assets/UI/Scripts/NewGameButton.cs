@@ -92,45 +92,7 @@ public class NewGameButton : MonoBehaviour
         AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(sceneNumber, LoadSceneMode.Single);
         //HEOYOON : 임시 총알 테스팅코드
         
-        Managers.instance.PlayerDataManager.AddBall
-            (new HeaderPadDefines.BallStat { ballBouncienss = 0.5f, ballFriction = 0.7f, ballName = "Bullet_Basic", weight = 1, ballKoreanName = "기본공" ,ballStartForce = 25});
 
-         Managers.instance.PlayerDataManager.AddBall
-                    (new HeaderPadDefines.BallStat { ballBouncienss = 0.5f, ballFriction = 0.7f, ballName = "cotton_bulb", weight = 1, ballKoreanName = "기본공 테스트1" ,ballStartForce = 25});
-
-         Managers.instance.PlayerDataManager.AddBall
-                    (new HeaderPadDefines.BallStat { ballBouncienss = 0.5f, ballFriction = 0.7f, ballName = "deco_bulb", weight = 1, ballKoreanName = "기본공 테스트2" ,ballStartForce = 25});
-
-        Managers.instance.PlayerDataManager.AddBall
-       (new HeaderPadDefines.BallStat { ballBouncienss = 0.5f, ballFriction = 0.7f, ballName = "funny_bulb", weight = 1, ballKoreanName = "기본공 테스트", ballStartForce = 25 });
-
-
-        Managers.instance.PlayerDataManager.AddBall
-            (new HeaderPadDefines.BallStat { ballBouncienss = 0.5f, ballFriction = 0.7f, ballName = "gold_bulb", weight = 1, ballKoreanName = "기본공" ,ballStartForce = 25});
-
-         Managers.instance.PlayerDataManager.AddBall
-                    (new HeaderPadDefines.BallStat { ballBouncienss = 0.5f, ballFriction = 0.7f, ballName = "hp_bulb", weight = 1, ballKoreanName = "기본공 테스트1" ,ballStartForce = 25});
-
-         Managers.instance.PlayerDataManager.AddBall
-                    (new HeaderPadDefines.BallStat { ballBouncienss = 0.5f, ballFriction = 0.7f, ballName = "ink_bulb", weight = 1, ballKoreanName = "기본공 테스트2" ,ballStartForce = 25});
-
-        Managers.instance.PlayerDataManager.AddBall
-       (new HeaderPadDefines.BallStat { ballBouncienss = 0.5f, ballFriction = 0.7f, ballName = "metal_bulb", weight = 1, ballKoreanName = "기본공 테스트", ballStartForce = 25 });
-
-        Managers.instance.PlayerDataManager.AddBall
-            (new HeaderPadDefines.BallStat { ballBouncienss = 0.5f, ballFriction = 0.7f, ballName = "most_perfect_bulb", weight = 1, ballKoreanName = "기본공" ,ballStartForce = 25});
-
-         Managers.instance.PlayerDataManager.AddBall
-                    (new HeaderPadDefines.BallStat { ballBouncienss = 0.5f, ballFriction = 0.7f, ballName = "nine_bulb", weight = 1, ballKoreanName = "기본공 테스트1" ,ballStartForce = 25});
-
-         Managers.instance.PlayerDataManager.AddBall
-                    (new HeaderPadDefines.BallStat { ballBouncienss = 0.5f, ballFriction = 0.7f, ballName = "shine_bulb", weight = 1, ballKoreanName = "기본공 테스트2" ,ballStartForce = 25});
-
-        Managers.instance.PlayerDataManager.AddBall
-       (new HeaderPadDefines.BallStat { ballBouncienss = 0.5f, ballFriction = 0.7f, ballName = "stone_bulb", weight = 1, ballKoreanName = "기본공 테스트", ballStartForce = 25 });
-
-        Managers.instance.PlayerDataManager.AddBall
-       (new HeaderPadDefines.BallStat { ballBouncienss = 0.5f, ballFriction = 0.7f, ballName = "torch_bulb", weight = 1, ballKoreanName = "기본공 테스트", ballStartForce = 25 });
         // 씬 로딩이 완료될 때까지 대기합니다.
         while (!asyncLoad.isDone)
         {

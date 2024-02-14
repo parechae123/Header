@@ -231,7 +231,8 @@ public class ShoterController : MonoBehaviour
                 NowBallStat = ballStatQueue.Dequeue();
             }
             TargetBall.Ballsetting(SettingValue(NowBallStat.ballBouncienss, NowBallStat.ballFriction), NowBallStat.weight);
-            
+            TargetBall.ChangeBallSprite(NowBallStat.ballName);
+
         }
         else
         {

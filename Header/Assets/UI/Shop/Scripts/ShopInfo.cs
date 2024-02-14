@@ -24,11 +24,20 @@ public class ShopInfo : MonoBehaviour
     }
     public string[] sellableBallNames = new string[0];
     [SerializeField]private BallStat[] shopBalls;
+
+    public BallStat[] CallBallList()
+    {
+        if (sellableBallNames.Length != shopBalls.Length||sellableBallNames.Length == 0)
+        {
+            SetShopList();
+        }
+        return shopBalls;
+    }
     
     void Start()
     {
-        SetShopList();
         Managers.instance.UI.ShopUICall.ShopUISetting();
+        CallBallList();
     }
 
     // Update is called once per frame
@@ -53,6 +62,7 @@ public class ShopInfo : MonoBehaviour
                 Array.Resize<BallStat>(ref shopBalls, i + 1);
                 int tempRandomNumber = UnityEngine.Random.Range(0, tempStatArray.Length);
                 shopBalls[i] = tempStatArray[tempRandomNumber];
+                Managers.instance.UI.ShopUICall.CreateWeaponBuyButtons(tempStatArray[tempRandomNumber]);
             }
         }
         else
@@ -63,6 +73,7 @@ public class ShopInfo : MonoBehaviour
                 if (Managers.instance.Resource._weaponDictionary.TryGetValue(sellableBallNames[i],out ExtraBallStat targetStat))
                 {
                     shopBalls[i] = targetStat;
+                    Managers.instance.UI.ShopUICall.CreateWeaponBuyButtons(targetStat);
                 }
                 else
                 {
@@ -81,6 +92,10 @@ public class ShopInfo : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.V))
         {
             Managers.instance.UI.ShopUICall.IsShopActivate = Managers.instance.UI.ShopUICall.IsShopActivate == true ? false : true;
+        }
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            Managers.instance.UI.CloseUIStack();
         }
     }
 }

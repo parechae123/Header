@@ -16,6 +16,8 @@ using UnityEditor.Build.Pipeline.Interfaces;
 using HeaderPadDefines;
 using UnityEngine.Analytics;
 using Unity.VisualScripting.Antlr3.Runtime.Tree;
+using MoreLinq;
+using System.Globalization;
 
 public class UIManager
 {
@@ -36,7 +38,11 @@ public class UIManager
         if (UIStack.Count > 0)
         {
             UIStack.Pop().gameObject.SetActive(false);
-            TopViewPlayer.Instance.isMoveAble = MoveAbleChecker();
+            if (TopViewPlayer.Instance!= null)
+            {
+                TopViewPlayer.Instance.isMoveAble = MoveAbleChecker();
+            }
+            
         }
     }
     public void CheckerRegist(Transform tr)
@@ -72,7 +78,10 @@ public class UIManager
         {
             UIStack.TryPop(out target);
         }
-        TopViewPlayer.Instance.isMoveAble = MoveAbleChecker();
+        if (TopViewPlayer.Instance != null)
+        {
+            TopViewPlayer.Instance.isMoveAble = MoveAbleChecker();
+        }
     }
 }
 
@@ -1299,7 +1308,7 @@ public class ShopUI
         get { return ShopPanel.gameObject.activeSelf; }
         set
         {
-            ShopPanel.gameObject.SetActive(value);
+            Managers.instance.UI.TargetUIOnOff(ShopPanel.rectTransform, value);
         }
     }
     #region 변수
@@ -1635,7 +1644,7 @@ public class ShopUI
                         inventoryIcons[i].Item2.font = Managers.instance.Resource.Load<Font>("InGameFont");
                         inventoryIcons[i].Item2.fontSize = 40;
                         inventoryIcons[i].Item2.alignment = TextAnchor.LowerLeft;
-
+                        inventoryIcons[i].Item2.color = Color.gray;
                         inventoryIcons[i].Item2.rectTransform.SetParent(inventoryIcons[i].Item1.rectTransform);
                         inventoryIcons[i].Item2.rectTransform.anchorMax = Vector2.one + Vector2.right;
                         inventoryIcons[i].Item2.rectTransform.anchorMin = Vector2.right;
@@ -1696,14 +1705,78 @@ public class ShopUI
                 shoppingPanel.rectTransform.sizeDelta = Vector2.zero;
                 shoppingPanel.rectTransform.anchoredPosition = Vector2.zero;
             }
-            return shopInnerPanel;
+            return shoppingPanel;
         }
     }
     private Button[] shopWeaponItems;
     
-    public void SetWeaponBuyButtons()
+    public void CreateWeaponBuyButtons(ExtraBallStat stat)
     {
-        shopWeaponItems = new Button[shopWeaponItems.Length];
+        if (shopWeaponItems == null)
+        {
+            shopWeaponItems = new Button[0];
+        }
+        Array.Resize(ref shopWeaponItems,shopWeaponItems.Length+1);
+        int arrayNum = shopWeaponItems.Length - 1;
+        shopWeaponItems[arrayNum] = new GameObject("ShopWeaponBTN"+(shopWeaponItems.Length)).AddComponent<Button>();
+        RectTransform tempParent = new GameObject("ShopWeaponBTNParentOBJ" + shopWeaponItems.Length).AddComponent<RectTransform>();
+        tempParent.SetParent(ShoppingPanel.rectTransform);
+
+
+
+
+        RectTransform tempRect = shopWeaponItems[arrayNum].AddComponent<RectTransform>();
+        Image tempImage = shopWeaponItems[arrayNum].AddComponent<Image>();
+        shopWeaponItems[arrayNum].targetGraphic = tempImage;
+        tempRect.SetParent(tempParent);
+
+
+        float shoppingPanelSizePercent = ShoppingPanel.rectTransform.rect.size.x / ShoppingPanel.rectTransform.rect.size.y;
+        //얘를 버튼  y에 곱해주면 정사각형이 됨,X는 배열과 정비례하나 Y는 반비례함
+        shopWeaponItems[arrayNum].onClick.AddListener(() =>
+        {
+            Managers.instance.PlayerDataManager.AddBall(stat, true);
+        });
+
+
+        int tempClumm = arrayNum / 4;
+        int tempRow = arrayNum % 4;
+/*        if (tempClumm > 0)
+        {
+            int tempLength = (shopWeaponItems.Length / 5) + shopWeaponItems.Length;
+            tempRow = tempLength % 5;
+            tempClumm = tempLength / 5;
+            tempRow = tempRow== 0 ? 1: tempRow ;
+        }*/
+
+        float tempMaxX = tempRow * 0.25f;
+        float tempMaxY = 1 - ((tempClumm* shoppingPanelSizePercent) *0.25f);
+        //row = 행 Clum = 열
+        tempParent.anchorMax = new Vector2(tempMaxX+ 0.25f, tempMaxY);
+        tempParent.anchorMin = new Vector2(tempMaxX, tempMaxY + (-0.25f * shoppingPanelSizePercent));
+        tempParent.sizeDelta = Vector2.zero;
+        tempParent.anchoredPosition = Vector2.zero;
+
+        Text priceText = new GameObject("ShopWeaponPriceText" + shopWeaponItems.Length).AddComponent<Text>();
+        priceText.font = Managers.instance.Resource.Load<Font>("InGameFont");
+        priceText.alignment = TextAnchor.MiddleCenter;
+        priceText.text = stat.price+"$";
+        priceText.color = Color.gray;
+        priceText.rectTransform.SetParent(tempParent);
+        priceText.rectTransform.anchorMax = new Vector2(1f, 0.4f);
+        priceText.rectTransform.anchorMin = Vector2.zero;
+        priceText.rectTransform.sizeDelta = Vector2.zero;
+        priceText.rectTransform.anchoredPosition = Vector2.zero;
+        priceText.fontSize = (int)(tempParent.rect.size.y * 0.3f);
+
+        tempRect.anchorMax = new Vector2(0.8f,1);
+        tempRect.anchorMin = new Vector2(0.2f, 0.4f);
+        tempRect.sizeDelta = Vector2.zero;
+        tempRect.anchoredPosition = Vector2.zero;
+
+        
+
+        tempImage.sprite = Managers.instance.Resource.Load<Sprite>(stat.ballName);
     }
     #endregion
     public void InvenBeforeBTN()
@@ -1721,51 +1794,47 @@ public class ShopUI
         {
             if (i >= Inventory.Count|| Inventory.Count == 0)
             {
+                NowPage = i / 6;
                 tempSet.Item1 = Managers.instance.Resource.Load<Sprite>(ballList[i].ballName);
                 tempSet.Item2 = ballList[i].amount.ToString();
                 Inventory.Add(tempSet);
-                if (i<= InventoryIcons.Length)
-                {
-                    NowPage = 0;
-                }
             }
             else if (Inventory[i].Item1.name != ballList[i].ballName || ballList[i].amount.ToString() != Inventory[i].Item2.ToString())
             {
-                if (Inventory[i].Item1.name != ballList[i].ballName || ballList[i].amount.ToString() != Inventory[i].Item2.ToString())
+                NowPage = i / 6;
+                if (Inventory[i].Item1.name != ballList[i].ballName && ballList[i].amount.ToString() != Inventory[i].Item2.ToString())
                 {
                     tempSet.Item1 = Managers.instance.Resource.Load<Sprite>(ballList[i].ballName);
                     tempSet.Item2 = ballList[i].amount.ToString();
                     Inventory[i] = tempSet;
-                    if (i <= InventoryIcons.Length)
-                    {
-                        NowPage = 0;
-                    }
                 }
                 else if (Inventory[i].Item1.name != ballList[i].ballName)
                 {
                     tempSet.Item1 = Managers.instance.Resource.Load<Sprite>(ballList[i].ballName);
                     tempSet.Item2 = Inventory[i].Item2;
                     Inventory[i] = tempSet;
-                    if (i <= InventoryIcons.Length)
-                    {
-                        NowPage = 0;
-                    }
                 }
                 else if (ballList[i].amount.ToString() != Inventory[i].Item2.ToString())
                 {
                     tempSet.Item1 = Inventory[i].Item1;
                     tempSet.Item2 = ballList[i].amount.ToString();
                     Inventory[i] = tempSet;
-                    if (i <= InventoryIcons.Length)
-                    {
-                        NowPage = 0;
-                    }
                 }
             }
+
+            if (invenPage<0)
+            {
+                NowPage = 0;
+            }
         }
+        SetInvenIMG();
     }
-    private void SetInvenIMG(int targetPage)
+    private void SetInvenIMG(int targetPage = -1)
     {
+        if (targetPage == -1)
+        {
+            targetPage = invenPage;
+        }
         int caculatePage = 1 + targetPage;
         int arrayUI = 0;
         for (int i = targetPage*6; i <= (caculatePage*5)+targetPage; i++)
@@ -1808,4 +1877,5 @@ public class ShopUI
         BeforeBTN.enabled = true;
         ShoppingPanel.enabled = true;
     }
+    
 }
