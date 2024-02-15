@@ -74,6 +74,11 @@ public class TopViewPlayer : MonoBehaviour
             Managers.instance.Grid.GridCheck(transform.position + playerColliderCenter);
             //플레이어 다리위치로 위치 보정
         }
+        if (Input.GetKeyDown(KeyCode.M))
+        {
+            Managers.instance.PlayerDataManager.PlayerMoney += 10;
+
+        }
     }
     public void SetPlayerState()
     {

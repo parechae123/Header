@@ -1710,73 +1710,85 @@ public class ShopUI
     }
     private Button[] shopWeaponItems;
     
-    public void CreateWeaponBuyButtons(ExtraBallStat stat)
+    public void CreateWeaponBuyButtons(ExtraBallStat stat,int ballArray)
     {
         if (shopWeaponItems == null)
         {
             shopWeaponItems = new Button[0];
         }
-        Array.Resize(ref shopWeaponItems,shopWeaponItems.Length+1);
-        int arrayNum = shopWeaponItems.Length - 1;
-        shopWeaponItems[arrayNum] = new GameObject("ShopWeaponBTN"+(shopWeaponItems.Length)).AddComponent<Button>();
-        RectTransform tempParent = new GameObject("ShopWeaponBTNParentOBJ" + shopWeaponItems.Length).AddComponent<RectTransform>();
-        tempParent.SetParent(ShoppingPanel.rectTransform);
+        if (ballArray>= shopWeaponItems.Length)
+        {
+            Array.Resize(ref shopWeaponItems, shopWeaponItems.Length + 1);
+            int arrayNum = shopWeaponItems.Length - 1;
+            shopWeaponItems[arrayNum] = new GameObject("ShopWeaponBTN" + (shopWeaponItems.Length)).AddComponent<Button>();
+            RectTransform tempParent = new GameObject("ShopWeaponBTNParentOBJ" + shopWeaponItems.Length).AddComponent<RectTransform>();
+            tempParent.SetParent(ShoppingPanel.rectTransform);
 
 
 
 
-        RectTransform tempRect = shopWeaponItems[arrayNum].AddComponent<RectTransform>();
-        Image tempImage = shopWeaponItems[arrayNum].AddComponent<Image>();
-        shopWeaponItems[arrayNum].targetGraphic = tempImage;
-        tempRect.SetParent(tempParent);
+            RectTransform tempRect = shopWeaponItems[arrayNum].AddComponent<RectTransform>();
+            Image tempImage = shopWeaponItems[arrayNum].AddComponent<Image>();
+            shopWeaponItems[arrayNum].targetGraphic = tempImage;
+            tempRect.SetParent(tempParent);
 
 
-        float shoppingPanelSizePercent = ShoppingPanel.rectTransform.rect.size.x / ShoppingPanel.rectTransform.rect.size.y;
-        //얘를 버튼  y에 곱해주면 정사각형이 됨,X는 배열과 정비례하나 Y는 반비례함
-        shopWeaponItems[arrayNum].onClick.AddListener(() =>
+            float shoppingPanelSizePercent = ShoppingPanel.rectTransform.rect.size.x / ShoppingPanel.rectTransform.rect.size.y;
+            //얘를 버튼  y에 곱해주면 정사각형이 됨,X는 배열과 정비례하나 Y는 반비례함
+            int tempClumm = arrayNum / 4;
+            int tempRow = arrayNum % 4;
+            /*        if (tempClumm > 0)
+                    {
+                        int tempLength = (shopWeaponItems.Length / 5) + shopWeaponItems.Length;
+                        tempRow = tempLength % 5;
+                        tempClumm = tempLength / 5;
+                        tempRow = tempRow== 0 ? 1: tempRow ;
+                    }*/
+
+            float tempMaxX = tempRow * 0.25f;
+            float tempMaxY = 1 - ((tempClumm * shoppingPanelSizePercent) * 0.25f);
+            //row = 행 Clum = 열
+            tempParent.anchorMax = new Vector2(tempMaxX + 0.25f, tempMaxY);
+            tempParent.anchorMin = new Vector2(tempMaxX, tempMaxY + (-0.25f * shoppingPanelSizePercent));
+            tempParent.sizeDelta = Vector2.zero;
+            tempParent.anchoredPosition = Vector2.zero;
+
+            Text priceText = new GameObject("ShopWeaponPriceText" + shopWeaponItems.Length).AddComponent<Text>();
+            priceText.font = Managers.instance.Resource.Load<Font>("InGameFont");
+            priceText.alignment = TextAnchor.MiddleCenter;
+            priceText.text = stat.price + "$";
+            priceText.color = Color.gray;
+            priceText.rectTransform.SetParent(tempParent);
+            priceText.rectTransform.anchorMax = new Vector2(1f, 0.4f);
+            priceText.rectTransform.anchorMin = Vector2.zero;
+            priceText.rectTransform.sizeDelta = Vector2.zero;
+            priceText.rectTransform.anchoredPosition = Vector2.zero;
+            priceText.fontSize = (int)(tempParent.rect.size.y * 0.3f);
+
+            tempRect.anchorMax = new Vector2(0.8f, 1);
+            tempRect.anchorMin = new Vector2(0.2f, 0.4f);
+            tempRect.sizeDelta = Vector2.zero;
+            tempRect.anchoredPosition = Vector2.zero;
+            tempImage.sprite = Managers.instance.Resource.Load<Sprite>(stat.ballName);
+        }
+        else
+        {
+            shopWeaponItems[ballArray].GetComponent<Image>().sprite = Managers.instance.Resource.Load<Sprite>(stat.ballName);
+            shopWeaponItems[ballArray].transform.parent.Find("ShopWeaponPriceText" + ballArray + 1);
+            for (int i = ballArray+1; i < shopWeaponItems.Length; i++)
+            {
+                shopWeaponItems[i].transform.parent.transform.gameObject.SetActive(false);
+            }
+            shopWeaponItems[ballArray].transform.parent.transform.gameObject.SetActive(true);
+        }
+        shopWeaponItems[ballArray].onClick.RemoveAllListeners();
+
+        shopWeaponItems[ballArray].onClick.AddListener(() =>
         {
             Managers.instance.PlayerDataManager.AddBall(stat, true);
         });
 
 
-        int tempClumm = arrayNum / 4;
-        int tempRow = arrayNum % 4;
-/*        if (tempClumm > 0)
-        {
-            int tempLength = (shopWeaponItems.Length / 5) + shopWeaponItems.Length;
-            tempRow = tempLength % 5;
-            tempClumm = tempLength / 5;
-            tempRow = tempRow== 0 ? 1: tempRow ;
-        }*/
-
-        float tempMaxX = tempRow * 0.25f;
-        float tempMaxY = 1 - ((tempClumm* shoppingPanelSizePercent) *0.25f);
-        //row = 행 Clum = 열
-        tempParent.anchorMax = new Vector2(tempMaxX+ 0.25f, tempMaxY);
-        tempParent.anchorMin = new Vector2(tempMaxX, tempMaxY + (-0.25f * shoppingPanelSizePercent));
-        tempParent.sizeDelta = Vector2.zero;
-        tempParent.anchoredPosition = Vector2.zero;
-
-        Text priceText = new GameObject("ShopWeaponPriceText" + shopWeaponItems.Length).AddComponent<Text>();
-        priceText.font = Managers.instance.Resource.Load<Font>("InGameFont");
-        priceText.alignment = TextAnchor.MiddleCenter;
-        priceText.text = stat.price+"$";
-        priceText.color = Color.gray;
-        priceText.rectTransform.SetParent(tempParent);
-        priceText.rectTransform.anchorMax = new Vector2(1f, 0.4f);
-        priceText.rectTransform.anchorMin = Vector2.zero;
-        priceText.rectTransform.sizeDelta = Vector2.zero;
-        priceText.rectTransform.anchoredPosition = Vector2.zero;
-        priceText.fontSize = (int)(tempParent.rect.size.y * 0.3f);
-
-        tempRect.anchorMax = new Vector2(0.8f,1);
-        tempRect.anchorMin = new Vector2(0.2f, 0.4f);
-        tempRect.sizeDelta = Vector2.zero;
-        tempRect.anchoredPosition = Vector2.zero;
-
-        
-
-        tempImage.sprite = Managers.instance.Resource.Load<Sprite>(stat.ballName);
     }
     #endregion
     public void InvenBeforeBTN()

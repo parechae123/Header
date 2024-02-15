@@ -10,6 +10,7 @@ using Object = UnityEngine.Object;
 using DataDefines;
 using UnityEngine.Video;
 using HeaderPadDefines;
+using Newtonsoft.Json.Linq;
 
 public class ResourceManager
 {
@@ -51,14 +52,21 @@ public class ResourceManager
                                 {
                                     loadingName = loadResource;
                                     loadCount++;
-                                    CB.Invoke(loadResource, loadCount, totalCount);
                                     if (loadCount == totalCount)
                                     {
+                                        JObject tempJson = JObject.Parse(Managers.instance.Resource.Load<TextAsset>("Weapon_Table").text);
+                                        JToken tempJToken = tempJson["Weapon_Table"];
+                                        ExtraBallStat[] tempBallTable = tempJToken.ToObject<ExtraBallStat[]>();
+                                        for (int E = 0; E < tempBallTable.Length; E++)
+                                        {
+                                            _weaponDictionary.Add(tempBallTable[E].ballName, tempBallTable[E]);
+                                        }
                                         loadDone = true;
-                                        isDone.Invoke(true,true);
+                                        isDone.Invoke(true, true);
                                     }
+                                    CB.Invoke(loadResource, loadCount, totalCount);
                                 });
-                                break;
+                                continue;
                             case ResourceType.Sprites:
                                 OpHandle = Addressables.LoadResourceLocationsAsync(ResourceDefines[i].LabelName, typeof(Sprite));
                                 totalCount += OpHandle.Result.Count;
@@ -66,14 +74,21 @@ public class ResourceManager
                                 {
                                     loadingName = loadResource;
                                     loadCount++;
-                                    CB.Invoke(loadResource, loadCount, totalCount);
                                     if (loadCount == totalCount)
                                     {
+                                        JObject tempJson = JObject.Parse(Managers.instance.Resource.Load<TextAsset>("Weapon_Table").text);
+                                        JToken tempJToken = tempJson["Weapon_Table"];
+                                        ExtraBallStat[] tempBallTable = tempJToken.ToObject<ExtraBallStat[]>();
+                                        for (int E = 0; E < tempBallTable.Length; E++)
+                                        {
+                                            _weaponDictionary.Add(tempBallTable[E].ballName, tempBallTable[E]);
+                                        }
                                         loadDone = true;
-                                        isDone.Invoke(true,true);
+                                        isDone.Invoke(true, true);
                                     }
+                                    CB.Invoke(loadResource, loadCount, totalCount);
                                 });
-                                break;
+                                continue;
                             case ResourceType.DataSheets:
                                 OpHandle = Addressables.LoadResourceLocationsAsync(ResourceDefines[i].LabelName, typeof(TextAsset));
                                 totalCount += OpHandle.Result.Count;
@@ -81,14 +96,21 @@ public class ResourceManager
                                 {
                                     loadingName = loadResource;
                                     loadCount++;
-                                    CB.Invoke(loadResource, loadCount, totalCount);
                                     if (loadCount == totalCount)
                                     {
+                                        JObject tempJson = JObject.Parse(Managers.instance.Resource.Load<TextAsset>("Weapon_Table").text);
+                                        JToken tempJToken = tempJson["Weapon_Table"];
+                                        ExtraBallStat[] tempBallTable = tempJToken.ToObject<ExtraBallStat[]>();
+                                        for (int E = 0; E < tempBallTable.Length; E++)
+                                        {
+                                            _weaponDictionary.Add(tempBallTable[E].ballName, tempBallTable[E]);
+                                        }
                                         loadDone = true;
-                                        isDone.Invoke(true,true);
+                                        isDone.Invoke(true, true);
                                     }
+                                    CB.Invoke(loadResource, loadCount, totalCount);
                                 });
-                                break;
+                                continue;
                             case ResourceType.Fonts:
                                 OpHandle = Addressables.LoadResourceLocationsAsync(ResourceDefines[i].LabelName, typeof(Font));
                                 totalCount += OpHandle.Result.Count;
@@ -96,14 +118,21 @@ public class ResourceManager
                                 {
                                     loadingName = loadResource;
                                     loadCount++;
-                                    CB.Invoke(loadResource, loadCount, totalCount);
                                     if (loadCount == totalCount)
                                     {
+                                        JObject tempJson = JObject.Parse(Managers.instance.Resource.Load<TextAsset>("Weapon_Table").text);
+                                        JToken tempJToken = tempJson["Weapon_Table"];
+                                        ExtraBallStat[] tempBallTable = tempJToken.ToObject<ExtraBallStat[]>();
+                                        for (int E = 0; E < tempBallTable.Length; E++)
+                                        {
+                                            _weaponDictionary.Add(tempBallTable[E].ballName, tempBallTable[E]);
+                                        }
                                         loadDone = true;
                                         isDone.Invoke(true, true);
                                     }
+                                    CB.Invoke(loadResource, loadCount, totalCount);
                                 });
-                                break;
+                                continue;
                             case ResourceType.RenderTexture:
                                 OpHandle = Addressables.LoadResourceLocationsAsync(ResourceDefines[i].LabelName, typeof(RenderTexture));
                                 totalCount += OpHandle.Result.Count;
@@ -111,14 +140,21 @@ public class ResourceManager
                                 {
                                     loadingName = loadResource;
                                     loadCount++;
-                                    CB.Invoke(loadResource, loadCount, totalCount);
                                     if (loadCount == totalCount)
                                     {
+                                        JObject tempJson = JObject.Parse(Managers.instance.Resource.Load<TextAsset>("Weapon_Table").text);
+                                        JToken tempJToken = tempJson["Weapon_Table"];
+                                        ExtraBallStat[] tempBallTable = tempJToken.ToObject<ExtraBallStat[]>();
+                                        for (int E = 0; E < tempBallTable.Length; E++)
+                                        {
+                                            _weaponDictionary.Add(tempBallTable[E].ballName, tempBallTable[E]);
+                                        }
                                         loadDone = true;
                                         isDone.Invoke(true, true);
                                     }
+                                    CB.Invoke(loadResource, loadCount, totalCount);
                                 });
-                                break;
+                                continue;
                             case ResourceType.Video:
                                 OpHandle = Addressables.LoadResourceLocationsAsync(ResourceDefines[i].LabelName, typeof(VideoClip));
                                 totalCount += OpHandle.Result.Count;
@@ -126,14 +162,21 @@ public class ResourceManager
                                 {
                                     loadingName = loadResource;
                                     loadCount++;
-                                    CB.Invoke(loadResource, loadCount, totalCount);
                                     if (loadCount == totalCount)
                                     {
+                                        JObject tempJson = JObject.Parse(Managers.instance.Resource.Load<TextAsset>("Weapon_Table").text);
+                                        JToken tempJToken = tempJson["Weapon_Table"];
+                                        ExtraBallStat[] tempBallTable = tempJToken.ToObject<ExtraBallStat[]>();
+                                        for (int E = 0; E < tempBallTable.Length; E++)
+                                        {
+                                            _weaponDictionary.Add(tempBallTable[E].ballName, tempBallTable[E]);
+                                        }
                                         loadDone = true;
                                         isDone.Invoke(true, true);
                                     }
+                                    CB.Invoke(loadResource, loadCount, totalCount);
                                 });
-                                break;
+                                continue;
                             case ResourceType.Texture2D:
                                 OpHandle = Addressables.LoadResourceLocationsAsync(ResourceDefines[i].LabelName, typeof(Texture2D));
                                 totalCount += OpHandle.Result.Count;
@@ -141,16 +184,26 @@ public class ResourceManager
                                 {
                                     loadingName = loadResource;
                                     loadCount++;
-                                    CB.Invoke(loadResource, loadCount, totalCount);
                                     if (loadCount == totalCount)
                                     {
+                                        JObject tempJson = JObject.Parse(Managers.instance.Resource.Load<TextAsset>("Weapon_Table").text);
+                                        JToken tempJToken = tempJson["Weapon_Table"];
+                                        ExtraBallStat[] tempBallTable = tempJToken.ToObject<ExtraBallStat[]>();
+                                        for (int E = 0; E < tempBallTable.Length; E++)
+                                        {
+                                            _weaponDictionary.Add(tempBallTable[E].ballName, tempBallTable[E]);
+                                        }
                                         loadDone = true;
                                         isDone.Invoke(true, true);
                                     }
+                                    CB.Invoke(loadResource, loadCount, totalCount);
+
                                 });
-                                break;
+                                continue;
                         }
+
                     }
+
                 }
             });
         }

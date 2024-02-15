@@ -4,15 +4,22 @@ using UnityEngine;
 
 public class InteractionInstaller : MonoBehaviour
 {
-    [SerializeField] InteractionDefines.InteractionInstallerProps[] interactionInstaller;
+    public InteractionDefines.InteractionInstallerProps[] interactionInstaller;
     // Start is called before the first frame update
-    void Awake()
+    void Start()
     {
-        for (int i = 0; i < interactionInstaller.Length; i++)
+        if (Managers.instance.Resource.isResourceLoadDone)
         {
-            Managers.instance.Grid.AddInteraction(interactionInstaller[i]);
-
+            for (int i = 0; i < interactionInstaller.Length; i++)
+            {
+                Managers.instance.Grid.AddInteraction(interactionInstaller[i]);
+            }
         }
+    }
+    private void Update()
+    {
+        
+
     }
     private void OnDrawGizmos()
     {

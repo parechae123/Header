@@ -576,18 +576,82 @@ MonoBehaviour:
       interactionRemoveSelf: 1
     interactionTypes: 1
     keyNumber: 2
+    weaponNameList: []
   - interactionPosition: {x: 0, y: -2}
     detail:
       installedInteractionPosition: {x: 0, y: -2}
       interactionRemoveSelf: 1
     interactionTypes: 1
     keyNumber: 1
+    weaponNameList: []
   - interactionPosition: {x: 0, y: 10}
     detail:
       installedInteractionPosition: {x: 0, y: 10}
       interactionRemoveSelf: 1
     interactionTypes: 1
     keyNumber: 1
+    weaponNameList: []
+  - interactionPosition: {x: 5, y: 1}
+    detail:
+      installedInteractionPosition: {x: 0, y: 10}
+      interactionRemoveSelf: 1
+    interactionTypes: 2
+    keyNumber: 1
+    weaponNameList:
+    - aim_bulb
+    - cotton_bulb
+    - deco_bulb
+    - funny_bulb
+    - funny_bulb
+    - funny_bulb
+    - funny_bulb
+    - funny_bulb
+  - interactionPosition: {x: 5, y: 3}
+    detail:
+      installedInteractionPosition: {x: 0, y: 10}
+      interactionRemoveSelf: 1
+    interactionTypes: 2
+    keyNumber: 1
+    weaponNameList:
+    - aim_bulb
+    - cotton_bulb
+    - deco_bulb
+    - funny_bulb
+    - funny_bulb
+    - funny_bulb
+    - funny_bulb
+    - funny_bulb
+    - funny_bulb
+    - funny_bulb
+    - funny_bulb
+    - funny_bulb
+    - funny_bulb
+    - funny_bulb
+    - funny_bulb
+    - funny_bulb
+  - interactionPosition: {x: 5, y: 5}
+    detail:
+      installedInteractionPosition: {x: 0, y: 10}
+      interactionRemoveSelf: 1
+    interactionTypes: 2
+    keyNumber: 1
+    weaponNameList:
+    - nine_bulb
+    - aim_bulb
+    - cotton_bulb
+    - deco_bulb
+    - funny_bulb
+    - gold_bulb
+    - hp_bulb
+    - ink_bulb
+    - metal_bulb
+    - most_perfect_bulb
+    - stone_bulb
+    - torch_bulb
+    - nine_bulb
+    - nine_bulb
+    - nine_bulb
+    - nine_bulb
 --- !u!1 &1272116825
 GameObject:
   m_ObjectHideFlags: 0

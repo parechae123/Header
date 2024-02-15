@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEditor;
 using Newtonsoft.Json;
 using System;
 using UnityEngine.UI;
@@ -48,14 +49,17 @@ namespace InteractionDefines
     {
         public Vector2Int interactionPosition;
         public InteractionDetailPosition detail;
+        
         public InteractionTypes interactionTypes;
         public short keyNumber;
+        [Header("merchant만 해당")]
+        public string[] weaponNameList;
     }
 
     public enum InteractionTypes
     {
         //MAINTANCE : 인터렉션 종류 추가 시 여기에 정의 필요
-        None, DialogInteraction,ToBattleScene
+        None, DialogInteraction,MerchantInteraction,ToBattleScene
     }
 }
 namespace HeaderPadDefines

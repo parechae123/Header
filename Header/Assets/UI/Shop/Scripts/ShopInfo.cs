@@ -10,18 +10,6 @@ using UnityEngine;
 public class ShopInfo : MonoBehaviour
 {
     // Start is called before the first frame update
-    private static ShopInfo instance;
-    public static ShopInfo Instance 
-    {  
-        get 
-        { 
-            if (instance == null)
-            {
-                instance = new GameObject("ShopInfo").AddComponent<ShopInfo>();
-            }
-            return instance;
-        } 
-    }
     public string[] sellableBallNames = new string[0];
     [SerializeField]private BallStat[] shopBalls;
 
@@ -62,7 +50,7 @@ public class ShopInfo : MonoBehaviour
                 Array.Resize<BallStat>(ref shopBalls, i + 1);
                 int tempRandomNumber = UnityEngine.Random.Range(0, tempStatArray.Length);
                 shopBalls[i] = tempStatArray[tempRandomNumber];
-                Managers.instance.UI.ShopUICall.CreateWeaponBuyButtons(tempStatArray[tempRandomNumber]);
+                Managers.instance.UI.ShopUICall.CreateWeaponBuyButtons(tempStatArray[tempRandomNumber], i);
             }
         }
         else
@@ -73,7 +61,7 @@ public class ShopInfo : MonoBehaviour
                 if (Managers.instance.Resource._weaponDictionary.TryGetValue(sellableBallNames[i],out ExtraBallStat targetStat))
                 {
                     shopBalls[i] = targetStat;
-                    Managers.instance.UI.ShopUICall.CreateWeaponBuyButtons(targetStat);
+                    Managers.instance.UI.ShopUICall.CreateWeaponBuyButtons(targetStat, i);
                 }
                 else
                 {

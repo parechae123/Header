@@ -39,7 +39,6 @@ public class NewGameButton : MonoBehaviour
     public void OnClickBTN()
     {
         newGameBTN.transform.SetParent(null);
-        DontDestroyOnLoad(newGameBTN.gameObject);
         Managers.instance.UI.ResetUI();
         Managers.instance.Pool.Clear();
         Managers.instance.Grid.ResetGrids();
@@ -102,22 +101,6 @@ public class NewGameButton : MonoBehaviour
 
             yield return null;
         }
-        AfterWeaponLoadDone(() =>
-        {
-            Destroy(this.gameObject);
-            Debug.Log("앙되");
-        });
         // 로딩이 완료되면 실행될 코드를 여기에 추가합니다.
-    }
-    private void AfterWeaponLoadDone(Action done)
-    {
-        JObject tempJson = JObject.Parse(Managers.instance.Resource.Load<TextAsset>("Weapon_Table").text);
-        JToken tempJToken = tempJson["Weapon_Table"];
-        ExtraBallStat[] tempBallTable = tempJToken.ToObject<ExtraBallStat[]>();
-        for (int i = 0; i < tempBallTable.Length; i++)
-        {
-            Managers.instance.Resource._weaponDictionary.Add(tempBallTable[i].ballName, tempBallTable[i]);
-        }
-        done.Invoke();
     }
 }
