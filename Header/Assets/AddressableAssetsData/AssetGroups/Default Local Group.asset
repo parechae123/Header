@@ -59,6 +59,60 @@ MonoBehaviour:
     m_SerializedLabels:
     - DatatSheet
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: edeb8eb704a0be7408de08a7515d0e21
+    m_Address: coin
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - UI
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: a26faf83b90e7b44790e17ce99e0f10f
+    m_Address: coin_panel
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - UI
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 20ec03545b464984dbcdf5fb39b6c29f
+    m_Address: shop_background_in
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - UI
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 7720133530dd14c47a3111948c626a48
+    m_Address: shop_background_out
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - UI
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 77efc9c8bdfa5f246b86291e106848b0
+    m_Address: shop_bag_panel
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - UI
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 392b3751c8e788645affd3c4b0f34cbf
+    m_Address: shop_buy_panel
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - UI
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: bdbf553bb78214a4f8714d0ed0e9403d
+    m_Address: shop_chat_panel
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - UI
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: d04b1007b5b93044bbf5ae56c2f737ba
+    m_Address: shop_portrait
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - UI
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 56d265c65ec3b534b84eba83746e13ea
+    m_Address: shop_portrait_panel
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - UI
+    FlaggedDuringContentUpdateRestriction: 0
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: 489b40023fd66be419d08d79841125b1, type: 2}
   m_SchemaSet:

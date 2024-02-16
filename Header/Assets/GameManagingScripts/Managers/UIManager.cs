@@ -1325,7 +1325,7 @@ public class ShopUI
                 shopPanel.rectTransform.anchorMax = Vector2.one;
                 shopPanel.rectTransform.anchorMin = Vector2.zero;
                 shopPanel.rectTransform.sizeDelta = Vector2.zero;
-                shopPanel.sprite = Managers.instance.Resource.Load<Sprite>("");
+                shopPanel.sprite = Managers.instance.Resource.Load<Sprite>("shop_background_out");
                 shopPanel.rectTransform.SetAsLastSibling();
                 //TODO : ShopPanel이 업로드시 해당 키값 작성 요망
             }
@@ -1345,26 +1345,25 @@ public class ShopUI
                 shopInnerPanel.rectTransform.anchorMax = new Vector2(0.99f, 0.98f);
                 shopInnerPanel.rectTransform.anchorMin = new Vector2(0.01f, 0.02f);
                 shopInnerPanel.rectTransform.sizeDelta = Vector2.zero;
-                shopInnerPanel.sprite = Managers.instance.Resource.Load<Sprite>("");
+                shopInnerPanel.sprite = Managers.instance.Resource.Load<Sprite>("shop_background_in");
                 //TODO : ShopPanel이 업로드시 해당 키값 작성 요망
             }
             return shopInnerPanel;
         }
     }
-    private Image shopPlayerStatusWindowPanel;
-    public Image ShopPlayerStatusWindowPanel
+    private RectTransform shopPlayerStatusWindowPanel;
+    public RectTransform ShopPlayerStatusWindowPanel
     {
         get
         {
             if (shopPlayerStatusWindowPanel == null)
             {
-                shopPlayerStatusWindowPanel = new GameObject("ShopPlayerPanel").AddComponent<Image>();
-                shopPlayerStatusWindowPanel.rectTransform.SetParent(ShopInnerShopPanel.rectTransform);
-                shopPlayerStatusWindowPanel.rectTransform.anchoredPosition = Vector3.zero;
-                shopPlayerStatusWindowPanel.rectTransform.anchorMax = new Vector2(0.322f, 1f);
-                shopPlayerStatusWindowPanel.rectTransform.anchorMin = Vector2.zero;
-                shopPlayerStatusWindowPanel.rectTransform.sizeDelta = Vector2.zero;
-                shopPlayerStatusWindowPanel.sprite = Managers.instance.Resource.Load<Sprite>("");
+                shopPlayerStatusWindowPanel = new GameObject("ShopPlayerPanel").AddComponent<RectTransform>();
+                shopPlayerStatusWindowPanel.SetParent(ShopInnerShopPanel.rectTransform);
+                shopPlayerStatusWindowPanel.anchoredPosition = Vector3.zero;
+                shopPlayerStatusWindowPanel.anchorMax = new Vector2(0.322f, 1f);
+                shopPlayerStatusWindowPanel.anchorMin = Vector2.zero;
+                shopPlayerStatusWindowPanel.sizeDelta = Vector2.zero;
                 //TODO : ShopPanel이 업로드시 해당 키값 작성 요망
             }
             return shopPlayerStatusWindowPanel;
@@ -1379,13 +1378,12 @@ public class ShopUI
             if (merchantPortrait == null)
             {
                 merchantPortrait = new GameObject("MerchantPortrait").AddComponent<Image>();
-                merchantPortrait.rectTransform.SetParent(ShopPlayerStatusWindowPanel.rectTransform);
+                merchantPortrait.rectTransform.SetParent(ShopPlayerStatusWindowPanel);
                 merchantPortrait.rectTransform.anchoredPosition = Vector3.zero;
                 merchantPortrait.rectTransform.anchorMax = new Vector2(0.505f, 0.981f);
                 merchantPortrait.rectTransform.anchorMin = new Vector2(0.019f, 0.649f);
                 merchantPortrait.rectTransform.sizeDelta = Vector2.zero;
-                merchantPortrait.color = Color.red;
-                merchantPortrait.sprite = Managers.instance.Resource.Load<Sprite>("");
+                merchantPortrait.sprite = Managers.instance.Resource.Load<Sprite>("shop_portrait");
                 //TODO : ShopPanel이 업로드시 해당 키값 작성 요망
             }
             return merchantPortrait;
@@ -1399,13 +1397,12 @@ public class ShopUI
             if (merchantDialogPanel == null)
             {
                 merchantDialogPanel = new GameObject("merchantDialogPanel").AddComponent<Image>();
-                merchantDialogPanel.rectTransform.SetParent(ShopPlayerStatusWindowPanel.rectTransform);
+                merchantDialogPanel.rectTransform.SetParent(ShopPlayerStatusWindowPanel);
                 merchantDialogPanel.rectTransform.anchoredPosition = Vector3.zero;
                 merchantDialogPanel.rectTransform.anchorMax = new Vector2(0.971f, 0.971f);
                 merchantDialogPanel.rectTransform.anchorMin = new Vector2(0.511f, 0.675f);
                 merchantDialogPanel.rectTransform.sizeDelta = Vector2.zero;
-                merchantDialogPanel.color = Color.red;
-                merchantDialogPanel.sprite = Managers.instance.Resource.Load<Sprite>("");
+                merchantDialogPanel.sprite = Managers.instance.Resource.Load<Sprite>("shop_chat_panel");
                 //TODO : ShopPanel이 업로드시 해당 키값 작성 요망
             }
             return merchantDialogPanel;
@@ -1419,12 +1416,11 @@ public class ShopUI
             if (playerBagPanel == null)
             {
                 playerBagPanel = new GameObject("PlayerBagPanel").AddComponent<Image>();
-                playerBagPanel.rectTransform.SetParent(ShopPlayerStatusWindowPanel.rectTransform);
+                playerBagPanel.rectTransform.SetParent(ShopPlayerStatusWindowPanel);
                 playerBagPanel.rectTransform.anchoredPosition = Vector3.zero;
                 playerBagPanel.rectTransform.anchorMax = new Vector2(0.971f, 0.624f);
                 playerBagPanel.rectTransform.anchorMin = new Vector2(0.019f, 0.0252f);
                 playerBagPanel.rectTransform.sizeDelta = Vector2.zero;
-                playerBagPanel.color = Color.red;
                 playerBagPanel.sprite = Managers.instance.Resource.Load<Sprite>("");
                 //TODO : ShopPanel이 업로드시 해당 키값 작성 요망
             }
@@ -1444,8 +1440,7 @@ public class ShopUI
                 playerMoneyPanel.rectTransform.anchorMax = Vector2.one;
                 playerMoneyPanel.rectTransform.anchorMin = new Vector2(0, 0.75f);
                 playerMoneyPanel.rectTransform.sizeDelta = Vector2.zero;
-                playerMoneyPanel.color = Color.red;
-                playerMoneyPanel.sprite = Managers.instance.Resource.Load<Sprite>("");
+                playerMoneyPanel.sprite = Managers.instance.Resource.Load<Sprite>("coin_panel");
                 //TODO : ShopPanel이 업로드시 해당 키값 작성 요망
             }
             return playerMoneyPanel;
@@ -1465,8 +1460,6 @@ public class ShopUI
                 playerInventoryPanel.rectTransform.anchorMax = new Vector2(1, 0.75f);
                 playerInventoryPanel.rectTransform.anchorMin = new Vector2(0, 0);
                 playerInventoryPanel.rectTransform.sizeDelta = Vector2.zero;
-                playerInventoryPanel.color = Color.red;
-                playerInventoryPanel.sprite = Managers.instance.Resource.Load<Sprite>("");
 
 
                 // Scroll Rect에 Content 연결
@@ -1486,7 +1479,7 @@ public class ShopUI
                 BackGroundIMG.rectTransform.anchorMin = Vector2.zero;
                 BackGroundIMG.rectTransform.sizeDelta = Vector2.zero;
                 BackGroundIMG.rectTransform.anchoredPosition = Vector2.zero;
-                BackGroundIMG.sprite = Managers.instance.Resource.Load<Sprite>("");
+                BackGroundIMG.sprite = Managers.instance.Resource.Load<Sprite>("shop_bag_panel");
 
                 // UI 텍스트를 Content에 추가 (예시)
                 playerInventoryPanel = BackGroundIMG;
@@ -1560,14 +1553,14 @@ public class ShopUI
             {
                 playerMoneyIMG = new GameObject("PlayerMoneyIMG").AddComponent<Image>();
                 playerMoneyIMG.rectTransform.SetParent(PlayerMoneyPanel.rectTransform);
+
                 playerMoneyIMG.rectTransform.anchoredPosition = Vector3.zero;
                 Vector2 startPos = new Vector2(0.055f, 0.225f);
                 Vector2 tempSize = new Vector2(0.15f, 0.15f * (PlayerMoneyPanel.rectTransform.rect.size.x / PlayerMoneyPanel.rectTransform.rect.size.y));
                 playerMoneyIMG.rectTransform.anchorMax = startPos + tempSize;
                 playerMoneyIMG.rectTransform.anchorMin = startPos;
                 playerMoneyIMG.rectTransform.sizeDelta = Vector2.zero;
-                playerMoneyIMG.color = Color.yellow;
-                playerMoneyIMG.sprite = Managers.instance.Resource.Load<Sprite>("");
+                PlayerMoneyIMG.sprite = Managers.instance.Resource.Load<Sprite>("coin");
                 //TODO : ShopPanel이 업로드시 해당 키값 작성 요망
             }
             return playerMoneyIMG;
@@ -1704,6 +1697,7 @@ public class ShopUI
                 shoppingPanel.rectTransform.anchorMin = new Vector2(0.33f,0f);
                 shoppingPanel.rectTransform.sizeDelta = Vector2.zero;
                 shoppingPanel.rectTransform.anchoredPosition = Vector2.zero;
+                shoppingPanel.sprite = Managers.instance.Resource.Load<Sprite>("shop_buy_panel");
             }
             return shoppingPanel;
         }

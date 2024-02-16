@@ -5,6 +5,7 @@ using UnityEditor;
 using Newtonsoft.Json;
 using System;
 using UnityEngine.UI;
+using Unity.VisualScripting;
 
 public class Defines
 {
@@ -159,5 +160,91 @@ namespace HeaderPadDefines
     public enum BlockStatus
     {
         Destroyed,Emptied,FIlled,FilledCoin,BoombBlock,MovePlatform
+    }
+}
+namespace MonsterDefines
+{
+    [System.Serializable]
+    public class MonsterStats
+    {
+        public MonsterStats(MonsterStats monsterStat = null) 
+        {
+            if (monsterStat == null)
+            {
+                return;
+            }
+            else
+            {
+                monsterHPMax = monsterStat.monsterHPMax;
+                monsterHPNow = monsterStat.monsterHPNow;
+                monsterAD = monsterStat.monsterAD;
+                monsterMoveSpeed = monsterStat.monsterMoveSpeed;
+            }
+        }
+        [SerializeField]private float monsterHPMax;
+        [SerializeField] private float monsterHPNow;
+        public float MonsterHP
+        {
+            get 
+            {
+                if (monsterHPNow > monsterHPMax)
+                {
+                    monsterHPNow = monsterHPMax;
+                }
+                return monsterHPNow;
+            }
+            set 
+            {
+                if (value > monsterHPMax)
+                {
+                    monsterHPNow = monsterHPMax;
+                }
+                else
+                {
+                    monsterHPNow = value;
+                }
+
+            }
+        }
+        public float monsterAD;//AttackDamage
+        public float monsterMoveSpeed;
+        public bool isMonsterDie
+        {
+            get 
+            {
+                return monsterHPNow >= 0;
+            }
+        }
+
+        public void GetDamage(float damage)
+        {
+            if (!isMonsterDie)
+            {
+                MonsterHP -= damage;
+            }
+        }
+        public void MonsterAttack()
+        {
+
+        }
+
+        public (SpriteRenderer, Animator) monsterAnimSprite(GameObject TargetOBJ)
+        {
+            (SpriteRenderer, Animator) tempSet;
+            tempSet.Item1 = TargetOBJ.GetComponent<SpriteRenderer>();
+            tempSet.Item2 = TargetOBJ.GetComponent<Animator>();
+
+            if (tempSet.Item1 == null) tempSet.Item1 = TargetOBJ.AddComponent<SpriteRenderer>();
+
+            if (tempSet.Item2 == null) tempSet.Item2 = TargetOBJ.AddComponent<Animator>();
+
+            return tempSet;
+        }
+    }
+    [System.Serializable]
+    public class MonsterPrefab
+    {
+        public MonsterStats stat;
+        public GameObject prefab;
     }
 }
