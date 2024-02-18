@@ -84,15 +84,18 @@ namespace HeaderPadDefines
                     blockCondition = BlockStatus.Destroyed;
                     targetIMG.transform.GetComponent<PolygonCollider2D>().enabled = false;
                     targetIMG.sprite = Managers.instance.Resource.Load<Sprite>("HeaderBlock_Destroyed");
+                    ShoterController.Instance.targetDamage += 1;
                     //TODO : 볼 충돌시 갱신되는 모든걸 여기에 넣으면될듯,EX : 데미지
                     break;
                 case BlockStatus.FIlled:
                     blockCondition = BlockStatus.Emptied;
                     targetIMG.sprite = Managers.instance.Resource.Load<Sprite>("HeaderBlock_Emptied");
+                    ShoterController.Instance.targetDamage += 3;
                     break;
                 case BlockStatus.FilledCoin:
                     blockCondition = BlockStatus.Emptied;
                     targetIMG.sprite = Managers.instance.Resource.Load<Sprite>("HeaderBlock_Emptied");
+                    Managers.instance.PlayerDataManager.PlayerMoney += 1;
                     break;
                 case BlockStatus.BoombBlock:
                     if (BlockHP>= 0)
@@ -102,6 +105,7 @@ namespace HeaderPadDefines
                     }
                     else
                     {
+                        ShoterController.Instance.regionalDamage += 40;
                         blockCondition = BlockStatus.Emptied;
                         targetIMG.transform.GetComponent<PolygonCollider2D>().enabled = false;
                         targetIMG.sprite = Managers.instance.Resource.Load<Sprite>("HeaderBlock_Destroyed");
@@ -178,11 +182,10 @@ namespace MonsterDefines
                 monsterHPMax = monsterStat.monsterHPMax;
                 monsterHPNow = monsterStat.monsterHPNow;
                 monsterAD = monsterStat.monsterAD;
-                monsterMoveSpeed = monsterStat.monsterMoveSpeed;
             }
         }
-        [SerializeField]private float monsterHPMax;
-        [SerializeField] private float monsterHPNow;
+        public float monsterHPMax;
+        public float monsterHPNow;
         public float MonsterHP
         {
             get 
@@ -207,12 +210,11 @@ namespace MonsterDefines
             }
         }
         public float monsterAD;//AttackDamage
-        public float monsterMoveSpeed;
         public bool isMonsterDie
         {
             get 
             {
-                return monsterHPNow >= 0;
+                return monsterHPNow <= 0;
             }
         }
 
@@ -221,6 +223,7 @@ namespace MonsterDefines
             if (!isMonsterDie)
             {
                 MonsterHP -= damage;
+                Debug.Log(MonsterHP);
             }
         }
         public void MonsterAttack()
@@ -246,5 +249,11 @@ namespace MonsterDefines
     {
         public MonsterStats stat;
         public GameObject prefab;
+    }
+    [System.Serializable]
+    public class MonsterMoveSlot
+    {
+        public Vector3 slotPosition;
+        public Transform monsterTR;
     }
 }

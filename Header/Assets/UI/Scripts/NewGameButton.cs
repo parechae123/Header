@@ -39,9 +39,7 @@ public class NewGameButton : MonoBehaviour
     public void OnClickBTN()
     {
         newGameBTN.transform.SetParent(null);
-        Managers.instance.UI.ResetUI();
-        Managers.instance.Pool.Clear();
-        Managers.instance.Grid.ResetGrids();
+        Managers.instance.ResetManagingArrays();
         loadToHideThings.SetAsFirstSibling();
         Managers.instance.Resource.RegistAllResource(labelNames, (ResourceName, resourceCount, TotalCount) =>
         {

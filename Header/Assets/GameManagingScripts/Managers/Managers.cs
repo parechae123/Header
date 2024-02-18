@@ -31,6 +31,12 @@ public class Managers : MonoBehaviour
     [SerializeField]private PlayerDataManager playerDataManager = new PlayerDataManager();
     public PlayerDataManager PlayerDataManager { get {  return instance?.playerDataManager; } }
 
+    public void ResetManagingArrays()
+    {
+        UI.ResetUI();
+        Pool.Clear();
+        Grid.ResetGrids();
+    }
     public static void Init()
     {
         if (s_instance == null)

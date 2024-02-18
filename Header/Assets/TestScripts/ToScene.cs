@@ -16,6 +16,7 @@ public class ToScene : MonoBehaviour
     }
     public void OnBTNClick()
     {
+        Managers.instance.ResetManagingArrays();
         SceneManager.LoadScene(TargetScene);
     }
 }

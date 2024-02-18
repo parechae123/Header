@@ -20,6 +20,9 @@ public class ShoterController : MonoBehaviour
     public static ShoterController Instance;
     [SerializeField]private float fireForce = 0;
     private BallScript targetBall;
+    public float regionalDamage = 0;
+    public float targetDamage = 0;
+    public Transform targetMonsterTR = null;
     public BallScript TargetBall
     {
         get
@@ -55,7 +58,6 @@ public class ShoterController : MonoBehaviour
     {
         refPhyMat = new PhysicsMaterial2D();
         Instance = this;
-        
     }
     private void Start()
     {
@@ -70,78 +72,111 @@ public class ShoterController : MonoBehaviour
     {
         if (isReadyFire)
         {
-            if (fireForce != 0)
+           GetBulbPoints();
+           ShotBall();
+        }
+
+
+        if (TargetBall.transform.position.y < -10)
+        {
+            SetBall();
+            MonsterManager.MonsterManagerInstance.NextTurn();
+            MonsterManager.MonsterManagerInstance.DamageToAllMonsters(regionalDamage);
+            MonsterManager.MonsterManagerInstance.DamageToTargetMonster(targetDamage, targetMonsterTR.name);
+            regionalDamage = 0;
+            targetDamage = 0;
+        }
+    }
+    private void GetBulbPoints()
+    {
+        if (fireForce != 0)
+        {
+            normalizedRelValue = pos();
+            TargetBall.transform.rotation = Quaternion.Euler(0, 0, Rot());
+            for (int i = 0; i < numPoints; i++)
             {
-                normalizedRelValue = pos();
-                TargetBall.transform.rotation = Quaternion.Euler(0, 0, Rot());
-                for (int i = 0; i < numPoints; i++)
+                float time = i * timeInterval;
+                float time2 = (i + 1) * timeInterval;
+                Vector2 tempVec = normalizedRelValue * fireForce;
+                float x = tempVec.x * time;
+                float y = (tempVec.y * time) + (0.5f * (gravity * NowBallStat.weight) * time * time);
+                float x2 = tempVec.x * time2;
+                float y2 = (tempVec.y * time2) + (0.5f * (gravity * NowBallStat.weight) * time2 * time2);
+
+                Vector3 firstPos = new Vector3(x, y) + transform.position;
+                Vector3 secondPos = new Vector3(x2, y2) + transform.position;
+                float nowAndNextDistance = Vector2.Distance(firstPos, secondPos);
+                lineRenderer.SetPosition(i, firstPos);
+                RaycastHit2D colInfo = Physics2D.Raycast(firstPos, secondPos - firstPos, nowAndNextDistance, layerBallCollision);
+                if (colInfo)
                 {
-                    float time = i * timeInterval;
-                    float time2 = (i + 1) * timeInterval;
-                    Vector2 tempVec = normalizedRelValue * fireForce;
-                    float x = tempVec.x * time;
-                    float y = (tempVec.y * time) + (0.5f * (gravity * NowBallStat.weight) * time * time);
-                    float x2 = tempVec.x * time2;
-                    float y2 = (tempVec.y * time2) + (0.5f * (gravity * NowBallStat.weight) * time2 * time2);
-
-                    Vector3 firstPos = new Vector3(x, y) + transform.position;
-                    Vector3 secondPos = new Vector3(x2, y2) + transform.position;
-                    float nowAndNextDistance = Vector2.Distance(firstPos, secondPos);
-                    lineRenderer.SetPosition(i, firstPos);
-                    RaycastHit2D colInfo = Physics2D.Raycast(firstPos, secondPos - firstPos, nowAndNextDistance, layerBallCollision);
-                    if (colInfo)
+                    testTR.position = colInfo.point;
+                    lineRenderer.SetPosition(i + 1, colInfo.point);
+                    float reflectedBallVelocity = nowBallStat.ballBouncienss * (Vector2.Distance(firstPos, secondPos) / timeInterval);
+                    Vector2 normalizedRefVector = (Vector2.Reflect(secondPos - firstPos, colInfo.normal)).normalized;
+                    Vector2 refTempVec = reflectedBallVelocity * normalizedRefVector;
+                    for (int E = i + 2; E < lineRenderer.positionCount; E++)
                     {
-                        testTR.position = colInfo.point;
-                        lineRenderer.SetPosition(i + 1, colInfo.point);
-                        float reflectedBallVelocity = nowBallStat.ballBouncienss * (Vector2.Distance(firstPos, secondPos) / timeInterval);
-                        Vector2 normalizedRefVector = (Vector2.Reflect(secondPos - firstPos, colInfo.normal)).normalized;
-                        Vector2 refTempVec = reflectedBallVelocity * normalizedRefVector;
-                        for (int E = i + 2; E < lineRenderer.positionCount; E++)
+                        float timeScaler = (E - i) * timeInterval;
+
+                        if (E < lineRenderer.positionCount)
                         {
-                            float timeScaler = (E - i) * timeInterval;
 
-                            if (E < lineRenderer.positionCount)
+                            float reflectedX = refTempVec.x * timeScaler;
+                            float reflectedY = (refTempVec.y * timeScaler) + (0.5f * (gravity * NowBallStat.weight) * timeScaler * timeScaler);
+                            lineRenderer.SetPosition(E, colInfo.point + new Vector2(reflectedX, reflectedY));
+                            if (E - 1 != i)
                             {
-
-                                float reflectedX = refTempVec.x * timeScaler;
-                                float reflectedY = (refTempVec.y * timeScaler) + (0.5f * (gravity * NowBallStat.weight) * timeScaler * timeScaler);
-                                lineRenderer.SetPosition(E, colInfo.point + new Vector2(reflectedX, reflectedY));
-                                if (E - 1 != i)
+                                float reflectedNowNextDistance = Vector2.Distance(lineRenderer.GetPosition(E), lineRenderer.GetPosition(E - 1));
+                                RaycastHit2D reflectedColl = Physics2D.Raycast(lineRenderer.GetPosition(E - 1), lineRenderer.GetPosition(E) - lineRenderer.GetPosition(E - 1), reflectedNowNextDistance, layerBallCollision);
+                                if (reflectedColl)
                                 {
-                                    float reflectedNowNextDistance = Vector2.Distance(lineRenderer.GetPosition(E), lineRenderer.GetPosition(E - 1));
-                                    RaycastHit2D reflectedColl = Physics2D.Raycast(lineRenderer.GetPosition(E - 1), lineRenderer.GetPosition(E) - lineRenderer.GetPosition(E - 1), reflectedNowNextDistance, layerBallCollision);
-                                    if (reflectedColl)
+                                    if (reflectedColl.point != colInfo.point)
                                     {
-                                        if (reflectedColl.point != colInfo.point)
+                                        for (int o = E; o < lineRenderer.positionCount; o++)
                                         {
-                                            for (int o = E; o < lineRenderer.positionCount; o++)
-                                            {
-                                                lineRenderer.SetPosition(o, reflectedColl.point);
-                                            }
-                                            break;
-
+                                            lineRenderer.SetPosition(o, reflectedColl.point);
                                         }
+                                        break;
+
                                     }
                                 }
                             }
                         }
-                        break;
                     }
+                    break;
                 }
             }
-            else
+        }
+        else
+        {
+            normalizedRelValue = pos();
+            TargetBall.transform.rotation = Quaternion.Euler(0, 0, Rot());
+            lineRenderer.SetPosition(0, (Vector2)transform.position);
+            for (int i = 1; i < lineRenderer.positionCount; i++)
             {
-                normalizedRelValue = pos();
-                TargetBall.transform.rotation = Quaternion.Euler(0, 0, Rot());
-                lineRenderer.SetPosition(0, (Vector2)transform.position);
-                for (int i = 1; i < lineRenderer.positionCount; i++)
-                {
-                    lineRenderer.SetPosition(i, (normalizedRelValue * 4) + (Vector2)transform.position);
-                }
+                lineRenderer.SetPosition(i, (normalizedRelValue * 4) + (Vector2)transform.position);
+            }
 
-            }
-            if (Input.GetMouseButtonUp(0)&& !UnityEngine.EventSystems.EventSystem.current.IsPointerOverGameObject()&&fireForce != 0)
+        }
+    }
+    private void ShotBall()
+    {
+        Vector2 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        Ray2D ray = new Ray2D(mousePosition, Vector2.one);
+        RaycastHit2D hit = Physics2D.Raycast(ray.origin, ray.direction,Mathf.Infinity,64);
+        if (hit)
+        {
+            if (Input.GetMouseButtonDown(0))
             {
+                targetMonsterTR = hit.collider.transform;
+            }
+        }
+        else
+        {
+            if (Input.GetMouseButtonUp(0) && !UnityEngine.EventSystems.EventSystem.current.IsPointerOverGameObject() && fireForce != 0)
+            {
+
                 TargetBall.BallFire(normalizedRelValue, fireForce);
                 for (int i = 0; i < lineRenderer.positionCount; i++)
                 {
@@ -154,9 +189,9 @@ public class ShoterController : MonoBehaviour
             {
                 Managers.instance.UI.BattleUICall.SetBallSliderPos(transform.position, true);
             }
-            else if(Input.GetMouseButton(0) && !UnityEngine.EventSystems.EventSystem.current.IsPointerOverGameObject())
+            else if (Input.GetMouseButton(0) && !UnityEngine.EventSystems.EventSystem.current.IsPointerOverGameObject())
             {
-                if (NowBallStat.ballStartForce> fireForce)
+                if (NowBallStat.ballStartForce > fireForce)
                 {
                     fireForce += Time.deltaTime * NowBallStat.ballStartForce;
                 }
@@ -175,12 +210,7 @@ public class ShoterController : MonoBehaviour
                 }
             }
         }
-        if (TargetBall.transform.position.y < -10)
-        {
-            SetBall();
-        }
     }
-
     public void ReloadBalls(List<BallStat> EquipedBalls)
     {
         Managers.instance.PlayerDataManager.CheckWeaponNextBeforeButton();

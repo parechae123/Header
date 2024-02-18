@@ -8,10 +8,7 @@ public class TestingLoadingSCR : MonoBehaviour
     // Start is called before the first frame update
     void Awake()
     {
-        Managers.instance.UI.ResetUI();
-        Managers.instance.Pool.Clear();
-        Managers.instance.Grid.ResetGrids();
-        Managers.instance.Grid.BattleGridData.Clear();
+        Managers.instance.ResetManagingArrays();
         Managers.instance.Resource.RegistAllResource(labelNames, (ResourceName, resourceCount, TotalCount) =>
         {
             Debug.Log(ResourceName + "를 로딩중입니다" + resourceCount + "/" + TotalCount);

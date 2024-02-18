@@ -2,22 +2,15 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
-using UnityEditor.Rendering;
 using UnityEngine;
 using UnityEngine.UI;
 using Newtonsoft.Json;
 using DataDefines;
 using InteractionDefines;
-using UnityEditor;
-using System.Diagnostics.Tracing;
 using DG.Tweening;
 using UnityEngine.Video;
-using UnityEditor.Build.Pipeline.Interfaces;
 using HeaderPadDefines;
-using UnityEngine.Analytics;
-using Unity.VisualScripting.Antlr3.Runtime.Tree;
-using MoreLinq;
-using System.Globalization;
+
 
 public class UIManager
 {
@@ -52,6 +45,7 @@ public class UIManager
     public void ResetUI()
     {
         UIStack.Clear();
+        ShopUICall.shopWeaponItems = null;
         MoveAbleCheckerList.Clear();
     }
 
@@ -351,7 +345,6 @@ public class DialogSystem
             if (nameText == null)
             {
                 nameText = new GameObject { name = "nameText" }.AddComponent<Text>();
-                //TODO : 폰트누락,사이즈 조절필요 중앙정렬 해야함
                 nameText.rectTransform.SetParent(NamePanel);
                 nameText.rectTransform.anchorMin = Vector2.zero;
                 nameText.rectTransform.anchorMax = Vector2.one;
@@ -373,7 +366,6 @@ public class DialogSystem
             if (dialogText == null)
             {
                 dialogText = new GameObject { name = "dialogText" }.AddComponent<Text>();
-                //TODO : 폰트누락,사이즈 조절필요 중앙정렬 해야함
                 dialogText.rectTransform.SetParent(DialogPanel);
                 dialogText.rectTransform.anchorMin = Vector2.zero;
                 dialogText.rectTransform.anchorMax = Vector2.one;
@@ -512,7 +504,6 @@ public class DialogSystem
         {
             Managers.instance.Grid.RemoveInteraction(RemoveInteractionPosition);
             Managers.instance.Grid.AddInteraction(AddInteraction);
-            //TODO : 인터렉션 삭제하는 코드 넣어줘야함
             Managers.instance.UI.TargetUIOnOff(DialogueBackGround.rectTransform, false);
         }
     }
@@ -901,6 +892,7 @@ public class BattleUI
                 tempEnemyHPbar.wholeNumbers = false;
                 tempEnemyHPbar.maxValue = 100;
                 //TODO : enemy 체력 구현하면 여기에 넣어줘야함
+                
                 RectTransform tempHpTR = tempEnemyHPbar.transform as RectTransform;
 
 
@@ -1327,6 +1319,7 @@ public class ShopUI
                 shopPanel.rectTransform.sizeDelta = Vector2.zero;
                 shopPanel.sprite = Managers.instance.Resource.Load<Sprite>("shop_background_out");
                 shopPanel.rectTransform.SetAsLastSibling();
+                shopPanel.gameObject.SetActive(false);
                 //TODO : ShopPanel이 업로드시 해당 키값 작성 요망
             }
             return shopPanel;
@@ -1702,8 +1695,7 @@ public class ShopUI
             return shoppingPanel;
         }
     }
-    private Button[] shopWeaponItems;
-    
+    public Button[] shopWeaponItems;
     public void CreateWeaponBuyButtons(ExtraBallStat stat,int ballArray)
     {
         if (shopWeaponItems == null)
@@ -1867,8 +1859,8 @@ public class ShopUI
     }
     public void MoneyUpdate(int money)
     {
+        IsShopActivate = Managers.instance.UI.ShopUICall.IsShopActivate == true ? true : false;
         GoldAmountText.text = money.ToString();
-        shopPanel.gameObject.SetActive(IsShopActivate);
     }
     public void ShopUISetting()
     {

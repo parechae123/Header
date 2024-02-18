@@ -51,6 +51,7 @@ public class GridManager
     public void ResetGrids()
     {
         interactionGrid.Clear();
+        BattleGridData.Clear();
         isInteractionAreThere.Clear();
     }
     Vector2Int VectorToIntPos(Vector3 tempVec)

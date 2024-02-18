@@ -13,6 +13,8 @@ public class Hogisim : MonoBehaviour
     public Button[] BT1;
     public Button[] BT2 = new Button[1];
     public TextAsset WeaponTest;
+    public Transform targetMonsterTR;
+    public LayerMask asdf;
     public List<TestWeaponClass> WeaponArrayTest = new List<TestWeaponClass>();
     void Start()
     {
@@ -26,12 +28,22 @@ public class Hogisim : MonoBehaviour
         JObject tempJson = JObject.Parse(WeaponTest.text);
         JToken tempJToken = tempJson["Weapon_Table"];
         WeaponArrayTest = tempJToken.ToObject<List<TestWeaponClass>>();
+        Debug.Log(asdf.value);
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        Vector2 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        Ray2D ray = new Ray2D(mousePosition, Vector2.one);
+        RaycastHit2D hit = Physics2D.Raycast(ray.origin, ray.direction, Mathf.Infinity, asdf);
+        if (hit)
+        {
+            if (Input.GetMouseButtonDown(0))
+            {
+                targetMonsterTR = hit.collider.transform;
+            }
+        }
     }
 }
 
