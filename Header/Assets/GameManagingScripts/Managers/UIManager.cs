@@ -10,6 +10,7 @@ using InteractionDefines;
 using DG.Tweening;
 using UnityEngine.Video;
 using HeaderPadDefines;
+using Unity.Mathematics;
 
 
 public class UIManager
@@ -520,6 +521,40 @@ public class DialogSystem
 }
 public class BattleUI
 {
+    private RectTransform battleSceneUI;
+    private RectTransform BattleSceneUI
+    {
+        get
+        {
+            if (battleSceneUI == null)
+            {
+                battleSceneUI = new GameObject("BattleSceneUIFolder").AddComponent<RectTransform>();
+                battleSceneUI.SetParent(Managers.instance.UI.LoadingUIProps.SceneMainCanvas);
+                battleSceneUI.anchorMin = Vector2.zero;
+                battleSceneUI.anchorMax = Vector2.one;
+                battleSceneUI.anchoredPosition = Vector2.zero;
+                battleSceneUI.sizeDelta = Vector2.zero;
+            }
+            return battleSceneUI;
+        }
+    }
+    public bool IsInBattleScene
+    {
+        get
+        {
+            if (battleSceneUI == null)
+            {
+                BattleSceneUI.gameObject.SetActive(false);
+            }
+            return BattleSceneUI.gameObject.activeSelf;
+        }
+        set
+        {
+
+            BattleSceneUI.gameObject.SetActive (value);
+        }
+    }
+
     #region 플레이어 관련 변수
     private Image playerStatusUI;
     private Image PlayerStatusUI
@@ -529,7 +564,7 @@ public class BattleUI
             if (playerStatusUI == null)
             {
                 playerStatusUI = new GameObject("PlayerStatusPanel").AddComponent<Image>();
-                playerStatusUI.rectTransform.SetParent(Managers.instance.UI.LoadingUIProps.SceneMainCanvas);
+                playerStatusUI.rectTransform.SetParent(BattleSceneUI);
                 playerStatusUI.rectTransform.anchorMax = new Vector2(0.172000006f, 1f);
                 playerStatusUI.rectTransform.anchorMin = Vector2.zero;
                 playerStatusUI.rectTransform.sizeDelta = Vector2.zero;
@@ -852,7 +887,7 @@ public class BattleUI
             if (enemyStatusUI == null)
             {
                 enemyStatusUI = new GameObject("EnemyStatusPanel").AddComponent<Image>();
-                enemyStatusUI.rectTransform.SetParent(Managers.instance.UI.LoadingUIProps.SceneMainCanvas);
+                enemyStatusUI.rectTransform.SetParent(BattleSceneUI);
                 enemyStatusUI.rectTransform.anchorMax = Vector2.one;
                 enemyStatusUI.rectTransform.anchorMin = new Vector2(0.828000009f, 0f);
                 enemyStatusUI.rectTransform.sizeDelta = Vector2.zero;
@@ -1027,7 +1062,7 @@ public class BattleUI
             {
                 scoreBoardPannel = new GameObject("ScoreBoardPannel").AddComponent<Image>();
                 scoreBoardPannel.sprite = Managers.instance.Resource.Load<Sprite>("score_panel");
-                scoreBoardPannel.rectTransform.SetParent(Managers.instance.UI.LoadingUIProps.SceneMainCanvas);
+                scoreBoardPannel.rectTransform.SetParent(BattleSceneUI);
                 scoreBoardPannel.rectTransform.anchorMin = new Vector2(0.398604751f, 0.872544408f);
                 scoreBoardPannel.rectTransform.anchorMax = new Vector2(0.604237199f, 0.987735808f);
                 scoreBoardPannel.rectTransform.anchoredPosition = Vector2.zero;
@@ -1059,7 +1094,7 @@ public class BattleUI
         }
     }
     private RectTransform ballForceSliderParent;
-    private RectTransform BallForceSliderParent
+    public RectTransform BallForceSliderParent
     {
         get 
         {
@@ -1098,6 +1133,7 @@ public class BattleUI
                 tempHandleArea.sizeDelta = Vector2.zero;
                 tempHandleArea.anchoredPosition = Vector2.zero;
                 Image handle = new GameObject("handle").AddComponent<Image>();
+                handle.raycastTarget = false;
                 handle.rectTransform.SetParent(tempHandleArea);
                 handle.rectTransform.anchorMax = Vector2.up;
                 handle.rectTransform.anchorMin = Vector2.zero;
@@ -1109,6 +1145,7 @@ public class BattleUI
 
 
                 Image BackGround = new GameObject("BackGround").AddComponent<Image>();
+                BackGround.raycastTarget = false;
                 BackGround.rectTransform.SetParent(tempHpTR);
                 BackGround.rectTransform.anchorMax = new Vector2(1f, 0.75f);
                 BackGround.rectTransform.anchorMin = new Vector2(0f, 0.25f);
@@ -1127,6 +1164,7 @@ public class BattleUI
                 tempFillArea.sizeDelta = Vector2.zero;
                 tempFillArea.anchoredPosition = Vector2.zero;
                 Image tempIMG = new GameObject("FillRect").AddComponent<Image>();
+                tempIMG.raycastTarget = false;
                 tempIMG.rectTransform.SetParent(tempFillArea);
                 tempIMG.rectTransform.sizeDelta = Vector2.zero;
                 tempIMG.color = Color.white;
@@ -1214,7 +1252,18 @@ public class BattleUI
         }
         ChangeWeaponUI(true, ballName, ballKRName);
     }
-    public void HPBarUpdate(bool isPlayer,float maxHP,float nowHP)
+    public void HPBarUpdate(bool isPlayer,float valueToAdd)
+    {
+        if (isPlayer)
+        {
+            PlayerHPBar.value = PlayerHPBar.value + valueToAdd;
+        }
+        else
+        {
+            EnemyHPBar.value = enemyHpBar.value + valueToAdd;
+        }
+    }
+    public void HPBarSetting(bool isPlayer,float maxHP,float nowHP)
     {
         if (isPlayer)
         {
@@ -1274,6 +1323,10 @@ public class BattleUI
     }
     public void UpdateBallForce(float max ,float value)
     {
+        if (!BallForceSliderParent.gameObject.activeSelf)
+        {
+            BallForceSliderParent.gameObject.SetActive(true);
+        }
         if (BallForceSlider.maxValue != max)
         {
             BallForceSlider.maxValue = max;

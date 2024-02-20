@@ -89,6 +89,14 @@ public class BallScript : MonoBehaviour
     {
         IMG.sprite = Managers.instance.Resource.Load<Sprite>(ballName);
     } 
+    public void BallPause()
+    {
+        BallRB.simulated = false;
+        BallCol.enabled = false;
+        ballRadios = BallCol.bounds.size.x;
+        transform.localPosition = Vector3.zero;
+        BallRB.velocity = Vector2.zero;
+    }
     public void Ballsetting(PhysicsMaterial2D phyMat, float Weight)
     {
         ShoterController.Instance.isReadyFire = true; 
@@ -106,6 +114,7 @@ public class BallScript : MonoBehaviour
     }
     public void BallFire(Vector2 FireToward,float FireForce)
     {
+        ShoterController.Instance.testTR.gameObject.SetActive(false);
         Managers.instance.UI.BattleUICall.WeaponButtonCheck(true);
         ShoterController.Instance.isReadyFire = false;
         ShoterController.Instance.lineRenderer.enabled = false;

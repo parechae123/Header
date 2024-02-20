@@ -11,14 +11,14 @@ using DG.Tweening;
 public class MonsterManager : MonoBehaviour
 {
     private static MonsterManager monsterManagerInstance;
-    public static MonsterManager MonsterManagerInstance 
-    { 
-        get 
+    public static MonsterManager MonsterManagerInstance
+    {
+        get
         {
             if (monsterManagerInstance == null)
             {
                 GameObject tempOBJ = GameObject.Find("MonsterManager");
-                if (tempOBJ != null) 
+                if (tempOBJ != null)
                 {
                     if (tempOBJ.TryGetComponent<MonsterManager>(out MonsterManager TempMC))
                     {
@@ -34,30 +34,74 @@ public class MonsterManager : MonoBehaviour
                     monsterManagerInstance = new GameObject("MonsterManager").AddComponent<MonsterManager>();
                 }
             }
-            return monsterManagerInstance; 
+            return monsterManagerInstance;
         }
     }
+
     [Header("몬스터 스폰(프리팹 배열)")]
     public int[] MonsterSpawnOrder = new int[0];
     public MonsterPrefab[] monsterPrefabs = new MonsterPrefab[0];
-    
+    public Transform SetTargetMonsters
+    {
+        get
+        {
+            Transform target = null;
+            for (int i = 0; i < moveSlots.Length; i++)
+            {
+                if (moveSlots[i].monsterTR != null)
+                {
+                    target = moveSlots[i].monsterTR;
+                }
+            }
+            return target;
+        }
+    }
     public (MonsterStats, SpriteRenderer, Animator)[] Monsters = new (MonsterStats, SpriteRenderer, Animator)[0];
     public Vector3 PlayerPos;
     public Vector3 MonsterSpawnPos;
     public MonsterMoveSlot[] moveSlots = new MonsterMoveSlot[0];
+    private SpriteRenderer attackBulb;
+    private SpriteRenderer AttackBulb
+    {
+        get
+        {
+            if (attackBulb == null)
+            {
+                attackBulb = new GameObject("AttackBulb").AddComponent<SpriteRenderer>();
+            }
+            attackBulb.sprite = Managers.instance.Resource.Load<Sprite>(ShoterController.Instance.NowBallStat.ballName);
+            return attackBulb;
+        }
+    }
+    private SpriteRenderer bombAttackBulb;
+    private SpriteRenderer BombAttackBulb
+    {
+        get
+        {
+            if (bombAttackBulb == null)
+            {
+                bombAttackBulb = new GameObject("BombAttackBulb").AddComponent<SpriteRenderer>();
+                bombAttackBulb.sprite = Managers.instance.Resource.Load<Sprite>("bomb");
+            }
+            return bombAttackBulb;
+        }
+    }
+
     [SerializeField] private int monsterSlotCount;
     private void Awake()
     {
         Array.Resize(ref Monsters, MonsterSpawnOrder.Length);
         Array.Resize(ref moveSlots, monsterSlotCount);
-        
-        float slotByXSize = Vector3.Distance(PlayerPos, MonsterSpawnPos) /monsterSlotCount;
+
+        float slotByXSize = Vector3.Distance(PlayerPos, MonsterSpawnPos) / monsterSlotCount;
         for (int i = 0; i < moveSlots.Length; i++)
         {
             moveSlots[i] = new MonsterMoveSlot();
-            moveSlots[i].slotPosition = PlayerPos+ (Vector3.right * slotByXSize) + (Vector3.right*(slotByXSize*i));
+            moveSlots[i].slotPosition = PlayerPos + (Vector3.right * slotByXSize) + (Vector3.right * (slotByXSize * i));
         }
         NextTurn();
+        (float, float) TempDoubleFloat = CarculateMonsterFullHP;
+        Managers.instance.UI.BattleUICall.HPBarSetting(false, TempDoubleFloat.Item1, TempDoubleFloat.Item2);
     }
     private void Update()
     {
@@ -67,35 +111,87 @@ public class MonsterManager : MonoBehaviour
         }
         if (Input.GetKeyDown(KeyCode.KeypadEnter))
         {
-            DamageToAllMonsters(10);
+            DamageToAllMonsters(10, (total, count) =>
+            {
+                if (total == count)
+                {
+
+                }
+            });
         }
 
+    }
+    public void NextTurnFunctions(float regionalDamage, float targetDamage, Transform TargetMonsterTR, Action isDone)
+    {
+        DamageToAllMonsters(regionalDamage, (total, count) =>
+        {
+            Debug.Log("토탈" + total + '\n' + "카운트" + count);
+            if (total == count)
+            {
+                DamageToTargetMonster(targetDamage, TargetMonsterTR, () =>
+                {
+                    NextTurn();
+                    isDone.Invoke();
+                });
+            }
+
+        });
     }
     public void NextTurn()
     {
         SpawnAndMove();
         AttackPlayer();
-        (float, float) TempDoubleFloat = CarculateMonsterFullHP;
-        Managers.instance.UI.BattleUICall.HPBarUpdate(false, TempDoubleFloat.Item1, TempDoubleFloat.Item2);
+
     }
-    public void DamageToAllMonsters(float damage)
+    public void DamageToAllMonsters(float damage, Action<int, int> isDamageDone)
     {
-        for (int i = 0; i < Monsters.Length; i++)
+        int total = 0;
+        int count = 0;
+        if (damage <= 0)
         {
-            if (Monsters[i].Item1 == null)
-            {
-                break;
-            }
-            else if(Monsters[i].Item2 != null && Monsters[i].Item1.isMonsterDie)
-            {
-                continue;
-            }
-            else if (Monsters[i].Item2 != null&& !Monsters[i].Item1.isMonsterDie)
-            {
-                Monsters[i].Item1.GetDamage(damage);
-                StartCoroutine(DamagedAnim(i));
-            }
+            isDamageDone.Invoke(total, count);
+            return;
         }
+        else
+        {
+            BombAttackBulb.transform.position = PlayerPos;
+            BombAttackBulb.gameObject.SetActive(true);
+
+            BombAttackBulb.transform.DOJump(PlayerPos + (Vector3.right * 5), 2, 2, 1.8f).OnComplete(() =>
+            {
+                for (int i = 0; i < moveSlots.Length; i++)
+                {
+                    if (moveSlots[i].monsterTR != null)
+                    {
+                        total++;
+                    }
+                }
+                for (int i = 0; i < Monsters.Length; i++)
+                {
+
+                    if (Monsters[i].Item2 != null && Monsters[i].Item1.isMonsterDie)
+                    {
+                        continue;
+                    }
+                    else if (Monsters[i].Item2 != null && !Monsters[i].Item1.isMonsterDie)
+                    {
+                        Monsters[i].Item1.GetDamage(damage);
+                        StartCoroutine(DamagedAnim(i, () =>
+                        {
+                            count++;
+                            if (count == total)
+                            {
+                                BombAttackBulb.gameObject.SetActive(false);
+                                isDamageDone.Invoke(total, count);
+                            }
+                        }));
+                    }
+                }
+
+            });
+        }
+
+
     }
     public void AttackPlayer()
     {
@@ -115,14 +211,37 @@ public class MonsterManager : MonoBehaviour
             return;
         }
     }
-    public void DamageToTargetMonster(float damage,string Name)
+    public void DamageToTargetMonster(float damage, Transform targetTR, Action isDone)
     {
-        Monsters[int.Parse(Name)].Item1.GetDamage(damage);
+        Debug.Log("때림");
+        if (targetTR != null)
+        {
+            int tempArray = int.Parse(targetTR.name);
+
+            if (damage <= 0)
+            {
+                isDone.Invoke();
+                return;
+            }
+
+            AttackBulb.gameObject.SetActive(true);
+            AttackBulb.transform.position = PlayerPos;
+            AttackBulb.transform.DOMove(targetTR.position, 0.3f).OnComplete(() =>
+            {
+                StartCoroutine(DamagedAnim(tempArray, () =>
+                {
+                    Monsters[int.Parse(targetTR.name)].Item1.GetDamage(damage);
+                    isDone.Invoke();
+                }));
+                AttackBulb.gameObject.SetActive(false);
+                AttackBulb.transform.position = PlayerPos;
+            });
+        }
     }
     public void SpawnAndMove()
     {
         int spawnArray = -1;
-        for (int i = 0; i < MonsterSpawnOrder.Length; i++) 
+        for (int i = 0; i < MonsterSpawnOrder.Length; i++)
         {
 
             if (Monsters[i].Item1 == null)
@@ -135,7 +254,7 @@ public class MonsterManager : MonoBehaviour
                 MoveMonsters(i);
             }
         }
-        if (moveSlots[moveSlots.Length-1].monsterTR == null&& spawnArray !=-1)
+        if (moveSlots[moveSlots.Length - 1].monsterTR == null && spawnArray != -1)
         {
             SpawnMonsters(MonsterSpawnOrder[spawnArray], spawnArray);
         }
@@ -146,7 +265,7 @@ public class MonsterManager : MonoBehaviour
         {
             for (int i = 0; i < moveSlots.Length; i++)
             {
-                if (moveSlots[i].monsterTR == Monsters[array].Item2.transform&&i != 0 )
+                if (moveSlots[i].monsterTR == Monsters[array].Item2.transform && i != 0)
                 {
                     if (moveSlots[i - 1].monsterTR == null)
                     {
@@ -165,29 +284,35 @@ public class MonsterManager : MonoBehaviour
         }
 
     }
-    public void SpawnMonsters(int prefabNum,int arrayOrder)
+    public void SpawnMonsters(int prefabNum, int arrayOrder)
     {
-        GameObject tempGOBJ = Instantiate(monsterPrefabs[prefabNum].prefab, moveSlots[moveSlots.Length-1].slotPosition, Quaternion.identity, null);
+        GameObject tempGOBJ = Instantiate(monsterPrefabs[prefabNum].prefab, moveSlots[moveSlots.Length - 1].slotPosition, Quaternion.identity, null);
         //TODO : 몬스터 이름을 해당 배열로 바꿔서 클릭시 이름을 가져오고 해당 배열이 타겟이 되도록
         tempGOBJ.name = arrayOrder.ToString();
         Monsters[arrayOrder].Item1 = new MonsterStats(monsterPrefabs[prefabNum].stat);
-        (SpriteRenderer,Animator) tempComponents = Monsters[arrayOrder].Item1.monsterAnimSprite(tempGOBJ);
+        (SpriteRenderer, Animator) tempComponents = Monsters[arrayOrder].Item1.monsterAnimSprite(tempGOBJ);
         Monsters[arrayOrder].Item2 = tempComponents.Item1;
         Monsters[arrayOrder].Item3 = tempComponents.Item2;
-        moveSlots[moveSlots.Length-1].monsterTR = tempComponents.Item1.transform;
+        moveSlots[moveSlots.Length - 1].monsterTR = tempComponents.Item1.transform;
 
     }
-    IEnumerator DamagedAnim(int index)
+    IEnumerator DamagedAnim(int index, Action isDone)
     {
         Monsters[index].Item3.Play("Damaged", 0);
         while (!Monsters[index].Item3.GetCurrentAnimatorStateInfo(0).IsName("Damaged"))
         {
             yield return null;
+            Monsters[index].Item3.Play("Damaged", 0);
             while (Monsters[index].Item3.GetCurrentAnimatorStateInfo(0).normalizedTime < 1)
             {
                 Debug.Log(Monsters[index].Item3.GetCurrentAnimatorStateInfo(0).normalizedTime);
+                if (!Monsters[index].Item3.GetCurrentAnimatorStateInfo(0).IsName("Damaged"))
+                {
+                    break;
+                }
                 yield return null;
             }
+            break;
         }
         if (Monsters[index].Item1.isMonsterDie)
         {
@@ -206,13 +331,14 @@ public class MonsterManager : MonoBehaviour
         {
             Monsters[index].Item3.Play("Idle", 0);
         }
+        isDone.Invoke();
     }
-    public (float,float) CarculateMonsterFullHP
+    public (float, float) CarculateMonsterFullHP
     {
-        get 
+        get
         {
-            (float, float) MaxAndNowHP = (0,0);
-            for (int i = 0;i < MonsterSpawnOrder.Length; i++)
+            (float, float) MaxAndNowHP = (0, 0);
+            for (int i = 0; i < MonsterSpawnOrder.Length; i++)
             {
                 MaxAndNowHP.Item1 += monsterPrefabs[MonsterSpawnOrder[i]].stat.monsterHPMax;
                 MaxAndNowHP.Item2 += monsterPrefabs[MonsterSpawnOrder[i]].stat.monsterHPNow;

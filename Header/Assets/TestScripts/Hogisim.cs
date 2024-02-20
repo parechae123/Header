@@ -16,6 +16,8 @@ public class Hogisim : MonoBehaviour
     public Transform targetMonsterTR;
     public LayerMask asdf;
     public List<TestWeaponClass> WeaponArrayTest = new List<TestWeaponClass>();
+    public float targetNum;
+    public float outPutNum;
     void Start()
     {
         Debug.Log(BT1.Length);
@@ -43,6 +45,11 @@ public class Hogisim : MonoBehaviour
             {
                 targetMonsterTR = hit.collider.transform;
             }
+
+        }
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            outPutNum = MathF.Sin(targetNum);
         }
     }
 }

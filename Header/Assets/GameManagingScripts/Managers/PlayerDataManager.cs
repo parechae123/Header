@@ -20,6 +20,26 @@ public class PlayerDataManager
             playerMoney = value;
         }
     }
+    private float playerHPMax;
+    private float playerHPNow;
+    public (float,float) PlayerHP
+    {
+        get 
+        {
+            return (playerHPMax,playerHPNow);
+        }
+        set
+        {
+            playerHPMax = value.Item1;
+            playerHPNow = value.Item2;
+            if (Managers.instance.UI.BattleUICall.IsInBattleScene)
+            {
+                Managers.instance.UI.BattleUICall.SettingPlayerBattleUI();
+            }
+            Managers.instance.UI.BattleUICall.HPBarSetting(true,value.Item1,value.Item2);
+            
+        }
+    }
     
 
     public void AddBall(BallStat balls,bool isCalledItOnShop = false)

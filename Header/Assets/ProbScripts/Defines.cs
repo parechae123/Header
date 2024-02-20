@@ -204,7 +204,14 @@ namespace MonsterDefines
                 }
                 else
                 {
-                    monsterHPNow = value;
+                    if (value < 0)
+                    {
+                        monsterHPNow = 0;
+                    }
+                    else
+                    {
+                        monsterHPNow = value;
+                    }
                 }
 
             }
@@ -222,8 +229,14 @@ namespace MonsterDefines
         {
             if (!isMonsterDie)
             {
+                float tempDMG = damage;
+                if (damage >= monsterHPNow)
+                {
+                    tempDMG = monsterHPNow;
+                }
                 MonsterHP -= damage;
-                Debug.Log(MonsterHP);
+
+                Managers.instance.UI.BattleUICall.HPBarUpdate(false, -tempDMG);
             }
         }
         public void MonsterAttack()

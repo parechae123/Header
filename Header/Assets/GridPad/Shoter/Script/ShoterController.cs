@@ -15,14 +15,34 @@ public class ShoterController : MonoBehaviour
     private float timeInterval = 0.1f;
     private float gravity = -9.8f;
     [SerializeField] private Vector2 normalizedRelValue;
-    [SerializeField] private UnityEngine.Transform testTR;
+    [SerializeField] public UnityEngine.Transform testTR;
     [SerializeField] LayerMask layerBallCollision;
     public static ShoterController Instance;
     [SerializeField]private float fireForce = 0;
     private BallScript targetBall;
     public float regionalDamage = 0;
     public float targetDamage = 0;
-    public Transform targetMonsterTR = null;
+    private Transform targetMonsterTR = null;
+    private Transform TargetMonsterTR
+    {
+        get 
+        { 
+            if (targetMonsterTR == null) 
+            {
+                targetMonsterTR = MonsterManager.MonsterManagerInstance.SetTargetMonsters;
+                    //TODO : 타겟몬스터 표시하는 UI 추가필요
+            }
+            else
+            {
+                if (!targetMonsterTR.gameObject.activeSelf)
+                {
+                    targetMonsterTR = MonsterManager.MonsterManagerInstance.SetTargetMonsters;
+                    //TODO : 타겟몬스터 표시하는 UI 추가필요
+                }
+            }
+            return targetMonsterTR; 
+        }
+    }
     public BallScript TargetBall
     {
         get
@@ -79,12 +99,13 @@ public class ShoterController : MonoBehaviour
 
         if (TargetBall.transform.position.y < -10)
         {
-            SetBall();
-            MonsterManager.MonsterManagerInstance.NextTurn();
-            MonsterManager.MonsterManagerInstance.DamageToAllMonsters(regionalDamage);
-            MonsterManager.MonsterManagerInstance.DamageToTargetMonster(targetDamage, targetMonsterTR.name);
-            regionalDamage = 0;
-            targetDamage = 0;
+            TargetBall.BallPause();
+            MonsterManager.MonsterManagerInstance.NextTurnFunctions(regionalDamage, targetDamage, TargetMonsterTR, () =>
+            {
+                SetBall();
+                regionalDamage = 0;
+                targetDamage = 0;
+            });
         }
     }
     private void GetBulbPoints()
@@ -163,20 +184,12 @@ public class ShoterController : MonoBehaviour
     private void ShotBall()
     {
         Vector2 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        Ray2D ray = new Ray2D(mousePosition, Vector2.one);
+        Ray2D ray = new Ray2D(mousePosition, Vector2.zero);
         RaycastHit2D hit = Physics2D.Raycast(ray.origin, ray.direction,Mathf.Infinity,64);
-        if (hit)
-        {
-            if (Input.GetMouseButtonDown(0))
-            {
-                targetMonsterTR = hit.collider.transform;
-            }
-        }
-        else
+        if (!hit)
         {
             if (Input.GetMouseButtonUp(0) && !UnityEngine.EventSystems.EventSystem.current.IsPointerOverGameObject() && fireForce != 0)
             {
-
                 TargetBall.BallFire(normalizedRelValue, fireForce);
                 for (int i = 0; i < lineRenderer.positionCount; i++)
                 {
@@ -187,6 +200,7 @@ public class ShoterController : MonoBehaviour
             }
             else if (Input.GetMouseButtonDown(0) && !UnityEngine.EventSystems.EventSystem.current.IsPointerOverGameObject())
             {
+                testTR.gameObject.SetActive(true);
                 Managers.instance.UI.BattleUICall.SetBallSliderPos(transform.position, true);
             }
             else if (Input.GetMouseButton(0) && !UnityEngine.EventSystems.EventSystem.current.IsPointerOverGameObject())
@@ -207,6 +221,42 @@ public class ShoterController : MonoBehaviour
                 if (fireForce != 0)
                 {
                     fireForce = 0;
+                    Managers.instance.UI.BattleUICall.SetBallSliderPos(transform.position, false);
+                }
+            }
+        }
+        else
+        {
+            if (Input.GetMouseButtonDown(0))
+            {
+                targetMonsterTR = hit.collider.transform;
+                fireForce = 0;
+                Managers.instance.UI.BattleUICall.SetBallSliderPos(transform.position, false);
+            }
+            else if (Managers.instance.UI.BattleUICall.BallForceSliderParent == null|| Managers.instance.UI.BattleUICall.BallForceSliderParent.gameObject.activeSelf)
+            {
+                if (Input.GetMouseButtonUp(0) && !UnityEngine.EventSystems.EventSystem.current.IsPointerOverGameObject() && fireForce != 0)
+                {
+
+                    TargetBall.BallFire(normalizedRelValue, fireForce);
+                    for (int i = 0; i < lineRenderer.positionCount; i++)
+                    {
+                        lineRenderer.SetPosition(i, transform.position);
+                    }
+                    fireForce = 0;
+                    Managers.instance.UI.BattleUICall.SetBallSliderPos(transform.position, false);
+                }
+                else if (Input.GetMouseButton(0) && !UnityEngine.EventSystems.EventSystem.current.IsPointerOverGameObject())
+                {
+                    if (NowBallStat.ballStartForce > fireForce)
+                    {
+                        fireForce += Time.deltaTime * NowBallStat.ballStartForce;
+                    }
+                    else
+                    {
+                        fireForce = NowBallStat.ballStartForce;
+                    }
+                    Managers.instance.UI.BattleUICall.UpdateBallForce(NowBallStat.ballStartForce, fireForce);
                 }
             }
         }
