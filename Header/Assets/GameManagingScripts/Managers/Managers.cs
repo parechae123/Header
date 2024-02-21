@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class Managers : MonoBehaviour
 {
@@ -36,6 +38,7 @@ public class Managers : MonoBehaviour
         UI.ResetUI();
         Pool.Clear();
         Grid.ResetGrids();
+        ui.ShopUICall.Inventory.Clear();
     }
     public static void Init()
     {
@@ -51,5 +54,11 @@ public class Managers : MonoBehaviour
             s_instance = go.GetComponent<Managers>();
             Debug.Log("게임 메니저 생성");
         }
+    }
+
+    public void OnBTNChangeScene(int SceneNumber)
+    {
+        Managers.instance.ResetManagingArrays();
+        SceneManager.LoadScene(SceneNumber);
     }
 }

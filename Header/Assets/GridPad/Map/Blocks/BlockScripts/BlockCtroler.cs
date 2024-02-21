@@ -57,6 +57,13 @@ public class BlockCtroler : MonoBehaviour
                     SettedBlockCondition = HeaderPadDefines.BlockStatus.Destroyed,
                 };
                 break;
+            case "HeaderBlock_Reroll":
+                tempBlockData = new HeaderPadDefines.BlockObjects
+                {
+                    blockCondition = HeaderPadDefines.BlockStatus.reroll,
+                    SettedBlockCondition = HeaderPadDefines.BlockStatus.reroll,
+                };
+                break;
         }
         tempBlockData.targetIMG = tempIMG;
         return tempBlockData;

@@ -6,6 +6,7 @@ using Newtonsoft.Json;
 using System;
 using UnityEngine.UI;
 using Unity.VisualScripting;
+using UnityEditor.Profiling.Memory.Experimental;
 
 public class Defines
 {
@@ -111,6 +112,11 @@ namespace HeaderPadDefines
                         targetIMG.sprite = Managers.instance.Resource.Load<Sprite>("HeaderBlock_Destroyed");
                     }
                     break;
+                case BlockStatus.reroll:
+                    Managers.instance.Grid.OnReset();
+                    blockCondition = BlockStatus.Emptied;
+                    targetIMG.sprite = Managers.instance.Resource.Load<Sprite>("HeaderBlock_Emptied");
+                    break;
             }
             if (BE != null)
             {
@@ -135,6 +141,9 @@ namespace HeaderPadDefines
                     case BlockStatus.BoombBlock:
                         targetIMG.sprite = Managers.instance.Resource.Load<Sprite>("HeaderBlock_BoombBlock");
                         BlockHP = 2;
+                        break;
+                    case BlockStatus.reroll:
+                        targetIMG.sprite = Managers.instance.Resource.Load<Sprite>("HeaderBlock_Emptied");
                         break;
                 }
                 blockCondition = SettedBlockCondition;
@@ -163,7 +172,7 @@ namespace HeaderPadDefines
     }
     public enum BlockStatus
     {
-        Destroyed,Emptied,FIlled,FilledCoin,BoombBlock,MovePlatform
+        Destroyed,Emptied,FIlled,FilledCoin,BoombBlock,MovePlatform,reroll
     }
 }
 namespace MonsterDefines

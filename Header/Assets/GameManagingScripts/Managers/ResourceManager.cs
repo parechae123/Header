@@ -26,6 +26,7 @@ public class ResourceManager
         //FLOW : isDone의 첫번째 = 일러스트,두번째 = 모든 리소스
         if (!isResourceLoadDone)
         {
+            Managers.instance.PlayerDataManager.SetPlayerHP = (100, 100);
             string loadingName = string.Empty;
             int loadCount = 0;
             int totalCount = 0;

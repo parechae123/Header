@@ -41,6 +41,12 @@ public class NewGameButton : MonoBehaviour
         newGameBTN.transform.SetParent(null);
         Managers.instance.ResetManagingArrays();
         loadToHideThings.SetAsFirstSibling();
+        if (Managers.instance.Resource.isResourceLoadDone)
+        {
+            Managers.instance.ResetManagingArrays();
+            Managers.instance.PlayerDataManager.ResetPlayer();
+            StartCoroutine(LoadSceneAsyncCoroutine());
+        }
         Managers.instance.Resource.RegistAllResource(labelNames, (ResourceName, resourceCount, TotalCount) =>
         {
             //Debug.Log(ResourceName + "를 로딩중입니다" + resourceCount + "/" + TotalCount);

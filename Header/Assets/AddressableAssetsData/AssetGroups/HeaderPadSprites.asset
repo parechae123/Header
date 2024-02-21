@@ -47,6 +47,12 @@ MonoBehaviour:
     m_SerializedLabels:
     - InGameSprites
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: f5960171e824a3b4f9500cf393df1748
+    m_Address: HeaderBlock_Reroll
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - InGameSprites
+    FlaggedDuringContentUpdateRestriction: 0
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: 489b40023fd66be419d08d79841125b1, type: 2}
   m_SchemaSet:

@@ -56,10 +56,25 @@ public class MonsterManager : MonoBehaviour
             return target;
         }
     }
+    private SpriteRenderer playerSprite;
+    private SpriteRenderer PlayerSprite
+    {
+        get 
+        { 
+            if (playerSprite == null)
+            {
+                playerSprite = new GameObject("PlayerBattleSceneCharactor").AddComponent<SpriteRenderer>();
+                playerSprite.sprite = Managers.instance.Resource.Load<Sprite>("PlayerTopViewWalkR_1");
+                playerSprite.transform.position = PlayerPos;
+            }
+            return playerSprite;
+        }
+    }
     public (MonsterStats, SpriteRenderer, Animator)[] Monsters = new (MonsterStats, SpriteRenderer, Animator)[0];
     public Vector3 PlayerPos;
     public Vector3 MonsterSpawnPos;
     public MonsterMoveSlot[] moveSlots = new MonsterMoveSlot[0];
+    [SerializeField] private int monsterSlotCount;
     private SpriteRenderer attackBulb;
     private SpriteRenderer AttackBulb
     {
@@ -86,13 +101,26 @@ public class MonsterManager : MonoBehaviour
             return bombAttackBulb;
         }
     }
+    private Transform bombTR
+    {
+        get 
+        {
+            return BombAttackBulb.transform;
+        }
+    }
+    [Header("폭탄 연출값")]
+    private float bounceCount=3;
+    private float bounceForce=1.6f;
+    private Vector3 targetPosition;
+    private float movementTime = 1.2f;
 
-    [SerializeField] private int monsterSlotCount;
+
     private void Awake()
     {
         Array.Resize(ref Monsters, MonsterSpawnOrder.Length);
         Array.Resize(ref moveSlots, monsterSlotCount);
-
+        PlayerSprite.color = Color.white;
+        Managers.instance.UI.BattleUICall.HPBarActivate(Managers.instance.PlayerDataManager.SetPlayerHP.Item1, Managers.instance.PlayerDataManager.SetPlayerHP.Item2);
         float slotByXSize = Vector3.Distance(PlayerPos, MonsterSpawnPos) / monsterSlotCount;
         for (int i = 0; i < moveSlots.Length; i++)
         {
@@ -102,6 +130,7 @@ public class MonsterManager : MonoBehaviour
         NextTurn();
         (float, float) TempDoubleFloat = CarculateMonsterFullHP;
         Managers.instance.UI.BattleUICall.HPBarSetting(false, TempDoubleFloat.Item1, TempDoubleFloat.Item2);
+        targetPosition = PlayerPos+Vector3.right*4;
     }
     private void Update()
     {
@@ -111,7 +140,7 @@ public class MonsterManager : MonoBehaviour
         }
         if (Input.GetKeyDown(KeyCode.KeypadEnter))
         {
-            DamageToAllMonsters(10, (total, count) =>
+            DamageToAllMonsters(100, (total, count) =>
             {
                 if (total == count)
                 {
@@ -130,17 +159,25 @@ public class MonsterManager : MonoBehaviour
             {
                 DamageToTargetMonster(targetDamage, TargetMonsterTR, () =>
                 {
-                    NextTurn();
-                    isDone.Invoke();
+                    NextTurn(() =>
+                    {
+                        isDone.Invoke();
+                    });
                 });
             }
 
         });
     }
-    public void NextTurn()
+    public void NextTurn(Action isDone = null)
     {
-        SpawnAndMove();
-        AttackPlayer();
+        AttackPlayer(() =>
+        {
+            SpawnAndMove();
+            if (isDone != null)
+            {
+                isDone.Invoke();
+            }
+        });
 
     }
     public void DamageToAllMonsters(float damage, Action<int, int> isDamageDone)
@@ -154,10 +191,11 @@ public class MonsterManager : MonoBehaviour
         }
         else
         {
-            BombAttackBulb.transform.position = PlayerPos;
+
+            bombTR.position = PlayerPos;
             BombAttackBulb.gameObject.SetActive(true);
 
-            BombAttackBulb.transform.DOJump(PlayerPos + (Vector3.right * 5), 2, 2, 1.8f).OnComplete(() =>
+            StartCoroutine(MoveBalls(GetBounceVectors(), () =>
             {
                 for (int i = 0; i < moveSlots.Length; i++)
                 {
@@ -187,13 +225,13 @@ public class MonsterManager : MonoBehaviour
                         }));
                     }
                 }
+            }));
 
-            });
         }
 
 
     }
-    public void AttackPlayer()
+    public void AttackPlayer(Action isDone)
     {
         if (moveSlots[0].monsterTR != null)
         {
@@ -202,18 +240,25 @@ public class MonsterManager : MonoBehaviour
                 if (Monsters[i].Item2.transform == moveSlots[0].monsterTR)
                 {
                     // TODO : Monsters[i].Item1.monsterAD; 이용하여 플레이어 피격처리
+                    StartCoroutine(PlayerDamagedAnim(Monsters[i].Item2.transform, () =>
+                    {
+                        Debug.Log("데미지");
+                        Managers.instance.PlayerDataManager.PlayerGetDamage(Monsters[i].Item1.monsterAD);
+                        isDone.Invoke();
+                    }));
+
                     break;
                 }
             }
         }
         else
         {
+            isDone.Invoke();
             return;
         }
     }
     public void DamageToTargetMonster(float damage, Transform targetTR, Action isDone)
     {
-        Debug.Log("때림");
         if (targetTR != null)
         {
             int tempArray = int.Parse(targetTR.name);
@@ -294,7 +339,6 @@ public class MonsterManager : MonoBehaviour
         Monsters[arrayOrder].Item2 = tempComponents.Item1;
         Monsters[arrayOrder].Item3 = tempComponents.Item2;
         moveSlots[moveSlots.Length - 1].monsterTR = tempComponents.Item1.transform;
-
     }
     IEnumerator DamagedAnim(int index, Action isDone)
     {
@@ -345,5 +389,68 @@ public class MonsterManager : MonoBehaviour
             }
             return MaxAndNowHP;
         }
+    }
+
+
+    public Vector3[] GetBounceVectors()
+    {
+        float tempY;
+        float timeX = 0;
+        int counter = 0;
+        float tempPos = targetPosition.x - PlayerPos.x;
+        Debug.Log(tempPos);
+        tempPos = tempPos / bounceCount;
+        tempPos = tempPos / (314f / 30f);
+        Debug.Log(tempPos);
+        Vector3[] vectorArray = new Vector3[(int)((314f / 30f) * bounceCount) + ((int)bounceCount - 1)];
+        Debug.Log(vectorArray.Length);
+        for (int i = 0; i < bounceCount; i++)
+        {
+            for (float p = 0; p < 3.14f;)
+            {
+                timeX += tempPos;
+                p += 0.3f;
+                tempY = Mathf.Sin(p);
+                Vector3 tempVec = new Vector3(timeX, (tempY * bounceForce) / (float)(i + 1), 0);
+                if (counter >= vectorArray.Length)
+                {
+                    Debug.Log(counter);
+                }
+                vectorArray[counter] = PlayerPos + tempVec;
+                counter++;
+            }
+        }
+        return vectorArray;
+    }
+    IEnumerator MoveBalls(Vector3[] vectors,Action isDone)
+    {
+        float timeDelay = (movementTime / vectors.Length);
+        for (int i = 0; i < vectors.Length; i++)
+        {
+            yield return new WaitForSeconds(timeDelay);
+            if (i == vectors.Length / bounceCount)
+            {
+                Debug.Log("감속");
+                timeDelay -= (movementTime / vectors.Length) / bounceCount;
+            }
+            bombTR.position = vectors[i];
+        }
+        yield return new WaitForSeconds(1.5f);
+        isDone();
+    }
+    IEnumerator PlayerDamagedAnim(Transform monster,Action isDone)
+    {
+        Vector3 originPos = monster.transform.position;
+        yield return monster.DOJump(PlayerPos, 0.7f, 1, 0.5f).WaitForCompletion();
+        PlayerSprite.color = Color.red;
+        yield return new WaitForSeconds(0.12f);
+        PlayerSprite.color = Color.white;
+        yield return new WaitForSeconds(0.12f);
+        PlayerSprite.color = Color.red;
+        yield return new WaitForSeconds(0.12f);
+        PlayerSprite.color = Color.white;
+        yield return monster.DOJump(originPos, 0.7f, 1, 0.5f).WaitForCompletion();
+        isDone.Invoke();
+
     }
 }

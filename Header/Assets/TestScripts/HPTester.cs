@@ -13,7 +13,7 @@ public class HPTester : MonoBehaviour
     public void HPTest()
     {
         
-        Managers.instance.PlayerDataManager.PlayerHP = (100,100);
-        Managers.instance.PlayerDataManager.PlayerHP = (Managers.instance.PlayerDataManager.PlayerHP.Item1+10, Managers.instance.PlayerDataManager.PlayerHP.Item2 + 100);
+        Managers.instance.PlayerDataManager.SetPlayerHP = (100,100);
+        Managers.instance.PlayerDataManager.SetPlayerHP = (Managers.instance.PlayerDataManager.SetPlayerHP.Item1+10, Managers.instance.PlayerDataManager.SetPlayerHP.Item2 + 100);
     }
 }

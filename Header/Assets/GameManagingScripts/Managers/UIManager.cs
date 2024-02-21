@@ -11,6 +11,7 @@ using DG.Tweening;
 using UnityEngine.Video;
 using HeaderPadDefines;
 using Unity.Mathematics;
+using UnityEditor.Rendering;
 
 
 public class UIManager
@@ -873,7 +874,95 @@ public class BattleUI
             return girlText; 
         }
     }
-    
+    private RectTransform sceneBTNParet;
+    public RectTransform SceneBTNParet
+    {
+        get 
+        {
+            if (sceneBTNParet == null)
+            {
+                sceneBTNParet = new GameObject("GameOverParent").AddComponent<RectTransform>();
+                sceneBTNParet.gameObject.AddComponent<Image>().sprite = Managers.instance.Resource.Load<Sprite>("shop_bag_panel");
+                sceneBTNParet.SetParent(battleSceneUI);
+                sceneBTNParet.SetAsLastSibling();
+                sceneBTNParet.anchorMax = new Vector2(0.7f, 0.6f);
+                sceneBTNParet.anchorMin = new Vector2(0.3f, 0.4f);
+                sceneBTNParet.anchoredPosition = Vector2.zero;
+                sceneBTNParet.sizeDelta = Vector2.zero;
+            }
+            return sceneBTNParet;
+        }
+    }
+
+    private Button gameOverBTN;
+    public Button GameOverBTN
+    {
+        get
+        {
+            if (gameOverBTN == null)
+            {
+
+                gameOverBTN = new GameObject("GameOverBTN").AddComponent<Button>();
+                RectTransform BTNRect = gameOverBTN.AddComponent<RectTransform>();
+                BTNRect.SetParent(SceneBTNParet);
+                Image btnImage = BTNRect.gameObject.AddComponent<Image>();
+                btnImage.sprite = Managers.instance.Resource.Load<Sprite>("shop_portrait_panel");
+                gameOverBTN.targetGraphic = btnImage;
+                BTNRect.anchorMax = Vector2.one;
+                BTNRect.anchorMin = new Vector2(0.5f, 0);
+                BTNRect.anchoredPosition = Vector2.zero;
+                BTNRect.sizeDelta = Vector2.zero;
+                Text tempText = new GameObject("GameOverText").AddComponent<Text>();
+                tempText.rectTransform.SetParent(BTNRect);
+                tempText.rectTransform.anchorMax = Vector2.one;
+                tempText.rectTransform.anchorMin = Vector2.zero;
+                tempText.rectTransform.anchoredPosition = Vector2.zero;
+                tempText.rectTransform.sizeDelta = Vector2.zero;
+                tempText.alignment = TextAnchor.MiddleCenter;
+                tempText.text = "To MainTitle";
+                tempText.font = Managers.instance.Resource.Load<Font>("InGameFont");
+                tempText.fontSize = (int)BTNRect.rect.size.y / 9;
+                tempText.color = Color.white;
+                gameOverBTN.onClick.AddListener(() => { Managers.instance.OnBTNChangeScene(0); });
+            }
+            return gameOverBTN;
+        }
+    }
+
+    private Button toDialogSceneBTN;
+    public Button ToDialogSceneBTN
+    {
+        get
+        {
+            if (toDialogSceneBTN == null)
+            {
+
+                toDialogSceneBTN = new GameObject("toDialogSceneBTN").AddComponent<Button>();
+                RectTransform BTNRect = toDialogSceneBTN.AddComponent<RectTransform>();
+                BTNRect.SetParent(SceneBTNParet);
+                Image btnImage = BTNRect.gameObject.AddComponent<Image>();
+                btnImage.sprite = Managers.instance.Resource.Load<Sprite>("shop_portrait_panel");
+                toDialogSceneBTN.targetGraphic = btnImage;
+                BTNRect.anchorMax = new Vector2(0.5f, 1);
+                BTNRect.anchorMin = Vector2.zero;
+                BTNRect.anchoredPosition = Vector2.zero;
+                BTNRect.sizeDelta = Vector2.zero;
+                Text tempText = new GameObject("ToDialogScene").AddComponent<Text>();
+                tempText.rectTransform.SetParent(BTNRect);
+                tempText.rectTransform.anchorMax = Vector2.one;
+                tempText.rectTransform.anchorMin = Vector2.zero;
+                tempText.rectTransform.anchoredPosition = Vector2.zero;
+                tempText.rectTransform.sizeDelta = Vector2.zero;
+                tempText.alignment = TextAnchor.MiddleCenter;
+                tempText.text = "Continue";
+                tempText.font = Managers.instance.Resource.Load<Font>("InGameFont");
+                tempText.fontSize = (int)BTNRect.rect.size.y / 9;
+                tempText.color = Color.white;
+                toDialogSceneBTN.onClick.AddListener(() => { Managers.instance.OnBTNChangeScene(1); });
+            }
+            return toDialogSceneBTN;
+        }
+    }
 
     #endregion
 
@@ -1261,7 +1350,16 @@ public class BattleUI
         else
         {
             EnemyHPBar.value = enemyHpBar.value + valueToAdd;
+            if (enemyHpBar.value <=0)
+            {
+                Managers.instance.UI.BattleUICall.ToDialogSceneBTN.enabled = true;
+            }
         }
+    }
+    public void HPBarActivate(float maxHP,float nowHP)
+    {
+        PlayerHPBar.maxValue = maxHP;
+        PlayerHPBar.value = nowHP;
     }
     public void HPBarSetting(bool isPlayer,float maxHP,float nowHP)
     {
@@ -1590,6 +1688,8 @@ public class ShopUI
         }
     }
 
+
+
     private Image playerMoneyIMG;
     public Image PlayerMoneyIMG
     {
@@ -1705,7 +1805,7 @@ public class ShopUI
             return inventoryIcons;
         }    
     }
-    private List<(Sprite, string)> Inventory = new List<(Sprite, string)>();
+    public List<(Sprite, string)> Inventory = new List<(Sprite, string)>();
     int invenPage;
     int NowPage
     {
