@@ -143,7 +143,7 @@ namespace HeaderPadDefines
                         BlockHP = 2;
                         break;
                     case BlockStatus.reroll:
-                        targetIMG.sprite = Managers.instance.Resource.Load<Sprite>("HeaderBlock_Emptied");
+                        targetIMG.sprite = Managers.instance.Resource.Load<Sprite>("HeaderBlock_Reroll");
                         break;
                 }
                 blockCondition = SettedBlockCondition;
