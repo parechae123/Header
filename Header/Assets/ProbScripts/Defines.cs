@@ -247,6 +247,7 @@ namespace MonsterDefines
 
                 Managers.instance.UI.BattleUICall.HPBarUpdate(false, -tempDMG);
             }
+
         }
         public void MonsterAttack()
         {

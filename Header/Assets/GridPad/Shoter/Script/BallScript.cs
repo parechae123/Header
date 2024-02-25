@@ -120,7 +120,6 @@ public class BallScript : MonoBehaviour
         ShoterController.Instance.lineRenderer.enabled = false;
         BallRB.simulated = true;
         BallCol.enabled = true;
-        Debug.Log(FireToward);
         FireToward = FireToward * FireForce;
         FireToward.y += 0.5f * BallRB.gravityScale * BallRB.mass * Mathf.Pow(Time.fixedDeltaTime, 2);
         BallRB.velocity = FireToward;

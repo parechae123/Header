@@ -57,6 +57,22 @@ public class MonsterManager : MonoBehaviour
             return target;
         }
     }
+    public Vector2 ReturnMonsterSpriteSize(Transform TR)
+    {
+        if (TR != null)
+        {
+            if (int.TryParse(TR.name, out int tempNum))
+            {
+                return Monsters[tempNum].Item2.sprite.bounds.extents;
+            }
+            else
+            {
+                return Vector2.one;
+            }
+        }
+        return Vector2.zero;
+
+    }
     private SpriteRenderer playerSprite;
     private SpriteRenderer PlayerSprite
     {
@@ -220,10 +236,11 @@ public class MonsterManager : MonoBehaviour
                         StartCoroutine(DamagedAnim(i,false, () =>
                         {
                             count++;
+                            Debug.Log("카운트" + count + "토탈" + total);
                             if (count == total)
                             {
-                                Debug.Log("카운트" + count + "토탈" + total);
                                 BombAttackBulb.gameObject.SetActive(false);
+                                Managers.instance.UI.BattleUICall.SetTargetUI(ShoterController.Instance.TargetMonsterTR, MonsterManager.MonsterManagerInstance.ReturnMonsterSpriteSize(ShoterController.Instance.TargetMonsterTR));
                                 isDamageDone.Invoke(total, count);
                             }
                         }));
@@ -282,6 +299,7 @@ public class MonsterManager : MonoBehaviour
                     Monsters[int.Parse(targetTR.name)].Item1.GetDamage(damage);
                     AttackBulb.transform.position = playerPos;
                     AttackBulb.gameObject.SetActive(false);
+                    Managers.instance.UI.BattleUICall.SetTargetUI(ShoterController.Instance.TargetMonsterTR, MonsterManager.MonsterManagerInstance.ReturnMonsterSpriteSize(ShoterController.Instance.TargetMonsterTR));
                     isDone.Invoke();
                 }));
 
@@ -330,7 +348,10 @@ public class MonsterManager : MonoBehaviour
                         moveSlots[i - 1].monsterTR.DOComplete();
                         moveSlots[i].monsterTR = null;
                         moveSlots[i - 1].monsterTR = Monsters[array].Item2.transform;
-                        moveSlots[i - 1].monsterTR.DOMove(moveSlots[i - 1].slotPosition, 0.2f);
+                        moveSlots[i - 1].monsterTR.DOMove(moveSlots[i - 1].slotPosition, 0.2f).OnComplete(()=> 
+                        {
+                            Managers.instance.UI.BattleUICall.SetTargetUI(ShoterController.Instance.TargetMonsterTR, MonsterManager.MonsterManagerInstance.ReturnMonsterSpriteSize(ShoterController.Instance.TargetMonsterTR));
+                        });
                     }
                     else
                     {
@@ -340,7 +361,6 @@ public class MonsterManager : MonoBehaviour
             }
 
         }
-
     }
     public void SpawnMonsters(int prefabNum, int arrayOrder)
     {
@@ -366,13 +386,9 @@ public class MonsterManager : MonoBehaviour
             }
         }
         Monsters[index].Item3.Play("Damaged", 0);
-        yield return null;
-        while (Monsters[index].Item3.GetCurrentAnimatorStateInfo(0).normalizedTime <= 1)
+        while (Monsters[index].Item3.GetCurrentAnimatorStateInfo(0).normalizedTime <= 1 || !Monsters[index].Item3.GetCurrentAnimatorStateInfo(0).IsName("Damaged"))
         {
-            if (!Monsters[index].Item3.GetCurrentAnimatorStateInfo(0).IsName("Damaged"))
-            {
-                break;
-            }
+            Debug.Log(Monsters[index].Item3.GetCurrentAnimatorStateInfo(0).normalizedTime + "노멀라이즈 타임"+'\n'+ Monsters[index].Item3.GetCurrentAnimatorStateInfo(0).IsName("Damaged"));
             yield return null;
         }
         Debug.Log("여기서 못나가네"+index);
@@ -443,23 +459,19 @@ public class MonsterManager : MonoBehaviour
     IEnumerator MoveBalls(Vector3[] vectors,Action isDone)
     {
         float timeDelay = (movementTime / vectors.Length);
+        timeDelay = timeDelay<=0? 0.1f: timeDelay;
         for (int i = 0; i < vectors.Length; i++)
         {
             yield return new WaitForSeconds(timeDelay);
-            if (i == vectors.Length / bounceCount)
-            {
-                Debug.Log("감속");
-                timeDelay -= (movementTime / vectors.Length) / bounceCount;
-            }
             bombTR.position = vectors[i];
         }
-        yield return new WaitForSeconds(1.5f);
+        
         isDone.Invoke();
     }
     IEnumerator PlayerDamagedAnim(Transform monster,Action isDone)
     {
         Vector3 originPos = monster.transform.position;
-        yield return monster.DOJump(playerPos, 0.7f, 1, 0.5f).WaitForCompletion();
+        yield return monster.DOJump(playerPos, -0.7f, 1, 0.5f).WaitForCompletion();
         PlayerSprite.color = Color.red;
         yield return new WaitForSeconds(0.12f);
         PlayerSprite.color = Color.white;
@@ -467,7 +479,8 @@ public class MonsterManager : MonoBehaviour
         PlayerSprite.color = Color.red;
         yield return new WaitForSeconds(0.12f);
         PlayerSprite.color = Color.white;
-        yield return monster.DOJump(originPos, 0.7f, 1, 0.5f).WaitForCompletion();
+        monster.DOComplete();
+        yield return monster.DOJump(originPos, -0.7f, 1, 0.5f).WaitForCompletion();
         isDone.Invoke();
 
     }

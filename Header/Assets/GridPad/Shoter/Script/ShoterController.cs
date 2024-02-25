@@ -5,6 +5,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Rendering;
 using System;
+using static UnityEngine.GraphicsBuffer;
 
 public class ShoterController : MonoBehaviour
 {
@@ -23,7 +24,7 @@ public class ShoterController : MonoBehaviour
     public float regionalDamage = 0;
     public float targetDamage = 0;
     private Transform targetMonsterTR = null;
-    private Transform TargetMonsterTR
+    public Transform TargetMonsterTR
     {
         get 
         { 
@@ -40,6 +41,15 @@ public class ShoterController : MonoBehaviour
                     //TODO : 타겟몬스터 표시하는 UI 추가필요
                 }
             }
+            if (targetMonsterTR != null)
+            {
+                Managers.instance.UI.BattleUICall.SetTargetUI(targetMonsterTR, MonsterManager.MonsterManagerInstance.ReturnMonsterSpriteSize(targetMonsterTR));
+            }
+            else
+            {
+                Managers.instance.UI.BattleUICall.SetTargetUI(null, Vector2.zero);
+            }
+
             return targetMonsterTR; 
         }
     }
@@ -229,7 +239,11 @@ public class ShoterController : MonoBehaviour
         {
             if (Input.GetMouseButtonDown(0))
             {
-                targetMonsterTR = hit.collider.transform;
+                if (hit.collider.transform!=null)
+                {
+                    targetMonsterTR = hit.collider.transform;
+                    Managers.instance.UI.BattleUICall.SetTargetUI(targetMonsterTR, MonsterManager.MonsterManagerInstance.ReturnMonsterSpriteSize(TargetMonsterTR));
+                }
                 fireForce = 0;
                 Managers.instance.UI.BattleUICall.SetBallSliderPos(transform.position, false);
             }

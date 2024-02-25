@@ -883,7 +883,7 @@ public class BattleUI
             {
                 sceneBTNParet = new GameObject("GameOverParent").AddComponent<RectTransform>();
                 sceneBTNParet.gameObject.AddComponent<Image>().sprite = Managers.instance.Resource.Load<Sprite>("shop_bag_panel");
-                sceneBTNParet.SetParent(battleSceneUI);
+                sceneBTNParet.SetParent(BattleSceneUI);
                 sceneBTNParet.SetAsLastSibling();
                 sceneBTNParet.anchorMax = new Vector2(0.7f, 0.6f);
                 sceneBTNParet.anchorMin = new Vector2(0.3f, 0.4f);
@@ -963,7 +963,22 @@ public class BattleUI
             return toDialogSceneBTN;
         }
     }
-
+    Image monsterTarget;
+    public Image MonsterTarget
+    {
+        get 
+        { 
+            if (monsterTarget == null)
+            {
+                
+                monsterTarget = new GameObject("MonsterTargetUI").AddComponent<Image>();
+                monsterTarget.rectTransform.SetParent(BattleSceneUI);
+                monsterTarget.sprite = Managers.instance.Resource.Load<Sprite>("TargetImg");  
+                monsterTarget.color = Color.red;
+            }
+            return monsterTarget;
+        }
+    }
     #endregion
 
     #region 적 statusUI관련 변수
@@ -1281,6 +1296,7 @@ public class BattleUI
         }
     }
     #region 관련 함수
+    
     public void SettingPlayerBattleUI()
     {
         //TODO : 매니저의 인스턴스 선언 후 해당구문 수정필요,아래의 Enabled는 테스트코드로 해당 작업 시 삭제필요
@@ -1441,6 +1457,24 @@ public class BattleUI
         EnemyWeaponImage.enabled = true;
         EnemyWeaponNamePannel.enabled = true;
         EnemyWeaponName.text = "무기이름";
+    }
+    public void SetTargetUI(Transform targetTR, Vector2 SpriteSize)
+    {
+        if (targetTR != null)
+        {
+            Vector2 spriteSizeInCanvasMax = Camera.main.WorldToScreenPoint(targetTR.position + (Vector3)SpriteSize);
+            Vector2 spriteSizeInCanvasMin = Camera.main.WorldToScreenPoint(targetTR.position - (Vector3)SpriteSize);
+            MonsterTarget.rectTransform.anchorMin = new Vector2(spriteSizeInCanvasMax.x/ Screen.width, spriteSizeInCanvasMax.y / Screen.height);
+            MonsterTarget.rectTransform.anchorMax = new Vector2(spriteSizeInCanvasMin.x / Screen.width, spriteSizeInCanvasMin.y / Screen.height);
+            MonsterTarget.rectTransform.anchoredPosition = Vector2.zero;
+            MonsterTarget.rectTransform.sizeDelta = Vector2.zero;
+            MonsterTarget.gameObject.SetActive(targetTR.gameObject.activeSelf);
+        }
+        else
+        {
+            MonsterTarget.gameObject.SetActive(false);
+        }
+
     }
     #endregion
 }
