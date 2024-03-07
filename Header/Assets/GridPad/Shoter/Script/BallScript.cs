@@ -102,7 +102,7 @@ public class BallScript : MonoBehaviour
         if (ballNowHP == 1)
         {
             blinkTimer += Time.deltaTime;
-            BulbLight.falloffIntensity = blinkTimer;
+            BulbLight.intensity = SinFunc(blinkTimer);
         }
     }
 
@@ -112,11 +112,13 @@ public class BallScript : MonoBehaviour
     } 
     public void BallPause()
     {
+        BulbLight.intensity = 0;
         BallRB.simulated = false;
         BallCol.enabled = false;
         ballRadios = BallCol.bounds.size.x;
         transform.localPosition = Vector3.zero;
         BallRB.velocity = Vector2.zero;
+
     }
     public void Ballsetting(PhysicsMaterial2D phyMat, float Weight)
     {
@@ -151,12 +153,17 @@ public class BallScript : MonoBehaviour
         {
             Managers.instance.Grid.OnColide(collision.transform.position);
         }
-        if (ballNowHP<= 0)
+        if (ballNowHP<= 1)
         {
-
+            ballNowHP--;
             BallPause();
             MonsterManager.MonsterManagerInstance.NextTurnFunctions(ShoterController.Instance.regionalDamage, ShoterController.Instance.targetDamage, ShoterController.Instance.TargetMonsterTR, () =>
             {
+
+                if (Managers.instance.PlayerDataManager.RemoveBall(ShoterController.Instance.NowBallStat))
+                {
+                    ShoterController.Instance.SetBallOnNext();
+                }
                 ResetBall();
                 ShoterController.Instance.regionalDamage = 0;
                 ShoterController.Instance.targetDamage = 0;
@@ -165,7 +172,7 @@ public class BallScript : MonoBehaviour
         }
         else
         {
-            ballNowHP -= 1;
+            ballNowHP--;
         }
     }
     public void BallToTarget(Vector2 targetPos,float Speed)
@@ -188,10 +195,16 @@ public class BallScript : MonoBehaviour
     {
         return (targetPos - (Vector2)transform.position).normalized;
     }
+    public float SinFunc(float timer)
+    {
+        float tempFloat = Mathf.Sin(timer*15)+1;
+        tempFloat = tempFloat* 7.5f;
+        return tempFloat;
+    }
     public void ResetBall()
     {
+        BulbLight.intensity = 15;
         ShoterController.Instance.SetBall();
-        BulbLight.falloffIntensity = 0.5f;
         blinkTimer = 0;
     }
 }

@@ -79,11 +79,19 @@ public class ShoterController : MonoBehaviour
         get { return nowBallStat; }
         set 
         {
-            Managers.instance.UI.BattleUICall.ChangeWeaponUI(true, value.ballName, value.ballKoreanName);
+            if (value.amount <= 0)
+            {
+                Managers.instance.UI.BattleUICall.ChangeWeaponUI(true, string.Empty, "전구가 없어!!");
+            }
+            else
+            {
+                Managers.instance.UI.BattleUICall.ChangeWeaponUI(true, value.ballName, value.ballKoreanName);
+            }
+
             nowBallStat = value;
         }
     }
-    Queue<HeaderPadDefines.ExtraBallStat> ballStatQueue = new Queue<HeaderPadDefines.ExtraBallStat>();
+    public Queue<HeaderPadDefines.ExtraBallStat> ballStatQueue = new Queue<HeaderPadDefines.ExtraBallStat>();
     private void Awake()
     {
         refPhyMat = new PhysicsMaterial2D();
@@ -109,9 +117,13 @@ public class ShoterController : MonoBehaviour
 
         if (TargetBall.transform.position.y < -10)
         {
-            TargetBall.BallPause();
             MonsterManager.MonsterManagerInstance.NextTurnFunctions(regionalDamage, targetDamage, TargetMonsterTR, () =>
             {
+                if (Managers.instance.PlayerDataManager.RemoveBall(Instance.NowBallStat))
+                {
+                    SetBallOnNext();
+                }
+                TargetBall.BallPause();
                 TargetBall.ResetBall();
                 regionalDamage = 0;
                 targetDamage = 0;
@@ -278,30 +290,67 @@ public class ShoterController : MonoBehaviour
     public void ReloadBalls(List<ExtraBallStat> EquipedBalls)
     {
         Managers.instance.PlayerDataManager.CheckWeaponNextBeforeButton();
-
-        for (int i = 0; i < EquipedBalls.Count; i++)
+        if (EquipedBalls.Count> 0)
         {
-            ballStatQueue.Enqueue(EquipedBalls[i]);
+            for (int i = 0; i < EquipedBalls.Count; i++)
+            {
+                ballStatQueue.Enqueue(EquipedBalls[i]);
+            }
+            SetBall();
         }
-        SetBall();
+
+        
     }
 
     public void SetBallOnNext()
     {
         string tempName = NowBallStat.ballName;
-        ballStatQueue.Enqueue(NowBallStat);
+        if (Managers.instance.PlayerDataManager.playerOwnBalls.Count<=0&& NowBallStat.amount <= 0)
+        {
+            ballStatQueue.Clear();
+            Managers.instance.UI.BattleUICall.WeaponAnim(true, "Bulb_Empty", "전구가 없어!!", tempName);
+            TargetBall.ChangeBallSprite("Bulb_Empty");
+        }
+        else
+        {
+            if (NowBallStat.amount > 0)
+            {
+                ballStatQueue.Enqueue(NowBallStat);
+            }
+            else if(NowBallStat.amount <= 0)
+            {
+                
+                ExtraBallStat[] tempEx = new ExtraBallStat[0];
+                Queue<ExtraBallStat> tempQueue = new Queue<ExtraBallStat>();
+                Array.Resize<ExtraBallStat>(ref tempEx, Managers.instance.PlayerDataManager.playerOwnBalls.Count);
+                tempEx = ballStatQueue.ToArray();
+                for (int i = 0; i < tempEx.Length; i++)
+                {
+                    if (tempEx[i].amount > 0)
+                    {
+                        tempQueue.Enqueue(tempEx[i]);
+                    }
+                }
+                ballStatQueue.Clear();
+                ballStatQueue = tempQueue;
+            }
 
-        NowBallStat = ballStatQueue.Dequeue();
-        TargetBall.Ballsetting(SettingValue(NowBallStat.ballBouncienss, NowBallStat.ballFriction), NowBallStat.weight);
-        Managers.instance.UI.BattleUICall.WeaponAnim(true, NowBallStat.ballName, NowBallStat.ballKoreanName, tempName);
-        TargetBall.ChangeBallSprite(NowBallStat.ballName);
+            NowBallStat = ballStatQueue.Dequeue();
+            TargetBall.Ballsetting(SettingValue(NowBallStat.ballBouncienss, NowBallStat.ballFriction), NowBallStat.weight);
+            Managers.instance.UI.BattleUICall.WeaponAnim(true, NowBallStat.ballName, NowBallStat.ballKoreanName , tempName);
+
+            TargetBall.ChangeBallSprite(NowBallStat.ballName);
+        }
     }
     public void SetBallOnBehind()
     {
         string tempName = NowBallStat.ballName;
         ExtraBallStat[] TempBallStat = ballStatQueue.ToArray();
         ballStatQueue.Clear();
-        ballStatQueue.Enqueue(NowBallStat);
+        if (NowBallStat.amount >0)
+        {
+            ballStatQueue.Enqueue(NowBallStat);
+        }
         for (int i = 0; i < TempBallStat.Length-1; i++)
         {
             ballStatQueue.Enqueue(TempBallStat[i]);
@@ -317,9 +366,16 @@ public class ShoterController : MonoBehaviour
 
     public void SetBall()
     {
-        Managers.instance.UI.BattleUICall.WeaponButtonCheck(false);
-        if (ballStatQueue.Count>0)
+        if ((ballStatQueue.Count <= 0 && nowBallStat.amount <= 0) || Managers.instance.PlayerDataManager.playerOwnBalls.Count <= 0)
         {
+            Managers.instance.UI.BattleUICall.WeaponButtonCheck(true);
+            Instance.isReadyFire = false;
+            Managers.instance.UI.BattleUICall.GameOverBTN.enabled = true;
+            TargetBall.BulbLight.intensity = 0;
+        }
+        else if (ballStatQueue.Count>0)
+        {
+            Managers.instance.UI.BattleUICall.WeaponButtonCheck(false);
             if (NowBallStat.ballName == string.Empty)
             {
                 NowBallStat = ballStatQueue.Dequeue();
@@ -330,9 +386,12 @@ public class ShoterController : MonoBehaviour
             TargetBall.ballNowHP = NowBallStat.ballHealth;
 
         }
-        else
+        else if (ballStatQueue.Count <= 0 && nowBallStat.amount > 0)
         {
-            ReloadBalls(Managers.instance.PlayerDataManager.playerOwnBalls);
+            Managers.instance.UI.BattleUICall.WeaponButtonCheck(false);
+            TargetBall.Ballsetting(SettingValue(NowBallStat.ballBouncienss, NowBallStat.ballFriction), NowBallStat.weight);
+            TargetBall.ChangeBallSprite(NowBallStat.ballName);
+            TargetBall.ballNowHP = NowBallStat.ballHealth;
         }
     }
     private PhysicsMaterial2D SettingValue(float bounce,float friction)

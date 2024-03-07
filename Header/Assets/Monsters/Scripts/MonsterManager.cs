@@ -173,7 +173,9 @@ public class MonsterManager : MonoBehaviour
     {
         DamageToAllMonsters(regionalDamage, (total, count) =>
         {
+
             Debug.Log("토탈" + total + '\n' + "카운트" + count);
+            Debug.Log("regionalDamage" + regionalDamage + '\n' + "targetDamage" + targetDamage);
             DamageToTargetMonster(targetDamage, TargetMonsterTR, () =>
             {
                 NextTurn(() =>
@@ -224,6 +226,7 @@ public class MonsterManager : MonoBehaviour
                 {
                     if (Monsters[i].Item2 != null && !Monsters[i].Item1.isMonsterDie)
                     {
+                        Monsters[i].Item1.GetDamage(damage);
                         StartCoroutine(DamagedAnim(i,false, () =>
                         {
                             count++;
@@ -390,7 +393,7 @@ public class MonsterManager : MonoBehaviour
             {
                 break;
             }
-            Debug.Log(Monsters[index].Item3.GetCurrentAnimatorStateInfo(0).normalizedTime + "노멀라이즈 타임"+'\n'+ Monsters[index].Item3.GetCurrentAnimatorStateInfo(0).IsName("Damaged"));
+           // Debug.Log(Monsters[index].Item3.GetCurrentAnimatorStateInfo(0).normalizedTime + "노멀라이즈 타임"+'\n'+ Monsters[index].Item3.GetCurrentAnimatorStateInfo(0).IsName("Damaged"));
             yield return null;
         }
         Debug.Log("여기서 못나가네"+index);

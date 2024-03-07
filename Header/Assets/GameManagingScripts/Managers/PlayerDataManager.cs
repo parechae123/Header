@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using HeaderPadDefines;
+using System;
 
 [System.Serializable]
 public class PlayerDataManager
@@ -110,19 +111,28 @@ public class PlayerDataManager
             Managers.instance.UI.ShopUICall.UpdateInvenBulb(playerOwnBalls);
         }
     }
-    public void RemoveBall(BallStat ball, bool isCalledItOnShop = false)
+    public bool RemoveBall(ExtraBallStat ball, bool isCalledItOnShop = false)
     { 
         foreach (ExtraBallStat item in playerOwnBalls)
         {
-            if (item == ball)
+            if (item.ballName == ball.ballName && item.amount<=1&& !isCalledItOnShop)
             {
+                item.amount--;
                 playerOwnBalls.Remove(item);
+
+                return true;
+            }
+            else if(item.ballName == ball.ballName && item.amount > 1&& !isCalledItOnShop) 
+            {
+                item.amount--;
+
             }
         }
         if (isCalledItOnShop)
         {
             Managers.instance.UI.ShopUICall.UpdateInvenBulb(playerOwnBalls);
         }
+        return false;
     }
     public void CheckWeaponNextBeforeButton()
     {

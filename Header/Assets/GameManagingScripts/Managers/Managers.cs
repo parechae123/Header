@@ -32,7 +32,14 @@ public class Managers : MonoBehaviour
 
     [SerializeField]private PlayerDataManager playerDataManager = new PlayerDataManager();
     public PlayerDataManager PlayerDataManager { get {  return instance?.playerDataManager; } }
-
+    public SoundManager soundManager = new SoundManager();
+    public SoundManager SoundManager 
+    { 
+        get 
+        { 
+            return soundManager;
+        } 
+    }
     public void ResetManagingArrays()
     {
         UI.ResetUI();

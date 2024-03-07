@@ -754,7 +754,7 @@ public class BattleUI
     }
 
     private Text playerWeaponName;
-    private Text PlayerWeaponName
+    public Text PlayerWeaponName
     {
         get
         {
@@ -1309,7 +1309,7 @@ public class BattleUI
         PlayerHPBar.enabled = true;
         WeaponImage.enabled = true;
         PlayerPortrait.enabled = true;
-        PlayerWeaponName.text = "무기이름";
+        PlayerWeaponName.text = "무기 텍스트";
         WeaponBeforeBTN.onClick.AddListener(Managers.instance.PlayerDataManager.PlayerBeforeBallPick);
         WeaponNextBTN.onClick.AddListener(Managers.instance.PlayerDataManager.PlayerNextBallPick);
         UpdateScore(0,0);
