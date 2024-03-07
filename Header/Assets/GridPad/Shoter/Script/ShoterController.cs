@@ -73,8 +73,8 @@ public class ShoterController : MonoBehaviour
         }
     }
     private PhysicsMaterial2D refPhyMat;
-    [SerializeField]private BallStat nowBallStat;
-    public BallStat NowBallStat
+    [SerializeField]private ExtraBallStat nowBallStat;
+    public ExtraBallStat NowBallStat
     {
         get { return nowBallStat; }
         set 
@@ -83,7 +83,7 @@ public class ShoterController : MonoBehaviour
             nowBallStat = value;
         }
     }
-    Queue<HeaderPadDefines.BallStat> ballStatQueue = new Queue<HeaderPadDefines.BallStat>();
+    Queue<HeaderPadDefines.ExtraBallStat> ballStatQueue = new Queue<HeaderPadDefines.ExtraBallStat>();
     private void Awake()
     {
         refPhyMat = new PhysicsMaterial2D();
@@ -112,7 +112,7 @@ public class ShoterController : MonoBehaviour
             TargetBall.BallPause();
             MonsterManager.MonsterManagerInstance.NextTurnFunctions(regionalDamage, targetDamage, TargetMonsterTR, () =>
             {
-                SetBall();
+                TargetBall.ResetBall();
                 regionalDamage = 0;
                 targetDamage = 0;
             });
@@ -275,7 +275,7 @@ public class ShoterController : MonoBehaviour
             }
         }
     }
-    public void ReloadBalls(List<BallStat> EquipedBalls)
+    public void ReloadBalls(List<ExtraBallStat> EquipedBalls)
     {
         Managers.instance.PlayerDataManager.CheckWeaponNextBeforeButton();
 
@@ -299,7 +299,7 @@ public class ShoterController : MonoBehaviour
     public void SetBallOnBehind()
     {
         string tempName = NowBallStat.ballName;
-        BallStat[] TempBallStat = ballStatQueue.ToArray();
+        ExtraBallStat[] TempBallStat = ballStatQueue.ToArray();
         ballStatQueue.Clear();
         ballStatQueue.Enqueue(NowBallStat);
         for (int i = 0; i < TempBallStat.Length-1; i++)
@@ -324,8 +324,10 @@ public class ShoterController : MonoBehaviour
             {
                 NowBallStat = ballStatQueue.Dequeue();
             }
+            
             TargetBall.Ballsetting(SettingValue(NowBallStat.ballBouncienss, NowBallStat.ballFriction), NowBallStat.weight);
             TargetBall.ChangeBallSprite(NowBallStat.ballName);
+            TargetBall.ballNowHP = NowBallStat.ballHealth;
 
         }
         else

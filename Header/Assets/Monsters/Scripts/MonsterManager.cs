@@ -174,16 +174,13 @@ public class MonsterManager : MonoBehaviour
         DamageToAllMonsters(regionalDamage, (total, count) =>
         {
             Debug.Log("토탈" + total + '\n' + "카운트" + count);
-            if (total == count)
+            DamageToTargetMonster(targetDamage, TargetMonsterTR, () =>
             {
-                DamageToTargetMonster(targetDamage, TargetMonsterTR, () =>
+                NextTurn(() =>
                 {
-                    NextTurn(() =>
-                    {
-                        isDone.Invoke();
-                    });
+                    isDone.Invoke();
                 });
-            }
+            });
 
         });
     }
@@ -203,6 +200,7 @@ public class MonsterManager : MonoBehaviour
     {
         int total = 0;
         int count = 0;
+        int actionTime = 0;
         if (damage <= 0)
         {
             isDamageDone.Invoke(total, count);
@@ -210,39 +208,33 @@ public class MonsterManager : MonoBehaviour
         }
         else
         {
-
+            for (int i = 0; i < moveSlots.Length; i++)
+            {
+                if (Monsters[i].Item2 != null && !Monsters[i].Item1.isMonsterDie)
+                {
+                    total++;
+                }
+            }
             bombTR.position = playerPos;
             BombAttackBulb.gameObject.SetActive(true);
 
             StartCoroutine(MoveBalls(GetBounceVectors(), () =>
             {
-                for (int i = 0; i < moveSlots.Length; i++)
-                {
-                    if (moveSlots[i].monsterTR != null)
-                    {
-                        total++;
-                    }
-                }
                 for (int i = 0; i < Monsters.Length; i++)
                 {
-
-                    if (Monsters[i].Item2 != null && Monsters[i].Item1.isMonsterDie)
+                    if (Monsters[i].Item2 != null && !Monsters[i].Item1.isMonsterDie)
                     {
-                        continue;
-                    }
-                    else if (Monsters[i].Item2 != null && !Monsters[i].Item1.isMonsterDie)
-                    {
-                        Monsters[i].Item1.GetDamage(damage);
                         StartCoroutine(DamagedAnim(i,false, () =>
                         {
                             count++;
                             Debug.Log("카운트" + count + "토탈" + total);
-                            if (count == total)
+                            if (actionTime == 0)
                             {
                                 BombAttackBulb.gameObject.SetActive(false);
                                 Managers.instance.UI.BattleUICall.SetTargetUI(ShoterController.Instance.TargetMonsterTR, MonsterManager.MonsterManagerInstance.ReturnMonsterSpriteSize(ShoterController.Instance.TargetMonsterTR));
                                 isDamageDone.Invoke(total, count);
                             }
+                            actionTime++;
                         }));
                     }
                 }
@@ -386,8 +378,18 @@ public class MonsterManager : MonoBehaviour
             }
         }
         Monsters[index].Item3.Play("Damaged", 0);
+        float animTimer = 0;
         while (Monsters[index].Item3.GetCurrentAnimatorStateInfo(0).normalizedTime <= 1 || !Monsters[index].Item3.GetCurrentAnimatorStateInfo(0).IsName("Damaged"))
         {
+            /*            if (!Monsters[index].Item3.GetCurrentAnimatorStateInfo(0).IsName("Damaged"))
+                        {
+                            Monsters[index].Item3.Play("Damaged", 0);
+                        }*/
+            animTimer += Time.deltaTime;
+            if (animTimer> 3)
+            {
+                break;
+            }
             Debug.Log(Monsters[index].Item3.GetCurrentAnimatorStateInfo(0).normalizedTime + "노멀라이즈 타임"+'\n'+ Monsters[index].Item3.GetCurrentAnimatorStateInfo(0).IsName("Damaged"));
             yield return null;
         }

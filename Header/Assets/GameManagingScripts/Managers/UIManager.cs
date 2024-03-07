@@ -1929,7 +1929,7 @@ public class ShopUI
             Text priceText = new GameObject("ShopWeaponPriceText" + shopWeaponItems.Length).AddComponent<Text>();
             priceText.font = Managers.instance.Resource.Load<Font>("InGameFont");
             priceText.alignment = TextAnchor.MiddleCenter;
-            priceText.text = stat.price + "$";
+            priceText.text = stat.ballPrice + "$";
             priceText.color = Color.gray;
             priceText.rectTransform.SetParent(tempParent);
             priceText.rectTransform.anchorMax = new Vector2(1f, 0.4f);
@@ -1972,7 +1972,7 @@ public class ShopUI
     {
         NowPage = invenPage + 1;
     }
-    public void UpdateInvenBulb(List<BallStat> ballList)
+    public void UpdateInvenBulb(List<ExtraBallStat> ballList)
     {
         (Sprite, string) tempSet;
         for (int i = 0; i < ballList.Count; i++)

@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Rendering.Universal;
 
 public class BallScript : MonoBehaviour
 {
@@ -9,6 +10,21 @@ public class BallScript : MonoBehaviour
     public float ballBouncienss;
     public float ballFriction;
     public float ballRadios;
+    public int ballNowHP;
+    public float blinkTimer;
+    private Light2D bulbLight;
+    public Light2D BulbLight 
+    {
+        get 
+        { 
+            if (bulbLight == null)
+            {
+                bulbLight = transform.GetChild(0).GetComponent<Light2D>();
+            }
+            return bulbLight;
+        }
+    }
+
     protected Rigidbody2D ballRB;
     protected Rigidbody2D BallRB
     {
@@ -83,6 +99,11 @@ public class BallScript : MonoBehaviour
                 Managers.instance.Grid.OnColide(pauseCollector[i].transform.position);
             }
         }
+        if (ballNowHP == 1)
+        {
+            blinkTimer += Time.deltaTime;
+            BulbLight.falloffIntensity = blinkTimer;
+        }
     }
 
     public void ChangeBallSprite(string ballName)
@@ -130,6 +151,22 @@ public class BallScript : MonoBehaviour
         {
             Managers.instance.Grid.OnColide(collision.transform.position);
         }
+        if (ballNowHP<= 0)
+        {
+
+            BallPause();
+            MonsterManager.MonsterManagerInstance.NextTurnFunctions(ShoterController.Instance.regionalDamage, ShoterController.Instance.targetDamage, ShoterController.Instance.TargetMonsterTR, () =>
+            {
+                ResetBall();
+                ShoterController.Instance.regionalDamage = 0;
+                ShoterController.Instance.targetDamage = 0;
+            }
+            );
+        }
+        else
+        {
+            ballNowHP -= 1;
+        }
     }
     public void BallToTarget(Vector2 targetPos,float Speed)
     {
@@ -150,6 +187,12 @@ public class BallScript : MonoBehaviour
     protected Vector2 CarculateDirection(Vector2 targetPos)
     {
         return (targetPos - (Vector2)transform.position).normalized;
+    }
+    public void ResetBall()
+    {
+        ShoterController.Instance.SetBall();
+        BulbLight.falloffIntensity = 0.5f;
+        blinkTimer = 0;
     }
 }
 

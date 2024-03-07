@@ -6,7 +6,7 @@ using HeaderPadDefines;
 [System.Serializable]
 public class PlayerDataManager
 {
-    public List<BallStat> playerOwnBalls = new List<BallStat>();
+    public List<ExtraBallStat> playerOwnBalls = new List<ExtraBallStat>();
     private int playerMoney;
     public int PlayerMoney
     {
@@ -62,17 +62,17 @@ public class PlayerDataManager
     }
     
 
-    public void AddBall(BallStat balls,bool isCalledItOnShop = false)
+    public void AddBall(ExtraBallStat balls,bool isCalledItOnShop = false)
     {
         if (isCalledItOnShop) 
         {
-            if (PlayerMoney < balls.price)
+            if (PlayerMoney < balls.ballPrice)
             {
                 return;
             }
             else
             {
-                PlayerMoney -= balls.price;
+                PlayerMoney -= balls.ballPrice;
             }
         }
         if (playerOwnBalls.Count > 0)
@@ -112,7 +112,7 @@ public class PlayerDataManager
     }
     public void RemoveBall(BallStat ball, bool isCalledItOnShop = false)
     { 
-        foreach (BallStat item in playerOwnBalls)
+        foreach (ExtraBallStat item in playerOwnBalls)
         {
             if (item == ball)
             {
