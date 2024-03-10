@@ -1,14 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
-using UnityEditor.Search;
 using UnityEngine;
-using UnityEngine.UI;
 using UnityEngine.SceneManagement;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
-using HeaderPadDefines;
-using System;
+using UnityEngine.AddressableAssets;
 
 public class NewGameButton : MonoBehaviour
 {
@@ -19,9 +13,14 @@ public class NewGameButton : MonoBehaviour
     Queue<Vector2> LoadingPercent = new Queue<Vector2>();
     (byte, byte) IlustMinMax;
     // Start is called before the first frame update
-    void Start()
+    private void Start()
     {
-        newGameBTN.onClick.AddListener(OnClickBTN);
+        Managers.instance.Resource.LoadAllAsync<AudioClip>("TItleAudios", (TempString, Num) =>
+        {
+            Managers.instance.SoundManager.BGM.enabled = true;
+            Managers.instance.SoundManager.SFX.enabled = true;
+            newGameBTN.onClick.AddListener(OnClickBTN);
+        });
     }
     private void Update()
     {

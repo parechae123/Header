@@ -102,7 +102,7 @@ public class MonsterManager : MonoBehaviour
             {
                 attackBulb = new GameObject("AttackBulb").AddComponent<SpriteRenderer>();
             }
-            attackBulb.sprite = Managers.instance.Resource.Load<Sprite>(ShoterController.Instance.NowBallStat.ballName);
+            attackBulb.sprite = Managers.instance.Resource.Load<Sprite>(ShoterController.Instance.NowBallStat == null ? string.Empty : ShoterController.Instance.NowBallStat.ballName);
             return attackBulb;
         }
     }
@@ -210,7 +210,7 @@ public class MonsterManager : MonoBehaviour
         }
         else
         {
-            for (int i = 0; i < moveSlots.Length; i++)
+            for (int i = 0; i < Monsters.Length; i++)
             {
                 if (Monsters[i].Item2 != null && !Monsters[i].Item1.isMonsterDie)
                 {
@@ -227,7 +227,7 @@ public class MonsterManager : MonoBehaviour
                     if (Monsters[i].Item2 != null && !Monsters[i].Item1.isMonsterDie)
                     {
                         Monsters[i].Item1.GetDamage(damage);
-                        StartCoroutine(DamagedAnim(i,false, () =>
+                        StartCoroutine(DamagedAnim(i, false, () =>
                         {
                             count++;
                             Debug.Log("Ä«¿îÆ®" + count + "ÅäÅ»" + total);
@@ -239,6 +239,14 @@ public class MonsterManager : MonoBehaviour
                             }
                             actionTime++;
                         }));
+                    }
+                    else
+                    {
+                        if (total == 0)
+                        {
+                            isDamageDone.Invoke(total, count);
+                            return;
+                        }
                     }
                 }
             }));
@@ -279,7 +287,7 @@ public class MonsterManager : MonoBehaviour
         {
             int tempArray = int.Parse(targetTR.name);
 
-            if (damage <= 0)
+            if (damage <= 0 || !targetTR.gameObject.activeSelf)
             {
                 isDone.Invoke();
                 return;
@@ -308,6 +316,11 @@ public class MonsterManager : MonoBehaviour
             }
 
         }
+        else
+        {
+            isDone.Invoke();
+            return;
+        }
     }
     public void SpawnAndMove()
     {
@@ -332,6 +345,26 @@ public class MonsterManager : MonoBehaviour
     }
     public void MoveMonsters(int array)
     {
+        for (int i = 0; i < moveSlots.Length; i++)
+        {
+            for (int E = 0; E < Monsters.Length; E++)
+            {
+                if (Monsters[E].Item2 != null)
+                {
+                    if (moveSlots[i].monsterTR == Monsters[E].Item2.transform)
+                    {
+                        if (Monsters[E].Item1.isMonsterDie)
+                        {
+                            moveSlots[i].monsterTR = null;
+                        }
+                    }
+                }
+                else
+                {
+                    break;
+                }
+            }
+        }
         if (!Monsters[array].Item1.isMonsterDie)
         {
             for (int i = 0; i < moveSlots.Length; i++)
@@ -346,11 +379,12 @@ public class MonsterManager : MonoBehaviour
                         moveSlots[i - 1].monsterTR.DOMove(moveSlots[i - 1].slotPosition, 0.2f).OnComplete(()=> 
                         {
                             Managers.instance.UI.BattleUICall.SetTargetUI(ShoterController.Instance.TargetMonsterTR, MonsterManager.MonsterManagerInstance.ReturnMonsterSpriteSize(ShoterController.Instance.TargetMonsterTR));
+                            moveSlots[i - 1].monsterTR.DOKill();
                         });
                     }
                     else
                     {
-                        return;
+                        continue;
                     }
                 }
             }
@@ -468,6 +502,7 @@ public class MonsterManager : MonoBehaviour
         for (int i = 0; i < vectors.Length; i++)
         {
             yield return new WaitForSeconds(timeDelay);
+
             bombTR.position = vectors[i];
         }
         

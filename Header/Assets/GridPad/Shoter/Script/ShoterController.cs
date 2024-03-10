@@ -76,16 +76,38 @@ public class ShoterController : MonoBehaviour
     [SerializeField]private ExtraBallStat nowBallStat;
     public ExtraBallStat NowBallStat
     {
-        get { return nowBallStat; }
+        get 
+        { 
+            return nowBallStat;
+        }
         set 
         {
-            if (value.amount <= 0)
+            if (value != null)
             {
-                Managers.instance.UI.BattleUICall.ChangeWeaponUI(true, string.Empty, "전구가 없어!!");
+                if (value.amount <= 0)
+                {
+                    Managers.instance.UI.BattleUICall.ChangeWeaponUI(true, string.Empty, "전구가 없어!!");
+                }
+                else
+                {
+                    Managers.instance.UI.BattleUICall.ChangeWeaponUI(true, value.ballName, value.ballKoreanName);
+                }
             }
             else
             {
-                Managers.instance.UI.BattleUICall.ChangeWeaponUI(true, value.ballName, value.ballKoreanName);
+                if (Managers.instance.PlayerDataManager.playerOwnBalls.Count<=0)
+                {
+                    Managers.instance.UI.BattleUICall.ChangeWeaponUI(true, string.Empty, "전구가 없어!!");
+                    ballStatQueue.Clear();
+                }
+                else
+                {
+                    ballStatQueue.Clear();
+                    for (int i = 0; i < Managers.instance.PlayerDataManager.playerOwnBalls.Count; i++)
+                    {
+                        ballStatQueue.Enqueue(Managers.instance.PlayerDataManager.playerOwnBalls[i]);
+                    }
+                }
             }
 
             nowBallStat = value;
@@ -155,7 +177,7 @@ public class ShoterController : MonoBehaviour
                 {
                     testTR.position = colInfo.point;
                     lineRenderer.SetPosition(i + 1, colInfo.point);
-                    float reflectedBallVelocity = nowBallStat.ballBouncienss * (Vector2.Distance(firstPos, secondPos) / timeInterval);
+                    float reflectedBallVelocity = NowBallStat.ballBouncienss * (Vector2.Distance(firstPos, secondPos) / timeInterval);
                     Vector2 normalizedRefVector = (Vector2.Reflect(secondPos - firstPos, colInfo.normal)).normalized;
                     Vector2 refTempVec = reflectedBallVelocity * normalizedRefVector;
                     for (int E = i + 2; E < lineRenderer.positionCount; E++)
@@ -308,8 +330,11 @@ public class ShoterController : MonoBehaviour
         if (Managers.instance.PlayerDataManager.playerOwnBalls.Count<=0&& NowBallStat.amount <= 0)
         {
             ballStatQueue.Clear();
+            NowBallStat = null;
+            isReadyFire = false;
             Managers.instance.UI.BattleUICall.WeaponAnim(true, "Bulb_Empty", "전구가 없어!!", tempName);
             TargetBall.ChangeBallSprite("Bulb_Empty");
+            return;
         }
         else
         {
@@ -366,16 +391,18 @@ public class ShoterController : MonoBehaviour
 
     public void SetBall()
     {
-        if ((ballStatQueue.Count <= 0 && nowBallStat.amount <= 0) || Managers.instance.PlayerDataManager.playerOwnBalls.Count <= 0)
+        if (ballStatQueue.Count <= 0 && Managers.instance.PlayerDataManager.playerOwnBalls.Count <= 0 && NowBallStat == null)
         {
-            Managers.instance.UI.BattleUICall.WeaponButtonCheck(true);
-            Instance.isReadyFire = false;
+
+            Managers.instance.PlayerDataManager.CheckWeaponNextBeforeButton();
+            isReadyFire = false;
             Managers.instance.UI.BattleUICall.GameOverBTN.enabled = true;
             TargetBall.BulbLight.intensity = 0;
+            return;
         }
         else if (ballStatQueue.Count>0)
         {
-            Managers.instance.UI.BattleUICall.WeaponButtonCheck(false);
+            Managers.instance.PlayerDataManager.CheckWeaponNextBeforeButton();
             if (NowBallStat.ballName == string.Empty)
             {
                 NowBallStat = ballStatQueue.Dequeue();
@@ -386,9 +413,9 @@ public class ShoterController : MonoBehaviour
             TargetBall.ballNowHP = NowBallStat.ballHealth;
 
         }
-        else if (ballStatQueue.Count <= 0 && nowBallStat.amount > 0)
+        else if (ballStatQueue.Count <= 0 && NowBallStat.amount > 0)
         {
-            Managers.instance.UI.BattleUICall.WeaponButtonCheck(false);
+            Managers.instance.PlayerDataManager.CheckWeaponNextBeforeButton();
             TargetBall.Ballsetting(SettingValue(NowBallStat.ballBouncienss, NowBallStat.ballFriction), NowBallStat.weight);
             TargetBall.ChangeBallSprite(NowBallStat.ballName);
             TargetBall.ballNowHP = NowBallStat.ballHealth;

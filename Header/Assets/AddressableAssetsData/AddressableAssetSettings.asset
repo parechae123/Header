@@ -15,7 +15,7 @@ MonoBehaviour:
   m_DefaultGroup: 2c470aee28d213248b7eba9a93cb50c6
   m_currentHash:
     serializedVersion: 2
-    Hash: 275b07dda6ad7809105bd0e6cecf922e
+    Hash: 7b1b1be69759428b1fcb877512c5f72d
   m_OptimizeCatalogSize: 0
   m_BuildRemoteCatalog: 0
   m_BundleLocalCatalog: 0
@@ -100,6 +100,7 @@ MonoBehaviour:
     - Texture
     - Texture2D
     - InGameSprites
+    - Mixer
   m_SchemaTemplates: []
   m_GroupTemplateObjects:
   - {fileID: 11400000, guid: c6ef9c20331d5e649a2617b27fb0ed50, type: 2}

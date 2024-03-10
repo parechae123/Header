@@ -125,6 +125,12 @@ MonoBehaviour:
     m_SerializedLabels:
     - UI
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: d4fdc107f9ea3834bada334782236d12
+    m_Address: GridiculousMax
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Font
+    FlaggedDuringContentUpdateRestriction: 0
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: 489b40023fd66be419d08d79841125b1, type: 2}
   m_SchemaSet:

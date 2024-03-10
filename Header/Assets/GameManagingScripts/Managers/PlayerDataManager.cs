@@ -89,12 +89,14 @@ public class PlayerDataManager
                     }
                     else if (playerOwnBalls[i].ballName != balls.ballName && i == playerOwnBalls.Count)
                     {
+                        balls.amount = 1;
                         playerOwnBalls.Add(balls);
                         break;
                     }
                 }
                 else
                 {
+                    balls.amount = 1;
                     playerOwnBalls.Add(balls);
                     break;
                 }
@@ -103,6 +105,7 @@ public class PlayerDataManager
         }
         else
         {
+            balls.amount = 1;
             playerOwnBalls.Add(balls);
         }
 
@@ -119,7 +122,10 @@ public class PlayerDataManager
             {
                 item.amount--;
                 playerOwnBalls.Remove(item);
-
+                if (ShoterController.Instance.NowBallStat != null&&playerOwnBalls.Count <= 1) 
+                {
+                    CheckWeaponNextBeforeButton();
+                }
                 return true;
             }
             else if(item.ballName == ball.ballName && item.amount > 1&& !isCalledItOnShop) 

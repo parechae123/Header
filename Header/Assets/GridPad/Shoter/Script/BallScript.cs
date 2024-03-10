@@ -149,6 +149,7 @@ public class BallScript : MonoBehaviour
     }
     protected void OnCollisionEnter2D(Collision2D collision)
     {
+        
         if (collision.gameObject.layer == 3) 
         {
             Managers.instance.Grid.OnColide(collision.transform.position);
@@ -173,6 +174,7 @@ public class BallScript : MonoBehaviour
         else
         {
             ballNowHP--;
+            Managers.instance.UI.BattleUICall.SetBulbDamagedText(ShoterController.Instance.NowBallStat.ballHealth,ballNowHP,transform.position);
         }
     }
     public void BallToTarget(Vector2 targetPos,float Speed)
@@ -203,6 +205,7 @@ public class BallScript : MonoBehaviour
     }
     public void ResetBall()
     {
+        Managers.instance.UI.BattleUICall.SetComboNumber(false);
         BulbLight.intensity = 15;
         ShoterController.Instance.SetBall();
         blinkTimer = 0;

@@ -12,6 +12,8 @@ using UnityEngine.Video;
 using HeaderPadDefines;
 using Unity.Mathematics;
 using UnityEditor.Rendering;
+using Unity.Burst.Intrinsics;
+using TMPro;
 
 
 public class UIManager
@@ -21,7 +23,7 @@ public class UIManager
     public DialogSystem DialogCall = new DialogSystem();
     public BattleUI BattleUICall = new BattleUI();
     public ShopUI ShopUICall = new ShopUI();
-
+    
     private Stack<Transform> UIStack = new Stack<Transform>();
     public List<Transform> MoveAbleCheckerList = new List<Transform>();
     public void RegistUIStack(Transform target)
@@ -78,6 +80,13 @@ public class UIManager
         {
             TopViewPlayer.Instance.isMoveAble = MoveAbleChecker();
         }
+    }
+    public void SetUISize(ref RectTransform TargetRect,Vector2 min,Vector2 max)
+    {
+        TargetRect.anchorMin = min;
+        TargetRect.anchorMax = max;    
+        TargetRect.sizeDelta = Vector2.zero;
+        TargetRect.anchoredPosition = Vector2.zero;
     }
 }
 
@@ -979,6 +988,88 @@ public class BattleUI
             return monsterTarget;
         }
     }
+    private Text[] bulbHPText;
+    private Tween[] bulbHPTweens;
+    public Text BulbHPText
+    {
+        get
+        {
+            if (bulbHPText != null)
+            {
+                if (bulbHPText.Length > 0)
+                {
+                    for (int i = 0; i < bulbHPText.Length; i++)
+                    {
+                        if (!bulbHPTweens[i].IsPlaying())
+                        {
+                            bulbHPText[i].DOKill();
+                            bulbHPTweens[i] = bulbHPText[i].rectTransform.DOAnchorPosY(1, 1.5f).OnComplete(() => { bulbHPText[i].gameObject.SetActive(false); bulbHPText[i].DOKill(); });
+                            return bulbHPText[i];
+                        }
+                        else if (bulbHPTweens[i].IsPlaying() && i == bulbHPText.Length - 1)
+                        {
+                            Array.Resize(ref bulbHPText, bulbHPText.Length + 1);
+                            Array.Resize(ref bulbHPTweens, bulbHPTweens.Length + 1);
+                            bulbHPText[bulbHPText.Length - 1] = new GameObject("BulbHPText").AddComponent<Text>();
+                            RectTransform tempTextRect = bulbHPText[bulbHPText.Length - 1].rectTransform;
+                            tempTextRect.SetParent(BattleSceneUI);
+                            bulbHPText[bulbHPText.Length - 1].alignment = TextAnchor.MiddleCenter;
+                            bulbHPText[bulbHPTweens.Length - 1].font = Managers.instance.Resource.Load<Font>("GridiculousMax");
+                            bulbHPText[bulbHPTweens.Length - 1].color = Color.red;
+                            bulbHPText[bulbHPTweens.Length - 1].fontSize = 30;
+                            bulbHPTweens[bulbHPTweens.Length - 1] = tempTextRect.DOAnchorPosY(1, 1.5f).OnComplete(() => { tempTextRect.gameObject.SetActive(false); tempTextRect.DOKill(); });
+                            return bulbHPText[bulbHPTweens.Length - 1];
+                        }
+                    }
+                }
+            }
+            bulbHPText = new Text[1];
+            bulbHPTweens = new Tween[1];
+            bulbHPText[bulbHPText.Length - 1] = new GameObject("BulbHPText").AddComponent<Text>();
+            RectTransform tempTextRectr = bulbHPText[bulbHPText.Length - 1].rectTransform;
+            tempTextRectr.SetParent(BattleSceneUI);
+            bulbHPText[bulbHPText.Length - 1].alignment = TextAnchor.MiddleCenter;
+            bulbHPText[bulbHPTweens.Length - 1].font = Managers.instance.Resource.Load<Font>("GridiculousMax");
+            bulbHPText[bulbHPTweens.Length - 1].color = Color.red;
+            bulbHPText[bulbHPTweens.Length - 1].fontSize = 30;
+            bulbHPTweens[bulbHPTweens.Length - 1] = tempTextRectr.DOAnchorPosY(1, 1.5f).OnComplete(() => { tempTextRectr.gameObject.SetActive(false); tempTextRectr.DOKill(); });
+            return bulbHPText[0];
+
+
+        }
+    }
+    private Text comboText;
+    public int comboStack;
+    public int ComboText
+    {
+        get
+        {
+            if (comboStack == 0)
+            {
+                comboStack = 1;
+            }
+            return comboStack;
+        }
+        set
+        {
+            if (comboText == null)
+            {
+                RectTransform comboParent = new GameObject("ComBoTextParent").AddComponent<RectTransform>();
+                comboParent.SetParent(BattleSceneUI);
+                Managers.instance.UI.SetUISize(ref comboParent,   new Vector2(0.179524779f, 0.464092642f),new Vector2(0.364462018f, 0.632877231f));
+                comboParent.SetAsLastSibling();
+                comboText = new GameObject("ComboTest").AddComponent<Text>();
+                RectTransform tempTextTR = comboText.rectTransform;
+                tempTextTR.SetParent(comboParent);
+                Managers.instance.UI.SetUISize(ref tempTextTR, Vector2.zero, Vector2.one);
+                comboText.fontSize = 96;
+                comboText.color = new Color(0.1933962f, 0.8095468f, 1,1);
+                comboText.font = Managers.instance.Resource.Load<Font>("GridiculousMax");
+            }
+            comboText.text = "Combo!\nX" + value;
+            comboStack = value;
+        }
+    }
     #endregion
 
     #region 적 statusUI관련 변수
@@ -1369,6 +1460,7 @@ public class BattleUI
             if (enemyHpBar.value <=0)
             {
                 Managers.instance.UI.BattleUICall.ToDialogSceneBTN.enabled = true;
+                ShoterController.Instance.isReadyFire = false;
             }
         }
     }
@@ -1475,6 +1567,35 @@ public class BattleUI
             MonsterTarget.gameObject.SetActive(false);
         }
 
+    }
+    public void SetComboNumber(bool turnOn)
+    {
+        if (turnOn)
+        {
+            ComboText = comboStack!= 0? ComboText * 2 : ComboText;
+            comboText.gameObject.SetActive(true);
+            ShoterController.Instance.regionalDamage = ShoterController.Instance.regionalDamage * 2;
+            ShoterController.Instance.targetDamage = ShoterController.Instance.targetDamage * 2;
+        }
+        else
+        {
+            ComboText = 0;
+            comboText.gameObject.SetActive(false);
+        }
+
+    }
+    public void SetBulbDamagedText(int max,int now,Vector3 Position)
+    {
+        Text tempText = BulbHPText;
+        tempText.gameObject.SetActive(true);
+        tempText.rectTransform.position = Camera.main.WorldToScreenPoint(Position);
+        
+        tempText.text = now + "/" + max;
+    }
+    public void ResetBulbDamageText()
+    {
+        bulbHPText = null;
+        bulbHPTweens = null;
     }
     #endregion
 }
@@ -2062,5 +2183,9 @@ public class ShopUI
         BeforeBTN.enabled = true;
         ShoppingPanel.enabled = true;
     }
+    
+}
+public class OptionUI
+{
     
 }

@@ -86,17 +86,20 @@ namespace HeaderPadDefines
                     targetIMG.transform.GetComponent<PolygonCollider2D>().enabled = false;
                     targetIMG.sprite = Managers.instance.Resource.Load<Sprite>("HeaderBlock_Destroyed");
                     ShoterController.Instance.targetDamage += 1;
+                    Managers.instance.UI.BattleUICall.SetComboNumber(true);
                     //TODO : 볼 충돌시 갱신되는 모든걸 여기에 넣으면될듯,EX : 데미지
                     break;
                 case BlockStatus.FIlled:
                     blockCondition = BlockStatus.Emptied;
                     targetIMG.sprite = Managers.instance.Resource.Load<Sprite>("HeaderBlock_Emptied");
                     ShoterController.Instance.targetDamage += 3;
+                    Managers.instance.UI.BattleUICall.SetComboNumber(true);
                     break;
                 case BlockStatus.FilledCoin:
                     blockCondition = BlockStatus.Emptied;
                     targetIMG.sprite = Managers.instance.Resource.Load<Sprite>("HeaderBlock_Emptied");
                     Managers.instance.PlayerDataManager.PlayerMoney += 1;
+                    Managers.instance.UI.BattleUICall.SetComboNumber(true);
                     break;
                 case BlockStatus.BoombBlock:
                     if (BlockHP>= 0)
@@ -109,6 +112,7 @@ namespace HeaderPadDefines
                         ShoterController.Instance.regionalDamage += 40;
                         blockCondition = BlockStatus.Emptied;
                         targetIMG.transform.GetComponent<PolygonCollider2D>().enabled = false;
+                        Managers.instance.UI.BattleUICall.SetComboNumber(true);
                         targetIMG.sprite = Managers.instance.Resource.Load<Sprite>("HeaderBlock_Destroyed");
                     }
                     break;
@@ -116,6 +120,7 @@ namespace HeaderPadDefines
                     Managers.instance.Grid.OnReset();
                     blockCondition = BlockStatus.Emptied;
                     targetIMG.sprite = Managers.instance.Resource.Load<Sprite>("HeaderBlock_Emptied");
+                    Managers.instance.UI.BattleUICall.SetComboNumber(true);
                     break;
             }
             if (BE != null)
@@ -160,8 +165,8 @@ namespace HeaderPadDefines
         public float ballBouncienss;
         public float ballFriction;
         public float weight; //무게 mass에 넣어줘야함
-        public int amount = 1;
-        public int ballPrice = 10;
+        public int amount;
+        public int ballPrice;
         public int ballHealth;
         public string flavorText;
     }

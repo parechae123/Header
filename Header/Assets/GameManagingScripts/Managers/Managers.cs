@@ -32,7 +32,7 @@ public class Managers : MonoBehaviour
 
     [SerializeField]private PlayerDataManager playerDataManager = new PlayerDataManager();
     public PlayerDataManager PlayerDataManager { get {  return instance?.playerDataManager; } }
-    public SoundManager soundManager = new SoundManager();
+    private SoundManager soundManager = new SoundManager();
     public SoundManager SoundManager 
     { 
         get 
@@ -46,6 +46,7 @@ public class Managers : MonoBehaviour
         Pool.Clear();
         Grid.ResetGrids();
         ui.ShopUICall.Inventory.Clear();
+        ui.BattleUICall.ResetBulbDamageText();
     }
     public static void Init()
     {
