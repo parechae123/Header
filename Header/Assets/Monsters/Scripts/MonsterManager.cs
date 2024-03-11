@@ -83,7 +83,6 @@ public class MonsterManager : MonoBehaviour
                 playerSprite = new GameObject("PlayerBattleSceneCharactor").AddComponent<SpriteRenderer>();
                 playerSprite.sprite = Managers.instance.Resource.Load<Sprite>("PlayerTopViewWalkR_1");
                 playerSprite.transform.position = playerPos;
-                playerSprite.flipY = true;
             }
             return playerSprite;
         }
@@ -115,7 +114,6 @@ public class MonsterManager : MonoBehaviour
             {
                 bombAttackBulb = new GameObject("BombAttackBulb").AddComponent<SpriteRenderer>();
                 bombAttackBulb.sprite = Managers.instance.Resource.Load<Sprite>("bomb");
-                bombAttackBulb.flipY = true;
             }
             return bombAttackBulb;
         }
@@ -484,7 +482,7 @@ public class MonsterManager : MonoBehaviour
                 timeX += tempPos;
                 p += 0.3f;
                 tempY = Mathf.Sin(p);
-                Vector3 tempVec = new Vector3(timeX, (tempY * -bounceForce) / (float)(i + 1), 0);
+                Vector3 tempVec = new Vector3(timeX, (tempY * bounceForce) / (float)(i + 1), 0);
                 if (counter >= vectorArray.Length)
                 {
                     Debug.Log(counter);
@@ -511,7 +509,7 @@ public class MonsterManager : MonoBehaviour
     IEnumerator PlayerDamagedAnim(Transform monster,Action isDone)
     {
         Vector3 originPos = monster.transform.position;
-        yield return monster.DOJump(playerPos, -0.7f, 1, 0.5f).WaitForCompletion();
+        yield return monster.DOJump(playerPos, 0.7f, 1, 0.5f).WaitForCompletion();
         PlayerSprite.color = Color.red;
         yield return new WaitForSeconds(0.12f);
         PlayerSprite.color = Color.white;
@@ -520,7 +518,7 @@ public class MonsterManager : MonoBehaviour
         yield return new WaitForSeconds(0.12f);
         PlayerSprite.color = Color.white;
         monster.DOComplete();
-        yield return monster.DOJump(originPos, -0.7f, 1, 0.5f).WaitForCompletion();
+        yield return monster.DOJump(originPos, 0.7f, 1, 0.5f).WaitForCompletion();
         isDone.Invoke();
 
     }

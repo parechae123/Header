@@ -32,8 +32,8 @@ public class DialogInteraction : Interactions
     {
         if (!Managers.instance.UI.DialogCall.DialogueBackGround.gameObject.activeSelf)
         {
-            Managers.instance.UI.TargetUIOnOff(Managers.instance.UI.DialogCall.FullDialogPanel,true);
-            Managers.instance.UI.TargetUIOnOff(Managers.instance.UI.DialogCall.DialogueBackGround.rectTransform, true);
+            Managers.instance.UI.TargetUIOnOff(Managers.instance.UI.DialogCall.FullDialogPanel,true,false);
+            Managers.instance.UI.TargetUIOnOff(Managers.instance.UI.DialogCall.DialogueBackGround.rectTransform, true, false);
             Managers.instance.UI.DialogCall.SetDialogueData(interactionKeyNumber);
             InteractionKeyUI(false);
         }

@@ -154,7 +154,11 @@ public class BallScript : MonoBehaviour
         {
             Managers.instance.Grid.OnColide(collision.transform.position);
         }
-        if (ballNowHP<= 1)
+        else if (collision.gameObject.layer == 7) 
+        {
+            ballNowHP = 1;
+        }
+        if (ballNowHP== 1)
         {
             ballNowHP--;
             BallPause();
@@ -174,7 +178,7 @@ public class BallScript : MonoBehaviour
         else
         {
             ballNowHP--;
-            Managers.instance.UI.BattleUICall.SetBulbDamagedText(ShoterController.Instance.NowBallStat.ballHealth,ballNowHP,transform.position);
+            Managers.instance.UI.BattleUICall.SetBulbDamagedText(ShoterController.Instance.NowBallStat.ballHealth,ballNowHP);
         }
     }
     public void BallToTarget(Vector2 targetPos,float Speed)

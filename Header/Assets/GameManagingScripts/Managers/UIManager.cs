@@ -10,10 +10,6 @@ using InteractionDefines;
 using DG.Tweening;
 using UnityEngine.Video;
 using HeaderPadDefines;
-using Unity.Mathematics;
-using UnityEditor.Rendering;
-using Unity.Burst.Intrinsics;
-using TMPro;
 
 
 public class UIManager
@@ -64,21 +60,24 @@ public class UIManager
         }
         return true;
     }
-    public void TargetUIOnOff(Transform target, bool isTurnOn)
+    public void TargetUIOnOff(Transform target, bool isTurnOn,bool isPush =true)
     {
         // TODO : 특정 UI 닫기버튼 누를때 연결해주어야 할 함수 끌때 isTurnOn을 false 열때는 true
         target.gameObject.SetActive(isTurnOn);
-        if (isTurnOn)
+        if (isPush)
         {
-            RegistUIStack(target);
-        }
-        else
-        {
-            UIStack.TryPop(out target);
-        }
-        if (TopViewPlayer.Instance != null)
-        {
-            TopViewPlayer.Instance.isMoveAble = MoveAbleChecker();
+            if (isTurnOn)
+            {
+                RegistUIStack(target);
+            }
+            else
+            {
+                UIStack.TryPop(out target);
+            }
+            if (TopViewPlayer.Instance != null)
+            {
+                TopViewPlayer.Instance.isMoveAble = MoveAbleChecker();
+            }
         }
     }
     public void SetUISize(ref RectTransform TargetRect,Vector2 min,Vector2 max)
@@ -490,7 +489,7 @@ public class DialogSystem
         }
         else
         {
-            Managers.instance.UI.TargetUIOnOff(DialogueBackGround.rectTransform, false);
+            Managers.instance.UI.TargetUIOnOff(DialogueBackGround.rectTransform, false,false);
         }
     }
     public void DialogTextChanger(Vector2Int RemoveInteractionPosition)
@@ -502,7 +501,7 @@ public class DialogSystem
         else
         {
             Managers.instance.Grid.RemoveInteraction(RemoveInteractionPosition);
-            Managers.instance.UI.TargetUIOnOff(DialogueBackGround.rectTransform, false);
+            Managers.instance.UI.TargetUIOnOff(DialogueBackGround.rectTransform, false,false);
         }
     }
     public void DialogTextChanger(Vector2Int RemoveInteractionPosition, InteractionInstallerProps AddInteraction)
@@ -515,7 +514,7 @@ public class DialogSystem
         {
             Managers.instance.Grid.RemoveInteraction(RemoveInteractionPosition);
             Managers.instance.Grid.AddInteraction(AddInteraction);
-            Managers.instance.UI.TargetUIOnOff(DialogueBackGround.rectTransform, false);
+            Managers.instance.UI.TargetUIOnOff(DialogueBackGround.rectTransform, false, false);
         }
     }
     #endregion
@@ -1003,7 +1002,8 @@ public class BattleUI
                         if (!bulbHPTweens[i].IsPlaying())
                         {
                             bulbHPText[i].DOKill();
-                            bulbHPTweens[i] = bulbHPText[i].rectTransform.DOAnchorPosY(1, 1.5f).OnComplete(() => { bulbHPText[i].gameObject.SetActive(false); bulbHPText[i].DOKill(); });
+                            bulbHPText[i].rectTransform.position = Camera.main.WorldToScreenPoint(ShoterController.Instance.TargetBall.transform.position);
+                            bulbHPTweens[i] = bulbHPText[i].rectTransform.DOAnchorPosY(bulbHPText[i].rectTransform.anchoredPosition.y + 40, 1.5f).OnComplete(() => { bulbHPText[i].gameObject.SetActive(false); bulbHPText[i].DOKill(); });
                             return bulbHPText[i];
                         }
                         else if (bulbHPTweens[i].IsPlaying() && i == bulbHPText.Length - 1)
@@ -1018,7 +1018,8 @@ public class BattleUI
                             bulbHPText[bulbHPTweens.Length - 1].font = Managers.instance.Resource.Load<Font>("GridiculousMax");
                             bulbHPText[bulbHPTweens.Length - 1].color = Color.red;
                             bulbHPText[bulbHPTweens.Length - 1].fontSize = 30;
-                            bulbHPTweens[bulbHPTweens.Length - 1] = tempTextRect.DOAnchorPosY(1, 1.5f).OnComplete(() => { tempTextRect.gameObject.SetActive(false); tempTextRect.DOKill(); });
+                            tempTextRect.position = Camera.main.WorldToScreenPoint(ShoterController.Instance.TargetBall.transform.position);
+                            bulbHPTweens[bulbHPTweens.Length - 1] = tempTextRect.DOAnchorPosY(tempTextRect.anchoredPosition.y + 40, 1.5f).OnComplete(() => { tempTextRect.gameObject.SetActive(false); tempTextRect.DOKill(); });
                             return bulbHPText[bulbHPTweens.Length - 1];
                         }
                     }
@@ -1034,7 +1035,8 @@ public class BattleUI
             bulbHPText[bulbHPTweens.Length - 1].color = Color.red;
             bulbHPText[bulbHPTweens.Length - 1].fontSize = 30;
             bulbHPText[bulbHPText.Length - 1].raycastTarget = false;
-            bulbHPTweens[bulbHPTweens.Length - 1] = tempTextRectr.DOAnchorPosY(1, 1.5f).OnComplete(() => { tempTextRectr.gameObject.SetActive(false); tempTextRectr.DOKill(); });
+            tempTextRectr.position = Camera.main.WorldToScreenPoint(ShoterController.Instance.TargetBall.transform.position);
+            bulbHPTweens[bulbHPTweens.Length - 1] = tempTextRectr.DOAnchorPosY(tempTextRectr.anchoredPosition.y+40, 1.5f).OnComplete(() => { tempTextRectr.gameObject.SetActive(false); tempTextRectr.DOKill(); });
             return bulbHPText[0];
 
 
@@ -1067,6 +1069,7 @@ public class BattleUI
                 comboText.fontSize = 60;
                 comboText.color = new Color(0.1933962f, 0.8095468f, 1,1);
                 comboText.font = Managers.instance.Resource.Load<Font>("GridiculousMax");
+                comboText.rectTransform.position = Camera.main.WorldToScreenPoint(ShoterController.Instance.transform.position+(Vector3.down*1.5f));
                 comboText.raycastTarget = false;
                 comboText.alignment = TextAnchor.MiddleCenter;
             }
@@ -1588,11 +1591,11 @@ public class BattleUI
         }
 
     }
-    public void SetBulbDamagedText(int max,int now,Vector3 Position)
+    public void SetBulbDamagedText(int max,int now)
     {
         Text tempText = BulbHPText;
         tempText.gameObject.SetActive(true);
-        tempText.rectTransform.position = Camera.main.WorldToScreenPoint(Position);
+
         
         tempText.text = now + "/" + max;
     }
