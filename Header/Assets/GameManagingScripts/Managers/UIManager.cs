@@ -1011,6 +1011,7 @@ public class BattleUI
                             Array.Resize(ref bulbHPText, bulbHPText.Length + 1);
                             Array.Resize(ref bulbHPTweens, bulbHPTweens.Length + 1);
                             bulbHPText[bulbHPText.Length - 1] = new GameObject("BulbHPText").AddComponent<Text>();
+                            bulbHPText[bulbHPText.Length - 1].raycastTarget = false;
                             RectTransform tempTextRect = bulbHPText[bulbHPText.Length - 1].rectTransform;
                             tempTextRect.SetParent(BattleSceneUI);
                             bulbHPText[bulbHPText.Length - 1].alignment = TextAnchor.MiddleCenter;
@@ -1032,6 +1033,7 @@ public class BattleUI
             bulbHPText[bulbHPTweens.Length - 1].font = Managers.instance.Resource.Load<Font>("GridiculousMax");
             bulbHPText[bulbHPTweens.Length - 1].color = Color.red;
             bulbHPText[bulbHPTweens.Length - 1].fontSize = 30;
+            bulbHPText[bulbHPText.Length - 1].raycastTarget = false;
             bulbHPTweens[bulbHPTweens.Length - 1] = tempTextRectr.DOAnchorPosY(1, 1.5f).OnComplete(() => { tempTextRectr.gameObject.SetActive(false); tempTextRectr.DOKill(); });
             return bulbHPText[0];
 
@@ -1056,15 +1058,17 @@ public class BattleUI
             {
                 RectTransform comboParent = new GameObject("ComBoTextParent").AddComponent<RectTransform>();
                 comboParent.SetParent(BattleSceneUI);
-                Managers.instance.UI.SetUISize(ref comboParent,   new Vector2(0.179524779f, 0.464092642f),new Vector2(0.364462018f, 0.632877231f));
+                Managers.instance.UI.SetUISize(ref comboParent,   new Vector2(0.4f, 0.3f),new Vector2(0.6f, 0.7f));
                 comboParent.SetAsLastSibling();
                 comboText = new GameObject("ComboTest").AddComponent<Text>();
                 RectTransform tempTextTR = comboText.rectTransform;
                 tempTextTR.SetParent(comboParent);
                 Managers.instance.UI.SetUISize(ref tempTextTR, Vector2.zero, Vector2.one);
-                comboText.fontSize = 96;
+                comboText.fontSize = 60;
                 comboText.color = new Color(0.1933962f, 0.8095468f, 1,1);
                 comboText.font = Managers.instance.Resource.Load<Font>("GridiculousMax");
+                comboText.raycastTarget = false;
+                comboText.alignment = TextAnchor.MiddleCenter;
             }
             comboText.text = "Combo!\nX" + value;
             comboStack = value;
