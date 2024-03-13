@@ -46,6 +46,10 @@ public class PlayerDataManager
             
         }
     }
+
+    public int girlAttackChance = 30;
+    //1´ç 1% ÃÑ 100%È®·ü
+    public float girlAD = 20;
     public void PlayerGetDamage(float Damage)
     {
         playerHPNow -= Damage;

@@ -164,7 +164,20 @@ public class BallScript : MonoBehaviour
             BallPause();
             MonsterManager.MonsterManagerInstance.NextTurnFunctions(ShoterController.Instance.regionalDamage, ShoterController.Instance.targetDamage, ShoterController.Instance.TargetMonsterTR, () =>
             {
+                if (100-Managers.instance.PlayerDataManager.girlAttackChance<=Random.Range(0,101))
+                {
+                    MonsterManager.MonsterManagerInstance.DamageToAllMonsters(Managers.instance.PlayerDataManager.girlAD, (total, count) =>
+                    {
 
+                    },true);
+                    Managers.instance.UI.BattleUICall.GirlTextAttack = "내가 도와줄께!";
+                    //TODO : 소녀 공격 구현
+                }
+                else
+                {
+                    Managers.instance.UI.BattleUICall.GirlTextAttack = "뒤는 나한테 맡겨!!";
+                    
+                }
                 if (Managers.instance.PlayerDataManager.RemoveBall(ShoterController.Instance.NowBallStat))
                 {
                     ShoterController.Instance.SetBallOnNext();

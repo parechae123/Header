@@ -825,7 +825,7 @@ public class BattleUI
         }
     }
     private Image girlPortrait;
-    private Image GirlPortrait
+    public Image GirlPortrait
     {
         get 
         {
@@ -869,10 +869,8 @@ public class BattleUI
             {
                 girlText = new GameObject("girlChatText").AddComponent<Text>();
                 girlText.rectTransform.SetParent(GirlChatBubble.rectTransform);
-                girlText.rectTransform.anchorMin = Vector2.zero;
-                girlText.rectTransform.anchorMax = Vector2.one;
-                girlText.rectTransform.sizeDelta = Vector2.zero;
-                girlText.rectTransform.anchoredPosition = Vector2.zero;
+                RectTransform rectTemp = girlText.rectTransform;
+                Managers.instance.UI.SetUISize(ref rectTemp, Vector2.zero, Vector2.one);
 
                 girlText.font = Managers.instance.Resource.Load<Font>("InGameFont");
                 girlText.alignment = TextAnchor.MiddleCenter;
@@ -882,6 +880,43 @@ public class BattleUI
             return girlText; 
         }
     }
+    private Image girlBoomb;
+    public Image GirlBoom
+    {
+        get 
+        {
+            if (girlBoomb == null)
+            {
+                girlBoomb = new GameObject("UIBomb").AddComponent<Image>();
+                girlBoomb.sprite = Managers.instance.Resource.Load<Sprite>("bomb");
+                girlBoomb.rectTransform.SetParent(battleSceneUI);
+                girlBoomb.rectTransform.anchorMax = Vector2.one/2f;
+                girlBoomb.rectTransform.anchorMin = Vector2.one/2f;
+                girlBoomb.rectTransform.sizeDelta = Vector2.one * 100;
+                girlBoomb.rectTransform.anchoredPosition = Vector2.zero;
+                
+            }
+            return girlBoomb;
+        }
+    }
+    public string GirlTextAttack
+    {
+        set
+        {
+            GirlChatBubble.color = Color.blue;
+            GirlText.color = Color.white;
+            GirlText.text = value;
+        }
+    }
+    public string GirlBulbExplane
+    {
+        set
+        {
+            GirlChatBubble.color = Color.green;
+            GirlText.color = Color.gray;
+            GirlText.text = value;
+        }
+    }
     private RectTransform sceneBTNParet;
     public RectTransform SceneBTNParet
     {
@@ -889,19 +924,42 @@ public class BattleUI
         {
             if (sceneBTNParet == null)
             {
+                
                 sceneBTNParet = new GameObject("GameOverParent").AddComponent<RectTransform>();
                 sceneBTNParet.gameObject.AddComponent<Image>().sprite = Managers.instance.Resource.Load<Sprite>("shop_bag_panel");
-                sceneBTNParet.SetParent(BattleSceneUI);
-                sceneBTNParet.SetAsLastSibling();
-                sceneBTNParet.anchorMax = new Vector2(0.7f, 0.6f);
-                sceneBTNParet.anchorMin = new Vector2(0.3f, 0.4f);
-                sceneBTNParet.anchoredPosition = Vector2.zero;
-                sceneBTNParet.sizeDelta = Vector2.zero;
+                Image parentBackGround = new GameObject("GameOverParentBackground").AddComponent<Image>();
+                parentBackGround.color = new Color32(0, 0, 0, 219);
+                RectTransform parentBackGroundRect = parentBackGround.rectTransform;
+                parentBackGroundRect.SetParent(BattleSceneUI);
+                Managers.instance.UI.SetUISize(ref parentBackGroundRect, Vector2.zero, Vector2.one);
+                parentBackGround.rectTransform.SetAsLastSibling();
+                sceneBTNParet.SetParent(parentBackGround.rectTransform);
+                Managers.instance.UI.SetUISize(ref sceneBTNParet, new Vector2(0.3f, 0.4f), new Vector2(0.7f, 0.6f));
+
             }
             return sceneBTNParet;
         }
     }
-
+    private Text gameOverText;
+    public string GameOverText
+    {
+        set
+        {
+            if (gameOverText == null)
+            {
+                gameOverText = new GameObject("WarningText").AddComponent<Text>();
+                RectTransform warningTextRect = gameOverText.rectTransform;
+                gameOverText.rectTransform.SetParent(SceneBTNParet);
+                Managers.instance.UI.SetUISize(ref warningTextRect, new Vector2(0,1), new Vector2(1,2));
+                gameOverText.raycastTarget = false;
+                gameOverText.color = Color.white;
+                gameOverText.fontSize = 102;
+                gameOverText.alignment = TextAnchor.MiddleCenter;
+                gameOverText.font = Managers.instance.Resource.Load<Font>("InGameFont");
+            }
+            gameOverText.text = value;
+        }
+    }
     private Button gameOverBTN;
     public Button GameOverBTN
     {
@@ -932,6 +990,8 @@ public class BattleUI
                 tempText.fontSize = (int)BTNRect.rect.size.y / 9;
                 tempText.color = Color.white;
                 gameOverBTN.onClick.AddListener(() => { Managers.instance.OnBTNChangeScene(0); });
+                GameOverText = "You DIed";
+                gameOverText.color = Color.red;
             }
             return gameOverBTN;
         }
@@ -967,6 +1027,7 @@ public class BattleUI
                 tempText.fontSize = (int)BTNRect.rect.size.y / 9;
                 tempText.color = Color.white;
                 toDialogSceneBTN.onClick.AddListener(() => { Managers.instance.OnBTNChangeScene(1); });
+                GameOverText = "Clear!";
             }
             return toDialogSceneBTN;
         }
@@ -1196,6 +1257,33 @@ public class BattleUI
             return enemyHpBar;
         }
     }
+    private Text warningText;
+    public string WarningText
+    {
+        set 
+        {
+            if (warningText == null)
+            {
+                warningText = new GameObject("WarningText").AddComponent<Text>();
+                RectTransform warningTextRect = warningText.rectTransform;
+                warningTextRect.SetParent(BattleSceneUI);
+                Managers.instance.UI.SetUISize(ref warningTextRect, Vector2.zero, Vector2.one);
+                warningText.raycastTarget = false;
+                warningText.color = Color.red;
+                warningText.fontSize = 102;
+                warningText.font = Managers.instance.Resource.Load<Font>("InGameFont");
+            }
+            warningText.text = value;
+        }
+    }
+    public bool isInFeverMode
+    {
+        get
+        {
+            return enemyHpBar.value < enemyHpBar.maxValue / 2;
+        }
+    }
+
     private Image enemyWeaponImage;
     private Image EnemyWeaponImage
     {
@@ -1283,14 +1371,13 @@ public class BattleUI
             {
                 scoreBoardText = new GameObject("enemyWeaponName").AddComponent<Text>();
                 scoreBoardText.rectTransform.SetParent(ScoreBoardPannel.rectTransform);
-                scoreBoardText.rectTransform.anchorMin = Vector2.zero;
-                scoreBoardText.rectTransform.anchorMax = Vector2.one;
-                scoreBoardText.rectTransform.sizeDelta = Vector2.zero;
-                scoreBoardText.rectTransform.anchoredPosition = Vector2.zero;
+                RectTransform scoreTextRect = scoreBoardText.rectTransform;
+                Managers.instance.UI.SetUISize(ref scoreTextRect, Vector2.zero, Vector2.one);
                 scoreBoardText.alignment = TextAnchor.MiddleCenter;
                 scoreBoardText.color = Color.black;
                 scoreBoardText.fontSize = 84;
                 scoreBoardText.font = Managers.instance.Resource.Load<Font>("InGameFont");
+                scoreBoardPannel.gameObject.SetActive(false);
             }
             return scoreBoardText;
         }
@@ -1464,7 +1551,12 @@ public class BattleUI
         else
         {
             EnemyHPBar.value = enemyHpBar.value + valueToAdd;
-            if (enemyHpBar.value <=0)
+            if (EnemyHPBar.value<= EnemyHPBar.maxValue/2f&& warningText == null)
+            {
+                WarningText = "적의 공격력이 2배 증가합니다!";
+                MonsterManager.MonsterManagerInstance.SetFeaverMode();
+            }
+            if (EnemyHPBar.value <=0)
             {
                 Managers.instance.UI.BattleUICall.ToDialogSceneBTN.enabled = true;
                 ShoterController.Instance.isReadyFire = false;
@@ -1563,8 +1655,8 @@ public class BattleUI
         {
             Vector2 spriteSizeInCanvasMax = Camera.main.WorldToScreenPoint(targetTR.position + (Vector3)SpriteSize);
             Vector2 spriteSizeInCanvasMin = Camera.main.WorldToScreenPoint(targetTR.position - (Vector3)SpriteSize);
-            MonsterTarget.rectTransform.anchorMin = new Vector2(spriteSizeInCanvasMax.x/ Screen.width, spriteSizeInCanvasMax.y / Screen.height);
-            MonsterTarget.rectTransform.anchorMax = new Vector2(spriteSizeInCanvasMin.x / Screen.width, spriteSizeInCanvasMin.y / Screen.height);
+            MonsterTarget.rectTransform.anchorMin = new Vector2(spriteSizeInCanvasMin.x/ Screen.width, spriteSizeInCanvasMin.y / Screen.height);
+            MonsterTarget.rectTransform.anchorMax = new Vector2(spriteSizeInCanvasMax.x / Screen.width, spriteSizeInCanvasMax.y / Screen.height);
             MonsterTarget.rectTransform.anchoredPosition = Vector2.zero;
             MonsterTarget.rectTransform.sizeDelta = Vector2.zero;
             MonsterTarget.gameObject.SetActive(targetTR.gameObject.activeSelf);
@@ -1595,9 +1687,7 @@ public class BattleUI
     {
         Text tempText = BulbHPText;
         tempText.gameObject.SetActive(true);
-
-        
-        tempText.text = now + "/" + max;
+        tempText.text = (now + "/" + max) ;
     }
     public void ResetBulbDamageText()
     {

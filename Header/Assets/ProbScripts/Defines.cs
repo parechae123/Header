@@ -260,17 +260,13 @@ namespace MonsterDefines
 
         }
 
-        public (SpriteRenderer, Animator) monsterAnimSprite(GameObject TargetOBJ)
+        public SpriteRenderer SetMonsterSprite(ref GameObject TargetOBJ)
         {
-            (SpriteRenderer, Animator) tempSet;
-            tempSet.Item1 = TargetOBJ.GetComponent<SpriteRenderer>();
-            tempSet.Item2 = TargetOBJ.GetComponent<Animator>();
+            SpriteRenderer tempSpriteRenderer;
+            tempSpriteRenderer = TargetOBJ.GetComponent<SpriteRenderer>();
 
-            if (tempSet.Item1 == null) tempSet.Item1 = TargetOBJ.AddComponent<SpriteRenderer>();
-
-            if (tempSet.Item2 == null) tempSet.Item2 = TargetOBJ.AddComponent<Animator>();
-
-            return tempSet;
+            if (tempSpriteRenderer == null) tempSpriteRenderer = TargetOBJ.AddComponent<SpriteRenderer>();
+            return tempSpriteRenderer;
         }
     }
     [System.Serializable]

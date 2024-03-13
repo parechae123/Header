@@ -89,7 +89,7 @@ public class MonsterManager : MonoBehaviour
             return playerSprite;
         }
     }
-    public (MonsterStats, SpriteRenderer, Animator)[] Monsters = new (MonsterStats, SpriteRenderer, Animator)[0];
+    [SerializeField]public (MonsterStats, SpriteRenderer)[] Monsters = new (MonsterStats, SpriteRenderer)[0];
     //array.resize로 해당 상황에 맞춰 배열 추가
     public Vector3 playerPos;
     public Vector3 monsterSpawnPos;
@@ -138,6 +138,8 @@ public class MonsterManager : MonoBehaviour
 
     private void Awake()
     {
+        (float, float) TempDoubleFloat = CarculateMonsterFullHP;
+        Managers.instance.UI.BattleUICall.HPBarSetting(false, TempDoubleFloat.Item1, TempDoubleFloat.Item2);
         Array.Resize(ref Monsters, MonsterSpawnOrder.Length);
         Array.Resize(ref moveSlots, monsterSlotCount);
         PlayerSprite.color = Color.white;
@@ -149,8 +151,7 @@ public class MonsterManager : MonoBehaviour
             moveSlots[i].slotPosition = playerPos + (Vector3.right * slotByXSize) + (Vector3.right * (slotByXSize * i));
         }
         NextTurn();
-        (float, float) TempDoubleFloat = CarculateMonsterFullHP;
-        Managers.instance.UI.BattleUICall.HPBarSetting(false, TempDoubleFloat.Item1, TempDoubleFloat.Item2);
+
         targetPosition = playerPos+Vector3.right*4;
     }
     private void Update()
@@ -182,6 +183,7 @@ public class MonsterManager : MonoBehaviour
             {
                 NextTurn(() =>
                 {
+                    
                     isDone.Invoke();
                 });
             });
@@ -200,7 +202,7 @@ public class MonsterManager : MonoBehaviour
         });
 
     }
-    public void DamageToAllMonsters(float damage, Action<int, int> isDamageDone)
+    public void DamageToAllMonsters(float damage, Action<int, int> isDamageDone,bool isGirlThrowing = false)
     {
         int total = 0;
         int count = 0;
@@ -222,36 +224,69 @@ public class MonsterManager : MonoBehaviour
             bombTR.position = playerPos;
             BombAttackBulb.gameObject.SetActive(true);
 
-            StartCoroutine(MoveBalls(GetBounceVectors(), () =>
+            if (!isGirlThrowing)
             {
-                for (int i = 0; i < Monsters.Length; i++)
-                {
-                    if (Monsters[i].Item2 != null && !Monsters[i].Item1.isMonsterDie)
+                //헤더가 던지는 로직
+                StartCoroutine(MoveBalls(GetBounceVectors(),false, () =>
                     {
-                        Monsters[i].Item1.GetDamage(damage);
-                        StartCoroutine(DamagedAnim(i, false, () =>
+                        for (int i = 0; i < Monsters.Length; i++)
                         {
-                            count++;
-                            Debug.Log("카운트" + count + "토탈" + total);
-                            if (actionTime == 0)
+                            if (Monsters[i].Item2 != null && !Monsters[i].Item1.isMonsterDie)
                             {
-                                BombAttackBulb.gameObject.SetActive(false);
-                                Managers.instance.UI.BattleUICall.SetTargetUI(ShoterController.Instance.TargetMonsterTR, MonsterManager.MonsterManagerInstance.ReturnMonsterSpriteSize(ShoterController.Instance.TargetMonsterTR));
-                                isDamageDone.Invoke(total, count);
+                                Monsters[i].Item1.GetDamage(damage);
+                                StartCoroutine(DamagedAnim(i, false, () =>
+                                {
+                                    count++;
+                                    Debug.Log("카운트" + count + "토탈" + total);
+                                    if (actionTime == 0)
+                                    {
+                                        BombAttackBulb.gameObject.SetActive(false);
+                                        Managers.instance.UI.BattleUICall.SetTargetUI(ShoterController.Instance.TargetMonsterTR, MonsterManager.MonsterManagerInstance.ReturnMonsterSpriteSize(ShoterController.Instance.TargetMonsterTR));
+                                        isDamageDone.Invoke(total, count);
+                                    }
+                                    actionTime++;
+                                }));
                             }
-                            actionTime++;
-                        }));
-                    }
-                    else
-                    {
+                        }
                         if (total == 0)
                         {
                             isDamageDone.Invoke(total, count);
                             return;
                         }
+                    })); 
+            }
+            else
+            {
+                //소녀가 던지는 로직
+                StartCoroutine(MoveBalls(GetVectorGirlBomb(),true, () =>
+                {
+                    for (int i = 0; i < Monsters.Length; i++)
+                    {
+                        if (Monsters[i].Item2 != null && !Monsters[i].Item1.isMonsterDie)
+                        {
+                            Monsters[i].Item1.GetDamage(damage);
+                            StartCoroutine(DamagedAnim(i, false, () =>
+                            {
+                                count++;
+                                Debug.Log("카운트" + count + "토탈" + total);
+                                if (actionTime == 0)
+                                {
+                                    BombAttackBulb.gameObject.SetActive(false);
+                                    Managers.instance.UI.BattleUICall.GirlBoom.gameObject.SetActive(false);
+                                    Managers.instance.UI.BattleUICall.SetTargetUI(ShoterController.Instance.TargetMonsterTR, MonsterManager.MonsterManagerInstance.ReturnMonsterSpriteSize(ShoterController.Instance.TargetMonsterTR));
+                                    isDamageDone.Invoke(total, count);
+                                }
+                                actionTime++;
+                            }));
+                        }
                     }
-                }
-            }));
+                    if (total == 0)
+                    {
+                        isDamageDone.Invoke(total, count);
+                        return;
+                    }
+                }));
+            }
 
         }
 
@@ -263,17 +298,29 @@ public class MonsterManager : MonoBehaviour
         {
             for (int i = 0; i < Monsters.Length; i++)
             {
-                if (Monsters[i].Item2.transform == moveSlots[0].monsterTR)
+                if (Monsters[i].Item1 != null)
                 {
-                    // TODO : Monsters[i].Item1.monsterAD; 이용하여 플레이어 피격처리
-                    StartCoroutine(PlayerDamagedAnim(Monsters[i].Item2.transform, () =>
+                    if (Monsters[i].Item2.transform == moveSlots[0].monsterTR && !Monsters[i].Item1.isMonsterDie)
                     {
-                        Debug.Log("데미지");
-                        Managers.instance.PlayerDataManager.PlayerGetDamage(Monsters[i].Item1.monsterAD);
-                        isDone.Invoke();
-                    }));
+                        // TODO : Monsters[i].Item1.monsterAD; 이용하여 플레이어 피격처리
+                        StartCoroutine(PlayerDamagedAnim(Monsters[i].Item2.transform, () =>
+                        {
+                            Debug.Log("데미지");
+                            Managers.instance.PlayerDataManager.PlayerGetDamage(Monsters[i].Item1.monsterAD);
+                            isDone.Invoke();
+                        }));
 
-                    break;
+                        break;
+                    }
+                    else if (i == Monsters.Length - 1)
+                    {
+                        isDone.Invoke();
+                    }
+                    
+                }
+                else if (i == Monsters.Length-1&& Monsters[i].Item1 == null)
+                {
+                    isDone.Invoke();
                 }
             }
         }
@@ -307,9 +354,6 @@ public class MonsterManager : MonoBehaviour
                     Managers.instance.UI.BattleUICall.SetTargetUI(ShoterController.Instance.TargetMonsterTR, MonsterManager.MonsterManagerInstance.ReturnMonsterSpriteSize(ShoterController.Instance.TargetMonsterTR));
                     isDone.Invoke();
                 }));
-
-
-
             }
             else 
             {
@@ -357,6 +401,8 @@ public class MonsterManager : MonoBehaviour
                     {
                         if (Monsters[E].Item1.isMonsterDie)
                         {
+                            Debug.Log(moveSlots[i].monsterTR.name+ Monsters[E].Item1.monsterHPNow);
+                            Monsters[E].Item2.gameObject.SetActive(false);
                             moveSlots[i].monsterTR = null;
                         }
                     }
@@ -397,15 +443,25 @@ public class MonsterManager : MonoBehaviour
     {
         GameObject tempGOBJ = Instantiate(monsterPrefabs[prefabNum].prefab, moveSlots[moveSlots.Length - 1].slotPosition, Quaternion.identity, null);
         //TODO : 몬스터 이름을 해당 배열로 바꿔서 클릭시 이름을 가져오고 해당 배열이 타겟이 되도록
+
         tempGOBJ.name = arrayOrder.ToString();
         Monsters[arrayOrder].Item1 = new MonsterStats(monsterPrefabs[prefabNum].stat);
-        (SpriteRenderer, Animator) tempComponents = Monsters[arrayOrder].Item1.monsterAnimSprite(tempGOBJ);
-        Monsters[arrayOrder].Item2 = tempComponents.Item1;
-        Monsters[arrayOrder].Item3 = tempComponents.Item2;
-        moveSlots[moveSlots.Length - 1].monsterTR = tempComponents.Item1.transform;
+        SpriteRenderer tempComponent = Monsters[arrayOrder].Item1.SetMonsterSprite(ref tempGOBJ);
+        Monsters[arrayOrder].Item2 = tempComponent;
+        if (Managers.instance.UI.BattleUICall.isInFeverMode)
+        {
+            Monsters[arrayOrder].Item2.color = Color.red;
+            Monsters[arrayOrder].Item1.monsterAD = monsterPrefabs[prefabNum].stat.monsterAD * 2;
+        }
+        moveSlots[moveSlots.Length - 1].monsterTR = tempComponent.transform;
     }
     IEnumerator DamagedAnim(int index,bool isTargetAttack, Action isDone)
     {
+        Color tempColor = Monsters[index].Item2.color;
+        if (Managers.instance.UI.BattleUICall.isInFeverMode)
+        {
+            tempColor = Color.red;
+        }
         if (isTargetAttack)
         {
             Vector3 tempPlrPos = Monsters[index].Item2.transform.position - playerPos;
@@ -413,24 +469,17 @@ public class MonsterManager : MonoBehaviour
             for (int i = 0; i < 20; i++)
             {
                 AttackBulb.transform.position += Vector3.right * (tempPlrPos.x / 20);
-                yield return null;
+                yield return new WaitForSeconds(0.03f);
             }
         }
-        Monsters[index].Item3.Play("Damaged", 0);
-        float animTimer = 0;
-        while (Monsters[index].Item3.GetCurrentAnimatorStateInfo(0).normalizedTime <= 1 || !Monsters[index].Item3.GetCurrentAnimatorStateInfo(0).IsName("Damaged"))
+        for (int i = 0; i < 3; i++)
         {
-            /*            if (!Monsters[index].Item3.GetCurrentAnimatorStateInfo(0).IsName("Damaged"))
-                        {
-                            Monsters[index].Item3.Play("Damaged", 0);
-                        }*/
-            animTimer += Time.deltaTime;
-            if (animTimer> 3)
-            {
-                break;
-            }
-           // Debug.Log(Monsters[index].Item3.GetCurrentAnimatorStateInfo(0).normalizedTime + "노멀라이즈 타임"+'\n'+ Monsters[index].Item3.GetCurrentAnimatorStateInfo(0).IsName("Damaged"));
-            yield return null;
+            
+            Monsters[index].Item2.color = new Color(0, 0, 0, 0);
+            yield return new WaitForSeconds(0.13f);
+            Monsters[index].Item2.color = tempColor;
+            yield return new WaitForSeconds(0.13f);
+
         }
         Debug.Log("여기서 못나가네"+index);
         if (Monsters[index].Item1.isMonsterDie)
@@ -445,10 +494,6 @@ public class MonsterManager : MonoBehaviour
                 }
             }
             Monsters[index].Item2.transform.position = Vector3.up * 10;
-        }
-        else
-        {
-            Monsters[index].Item3.Play("Idle", 0);
         }
         isDone.Invoke();
     }
@@ -497,17 +542,63 @@ public class MonsterManager : MonoBehaviour
         }
         return vectorArray;
     }
-    IEnumerator MoveBalls(Vector3[] vectors,Action isDone)
+    public Vector3[] GetVectorGirlBomb()
     {
-        float timeDelay = (movementTime / vectors.Length);
-        timeDelay = timeDelay<=0? 0.1f: timeDelay;
-        for (int i = 0; i < vectors.Length; i++)
+        Vector3[] vectorArray = new Vector3[0];
+        //포문을 통해 계속 리사이징
+        Vector3 startPos = Managers.instance.UI.BattleUICall.GirlPortrait.rectTransform.position;
+        Vector3 endPos = Camera.main.WorldToScreenPoint(moveSlots[0].slotPosition);
+        Vector2 tempNomalVal = startPos+endPos;
+        tempNomalVal = tempNomalVal / 30;
+        for (int i = 0;i <30;i++)
         {
-            yield return new WaitForSeconds(timeDelay);
+            Array.Resize(ref vectorArray, i+1);
+            vectorArray[i] = new Vector2(startPos.x+(tempNomalVal.x*i), startPos.y + (tempNomalVal.y * i));
 
-            bombTR.position = vectors[i];
         }
-        
+        Vector3 controlPoint = (startPos + endPos) / 2  +Vector3.up * 100 + Vector3.left * 400;
+
+        for (int i = 0; i < 30; i++)
+        {
+            Array.Resize(ref vectorArray, i + 1);
+            float t = i / (float)(30 - 1);
+            vectorArray[i] = CalculateBezierPoint(t, startPos, controlPoint, endPos);
+        }
+
+
+        return vectorArray;
+    }
+    private static Vector2 CalculateBezierPoint(float t, Vector2 p0, Vector2 p1, Vector2 p2)
+    {
+        // 베지어 곡선 공식
+        return (1 - t) * (1 - t) * p0 + 2 * (1 - t) * t * p1 + t * t * p2;
+    }
+    IEnumerator MoveBalls(Vector3[] vectors, bool isGirl, Action isDone)
+    {
+        if (!isGirl)
+        {
+            float timeDelay = (movementTime / vectors.Length);
+            timeDelay = timeDelay <= 0 ? 0.1f : timeDelay;
+            for (int i = 0; i < vectors.Length; i++)
+            {
+                yield return new WaitForSeconds(timeDelay);
+
+                bombTR.position = vectors[i];
+            }
+
+        }
+        else
+        {
+            Managers.instance.UI.BattleUICall.GirlBoom.gameObject.SetActive(true);
+            float timeDelay = (movementTime / vectors.Length);
+            timeDelay = timeDelay <= 0 ? 0.1f : timeDelay;
+            for (int i = 0; i < vectors.Length; i++)
+            {
+                yield return new WaitForSeconds(timeDelay);
+
+                Managers.instance.UI.BattleUICall.GirlBoom.rectTransform.position = vectors[i];
+            }
+        }
         isDone.Invoke();
     }
     IEnumerator PlayerDamagedAnim(Transform monster,Action isDone)
@@ -525,5 +616,23 @@ public class MonsterManager : MonoBehaviour
         yield return monster.DOJump(originPos, 0.7f, 1, 0.5f).WaitForCompletion();
         isDone.Invoke();
 
+    }
+    public void SetFeaverMode()
+    {
+        if (Managers.instance.UI.BattleUICall.isInFeverMode)
+        {
+            for (int i = 0; i < Monsters.Length; i++)
+            {
+                if (Monsters[i].Item1 != null)
+                {
+                    Monsters[i].Item1.monsterAD = Monsters[i].Item1.monsterAD * 2;
+                    Monsters[i].Item2.color = Color.red;
+                }
+                else
+                {
+                    return;
+                }
+            }
+        }
     }
 }
