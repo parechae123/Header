@@ -41,7 +41,9 @@ public class MonsterManager : MonoBehaviour
 
     [Header("몬스터 스폰(프리팹 배열)")]
     public int[] MonsterSpawnOrder = new int[0];
+    //인스펙터에서 수정
     public MonsterPrefab[] monsterPrefabs = new MonsterPrefab[0];
+    //인스팩터창에서 수정
     public Transform SetTargetMonsters
     {
         get
@@ -88,9 +90,11 @@ public class MonsterManager : MonoBehaviour
         }
     }
     public (MonsterStats, SpriteRenderer, Animator)[] Monsters = new (MonsterStats, SpriteRenderer, Animator)[0];
+    //array.resize로 해당 상황에 맞춰 배열 추가
     public Vector3 playerPos;
     public Vector3 monsterSpawnPos;
     public MonsterMoveSlot[] moveSlots = new MonsterMoveSlot[0];
+    //array.resize로 해당 상황에 맞춰 배열 추가
     [SerializeField] private int monsterSlotCount;
     private SpriteRenderer attackBulb;
     private SpriteRenderer AttackBulb
@@ -510,13 +514,13 @@ public class MonsterManager : MonoBehaviour
     {
         Vector3 originPos = monster.transform.position;
         yield return monster.DOJump(playerPos, 0.7f, 1, 0.5f).WaitForCompletion();
-        PlayerSprite.color = Color.red;
-        yield return new WaitForSeconds(0.12f);
-        PlayerSprite.color = Color.white;
-        yield return new WaitForSeconds(0.12f);
-        PlayerSprite.color = Color.red;
-        yield return new WaitForSeconds(0.12f);
-        PlayerSprite.color = Color.white;
+        for (int i = 0; i < 2; i++)
+        {
+            PlayerSprite.color = Color.red;
+            yield return new WaitForSeconds(0.12f);
+            PlayerSprite.color = Color.white;
+            yield return new WaitForSeconds(0.12f);
+        }
         monster.DOComplete();
         yield return monster.DOJump(originPos, 0.7f, 1, 0.5f).WaitForCompletion();
         isDone.Invoke();
