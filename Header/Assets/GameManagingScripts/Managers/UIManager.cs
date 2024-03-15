@@ -10,6 +10,7 @@ using InteractionDefines;
 using DG.Tweening;
 using UnityEngine.Video;
 using HeaderPadDefines;
+using System.Threading.Tasks;
 
 
 public class UIManager
@@ -899,14 +900,14 @@ public class BattleUI
             return girlBoomb;
         }
     }
-    public string GirlTextAttack
+
+    private async void AwaitChatColor()
     {
-        set
-        {
-            GirlChatBubble.color = Color.blue;
-            GirlText.color = Color.white;
-            GirlText.text = value;
-        }
+        await Task.Delay(5000);
+        
+        GirlChatBubble.color = Color.white;
+        GirlText.color = Color.black;
+        GirlText.text = string.Empty;
     }
     public string GirlBulbExplane
     {
@@ -1481,7 +1482,19 @@ public class BattleUI
         }
     }
     #region 관련 함수
-    
+    public void GirlTextAttack(string TXT,Color bubbleColor,Color chattingColor)
+    {
+        GirlChatBubble.rectTransform.DOPunchScale(Vector3.one, 0.4f, 1, 0.5f).OnComplete(() =>
+        {
+            girlChatBubble.rectTransform.DOKill();
+            AwaitChatColor();
+        });
+        GirlChatBubble.color = bubbleColor;
+        GirlText.color = chattingColor;
+
+        GirlText.text = TXT;
+    }
+
     public void SettingPlayerBattleUI()
     {
         //TODO : 매니저의 인스턴스 선언 후 해당구문 수정필요,아래의 Enabled는 테스트코드로 해당 작업 시 삭제필요
@@ -1494,7 +1507,14 @@ public class BattleUI
         PlayerHPBar.enabled = true;
         WeaponImage.enabled = true;
         PlayerPortrait.enabled = true;
-        PlayerWeaponName.text = "무기 텍스트";
+        if (ShoterController.Instance.NowBallStat != null)
+        {
+            PlayerWeaponName.text = ShoterController.Instance.NowBallStat.ballKoreanName;
+        }
+        else
+        {
+            PlayerWeaponName.text = "무기가 없어!!";
+        }
         WeaponBeforeBTN.onClick.AddListener(Managers.instance.PlayerDataManager.PlayerBeforeBallPick);
         WeaponNextBTN.onClick.AddListener(Managers.instance.PlayerDataManager.PlayerNextBallPick);
         UpdateScore(0,0);

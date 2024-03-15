@@ -92,7 +92,6 @@ public class NewGameButton : MonoBehaviour
             yield return null;
         }
         AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(sceneNumber, LoadSceneMode.Single);
-        //HEOYOON : 임시 총알 테스팅코드
         
 
         // 씬 로딩이 완료될 때까지 대기합니다.

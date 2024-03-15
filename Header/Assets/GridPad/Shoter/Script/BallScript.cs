@@ -170,13 +170,13 @@ public class BallScript : MonoBehaviour
                     {
 
                     },true);
-                    Managers.instance.UI.BattleUICall.GirlTextAttack = "내가 도와줄께!";
+                    Managers.instance.UI.BattleUICall.GirlTextAttack("내가 도와줄께!",Color.blue,Color.white);
                     //TODO : 소녀 공격 구현
                 }
                 else
                 {
-                    Managers.instance.UI.BattleUICall.GirlTextAttack = "뒤는 나한테 맡겨!!";
-                    
+                    Managers.instance.UI.BattleUICall.GirlTextAttack("뒤는 나한테 맡겨!!", Color.red, Color.white);
+
                 }
                 if (Managers.instance.PlayerDataManager.RemoveBall(ShoterController.Instance.NowBallStat))
                 {
