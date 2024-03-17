@@ -279,6 +279,6 @@ namespace MonsterDefines
     public class MonsterMoveSlot
     {
         public Vector3 slotPosition;
-        public Transform monsterTR;
+        public Transform MonsterTR;
     }
 }

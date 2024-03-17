@@ -168,7 +168,9 @@ public class BallScript : MonoBehaviour
                 {
                     MonsterManager.MonsterManagerInstance.DamageToAllMonsters(Managers.instance.PlayerDataManager.girlAD, (total, count) =>
                     {
-
+                        ResetBall();
+                        ShoterController.Instance.regionalDamage = 0;
+                        ShoterController.Instance.targetDamage = 0;
                     },true);
                     Managers.instance.UI.BattleUICall.GirlTextAttack("내가 도와줄께!",Color.blue,Color.white);
                     //TODO : 소녀 공격 구현
@@ -176,15 +178,15 @@ public class BallScript : MonoBehaviour
                 else
                 {
                     Managers.instance.UI.BattleUICall.GirlTextAttack("뒤는 나한테 맡겨!!", Color.red, Color.white);
-
+                    ResetBall();
+                    ShoterController.Instance.regionalDamage = 0;
+                    ShoterController.Instance.targetDamage = 0;
                 }
                 if (Managers.instance.PlayerDataManager.RemoveBall(ShoterController.Instance.NowBallStat))
                 {
                     ShoterController.Instance.SetBallOnNext();
                 }
-                ResetBall();
-                ShoterController.Instance.regionalDamage = 0;
-                ShoterController.Instance.targetDamage = 0;
+
             }
             );
         }

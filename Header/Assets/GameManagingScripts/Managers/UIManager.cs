@@ -11,6 +11,7 @@ using DG.Tweening;
 using UnityEngine.Video;
 using HeaderPadDefines;
 using System.Threading.Tasks;
+using MonsterDefines;
 
 
 public class UIManager
@@ -48,6 +49,7 @@ public class UIManager
         UIStack.Clear();
         ShopUICall.shopWeaponItems = null;
         MoveAbleCheckerList.Clear();
+        BattleUICall.ResetMonsterQueueIMG();
     }
 
     private bool MoveAbleChecker()
@@ -1351,6 +1353,7 @@ public class BattleUI
             if (monsterQueuePannel == null)
             {
                 monsterQueuePannel = new GameObject("MonsterQueuePreveiwPanel").AddComponent<Image>();
+                monsterQueuePannel.sprite = Managers.instance.Resource.Load<Sprite>("shop_buy_panel");
                 RectTransform tempRect = monsterQueuePannel.rectTransform;
                 tempRect.SetParent(EnemyStatusUI.rectTransform);
                 Managers.instance.UI.SetUISize(ref tempRect, Vector2.zero, new Vector2(1f, 0.3f));
@@ -1484,10 +1487,7 @@ public class BattleUI
 
                 tempHpTR.SetParent(BallForceSliderParent);
                 tempHpTR.SetAsLastSibling();
-                tempHpTR.anchorMin = new Vector2(0.45f, 0.48f);
-                tempHpTR.anchorMax = new Vector2(0.55f, 0.52f);
-                tempHpTR.sizeDelta = Vector2.zero;
-                tempHpTR.anchoredPosition = Vector2.zero;
+                Managers.instance.UI.SetUISize(ref tempHpTR, new Vector2(0.45f, 0.48f), new Vector2(0.55f, 0.52f));
                 tempBallForceBar.interactable = false;
                 tempBallForceBar.enabled = true;
                 tempBallForceBar.SetDirection(Slider.Direction.RightToLeft, true);
@@ -1498,8 +1498,10 @@ public class BattleUI
             return ballForceSlider;
         }
     }
+    Slider[] monsterPriavteHPBar;
 
     #region 관련 함수
+    
     public void GirlTextAttack(string TXT,Color bubbleColor,Color chattingColor)
     {
         GirlChatBubble.rectTransform.DOPunchScale(Vector3.one, 0.4f, 1, 0.5f).OnComplete(() =>
@@ -1736,13 +1738,12 @@ public class BattleUI
     public void SetUIMonsterImageArray(Queue<Sprite> spriteQueue)
     {
         RectTransform tempRec;
-        float XSize = 0.20f;
-        float XperY = MonsterQueuePannel.rectTransform.rect.size.y / MonsterQueuePannel.rectTransform.rect.size.x;
-        float YSize = 1-(XperY * XSize);
-        float XBlank = 0.025f;
-        float YBlank = XBlank * XperY;
+        float XPerY = MonsterQueuePannel.rectTransform.rect.size.x / MonsterQueuePannel.rectTransform.rect.size.y;
+        float xBlank = 0.025f;
+        float yBlank = xBlank * XPerY;
+        Vector2 ImageSize = new Vector2(0.2f, 0.2f * XPerY);
         //정사각형 기준
-        Vector2 halfSize = new Vector2(XSize/2f, YSize/2f);
+        int savedQueueCount = spriteQueue.Count;
         //부모기준으로 된 절반크기
         if (queueMonsterIMG== null)
         {
@@ -1750,18 +1751,134 @@ public class BattleUI
         }
         if (queueMonsterIMG.Length< spriteQueue.Count)
         {
-            Array.Resize(ref queueMonsterIMG, spriteQueue.Count);
+            Array.Resize(ref queueMonsterIMG, savedQueueCount);
         }
-        for (int i = 0; i < spriteQueue.Count; i++)
+        for (int i = 0; i < savedQueueCount; i++)
         {
-            Vector2 imageMax = new Vector2((i%5) * ((XBlank*2)+ (halfSize.x * 2)),(i/5)* ((YBlank * 2) + (halfSize.y * 2)));
-            Vector2 imageCenter = new Vector2(imageMax.x/2f,imageMax.y/2f);
+            if (i % 4 == 0)
+            {
+                xBlank = 0.025f;
+            }
+            else
+            {
+                xBlank = 0.05f;
+            }
+            float tempYBlank = (yBlank*2) * (i / 4);
+            Vector2 imageMax = new Vector2((((i%4)+1)*(ImageSize.x+xBlank)) , (1 - yBlank) - tempYBlank-((i/4)*ImageSize.y));
             queueMonsterIMG[i] = new GameObject(i + "THMonster").AddComponent<Image>();
             tempRec = queueMonsterIMG[i].rectTransform;
             tempRec.SetParent(MonsterQueuePannel.rectTransform);
-            Managers.instance.UI.SetUISize(ref tempRec,new Vector2(imageCenter.x-halfSize.x, imageCenter.y - halfSize.y),new Vector2(imageCenter.x + halfSize.x, imageCenter.y + halfSize.y) );
+
+            Managers.instance.UI.SetUISize(ref tempRec, (imageMax - ImageSize) - new Vector2(i % 4 != 0 ? 0.025f : 0, 0), imageMax - new Vector2(i % 4 != 0 ? 0.025f : 0, 0));
+
             queueMonsterIMG[i].sprite = spriteQueue.Dequeue();
         }
+    }
+    public void InstallMonsterHPBar(int maxSlotCount)
+    {
+        monsterPriavteHPBar = new Slider[maxSlotCount];
+        for (int i = 0; i < maxSlotCount; i++)
+        {
+            monsterPriavteHPBar[i] = new GameObject("Slot" + i + "Bar").AddComponent<Slider>();
+            monsterPriavteHPBar[i].wholeNumbers = false;
+            monsterPriavteHPBar[i].maxValue = 100;
+            //TODO : 슬라이드바 UI 추가시 여기에 작업
+            RectTransform tempHpTR = monsterPriavteHPBar[i].transform as RectTransform;
+
+
+            RectTransform tempHandleArea = new GameObject("HandleArea").AddComponent<RectTransform>();
+            tempHandleArea.SetParent(tempHpTR);
+            tempHandleArea.anchorMin = Vector2.zero; // 부모의 왼쪽 하단을 기준으로
+            tempHandleArea.anchorMax = Vector2.one; // 부모의 왼쪽 상단을 기준으로
+            tempHandleArea.pivot = new Vector2(0.5f, 0.5f); // 부모의 왼쪽 중간을 기준으로
+            tempHandleArea.sizeDelta = Vector2.zero;
+            tempHandleArea.anchoredPosition = Vector2.zero;
+            Image handle = new GameObject("handle").AddComponent<Image>();
+            handle.raycastTarget = false;
+            handle.rectTransform.SetParent(tempHandleArea);
+            handle.rectTransform.anchorMax = Vector2.up;
+            handle.rectTransform.anchorMin = Vector2.zero;
+            handle.rectTransform.pivot = Vector2.one / 2f;
+            handle.rectTransform.sizeDelta = Vector2.right * 50;
+            monsterPriavteHPBar[i].handleRect = handle.rectTransform;
+            handle.color = Color.white;
+            handle.sprite = Managers.instance.Resource.Load<Sprite>("HP_icon");
+
+
+            Image BackGround = new GameObject("BackGround").AddComponent<Image>();
+            BackGround.raycastTarget = false;
+            BackGround.rectTransform.SetParent(tempHpTR);
+            BackGround.rectTransform.anchorMax = new Vector2(1f, 0.75f);
+            BackGround.rectTransform.anchorMin = new Vector2(0f, 0.25f);
+            BackGround.rectTransform.sizeDelta = Vector2.zero;
+            BackGround.rectTransform.pivot = Vector2.one / 2f;
+            BackGround.color = Color.grey;
+            BackGround.sprite = Managers.instance.Resource.Load<Sprite>("HPbar");
+            BackGround.rectTransform.SetAsFirstSibling();
+
+
+            RectTransform tempFillArea = new GameObject("FillArea").AddComponent<RectTransform>();
+            tempFillArea.SetParent(tempHpTR);
+            tempFillArea.anchorMin = new Vector2(0f, 0.25f); // 부모의 왼쪽 하단을 기준으로
+            tempFillArea.anchorMax = new Vector2(1f, 0.75f); // 부모의 왼쪽 상단을 기준으로
+            tempFillArea.pivot = new Vector2(0.5f, 0.5f); // 부모의 왼쪽 중간을 기준으로
+            tempFillArea.sizeDelta = Vector2.zero;
+            tempFillArea.anchoredPosition = Vector2.zero;
+            Image tempIMG = new GameObject("FillRect").AddComponent<Image>();
+            tempIMG.raycastTarget = false;
+            tempIMG.rectTransform.SetParent(tempFillArea);
+            tempIMG.rectTransform.sizeDelta = Vector2.zero;
+            tempIMG.color = Color.white;
+            tempIMG.sprite = Managers.instance.Resource.Load<Sprite>("HPbar");
+            monsterPriavteHPBar[i].fillRect = tempIMG.rectTransform;
+
+            // Slider의 부모-자식 관계 설정  
+
+
+
+            tempHpTR.SetParent(BattleSceneUI);
+            tempHpTR.SetAsLastSibling();
+            Managers.instance.UI.SetUISize(ref tempHpTR, new Vector2(0.45f, 0.48f), new Vector2(0.55f, 0.52f));
+            monsterPriavteHPBar[i].interactable = false;
+            monsterPriavteHPBar[i].enabled = false;
+            monsterPriavteHPBar[i].SetDirection(Slider.Direction.RightToLeft, true);
+
+            tempHandleArea.SetAsLastSibling();
+            monsterPriavteHPBar[i].gameObject.SetActive(false);
+
+        }
+    }
+    public void SetMonsterHPBar(Vector3 SlotPos,int SlotIndex, float maxHP = -100, float nowHP = -100)
+    {
+        if (maxHP == -100)
+        {
+            monsterPriavteHPBar[SlotIndex].gameObject.SetActive(false);
+            return;
+        }
+        else
+        {
+            if (monsterPriavteHPBar.Length<=SlotIndex)
+            {
+                return;
+            }
+            monsterPriavteHPBar[SlotIndex].gameObject.SetActive(true);
+            monsterPriavteHPBar[SlotIndex].transform.position = Camera.main.WorldToScreenPoint(SlotPos+Vector3.up);
+            monsterPriavteHPBar[SlotIndex].maxValue = maxHP;
+            monsterPriavteHPBar[SlotIndex].value = nowHP;
+            if (nowHP<= 0)
+            {
+                monsterPriavteHPBar[SlotIndex].gameObject.SetActive(false);
+            }
+
+        }
+    }
+    public void SetMonsterDeadInQueue(int index)
+    {
+        queueMonsterIMG[index].color = Color.gray;
+    }
+    public void ResetMonsterQueueIMG()
+    {
+        queueMonsterIMG = null;
     }
     #endregion
 }

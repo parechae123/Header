@@ -51,9 +51,9 @@ public class MonsterManager : MonoBehaviour
             Transform target = null;
             for (int i = 0; i < moveSlots.Length; i++)
             {
-                if (moveSlots[i].monsterTR != null)
+                if (moveSlots[i].MonsterTR != null)
                 {
-                    target = moveSlots[i].monsterTR;
+                    target = moveSlots[i].MonsterTR;
                 }
             }
             return target;
@@ -138,6 +138,7 @@ public class MonsterManager : MonoBehaviour
 
     private void Awake()
     {
+        Managers.instance.UI.BattleUICall.InstallMonsterHPBar(monsterSlotCount);
         (float, float) TempDoubleFloat = CarculateMonsterFullHP;
         Managers.instance.UI.BattleUICall.HPBarSetting(false, TempDoubleFloat.Item1, TempDoubleFloat.Item2);
         Array.Resize(ref Monsters, MonsterSpawnOrder.Length);
@@ -240,6 +241,7 @@ public class MonsterManager : MonoBehaviour
                             if (Monsters[i].Item2 != null && !Monsters[i].Item1.isMonsterDie)
                             {
                                 Monsters[i].Item1.GetDamage(damage);
+                                Managers.instance.UI.BattleUICall.SetMonsterHPBar(Monsters[i].Item2.transform.position,ReturnMonstersToSlotArray(Monsters[i].Item2.transform), Monsters[i].Item1.monsterHPMax, Monsters[i].Item1.monsterHPNow);
                                 StartCoroutine(DamagedAnim(i, false, () =>
                                 {
                                     count++;
@@ -271,10 +273,11 @@ public class MonsterManager : MonoBehaviour
                         if (Monsters[i].Item2 != null && !Monsters[i].Item1.isMonsterDie)
                         {
                             Monsters[i].Item1.GetDamage(damage);
+                            Managers.instance.UI.BattleUICall.SetMonsterHPBar( Monsters[i].Item2.transform.position, ReturnMonstersToSlotArray(Monsters[i].Item2.transform), Monsters[i].Item1.monsterHPMax, Monsters[i].Item1.monsterHPNow);
                             StartCoroutine(DamagedAnim(i, false, () =>
                             {
                                 count++;
-                                Debug.Log("카운트" + count + "토탈" + total);
+                                Debug.Log("카운트" + count + "토탈" + total);    
                                 if (actionTime == 0)
                                 {
                                     BombAttackBulb.gameObject.SetActive(false);
@@ -300,34 +303,30 @@ public class MonsterManager : MonoBehaviour
     }
     public void AttackPlayer(Action isDone)
     {
-        if (moveSlots[0].monsterTR != null)
+        if (moveSlots[0].MonsterTR != null)
         {
-            for (int i = 0; i < Monsters.Length; i++)
+            int tempArray = ReturnSlotToMonsters(moveSlots[0].MonsterTR);
+            if (Monsters[tempArray].Item1 != null)
             {
-                if (Monsters[i].Item1 != null)
+                if (!Monsters[tempArray].Item1.isMonsterDie)
                 {
-                    if (Monsters[i].Item2.transform == moveSlots[0].monsterTR && !Monsters[i].Item1.isMonsterDie)
+                    // TODO : Monsters[i].Item1.monsterAD; 이용하여 플레이어 피격처리
+                    StartCoroutine(PlayerDamagedAnim(Monsters[tempArray].Item2.transform, () =>
                     {
-                        // TODO : Monsters[i].Item1.monsterAD; 이용하여 플레이어 피격처리
-                        StartCoroutine(PlayerDamagedAnim(Monsters[i].Item2.transform, () =>
-                        {
-                            Debug.Log("데미지");
-                            Managers.instance.PlayerDataManager.PlayerGetDamage(Monsters[i].Item1.monsterAD);
-                            isDone.Invoke();
-                        }));
-
-                        break;
-                    }
-                    else if (i == Monsters.Length - 1)
-                    {
+                        Debug.Log("데미지");
+                        Managers.instance.PlayerDataManager.PlayerGetDamage(Monsters[tempArray].Item1.monsterAD);
                         isDone.Invoke();
-                    }
-                    
+                    }));
                 }
-                else if (i == Monsters.Length-1&& Monsters[i].Item1 == null)
+                else
                 {
                     isDone.Invoke();
                 }
+
+            }
+            else
+            {
+                isDone.Invoke();
             }
         }
         else
@@ -354,7 +353,9 @@ public class MonsterManager : MonoBehaviour
             {
                 StartCoroutine(DamagedAnim(tempArray,true, () =>
                 {
-                    Monsters[int.Parse(targetTR.name)].Item1.GetDamage(damage);
+                    int tempNun = int.Parse(targetTR.name);
+                    Monsters[tempNun].Item1.GetDamage(damage);
+                    Managers.instance.UI.BattleUICall.SetMonsterHPBar(Monsters[tempNun].Item2.transform.position, ReturnMonstersToSlotArray(Monsters[tempNun].Item2.transform), Monsters[tempNun].Item1.monsterHPMax, Monsters[tempNun].Item1.monsterHPNow);
                     AttackBulb.transform.position = playerPos;
                     AttackBulb.gameObject.SetActive(false);
                     Managers.instance.UI.BattleUICall.SetTargetUI(ShoterController.Instance.TargetMonsterTR, MonsterManager.MonsterManagerInstance.ReturnMonsterSpriteSize(ShoterController.Instance.TargetMonsterTR));
@@ -390,7 +391,7 @@ public class MonsterManager : MonoBehaviour
                 MoveMonsters(i);
             }
         }
-        if (moveSlots[moveSlots.Length - 1].monsterTR == null && spawnArray != -1)
+        if (moveSlots[moveSlots.Length - 1].MonsterTR == null && spawnArray != -1)
         {
             SpawnMonsters(MonsterSpawnOrder[spawnArray], spawnArray);
         }
@@ -403,13 +404,15 @@ public class MonsterManager : MonoBehaviour
             {
                 if (Monsters[E].Item2 != null)
                 {
-                    if (moveSlots[i].monsterTR == Monsters[E].Item2.transform)
+                    if (moveSlots[i].MonsterTR == Monsters[E].Item2.transform)
                     {
                         if (Monsters[E].Item1.isMonsterDie)
                         {
-                            Debug.Log(moveSlots[i].monsterTR.name+ Monsters[E].Item1.monsterHPNow);
+                            Debug.Log(moveSlots[i].MonsterTR.name+ Monsters[E].Item1.monsterHPNow);
                             Monsters[E].Item2.gameObject.SetActive(false);
-                            moveSlots[i].monsterTR = null;
+                            Managers.instance.UI.BattleUICall.SetMonsterDeadInQueue(E);
+                            Managers.instance.UI.BattleUICall.SetMonsterHPBar(moveSlots[i].slotPosition, i);
+                            moveSlots[i].MonsterTR = null;
                         }
                     }
                 }
@@ -423,17 +426,19 @@ public class MonsterManager : MonoBehaviour
         {
             for (int i = 0; i < moveSlots.Length; i++)
             {
-                if (moveSlots[i].monsterTR == Monsters[array].Item2.transform && i != 0)
+                if (moveSlots[i].MonsterTR == Monsters[array].Item2.transform && i != 0)
                 {
-                    if (moveSlots[i - 1].monsterTR == null)
+                    if (moveSlots[i - 1].MonsterTR == null)
                     {
-                        moveSlots[i - 1].monsterTR.DOComplete();
-                        moveSlots[i].monsterTR = null;
-                        moveSlots[i - 1].monsterTR = Monsters[array].Item2.transform;
-                        moveSlots[i - 1].monsterTR.DOMove(moveSlots[i - 1].slotPosition, 0.2f).OnComplete(()=> 
+                        moveSlots[i - 1].MonsterTR.DOComplete();
+                        moveSlots[i].MonsterTR = null;
+                        moveSlots[i - 1].MonsterTR = Monsters[array].Item2.transform;
+                        Managers.instance.UI.BattleUICall.SetMonsterHPBar(moveSlots[i - 1].slotPosition, i - 1, Monsters[array].Item1.monsterHPMax, Monsters[array].Item1.monsterHPNow);
+                        moveSlots[i - 1].MonsterTR.DOMove(moveSlots[i - 1].slotPosition, 0.2f).OnComplete(()=> 
                         {
-                            Managers.instance.UI.BattleUICall.SetTargetUI(ShoterController.Instance.TargetMonsterTR, MonsterManager.MonsterManagerInstance.ReturnMonsterSpriteSize(ShoterController.Instance.TargetMonsterTR));
-                            moveSlots[i - 1].monsterTR.DOKill();
+
+                            Managers.instance.UI.BattleUICall.SetTargetUI(ShoterController.Instance.TargetMonsterTR,ReturnMonsterSpriteSize(ShoterController.Instance.TargetMonsterTR));
+                            moveSlots[i - 1].MonsterTR.DOKill();
                         });
                     }
                     else
@@ -459,7 +464,8 @@ public class MonsterManager : MonoBehaviour
             Monsters[arrayOrder].Item2.color = Color.red;
             Monsters[arrayOrder].Item1.monsterAD = monsterPrefabs[prefabNum].stat.monsterAD * 2;
         }
-        moveSlots[moveSlots.Length - 1].monsterTR = tempComponent.transform;
+        moveSlots[moveSlots.Length - 1].MonsterTR = tempComponent.transform;
+        Managers.instance.UI.BattleUICall.SetMonsterHPBar(moveSlots[moveSlots.Length - 1].slotPosition, moveSlots.Length - 1, Monsters[arrayOrder].Item1.monsterHPMax, Monsters[arrayOrder].Item1.monsterHPNow);
     }
     IEnumerator DamagedAnim(int index,bool isTargetAttack, Action isDone)
     {
@@ -490,12 +496,13 @@ public class MonsterManager : MonoBehaviour
         Debug.Log("여기서 못나가네"+index);
         if (Monsters[index].Item1.isMonsterDie)
         {
+            Managers.instance.UI.BattleUICall.SetMonsterDeadInQueue(index);
             Monsters[index].Item2.gameObject.SetActive(false);
             for (int i = 0; i < monsterSlotCount; i++)
             {
-                if (moveSlots[i].monsterTR == Monsters[index].Item2.transform)
+                if (moveSlots[i].MonsterTR == Monsters[index].Item2.transform)
                 {
-                    moveSlots[i].monsterTR = null;
+                    moveSlots[i].MonsterTR = null;
                     break;
                 }
             }
@@ -517,7 +524,34 @@ public class MonsterManager : MonoBehaviour
         }
     }
 
-
+    public int ReturnMonstersToSlotArray(Transform MonsterTR)
+    {
+        if (MonsterTR != null)
+        {
+            for (int i = 0; i < moveSlots.Length; i++)
+            {
+                if (moveSlots[i].MonsterTR == MonsterTR)
+                {
+                    return i;
+                }
+            } 
+        }
+        return -1;
+    }
+    public int ReturnSlotToMonsters(Transform MonsterTR)
+    {
+        if (MonsterTR != null)
+        {
+            for (int i = 0; i < Monsters.Length; i++)
+            {
+                if (Monsters[i].Item2.transform == MonsterTR)
+                {
+                    return i;
+                }
+            } 
+        }
+        return -1;
+    }
     public Vector3[] GetBounceVectors()
     {
         float tempY;
@@ -591,7 +625,7 @@ public class MonsterManager : MonoBehaviour
 
                 bombTR.position = vectors[i];
             }
-
+            isDone.Invoke();
         }
         else
         {
@@ -604,8 +638,8 @@ public class MonsterManager : MonoBehaviour
 
                 Managers.instance.UI.BattleUICall.GirlBoom.rectTransform.position = vectors[i];
             }
+            isDone.Invoke();
         }
-        isDone.Invoke();
     }
     IEnumerator PlayerDamagedAnim(Transform monster,Action isDone)
     {
