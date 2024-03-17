@@ -1343,6 +1343,23 @@ public class BattleUI
             return enemyWeaponName;
         }
     }
+    private Image monsterQueuePannel;
+    private Image MonsterQueuePannel
+    {
+        get
+        {
+            if (monsterQueuePannel == null)
+            {
+                monsterQueuePannel = new GameObject("MonsterQueuePreveiwPanel").AddComponent<Image>();
+                RectTransform tempRect = monsterQueuePannel.rectTransform;
+                tempRect.SetParent(EnemyStatusUI.rectTransform);
+                Managers.instance.UI.SetUISize(ref tempRect, Vector2.zero, new Vector2(1f, 0.3f));
+            }
+            return monsterQueuePannel;
+        }
+    }
+    private Image[] queueMonsterIMG;
+    //array.resize로 재할당
     #endregion
     private Image scoreBoardPannel;
     private Image ScoreBoardPannel 
@@ -1481,6 +1498,7 @@ public class BattleUI
             return ballForceSlider;
         }
     }
+
     #region 관련 함수
     public void GirlTextAttack(string TXT,Color bubbleColor,Color chattingColor)
     {
@@ -1519,6 +1537,7 @@ public class BattleUI
         WeaponNextBTN.onClick.AddListener(Managers.instance.PlayerDataManager.PlayerNextBallPick);
         UpdateScore(0,0);
         EnemyUISetting();
+        MonsterQueuePannel.enabled = true;
     }
     public void WeaponAnim(bool isMoveRight,string ballName,string ballKRName,string PrevBallName)
     {
@@ -1713,6 +1732,36 @@ public class BattleUI
     {
         bulbHPText = null;
         bulbHPTweens = null;
+    }
+    public void SetUIMonsterImageArray(Queue<Sprite> spriteQueue)
+    {
+        RectTransform tempRec;
+        float XSize = 0.20f;
+        float XperY = MonsterQueuePannel.rectTransform.rect.size.y / MonsterQueuePannel.rectTransform.rect.size.x;
+        float YSize = 1-(XperY * XSize);
+        float XBlank = 0.025f;
+        float YBlank = XBlank * XperY;
+        //정사각형 기준
+        Vector2 halfSize = new Vector2(XSize/2f, YSize/2f);
+        //부모기준으로 된 절반크기
+        if (queueMonsterIMG== null)
+        {
+            queueMonsterIMG = new Image[0];
+        }
+        if (queueMonsterIMG.Length< spriteQueue.Count)
+        {
+            Array.Resize(ref queueMonsterIMG, spriteQueue.Count);
+        }
+        for (int i = 0; i < spriteQueue.Count; i++)
+        {
+            Vector2 imageMax = new Vector2((i%5) * ((XBlank*2)+ (halfSize.x * 2)),(i/5)* ((YBlank * 2) + (halfSize.y * 2)));
+            Vector2 imageCenter = new Vector2(imageMax.x/2f,imageMax.y/2f);
+            queueMonsterIMG[i] = new GameObject(i + "THMonster").AddComponent<Image>();
+            tempRec = queueMonsterIMG[i].rectTransform;
+            tempRec.SetParent(MonsterQueuePannel.rectTransform);
+            Managers.instance.UI.SetUISize(ref tempRec,new Vector2(imageCenter.x-halfSize.x, imageCenter.y - halfSize.y),new Vector2(imageCenter.x + halfSize.x, imageCenter.y + halfSize.y) );
+            queueMonsterIMG[i].sprite = spriteQueue.Dequeue();
+        }
     }
     #endregion
 }

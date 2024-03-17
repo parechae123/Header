@@ -153,6 +153,12 @@ public class MonsterManager : MonoBehaviour
         NextTurn();
 
         targetPosition = playerPos+Vector3.right*4;
+        Queue<Sprite> monsterQueue = new Queue<Sprite>();
+        for (int i = 0; i < MonsterSpawnOrder.Length; i++)
+        {
+            monsterQueue.Enqueue(monsterPrefabs[MonsterSpawnOrder[i]].prefab.GetComponent<SpriteRenderer>().sprite);
+        }
+        Managers.instance.UI.BattleUICall.SetUIMonsterImageArray(monsterQueue);
     }
     private void Update()
     {
