@@ -98,6 +98,7 @@ public class ShoterController : MonoBehaviour
                 if (Managers.instance.PlayerDataManager.playerOwnBalls.Count<=0)
                 {
                     Managers.instance.UI.BattleUICall.ChangeWeaponUI(true, string.Empty, "전구가 없어!!");
+                    Managers.instance.UI.BattleUICall.GameOverBTN.enabled = true;
                     ballStatQueue.Clear();
                 }
                 else

@@ -902,15 +902,7 @@ public class BattleUI
             return girlBoomb;
         }
     }
-
-    private async void AwaitChatColor()
-    {
-        await Task.Delay(5000);
-        
-        GirlChatBubble.color = Color.white;
-        GirlText.color = Color.black;
-        GirlText.text = string.Empty;
-    }
+   
     public string GirlBulbExplane
     {
         set
@@ -1506,8 +1498,14 @@ public class BattleUI
     {
         GirlChatBubble.rectTransform.DOPunchScale(Vector3.one, 0.4f, 1, 0.5f).OnComplete(() =>
         {
-            girlChatBubble.rectTransform.DOKill();
-            AwaitChatColor();
+            
+            GirlChatBubble.rectTransform.DOAnchorPos(GirlChatBubble.rectTransform.anchoredPosition, 5).OnComplete(() =>
+            {
+                GirlChatBubble.color = Color.white;
+                GirlText.color = Color.black;
+                GirlText.text = string.Empty;
+                GirlChatBubble.rectTransform.DOKill();
+            });
         });
         GirlChatBubble.color = bubbleColor;
         GirlText.color = chattingColor;
