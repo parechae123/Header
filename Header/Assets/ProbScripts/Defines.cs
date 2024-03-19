@@ -123,6 +123,7 @@ namespace HeaderPadDefines
                     Managers.instance.UI.BattleUICall.SetComboNumber(true);
                     break;
             }
+            Managers.instance.UI.BattleUICall.GirlBulbExplane = "气藕 单固瘤 : " + ShoterController.Instance.regionalDamage + '\n' + "气藕 单固瘤 : " + ShoterController.Instance.targetDamage;
             if (BE != null)
             {
                 BE();

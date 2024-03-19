@@ -281,7 +281,7 @@ public class MonsterManager : MonoBehaviour
                                 if (actionTime == 0)
                                 {
                                     BombAttackBulb.gameObject.SetActive(false);
-                                    Managers.instance.UI.BattleUICall.GirlBoom.gameObject.SetActive(false);
+                                    Managers.instance.UI.BattleUICall.GirlBomb.gameObject.SetActive(false);
                                     Managers.instance.UI.BattleUICall.SetTargetUI(ShoterController.Instance.TargetMonsterTR, MonsterManager.MonsterManagerInstance.ReturnMonsterSpriteSize(ShoterController.Instance.TargetMonsterTR));
                                     isDamageDone.Invoke(total, count);
                                 }
@@ -434,6 +434,7 @@ public class MonsterManager : MonoBehaviour
                         moveSlots[i].MonsterTR = null;
                         moveSlots[i - 1].MonsterTR = Monsters[array].Item2.transform;
                         Managers.instance.UI.BattleUICall.SetMonsterHPBar(moveSlots[i - 1].slotPosition, i - 1, Monsters[array].Item1.monsterHPMax, Monsters[array].Item1.monsterHPNow);
+                        Managers.instance.UI.BattleUICall.SetMonsterHPBar(moveSlots[i].slotPosition, i);
                         moveSlots[i - 1].MonsterTR.DOMove(moveSlots[i - 1].slotPosition, 0.2f).OnComplete(()=> 
                         {
 
@@ -629,14 +630,14 @@ public class MonsterManager : MonoBehaviour
         }
         else
         {
-            Managers.instance.UI.BattleUICall.GirlBoom.gameObject.SetActive(true);
+            Managers.instance.UI.BattleUICall.GirlBomb.gameObject.SetActive(true);
             float timeDelay = (movementTime / vectors.Length);
             timeDelay = timeDelay <= 0 ? 0.1f : timeDelay;
             for (int i = 0; i < vectors.Length; i++)
             {
                 yield return new WaitForSeconds(timeDelay);
 
-                Managers.instance.UI.BattleUICall.GirlBoom.rectTransform.position = vectors[i];
+                Managers.instance.UI.BattleUICall.GirlBomb.rectTransform.position = vectors[i];
             }
             isDone.Invoke();
         }

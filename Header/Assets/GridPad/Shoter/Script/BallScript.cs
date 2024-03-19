@@ -172,12 +172,12 @@ public class BallScript : MonoBehaviour
                         ShoterController.Instance.regionalDamage = 0;
                         ShoterController.Instance.targetDamage = 0;
                     },true);
-                    Managers.instance.UI.BattleUICall.GirlTextAttack("내가 도와줄께!",Color.blue,Color.white);
+                    Managers.instance.UI.BattleUICall.GirlTextAttack("읏쌰!",Color.blue,Color.white);
                     //TODO : 소녀 공격 구현
                 }
                 else
                 {
-                    Managers.instance.UI.BattleUICall.GirlTextAttack("뒤는 나한테 맡겨!!", Color.red, Color.white);
+                    Managers.instance.UI.BattleUICall.GirlTextAttack("아쉬운거죠 뭐", Color.red, Color.white);
                     ResetBall();
                     ShoterController.Instance.regionalDamage = 0;
                     ShoterController.Instance.targetDamage = 0;

@@ -6,6 +6,7 @@ using UnityEngine;
 using UnityEngine.Rendering;
 using System;
 using static UnityEngine.GraphicsBuffer;
+using UnityEngine.EventSystems;
 
 public class ShoterController : MonoBehaviour
 {
@@ -136,8 +137,19 @@ public class ShoterController : MonoBehaviour
            GetBulbPoints();
            ShotBall();
         }
-
-
+        if (Input.GetMouseButtonDown(1))
+        {
+            Debug.LogError("클릭은 됬는디");
+            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+            RaycastHit hit;
+            if (Physics.Raycast(ray, out hit))
+            {
+                if (hit.transform == Managers.instance.UI.BattleUICall.WeaponImage.transform)
+                {
+                    Managers.instance.UI.BattleUICall.GirlBulbExplane = NowBallStat.flavorText;
+                }
+            }
+        }
         if (TargetBall.transform.position.y < -10)
         {
             MonsterManager.MonsterManagerInstance.NextTurnFunctions(regionalDamage, targetDamage, TargetMonsterTR, () =>

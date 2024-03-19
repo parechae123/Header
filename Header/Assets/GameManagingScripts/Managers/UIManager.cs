@@ -582,6 +582,7 @@ public class BattleUI
                 playerStatusUI.rectTransform.sizeDelta = Vector2.zero;
                 playerStatusUI.rectTransform.anchoredPosition = Vector2.zero;
                 playerStatusUI.sprite = Managers.instance.Resource.Load<Sprite>("battle_panel");
+                playerStatusUI.raycastTarget = false;
             }
             return playerStatusUI;
         }
@@ -704,12 +705,13 @@ public class BattleUI
                 weaponImagePanel.rectTransform.sizeDelta = Vector2.zero;
                 weaponImagePanel.rectTransform.anchoredPosition = Vector2.zero;
                 WeaponImagePanel.AddComponent<RectMask2D>();
+                weaponImagePanel.raycastTarget = false;
             }
             return weaponImagePanel;
         }
     }
     private Image weaponImage;
-    private Image WeaponImage
+    public Image WeaponImage
     {
         get 
         { 
@@ -718,6 +720,7 @@ public class BattleUI
                 weaponImage = new GameObject("weaponIMG").AddComponent<Image>();
                 weaponImage.rectTransform.SetParent(WeaponImagePanel.rectTransform);
                 weaponImage.sprite = Managers.instance.Resource.Load<Sprite>("Bullet_Basic");
+                weaponImage.raycastTarget = true;
                 WeaponImagePrev.enabled = true;
                 weaponImage.rectTransform.anchorMin = Vector2.zero;
                 weaponImage.rectTransform.anchorMax = Vector2.one;
@@ -883,23 +886,23 @@ public class BattleUI
             return girlText; 
         }
     }
-    private Image girlBoomb;
-    public Image GirlBoom
+    private Image girlBomb;
+    public Image GirlBomb
     {
         get 
         {
-            if (girlBoomb == null)
+            if (girlBomb == null)
             {
-                girlBoomb = new GameObject("UIBomb").AddComponent<Image>();
-                girlBoomb.sprite = Managers.instance.Resource.Load<Sprite>("bomb");
-                girlBoomb.rectTransform.SetParent(battleSceneUI);
-                girlBoomb.rectTransform.anchorMax = Vector2.one/2f;
-                girlBoomb.rectTransform.anchorMin = Vector2.one/2f;
-                girlBoomb.rectTransform.sizeDelta = Vector2.one * 100;
-                girlBoomb.rectTransform.anchoredPosition = Vector2.zero;
+                girlBomb = new GameObject("UIBomb").AddComponent<Image>();
+                girlBomb.sprite = Managers.instance.Resource.Load<Sprite>("bomb");
+                girlBomb.rectTransform.SetParent(battleSceneUI);
+                girlBomb.rectTransform.anchorMax = Vector2.one/2f;
+                girlBomb.rectTransform.anchorMin = Vector2.one/2f;
+                girlBomb.rectTransform.sizeDelta = girlBomb.sprite.rect.size;
+                girlBomb.rectTransform.anchoredPosition = Vector2.zero;
                 
             }
-            return girlBoomb;
+            return girlBomb;
         }
     }
    
@@ -1420,7 +1423,7 @@ public class BattleUI
         {
             if (ballForceSlider == null)
             {
-                Slider tempBallForceBar = new GameObject("EnemyHPBar").AddComponent<Slider>();
+                Slider tempBallForceBar = new GameObject("BallForceSlider").AddComponent<Slider>();
                 tempBallForceBar.wholeNumbers = false;
                 tempBallForceBar.maxValue = 100;
                 //TODO : 슬라이드바 UI 추가시 여기에 작업
@@ -1443,7 +1446,7 @@ public class BattleUI
                 handle.rectTransform.sizeDelta = Vector2.right * 50;
                 tempBallForceBar.handleRect = handle.rectTransform;
                 handle.color = Color.white;
-                handle.sprite = Managers.instance.Resource.Load<Sprite>("HP_icon");
+                handle.color = Color.clear;
 
 
                 Image BackGround = new GameObject("BackGround").AddComponent<Image>();
@@ -1454,7 +1457,7 @@ public class BattleUI
                 BackGround.rectTransform.sizeDelta = Vector2.zero;
                 BackGround.rectTransform.pivot = Vector2.one / 2f;
                 BackGround.color = Color.grey;
-                BackGround.sprite = Managers.instance.Resource.Load<Sprite>("HPbar");
+                BackGround.sprite = Managers.instance.Resource.Load<Sprite>("charge_empty");
                 BackGround.rectTransform.SetAsFirstSibling();
 
 
@@ -1470,7 +1473,7 @@ public class BattleUI
                 tempIMG.rectTransform.SetParent(tempFillArea);
                 tempIMG.rectTransform.sizeDelta = Vector2.zero;
                 tempIMG.color = Color.white;
-                tempIMG.sprite = Managers.instance.Resource.Load<Sprite>("HPbar");
+                tempIMG.sprite = Managers.instance.Resource.Load<Sprite>("charge_full");
                 tempBallForceBar.fillRect = tempIMG.rectTransform;
 
                 // Slider의 부모-자식 관계 설정  
@@ -1855,6 +1858,10 @@ public class BattleUI
         }
         else
         {
+            if (SlotIndex <=-1)
+            {
+                return;
+            }
             if (monsterPriavteHPBar.Length<=SlotIndex)
             {
                 return;
