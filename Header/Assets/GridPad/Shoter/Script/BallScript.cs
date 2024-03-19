@@ -12,6 +12,8 @@ public class BallScript : MonoBehaviour
     public float ballRadios;
     public int ballNowHP;
     public float blinkTimer;
+    public int breakBlockCount;
+    public BulbSkills bulbSkills;
     private Light2D bulbLight;
     public Light2D BulbLight 
     {
@@ -26,7 +28,7 @@ public class BallScript : MonoBehaviour
     }
 
     protected Rigidbody2D ballRB;
-    protected Rigidbody2D BallRB
+    public Rigidbody2D BallRB
     {
         get 
         {
@@ -104,6 +106,10 @@ public class BallScript : MonoBehaviour
             blinkTimer += Time.deltaTime;
             BulbLight.intensity = SinFunc(blinkTimer);
         }
+        if (bulbSkills != null)
+        {
+            bulbSkills.UpdateSkills();
+        }
     }
 
     public void ChangeBallSprite(string ballName)
@@ -112,6 +118,10 @@ public class BallScript : MonoBehaviour
     } 
     public void BallPause()
     {
+        if (bulbSkills != null)
+        {
+            bulbSkills.BreakEventSkills();
+        }
         BulbLight.intensity = 0;
         BallRB.simulated = false;
         BallCol.enabled = false;
@@ -137,6 +147,11 @@ public class BallScript : MonoBehaviour
     }
     public void BallFire(Vector2 FireToward,float FireForce)
     {
+
+        if (bulbSkills != null)
+        {
+            bulbSkills.StartEventSkills();
+        }
         ShoterController.Instance.testTR.gameObject.SetActive(false);
         Managers.instance.UI.BattleUICall.WeaponButtonCheck(true);
         ShoterController.Instance.isReadyFire = false;
@@ -162,6 +177,7 @@ public class BallScript : MonoBehaviour
         {
             ballNowHP--;
             BallPause();
+
             MonsterManager.MonsterManagerInstance.NextTurnFunctions(ShoterController.Instance.regionalDamage, ShoterController.Instance.targetDamage, ShoterController.Instance.TargetMonsterTR, () =>
             {
                 if (100-Managers.instance.PlayerDataManager.girlAttackChance<=Random.Range(0,101))
@@ -172,7 +188,7 @@ public class BallScript : MonoBehaviour
                         ShoterController.Instance.regionalDamage = 0;
                         ShoterController.Instance.targetDamage = 0;
                     },true);
-                    Managers.instance.UI.BattleUICall.GirlTextAttack("À¿›X!",Color.blue,Color.white);
+                    Managers.instance.UI.BattleUICall.GirlTextAttack("¿µÂ÷!!",Color.blue,Color.white);
                     //TODO : ¼Ò³à °ø°Ý ±¸Çö
                 }
                 else

@@ -17,14 +17,14 @@ MonoBehaviour:
     m_SerializedData: []
   m_GUID: 57fe113604f16b24195e6edbdc141b1d
   m_SerializeEntries:
-  - m_GUID: e13b422281b2faf4387706e59cf63636
-    m_Address: HeaderBlock_Emptied
+  - m_GUID: e37226851c26b5d45b5295d7e425794c
+    m_Address: HeaderBlock_Reroll
     m_ReadOnly: 0
     m_SerializedLabels:
     - InGameSprites
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 2d423c1fd1258c9479f5766344a2d4ff
-    m_Address: HeaderBlock_FIlled
+  - m_GUID: 1c08bbaff2673b9469884b6ff983833b
+    m_Address: HeaderBlock_Emptied
     m_ReadOnly: 0
     m_SerializedLabels:
     - InGameSprites
@@ -35,20 +35,20 @@ MonoBehaviour:
     m_SerializedLabels:
     - InGameSprites
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: d5a72a383ec24334c9a74fc4cd30754e
-    m_Address: HeaderBlock_FilledCoin
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - InGameSprites
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 0c9f346cc961b364bb021a14c176b351
+  - m_GUID: 996613ce674f62d4b896f2fdb19a86f0
     m_Address: HeaderBlock_BoombBlock
     m_ReadOnly: 0
     m_SerializedLabels:
     - InGameSprites
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: f5960171e824a3b4f9500cf393df1748
-    m_Address: HeaderBlock_Reroll
+  - m_GUID: 7646b119f57234c41b4356552d380b4f
+    m_Address: HeaderBlock_FilledCoin
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - InGameSprites
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: d50f24fdf0c4f8b42b9b94704094003f
+    m_Address: HeaderBlock_FIlled
     m_ReadOnly: 0
     m_SerializedLabels:
     - InGameSprites

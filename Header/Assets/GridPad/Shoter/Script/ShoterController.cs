@@ -7,21 +7,22 @@ using UnityEngine.Rendering;
 using System;
 using static UnityEngine.GraphicsBuffer;
 using UnityEngine.EventSystems;
+using UnityEngine.UI;
+using System.Reflection;
 
 public class ShoterController : MonoBehaviour
 {
     public bool isReadyFire = false;
     public LineRenderer lineRenderer;
     private int numPoints = 50;
-    private float ballRadios;
     private float timeInterval = 0.1f;
     private float gravity = -9.8f;
-    [SerializeField] private Vector2 normalizedRelValue;
+    [SerializeField] public Vector2 normalizedRelValue;
     [SerializeField] public UnityEngine.Transform testTR;
     [SerializeField] LayerMask layerBallCollision;
     public static ShoterController Instance;
     [SerializeField]private float fireForce = 0;
-    private BallScript targetBall;
+    public BallScript targetBall;
     public float regionalDamage = 0;
     public float targetDamage = 0;
     private Transform targetMonsterTR = null;
@@ -85,6 +86,7 @@ public class ShoterController : MonoBehaviour
         {
             if (value != null)
             {
+                TargetBall.ballNowHP = value.ballHealth;
                 if (value.amount <= 0)
                 {
                     Managers.instance.UI.BattleUICall.ChangeWeaponUI(true, string.Empty, "전구가 없어!!");
@@ -92,6 +94,7 @@ public class ShoterController : MonoBehaviour
                 else
                 {
                     Managers.instance.UI.BattleUICall.ChangeWeaponUI(true, value.ballName, value.ballKoreanName);
+                    SetBulbSkills(value.ballName);
                 }
             }
             else
@@ -111,7 +114,6 @@ public class ShoterController : MonoBehaviour
                     }
                 }
             }
-
             nowBallStat = value;
         }
     }
@@ -140,15 +142,23 @@ public class ShoterController : MonoBehaviour
         if (Input.GetMouseButtonDown(1))
         {
             Debug.LogError("클릭은 됬는디");
-            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-            RaycastHit hit;
-            if (Physics.Raycast(ray, out hit))
+            BaseInputModule tempModule = EventSystem.current.currentInputModule;
+            Type tempType = tempModule.GetType();
+            FieldInfo focusedObjectField = tempType.GetField("m_CurrentFocusedGameObject", BindingFlags.Instance | BindingFlags.NonPublic);
+            GameObject tempGOBJ = focusedObjectField.GetValue(tempModule) as GameObject;
+            if (tempGOBJ == null)
             {
-                if (hit.transform == Managers.instance.UI.BattleUICall.WeaponImage.transform)
+                return;
+            }
+            else
+            {
+                Debug.Log(tempGOBJ);
+                if (tempGOBJ.name.Contains("weaponIMG"))
                 {
-                    Managers.instance.UI.BattleUICall.GirlBulbExplane = NowBallStat.flavorText;
+                    Managers.instance.UI.BattleUICall.GirlBulbExplane = "'" + NowBallStat.flavorText + " ' " + "라고 하네요";
                 }
             }
+
         }
         if (TargetBall.transform.position.y < -10)
         {
@@ -270,7 +280,7 @@ public class ShoterController : MonoBehaviour
                 {
                     fireForce = NowBallStat.ballStartForce;
                 }
-                Managers.instance.UI.BattleUICall.UpdateBallForce(NowBallStat.ballStartForce, fireForce);
+                Managers.instance.UI.BattleUICall.UpdateBallForce( fireForce/ NowBallStat.ballStartForce);
             }
 
             else if (UnityEngine.EventSystems.EventSystem.current.IsPointerOverGameObject())
@@ -317,7 +327,7 @@ public class ShoterController : MonoBehaviour
                     {
                         fireForce = NowBallStat.ballStartForce;
                     }
-                    Managers.instance.UI.BattleUICall.UpdateBallForce(NowBallStat.ballStartForce, fireForce);
+                    Managers.instance.UI.BattleUICall.UpdateBallForce(fireForce / NowBallStat.ballStartForce);
                 }
             }
         }
@@ -451,5 +461,33 @@ public class ShoterController : MonoBehaviour
         tempVec.x = tempVec.x - transform.position.x;
         tempVec.y = tempVec.y - transform.position.y;
         return tempVec.normalized;
+    }
+    public void SetBulbSkills(string bulblName)
+    {
+        if (TargetBall.bulbSkills !=null)
+        {
+            TargetBall.bulbSkills.Reset();
+            TargetBall.bulbSkills = null;
+        }
+        switch (bulblName)
+        {
+            case "deco_bulb":
+                TargetBall.bulbSkills = new DecoBulbSkill();
+                TargetBall.bulbSkills.InitializeSetting();
+                break;
+
+            case "hp_bulb":
+                //TODO : 전구 스킬구현시 해당위치에 스크립트 넣어주면됨
+                /*TargetBall.bulbSkills = new DecoBulbSkill(); */
+                break;
+
+            case "metal_bulb":
+                /*TargetBall.bulbSkills = new DecoBulbSkill(); */
+                break;
+            default:
+                Debug.Log("스킬이 없어용");
+            TargetBall.bulbSkills = null;
+                break;
+        }
     }
 }

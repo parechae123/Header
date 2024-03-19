@@ -193,7 +193,7 @@
   "skillValueTwo": 0,
   "flavorText": "장식용 전구, 파괴되지 않고 처음 충돌판정 시 해당 맵의 지형으로 굳어진다. ",
   "ballPrice": 15,
-  "ballHealth": 5
+  "ballHealth": 1
  }
 ],
 "Weapon_Description":[

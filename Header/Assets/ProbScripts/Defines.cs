@@ -123,7 +123,7 @@ namespace HeaderPadDefines
                     Managers.instance.UI.BattleUICall.SetComboNumber(true);
                     break;
             }
-            Managers.instance.UI.BattleUICall.GirlBulbExplane = "ÆøÅº µ¥¹ÌÁö : " + ShoterController.Instance.regionalDamage + '\n' + "ÆøÅº µ¥¹ÌÁö : " + ShoterController.Instance.targetDamage;
+            Managers.instance.UI.BattleUICall.GirlBulbExplane = "ÆøÅº µ¥¹ÌÁö : " + ShoterController.Instance.regionalDamage + '\n' + "´ÜÀÏ µ¥¹ÌÁö : " + ShoterController.Instance.targetDamage;
             if (BE != null)
             {
                 BE();

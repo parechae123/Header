@@ -881,7 +881,7 @@ public class BattleUI
                 girlText.font = Managers.instance.Resource.Load<Font>("InGameFont");
                 girlText.alignment = TextAnchor.MiddleCenter;
                 girlText.color = Color.black;
-                girlText.fontSize = 36;
+                girlText.resizeTextForBestFit = true;
             }
             return girlText; 
         }
@@ -910,8 +910,8 @@ public class BattleUI
     {
         set
         {
-            GirlChatBubble.color = Color.green;
-            GirlText.color = Color.gray;
+            GirlChatBubble.color = Color.gray;
+            GirlText.color = Color.black;
             GirlText.text = value;
         }
     }
@@ -1348,7 +1348,7 @@ public class BattleUI
             if (monsterQueuePannel == null)
             {
                 monsterQueuePannel = new GameObject("MonsterQueuePreveiwPanel").AddComponent<Image>();
-                monsterQueuePannel.sprite = Managers.instance.Resource.Load<Sprite>("shop_buy_panel");
+                monsterQueuePannel.sprite = Managers.instance.Resource.Load<Sprite>("nextmonster_panel");
                 RectTransform tempRect = monsterQueuePannel.rectTransform;
                 tempRect.SetParent(EnemyStatusUI.rectTransform);
                 Managers.instance.UI.SetUISize(ref tempRect, Vector2.zero, new Vector2(1f, 0.3f));
@@ -1416,81 +1416,54 @@ public class BattleUI
         }
     }
 
-    private Slider ballForceSlider = null;
-    private Slider BallForceSlider
+    private Image ballForceSliderBackGround = null;
+    private Image BallForceSliderBackGround
+    {
+        get
+        {
+            if (ballForceSliderBackGround == null)
+            {
+                ballForceSliderBackGround = new GameObject("BallForceSlider").AddComponent<Image>();
+                ballForceSliderBackGround.rectTransform.SetParent(BallForceSliderParent);
+                ballForceSliderBackGround.rectTransform.anchorMax = Vector2.one / 2;
+                ballForceSliderBackGround.rectTransform.anchorMin = Vector2.one / 2;
+                Sprite tempSprite = Managers.instance.Resource.Load<Sprite>("charge_empty");
+                ballForceSliderBackGround.sprite = tempSprite;
+                ballForceSliderBackGround.rectTransform.sizeDelta = tempSprite.rect.size;
+                ballForceSliderBackGround.rectTransform.anchoredPosition = Vector2.zero;
+                ballForceSliderBackGround.raycastTarget = false;
+            }
+            return ballForceSliderBackGround;
+        }
+    }
+
+    private Image ballForceSlider = null;
+    private Image BallForceSlider
     {
         get
         {
             if (ballForceSlider == null)
             {
-                Slider tempBallForceBar = new GameObject("BallForceSlider").AddComponent<Slider>();
-                tempBallForceBar.wholeNumbers = false;
-                tempBallForceBar.maxValue = 100;
-                //TODO : 슬라이드바 UI 추가시 여기에 작업
-                RectTransform tempHpTR = tempBallForceBar.transform as RectTransform;
-
-
-                RectTransform tempHandleArea = new GameObject("HandleArea").AddComponent<RectTransform>();
-                tempHandleArea.SetParent(tempHpTR);
-                tempHandleArea.anchorMin = Vector2.zero; // 부모의 왼쪽 하단을 기준으로
-                tempHandleArea.anchorMax = Vector2.one; // 부모의 왼쪽 상단을 기준으로
-                tempHandleArea.pivot = new Vector2(0.5f, 0.5f); // 부모의 왼쪽 중간을 기준으로
-                tempHandleArea.sizeDelta = Vector2.zero;
-                tempHandleArea.anchoredPosition = Vector2.zero;
-                Image handle = new GameObject("handle").AddComponent<Image>();
-                handle.raycastTarget = false;
-                handle.rectTransform.SetParent(tempHandleArea);
-                handle.rectTransform.anchorMax = Vector2.up;
-                handle.rectTransform.anchorMin = Vector2.zero;
-                handle.rectTransform.pivot = Vector2.one / 2f;
-                handle.rectTransform.sizeDelta = Vector2.right * 50;
-                tempBallForceBar.handleRect = handle.rectTransform;
-                handle.color = Color.white;
-                handle.color = Color.clear;
-
-
-                Image BackGround = new GameObject("BackGround").AddComponent<Image>();
-                BackGround.raycastTarget = false;
-                BackGround.rectTransform.SetParent(tempHpTR);
-                BackGround.rectTransform.anchorMax = new Vector2(1f, 0.75f);
-                BackGround.rectTransform.anchorMin = new Vector2(0f, 0.25f);
-                BackGround.rectTransform.sizeDelta = Vector2.zero;
-                BackGround.rectTransform.pivot = Vector2.one / 2f;
-                BackGround.color = Color.grey;
-                BackGround.sprite = Managers.instance.Resource.Load<Sprite>("charge_empty");
-                BackGround.rectTransform.SetAsFirstSibling();
-
-
-                RectTransform tempFillArea = new GameObject("FillArea").AddComponent<RectTransform>();
-                tempFillArea.SetParent(tempHpTR);
-                tempFillArea.anchorMin = new Vector2(0f, 0.25f); // 부모의 왼쪽 하단을 기준으로
-                tempFillArea.anchorMax = new Vector2(1f, 0.75f); // 부모의 왼쪽 상단을 기준으로
-                tempFillArea.pivot = new Vector2(0.5f, 0.5f); // 부모의 왼쪽 중간을 기준으로
-                tempFillArea.sizeDelta = Vector2.zero;
-                tempFillArea.anchoredPosition = Vector2.zero;
-                Image tempIMG = new GameObject("FillRect").AddComponent<Image>();
-                tempIMG.raycastTarget = false;
-                tempIMG.rectTransform.SetParent(tempFillArea);
-                tempIMG.rectTransform.sizeDelta = Vector2.zero;
-                tempIMG.color = Color.white;
-                tempIMG.sprite = Managers.instance.Resource.Load<Sprite>("charge_full");
-                tempBallForceBar.fillRect = tempIMG.rectTransform;
-
-                // Slider의 부모-자식 관계 설정  
-
-
-
-                tempHpTR.SetParent(BallForceSliderParent);
-                tempHpTR.SetAsLastSibling();
-                Managers.instance.UI.SetUISize(ref tempHpTR, new Vector2(0.45f, 0.48f), new Vector2(0.55f, 0.52f));
-                tempBallForceBar.interactable = false;
-                tempBallForceBar.enabled = true;
-                tempBallForceBar.SetDirection(Slider.Direction.RightToLeft, true);
-                ballForceSlider = tempBallForceBar;
-                tempHandleArea.SetAsLastSibling();
-                Debug.Log("포스바 세팅 끝");
+                ballForceSlider = new GameObject("BallForceSlider").AddComponent<Image>();
+                ballForceSlider.rectTransform.SetParent(BallForceSliderBackGround.rectTransform);
+                ballForceSlider.rectTransform.anchorMax = Vector2.one / 2;
+                ballForceSlider.rectTransform.anchorMin = Vector2.one / 2;
+                ballForceSlider.rectTransform.anchoredPosition = Vector2.zero;
+                Sprite tempSprite = Managers.instance.Resource.Load<Sprite>("charge_full");
+                ballForceSlider.sprite = tempSprite;
+                ballForceSlider.rectTransform.sizeDelta = tempSprite.rect.size;
+                ballForceSlider.fillClockwise = true;
+                ballForceSlider.type = Image.Type.Filled;
+                ballForceSliderBackGround.raycastTarget = false;
             }
             return ballForceSlider;
+        }
+    }
+    public float ForceValue
+    {
+        set
+        {
+            BallForceSlider.fillAmount = value;
         }
     }
     Slider[] monsterPriavteHPBar;
@@ -1499,6 +1472,7 @@ public class BattleUI
     
     public void GirlTextAttack(string TXT,Color bubbleColor,Color chattingColor)
     {
+        girlText.fontSize = 36;
         GirlChatBubble.rectTransform.DOPunchScale(Vector3.one, 0.4f, 1, 0.5f).OnComplete(() =>
         {
             
@@ -1662,23 +1636,19 @@ public class BattleUI
     {
         if (isSetActive)
         {
-            Vector3 tempVec = Camera.main.WorldToScreenPoint(ShooterPosition-Vector3.up);
+            Vector3 tempVec = Camera.main.WorldToScreenPoint(ShooterPosition+Vector3.up);
             BallForceSliderParent.position = tempVec;
         }
         BallForceSliderParent.gameObject.SetActive(isSetActive);
         
     }
-    public void UpdateBallForce(float max ,float value)
+    public void UpdateBallForce(float value)
     {
         if (!BallForceSliderParent.gameObject.activeSelf)
         {
             BallForceSliderParent.gameObject.SetActive(true);
         }
-        if (BallForceSlider.maxValue != max)
-        {
-            BallForceSlider.maxValue = max;
-        }
-        ballForceSlider.value = value;
+        ForceValue = value;
     }
 
 
@@ -2337,7 +2307,7 @@ public class ShopUI
 
             Text priceText = new GameObject("ShopWeaponPriceText" + shopWeaponItems.Length).AddComponent<Text>();
             priceText.font = Managers.instance.Resource.Load<Font>("InGameFont");
-            priceText.alignment = TextAnchor.MiddleCenter;
+            priceText.alignment = TextAnchor.UpperCenter;
             priceText.text = stat.ballPrice + "$";
             priceText.color = Color.gray;
             priceText.rectTransform.SetParent(tempParent);
@@ -2345,7 +2315,7 @@ public class ShopUI
             priceText.rectTransform.anchorMin = Vector2.zero;
             priceText.rectTransform.sizeDelta = Vector2.zero;
             priceText.rectTransform.anchoredPosition = Vector2.zero;
-            priceText.fontSize = (int)(tempParent.rect.size.y * 0.3f);
+            priceText.fontSize = (int)(70);
 
             tempRect.anchorMax = new Vector2(0.8f, 1);
             tempRect.anchorMin = new Vector2(0.2f, 0.4f);

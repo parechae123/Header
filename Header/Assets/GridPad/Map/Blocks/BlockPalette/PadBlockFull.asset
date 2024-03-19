@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 13312, guid: 0000000000000000e000000000000000, type: 0}
   m_Name: PadBlockFull
   m_EditorClassIdentifier: 
-  m_Sprite: {fileID: 21300000, guid: 2d423c1fd1258c9479f5766344a2d4ff, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 1c08bbaff2673b9469884b6ff983833b, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_Transform:
     e00: 1
