@@ -57,6 +57,7 @@ public class PlayerDataManager
         {
             ShoterController.Instance.isReadyFire = false;
             Managers.instance.UI.BattleUICall.GameOverBTN.enabled = true;
+            Managers.instance.UI.BattleUICall.ToDialogSceneBTN.gameObject.SetActive(false);
         }
 
         if (Managers.instance.UI.BattleUICall.IsInBattleScene)

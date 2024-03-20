@@ -89,11 +89,11 @@ public class ShoterController : MonoBehaviour
                 TargetBall.ballNowHP = value.ballHealth;
                 if (value.amount <= 0)
                 {
-                    Managers.instance.UI.BattleUICall.ChangeWeaponUI(true, string.Empty, "전구가 없어!!");
+                    Managers.instance.UI.BattleUICall.ChangeWeaponUI(string.Empty, "전구가 없어!!");
                 }
                 else
                 {
-                    Managers.instance.UI.BattleUICall.ChangeWeaponUI(true, value.ballName, value.ballKoreanName);
+                    Managers.instance.UI.BattleUICall.ChangeWeaponUI(value.ballName, value.ballKoreanName);
                     SetBulbSkills(value.ballName);
                 }
             }
@@ -101,7 +101,7 @@ public class ShoterController : MonoBehaviour
             {
                 if (Managers.instance.PlayerDataManager.playerOwnBalls.Count<=0)
                 {
-                    Managers.instance.UI.BattleUICall.ChangeWeaponUI(true, string.Empty, "전구가 없어!!");
+                    Managers.instance.UI.BattleUICall.ChangeWeaponUI(string.Empty, "전구가 없어!!");
                     Managers.instance.UI.BattleUICall.GameOverBTN.enabled = true;
                     ballStatQueue.Clear();
                 }

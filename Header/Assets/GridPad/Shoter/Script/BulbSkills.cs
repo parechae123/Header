@@ -43,6 +43,7 @@ public class DecoBulbSkill : BulbSkills
     {
         decoShapeCtrler = GameObject.Instantiate(Managers.instance.Resource.Load<GameObject>("DecoBulbLIne"), null).GetComponent<SpriteShapeController>();
         decoShape = decoShapeCtrler.gameObject.GetComponent<SpriteShapeRenderer>();
+        lineArray = new Vector2[3];
         //컴포넌트 할당
         decoShapeCtrler.transform.position = Vector3.zero;
         isStartedForceNegative = OriginBall.BallRB.velocity.y>0? false: true;
@@ -88,7 +89,7 @@ public class DecoBulbSkill : BulbSkills
         }
         for (int i = 0; i < lineArray.Length; i++)
         {
-            Debug.Log(lineArray[i]);
+
             if (Vector2.Distance(lineArray[i],ShoterController.Instance.transform.position)<= 1)
             {
                 GameObject.Destroy(decoShape.gameObject);
@@ -116,6 +117,7 @@ public class DecoBulbSkill : BulbSkills
                     decoShapeCtrler.edgeCollider.points[i] = lineArray[i];
                 }
             }
+            Debug.Log(lineArray[i]);
         }
 
         decoShape.enabled = true;

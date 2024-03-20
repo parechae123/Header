@@ -117,9 +117,9 @@ MonoBehaviour:
       corner: 1
       m_CornerMode: 1
     - position: {x: 0, y: 0, z: 0}
-      leftTangent: {x: 0, y: 0, z: 0}
-      rightTangent: {x: 0, y: 0, z: 0}
-      mode: 0
+      leftTangent: {x: -0.012345869, y: 0.029793898, z: -0}
+      rightTangent: {x: 0.00905908, y: -0.021861993, z: 0}
+      mode: 1
       height: 1
       spriteIndex: 0
       corner: 1

@@ -797,7 +797,7 @@ public class BattleUI
         {
             if (weaponBeforeBTN == null)
             {
-                weaponBeforeBTN = new GameObject("weaponNextBTN").AddComponent<Button>();
+                weaponBeforeBTN = new GameObject("weaponBeforeBTN").AddComponent<Button>();
                 Image tempIMG = weaponBeforeBTN.AddComponent<Image>();
                 weaponBeforeBTN.targetGraphic = tempIMG;
                 tempIMG.rectTransform.SetParent(WeaponNamePannel.rectTransform);
@@ -1282,7 +1282,7 @@ public class BattleUI
         }
     }
 
-    private Image enemyWeaponImage;
+/*    private Image enemyWeaponImage;
     private Image EnemyWeaponImage
     {
         get
@@ -1339,7 +1339,7 @@ public class BattleUI
             }
             return enemyWeaponName;
         }
-    }
+    }*/
     private Image monsterQueuePannel;
     private Image MonsterQueuePannel
     {
@@ -1454,7 +1454,7 @@ public class BattleUI
                 ballForceSlider.rectTransform.sizeDelta = tempSprite.rect.size;
                 ballForceSlider.fillClockwise = true;
                 ballForceSlider.type = Image.Type.Filled;
-                ballForceSliderBackGround.raycastTarget = false;
+                ballForceSlider.raycastTarget = false;
             }
             return ballForceSlider;
         }
@@ -1473,6 +1473,7 @@ public class BattleUI
     public void GirlTextAttack(string TXT,Color bubbleColor,Color chattingColor)
     {
         girlText.fontSize = 36;
+        GirlChatBubble.rectTransform.DOComplete();
         GirlChatBubble.rectTransform.DOPunchScale(Vector3.one, 0.4f, 1, 0.5f).OnComplete(() =>
         {
             
@@ -1513,7 +1514,7 @@ public class BattleUI
         WeaponBeforeBTN.onClick.AddListener(Managers.instance.PlayerDataManager.PlayerBeforeBallPick);
         WeaponNextBTN.onClick.AddListener(Managers.instance.PlayerDataManager.PlayerNextBallPick);
         UpdateScore(0,0);
-        EnemyUISetting();
+        //EnemyUISetting();
         MonsterQueuePannel.enabled = true;
     }
     public void WeaponAnim(bool isMoveRight,string ballName,string ballKRName,string PrevBallName)
@@ -1556,7 +1557,7 @@ public class BattleUI
             WeaponImagePrev.rectTransform.DOAnchorMax(Vector2.up, 0.7f);
             WeaponImagePrev.rectTransform.DOAnchorMin(Vector2.left, 0.7f);
         }
-        ChangeWeaponUI(true, ballName, ballKRName);
+//        ChangeWeaponUI(true, ballName, ballKRName);
     }
     public void HPBarUpdate(bool isPlayer,float valueToAdd)
     {
@@ -1574,7 +1575,10 @@ public class BattleUI
             }
             if (EnemyHPBar.value <=0)
             {
-                Managers.instance.UI.BattleUICall.ToDialogSceneBTN.enabled = true;
+                if (Managers.instance.PlayerDataManager.SetPlayerHP.Item2 >=0)
+                {
+                    Managers.instance.UI.BattleUICall.ToDialogSceneBTN.enabled = true;
+                }
                 ShoterController.Instance.isReadyFire = false;
             }
         }
@@ -1608,9 +1612,11 @@ public class BattleUI
             EnemyPortrait.sprite = Managers.instance.Resource.Load<Sprite>(spriteName);
         }
     }
-    public void ChangeWeaponUI(bool isPlayer,string spriteName,string weaponKoreanName)
+    public void ChangeWeaponUI(string spriteName,string weaponKoreanName)
     {
-        if (isPlayer)
+        WeaponImage.sprite = Managers.instance.Resource.Load<Sprite>(spriteName);
+        PlayerWeaponName.text = weaponKoreanName;
+/*        if (isPlayer)
         {
             WeaponImage.sprite = Managers.instance.Resource.Load<Sprite>(spriteName);
             PlayerWeaponName.text = weaponKoreanName;
@@ -1619,7 +1625,7 @@ public class BattleUI
         {
             EnemyWeaponImage.sprite = Managers.instance.Resource.Load<Sprite>(spriteName);
             EnemyWeaponName.text = weaponKoreanName;
-        }
+        }*/
     }
 
     public void WeaponButtonCheck(bool isZero)
@@ -1652,7 +1658,7 @@ public class BattleUI
     }
 
 
-    private void EnemyUISetting()
+/*    private void EnemyUISetting()
     {
         EnemyHPBar.enabled = true;
         EnemyWeaponImage.enabled = true;
@@ -1660,7 +1666,7 @@ public class BattleUI
         EnemyWeaponImage.enabled = true;
         EnemyWeaponNamePannel.enabled = true;
         EnemyWeaponName.text = "무기이름";
-    }
+    }*/
     public void SetTargetUI(Transform targetTR, Vector2 SpriteSize)
     {
         if (targetTR != null)
