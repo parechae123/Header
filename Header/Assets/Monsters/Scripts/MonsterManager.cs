@@ -467,7 +467,7 @@ public class MonsterManager : MonoBehaviour
             Monsters[arrayOrder].Item1.monsterAD = monsterPrefabs[prefabNum].stat.monsterAD * 2;
         }
         moveSlots[moveSlots.Length - 1].MonsterTR = tempComponent.transform;
-        Managers.instance.UI.BattleUICall.SetUIMonsterImageArray(monsterPrefabs[MonsterSpawnOrder[arrayOrder + 1]].prefab.GetComponent<SpriteRenderer>().sprite, Monsters[arrayOrder].Item2);
+        Managers.instance.UI.BattleUICall.SetUIMonsterImageArray(arrayOrder < MonsterSpawnOrder.Length-1 ? monsterPrefabs[MonsterSpawnOrder[arrayOrder + 1]].prefab.GetComponent<SpriteRenderer>().sprite : null, Monsters[arrayOrder].Item2);
         Managers.instance.UI.BattleUICall.SetMonsterHPBar(moveSlots[moveSlots.Length - 1].slotPosition, moveSlots.Length - 1, Monsters[arrayOrder].Item1.monsterHPMax, Monsters[arrayOrder].Item1.monsterHPNow);
     }
     IEnumerator DamagedAnim(int index,bool isTargetAttack, Action isDone)

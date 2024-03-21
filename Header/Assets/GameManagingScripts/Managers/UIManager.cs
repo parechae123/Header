@@ -1366,33 +1366,33 @@ public class BattleUI
     }
     /*    private Image[] queueMonsterIMG;*/
     //array.resize로 재할당
-    private Image nextMonsterIMG;
     private Image beforeMonsterIMG;
-    private Image BeforeMonsterIMG
-    {
-        get
-        {
-            if (beforeMonsterIMG == null)
-            {
-                beforeMonsterIMG = new GameObject("BeforeMonsterimg").AddComponent<Image>();
-                RectTransform TempRect = beforeMonsterIMG.rectTransform;
-                TempRect.SetParent(NextMonsterPannel.rectTransform);
-                TempRect.anchoredPosition = Vector2.right*400f;
-                TempRect.anchorMax = Vector2.one / 2f;
-                TempRect.anchorMin = Vector2.one / 2f;
-                TempRect.sizeDelta = NextMonsterPannel.rectTransform.rect.size*(2f/3f);
-            }
-            return beforeMonsterIMG;
-        }
-    }
+    private Image nextMonsterIMG;
     private Image NextMonsterIMG
     {
         get
         {
             if (nextMonsterIMG == null)
             {
-                nextMonsterIMG = new GameObject("NextMonsterimg").AddComponent<Image>();
+                nextMonsterIMG = new GameObject("BeforeMonsterimg").AddComponent<Image>();
                 RectTransform TempRect = nextMonsterIMG.rectTransform;
+                TempRect.SetParent(NextMonsterPannel.rectTransform);
+                TempRect.anchoredPosition = Vector2.right*400f;
+                TempRect.anchorMax = Vector2.one / 2f;
+                TempRect.anchorMin = Vector2.one / 2f;
+                TempRect.sizeDelta = NextMonsterPannel.rectTransform.rect.size*(2f/3f);
+            }
+            return nextMonsterIMG;
+        }
+    }
+    private Image BeforeMonsterIMG
+    {
+        get
+        {
+            if (beforeMonsterIMG == null)
+            {
+                beforeMonsterIMG = new GameObject("NextMonsterimg").AddComponent<Image>();
+                RectTransform TempRect = beforeMonsterIMG.rectTransform;
                 TempRect.SetParent(NextMonsterPannel.rectTransform);
                 TempRect.anchoredPosition = Vector2.zero;
                 TempRect.anchorMax = Vector2.one / 2f;
@@ -1400,7 +1400,7 @@ public class BattleUI
                 TempRect.sizeDelta = NextMonsterPannel.rectTransform.rect.size * (2f / 3f);
 
             }
-            return nextMonsterIMG;
+            return beforeMonsterIMG;
         }
     }
     #endregion
@@ -1759,24 +1759,41 @@ public class BattleUI
     }
     public void SetUIMonsterImageArray(/*Queue<Sprite> spriteQueue*/Sprite NextMonsterSprite,SpriteRenderer monsterSR)
     {
-        Sprite tempIMG = NextMonsterIMG.sprite;
+        Sprite tempIMG = BeforeMonsterIMG.sprite;
         if (tempIMG == null)
         {
             if (MonsterManager.MonsterManagerInstance.Monsters[0].Item2 != null)
             {
                 tempIMG = MonsterManager.MonsterManagerInstance.Monsters[0].Item2.sprite;
-                NextMonsterIMG.sprite = tempIMG;
+                BeforeMonsterIMG.sprite = tempIMG;
             }
         }
-        Vector2 temppos = Camera.main.WorldToScreenPoint(MonsterManager.MonsterManagerInstance.moveSlots[MonsterManager.MonsterManagerInstance.moveSlots.Length-1].slotPosition);
-        NextMonsterIMG.rectTransform.DOJump(temppos, 30,2,1.8f,true).OnComplete(() =>
+        BeforeMonsterIMG.DOComplete();
+        NextMonsterIMG.DOComplete();
+        BeforeMonsterIMG.rectTransform.localScale = Vector3.one;
+        BeforeMonsterIMG.rectTransform.anchoredPosition = Vector2.zero;
+        NextMonsterIMG.rectTransform.anchoredPosition = Vector2.right * 300;
+
+        Vector3 targetPos = MonsterManager.MonsterManagerInstance.moveSlots[MonsterManager.MonsterManagerInstance.moveSlots.Length - 1].slotPosition;
+        Vector2 temppos = Camera.main.WorldToScreenPoint(targetPos);
+        Vector2 PosMin = Camera.main.WorldToScreenPoint(targetPos+monsterSR.bounds.min);
+        Vector2 PosMax = Camera.main.WorldToScreenPoint(targetPos+monsterSR.bounds.max);
+        float ScaleValue = Vector2.Distance(PosMin, PosMax) / Vector2.Distance(BeforeMonsterIMG.rectTransform.rect.min, BeforeMonsterIMG.rectTransform.rect.max);
+        NextMonsterIMG.sprite = NextMonsterSprite;
+        BeforeMonsterIMG.rectTransform.DOScale(ScaleValue, 1f);
+        BeforeMonsterIMG.rectTransform.DOJump(temppos, 30,2,1.8f,true).OnComplete(() =>
         {
-            NextMonsterIMG.rectTransform.anchoredPosition = Vector2.zero;
-            BeforeMonsterIMG.sprite = tempIMG;
-            NextMonsterIMG.sprite = NextMonsterSprite;
+
+            BeforeMonsterIMG.rectTransform.localScale = Vector3.one;
+            BeforeMonsterIMG.rectTransform.anchoredPosition = Vector2.zero;
+            NextMonsterIMG.sprite = tempIMG;
+            BeforeMonsterIMG.sprite = NextMonsterSprite;
             monsterSR.enabled = true;
         });
-
+        NextMonsterIMG.rectTransform.DOJump(NextMonsterPannel.rectTransform.position, 40f, 4, 1.8f, true).OnComplete(() =>
+        {
+            NextMonsterIMG.rectTransform.anchoredPosition = Vector2.right * 300;
+        });
 
         //기존 nextMonster세팅,Queue형식
         /*        RectTransform tempRec;
