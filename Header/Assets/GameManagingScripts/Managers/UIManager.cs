@@ -21,7 +21,7 @@ public class UIManager
     public DialogSystem DialogCall = new DialogSystem();
     public BattleUI BattleUICall = new BattleUI();
     public ShopUI ShopUICall = new ShopUI();
-    
+
     private Stack<Transform> UIStack = new Stack<Transform>();
     public List<Transform> MoveAbleCheckerList = new List<Transform>();
     public void RegistUIStack(Transform target)
@@ -33,11 +33,11 @@ public class UIManager
         if (UIStack.Count > 0)
         {
             UIStack.Pop().gameObject.SetActive(false);
-            if (TopViewPlayer.Instance!= null)
+            if (TopViewPlayer.Instance != null)
             {
                 TopViewPlayer.Instance.isMoveAble = MoveAbleChecker();
             }
-            
+
         }
     }
     public void CheckerRegist(Transform tr)
@@ -49,7 +49,7 @@ public class UIManager
         UIStack.Clear();
         ShopUICall.shopWeaponItems = null;
         MoveAbleCheckerList.Clear();
-        BattleUICall.ResetMonsterQueueIMG();
+//        BattleUICall.ResetMonsterQueueIMG();
     }
 
     private bool MoveAbleChecker()
@@ -63,7 +63,7 @@ public class UIManager
         }
         return true;
     }
-    public void TargetUIOnOff(Transform target, bool isTurnOn,bool isPush =true)
+    public void TargetUIOnOff(Transform target, bool isTurnOn, bool isPush = true)
     {
         // TODO : 특정 UI 닫기버튼 누를때 연결해주어야 할 함수 끌때 isTurnOn을 false 열때는 true
         target.gameObject.SetActive(isTurnOn);
@@ -83,10 +83,10 @@ public class UIManager
             }
         }
     }
-    public void SetUISize(ref RectTransform TargetRect,Vector2 min,Vector2 max)
+    public void SetUISize(ref RectTransform TargetRect, Vector2 min, Vector2 max)
     {
         TargetRect.anchorMin = min;
-        TargetRect.anchorMax = max;    
+        TargetRect.anchorMax = max;
         TargetRect.sizeDelta = Vector2.zero;
         TargetRect.anchoredPosition = Vector2.zero;
     }
@@ -102,7 +102,7 @@ public class LoadingUI
             if (sceneMainCanvas == null)
             {
                 GameObject targetTempOBJ = GameObject.Find("Canvas");
-                
+
                 RectTransform tempTR = targetTempOBJ == null ? new GameObject("Canvas").AddComponent<Canvas>().transform as RectTransform : targetTempOBJ.transform as RectTransform;
                 tempTR.GetComponent<Canvas>().renderMode = RenderMode.ScreenSpaceCamera;
                 tempTR.gameObject.layer = 5;
@@ -492,7 +492,7 @@ public class DialogSystem
         }
         else
         {
-            Managers.instance.UI.TargetUIOnOff(DialogueBackGround.rectTransform, false,false);
+            Managers.instance.UI.TargetUIOnOff(DialogueBackGround.rectTransform, false, false);
         }
     }
     public void DialogTextChanger(Vector2Int RemoveInteractionPosition)
@@ -504,7 +504,7 @@ public class DialogSystem
         else
         {
             Managers.instance.Grid.RemoveInteraction(RemoveInteractionPosition);
-            Managers.instance.UI.TargetUIOnOff(DialogueBackGround.rectTransform, false,false);
+            Managers.instance.UI.TargetUIOnOff(DialogueBackGround.rectTransform, false, false);
         }
     }
     public void DialogTextChanger(Vector2Int RemoveInteractionPosition, InteractionInstallerProps AddInteraction)
@@ -563,7 +563,7 @@ public class BattleUI
         set
         {
 
-            BattleSceneUI.gameObject.SetActive (value);
+            BattleSceneUI.gameObject.SetActive(value);
         }
     }
 
@@ -635,8 +635,8 @@ public class BattleUI
                 handle.rectTransform.pivot = Vector2.one / 2f;
                 handle.rectTransform.sizeDelta = Vector2.right * 50;
                 tempPlayerHPbar.handleRect = handle.rectTransform;
-                handle.color = Color.white;
                 handle.sprite = Managers.instance.Resource.Load<Sprite>("HP_icon");
+                handle.color = Color.clear;
                 handle.rectTransform.SetAsLastSibling();
 
                 Image BackGround = new GameObject("BackGround").AddComponent<Image>();
@@ -681,7 +681,7 @@ public class BattleUI
                 tempPlayerHPbar.interactable = false;
                 tempPlayerHPbar.enabled = true;
                 tempHandleArea.SetAsLastSibling();
-                tempPlayerHPbar.SetDirection(Slider.Direction.RightToLeft,true);
+                tempPlayerHPbar.SetDirection(Slider.Direction.RightToLeft, true);
                 playerHpBar = tempPlayerHPbar;
 
                 Debug.Log("체력바 세팅 끝");
@@ -692,9 +692,9 @@ public class BattleUI
     private Image weaponImagePanel;
     private Image WeaponImagePanel
     {
-        get 
-        { 
-            if (weaponImagePanel == null) 
+        get
+        {
+            if (weaponImagePanel == null)
             {
                 weaponImagePanel = new GameObject("weaponIMGPanel").AddComponent<Image>();
                 weaponImagePanel.rectTransform.SetParent(PlayerStatusUI.rectTransform);
@@ -713,9 +713,9 @@ public class BattleUI
     private Image weaponImage;
     public Image WeaponImage
     {
-        get 
-        { 
-            if (weaponImage == null) 
+        get
+        {
+            if (weaponImage == null)
             {
                 weaponImage = new GameObject("weaponIMG").AddComponent<Image>();
                 weaponImage.rectTransform.SetParent(WeaponImagePanel.rectTransform);
@@ -733,9 +733,9 @@ public class BattleUI
     private Image weaponImagePrev;
     private Image WeaponImagePrev
     {
-        get 
-        { 
-            if (weaponImagePrev == null) 
+        get
+        {
+            if (weaponImagePrev == null)
             {
                 weaponImagePrev = new GameObject("weaponIMGPrev").AddComponent<Image>();
                 weaponImagePrev.rectTransform.SetParent(WeaponImagePanel.rectTransform);
@@ -749,10 +749,10 @@ public class BattleUI
         }
     }
     private Image weaponNamePannel;
-    private Image WeaponNamePannel 
-    { 
-        get 
-        { 
+    private Image WeaponNamePannel
+    {
+        get
+        {
             if (weaponNamePannel == null)
             {
                 weaponNamePannel = new GameObject("WeaponNamePannel").AddComponent<Image>();
@@ -764,7 +764,7 @@ public class BattleUI
                 weaponNamePannel.rectTransform.anchoredPosition = Vector2.zero;
             }
             return weaponNamePannel;
-        } 
+        }
     }
 
     private Text playerWeaponName;
@@ -793,7 +793,7 @@ public class BattleUI
     private Button weaponBeforeBTN;
     private Button WeaponBeforeBTN
     {
-        get 
+        get
         {
             if (weaponBeforeBTN == null)
             {
@@ -813,7 +813,7 @@ public class BattleUI
     private Button weaponNextBTN;
     private Button WeaponNextBTN
     {
-        get 
+        get
         {
             if (weaponNextBTN == null)
             {
@@ -833,7 +833,7 @@ public class BattleUI
     private Image girlPortrait;
     public Image GirlPortrait
     {
-        get 
+        get
         {
             if (girlPortrait == null)
             {
@@ -841,17 +841,17 @@ public class BattleUI
                 girlPortrait.rectTransform.SetParent(PlayerStatusUI.rectTransform);
                 girlPortrait.rectTransform.anchorMax = new Vector2(0.784737825f, 0.217769772f);
                 girlPortrait.rectTransform.anchorMin = new Vector2(0.216160953f, 0.0475479327f);
-                girlPortrait.rectTransform.anchoredPosition= Vector2.zero;
-                girlPortrait.rectTransform.sizeDelta= Vector2.zero;
+                girlPortrait.rectTransform.anchoredPosition = Vector2.zero;
+                girlPortrait.rectTransform.sizeDelta = Vector2.zero;
                 girlPortrait.sprite = Managers.instance.Resource.Load<Sprite>("battle_portrait_girl");
             }
-            return girlPortrait; 
+            return girlPortrait;
         }
     }
     private Image girlChatBubble;
     private Image GirlChatBubble
     {
-        get 
+        get
         {
             if (girlChatBubble == null)
             {
@@ -859,17 +859,17 @@ public class BattleUI
                 girlChatBubble.rectTransform.SetParent(PlayerStatusUI.rectTransform);
                 girlChatBubble.rectTransform.anchorMax = new Vector2(0.86668098f, 0.371693075f);
                 girlChatBubble.rectTransform.anchorMin = new Vector2(0.132425845f, 0.226054743f);
-                girlChatBubble.rectTransform.anchoredPosition= Vector2.zero;
-                girlChatBubble.rectTransform.sizeDelta= Vector2.zero;
+                girlChatBubble.rectTransform.anchoredPosition = Vector2.zero;
+                girlChatBubble.rectTransform.sizeDelta = Vector2.zero;
                 girlChatBubble.sprite = Managers.instance.Resource.Load<Sprite>("chatbubble ");
             }
-            return girlChatBubble; 
+            return girlChatBubble;
         }
     }
     private Text girlText;
     private Text GirlText
     {
-        get 
+        get
         {
             if (girlText == null)
             {
@@ -883,29 +883,29 @@ public class BattleUI
                 girlText.color = Color.black;
                 girlText.resizeTextForBestFit = true;
             }
-            return girlText; 
+            return girlText;
         }
     }
     private Image girlBomb;
     public Image GirlBomb
     {
-        get 
+        get
         {
             if (girlBomb == null)
             {
                 girlBomb = new GameObject("UIBomb").AddComponent<Image>();
                 girlBomb.sprite = Managers.instance.Resource.Load<Sprite>("bomb");
                 girlBomb.rectTransform.SetParent(battleSceneUI);
-                girlBomb.rectTransform.anchorMax = Vector2.one/2f;
-                girlBomb.rectTransform.anchorMin = Vector2.one/2f;
+                girlBomb.rectTransform.anchorMax = Vector2.one / 2f;
+                girlBomb.rectTransform.anchorMin = Vector2.one / 2f;
                 girlBomb.rectTransform.sizeDelta = girlBomb.sprite.rect.size;
                 girlBomb.rectTransform.anchoredPosition = Vector2.zero;
-                
+
             }
             return girlBomb;
         }
     }
-   
+
     public string GirlBulbExplane
     {
         set
@@ -918,11 +918,11 @@ public class BattleUI
     private RectTransform sceneBTNParet;
     public RectTransform SceneBTNParet
     {
-        get 
+        get
         {
             if (sceneBTNParet == null)
             {
-                
+
                 sceneBTNParet = new GameObject("GameOverParent").AddComponent<RectTransform>();
                 sceneBTNParet.gameObject.AddComponent<Image>().sprite = Managers.instance.Resource.Load<Sprite>("shop_bag_panel");
                 Image parentBackGround = new GameObject("GameOverParentBackground").AddComponent<Image>();
@@ -948,7 +948,7 @@ public class BattleUI
                 gameOverText = new GameObject("WarningText").AddComponent<Text>();
                 RectTransform warningTextRect = gameOverText.rectTransform;
                 gameOverText.rectTransform.SetParent(SceneBTNParet);
-                Managers.instance.UI.SetUISize(ref warningTextRect, new Vector2(0,1), new Vector2(1,2));
+                Managers.instance.UI.SetUISize(ref warningTextRect, new Vector2(0, 1), new Vector2(1, 2));
                 gameOverText.raycastTarget = false;
                 gameOverText.color = Color.white;
                 gameOverText.fontSize = 102;
@@ -1033,14 +1033,14 @@ public class BattleUI
     Image monsterTarget;
     public Image MonsterTarget
     {
-        get 
-        { 
+        get
+        {
             if (monsterTarget == null)
             {
-                
+
                 monsterTarget = new GameObject("MonsterTargetUI").AddComponent<Image>();
                 monsterTarget.rectTransform.SetParent(BattleSceneUI);
-                monsterTarget.sprite = Managers.instance.Resource.Load<Sprite>("TargetImg");  
+                monsterTarget.sprite = Managers.instance.Resource.Load<Sprite>("TargetImg");
                 monsterTarget.color = Color.red;
             }
             return monsterTarget;
@@ -1095,7 +1095,7 @@ public class BattleUI
             bulbHPText[bulbHPTweens.Length - 1].fontSize = 30;
             bulbHPText[bulbHPText.Length - 1].raycastTarget = false;
             tempTextRectr.position = Camera.main.WorldToScreenPoint(ShoterController.Instance.TargetBall.transform.position);
-            bulbHPTweens[bulbHPTweens.Length - 1] = tempTextRectr.DOAnchorPosY(tempTextRectr.anchoredPosition.y+40, 1.5f).OnComplete(() => { tempTextRectr.gameObject.SetActive(false); tempTextRectr.DOKill(); });
+            bulbHPTweens[bulbHPTweens.Length - 1] = tempTextRectr.DOAnchorPosY(tempTextRectr.anchoredPosition.y + 40, 1.5f).OnComplete(() => { tempTextRectr.gameObject.SetActive(false); tempTextRectr.DOKill(); });
             return bulbHPText[0];
 
 
@@ -1119,16 +1119,16 @@ public class BattleUI
             {
                 RectTransform comboParent = new GameObject("ComBoTextParent").AddComponent<RectTransform>();
                 comboParent.SetParent(BattleSceneUI);
-                Managers.instance.UI.SetUISize(ref comboParent,   new Vector2(0.4f, 0.3f),new Vector2(0.6f, 0.7f));
+                Managers.instance.UI.SetUISize(ref comboParent, new Vector2(0.4f, 0.3f), new Vector2(0.6f, 0.7f));
                 comboParent.SetAsLastSibling();
                 comboText = new GameObject("ComboTest").AddComponent<Text>();
                 RectTransform tempTextTR = comboText.rectTransform;
                 tempTextTR.SetParent(comboParent);
                 Managers.instance.UI.SetUISize(ref tempTextTR, Vector2.zero, Vector2.one);
                 comboText.fontSize = 60;
-                comboText.color = new Color(0.1933962f, 0.8095468f, 1,1);
+                comboText.color = new Color(0.1933962f, 0.8095468f, 1, 1);
                 comboText.font = Managers.instance.Resource.Load<Font>("GridiculousMax");
-                comboText.rectTransform.position = Camera.main.WorldToScreenPoint(ShoterController.Instance.transform.position+(Vector3.down*1.5f));
+                comboText.rectTransform.position = Camera.main.WorldToScreenPoint(ShoterController.Instance.transform.position + (Vector3.down * 1.5f));
                 comboText.raycastTarget = false;
                 comboText.alignment = TextAnchor.MiddleCenter;
             }
@@ -1149,10 +1149,8 @@ public class BattleUI
             {
                 enemyStatusUI = new GameObject("EnemyStatusPanel").AddComponent<Image>();
                 enemyStatusUI.rectTransform.SetParent(BattleSceneUI);
-                enemyStatusUI.rectTransform.anchorMax = Vector2.one;
-                enemyStatusUI.rectTransform.anchorMin = new Vector2(0.828000009f, 0f);
-                enemyStatusUI.rectTransform.sizeDelta = Vector2.zero;
-                enemyStatusUI.rectTransform.anchoredPosition = Vector2.zero;
+                RectTransform enemyStatusUIRect = enemyStatusUI.rectTransform;
+                Managers.instance.UI.SetUISize(ref enemyStatusUIRect, new Vector2(0.8307168f, 0f), new Vector2(1, 0.7096561f));
                 enemyStatusUI.sprite = Managers.instance.Resource.Load<Sprite>("battle_panel");
             }
             return enemyStatusUI;
@@ -1188,7 +1186,7 @@ public class BattleUI
                 tempEnemyHPbar.wholeNumbers = false;
                 tempEnemyHPbar.maxValue = 100;
                 //TODO : enemy 체력 구현하면 여기에 넣어줘야함
-                
+
                 RectTransform tempHpTR = tempEnemyHPbar.transform as RectTransform;
 
 
@@ -1206,8 +1204,8 @@ public class BattleUI
                 handle.rectTransform.pivot = Vector2.one / 2f;
                 handle.rectTransform.sizeDelta = Vector2.right * 50;
                 tempEnemyHPbar.handleRect = handle.rectTransform;
-                handle.color = Color.white;
                 handle.sprite = Managers.instance.Resource.Load<Sprite>("HP_icon");
+                handle.color = Color.clear;
 
 
                 Image BackGround = new GameObject("BackGround").AddComponent<Image>();
@@ -1241,10 +1239,7 @@ public class BattleUI
 
                 tempHpTR.SetParent(EnemyStatusUI.rectTransform);
                 tempHpTR.SetAsLastSibling();
-                tempHpTR.anchorMin = new Vector2(0.1f, 0.88f);
-                tempHpTR.anchorMax = new Vector2(0.9f, 0.93f);
-                tempHpTR.sizeDelta = Vector2.zero;
-                tempHpTR.anchoredPosition = Vector2.zero;
+                Managers.instance.UI.SetUISize(ref tempHpTR, new Vector2(0.1042682f, 0.3454925f), new Vector2(0.9130226f, 0.5160704f));
                 tempEnemyHPbar.interactable = false;
                 tempEnemyHPbar.enabled = true;
                 tempEnemyHPbar.SetDirection(Slider.Direction.RightToLeft, true);
@@ -1258,7 +1253,7 @@ public class BattleUI
     private Text warningText;
     public string WarningText
     {
-        set 
+        set
         {
             if (warningText == null)
             {
@@ -1282,7 +1277,7 @@ public class BattleUI
         }
     }
 
-/*    private Image enemyWeaponImage;
+    private Image enemyWeaponImage;
     private Image EnemyWeaponImage
     {
         get
@@ -1321,7 +1316,7 @@ public class BattleUI
     private Text enemyWeaponName;
     private Text EnemyWeaponName
     {
-        get 
+        get
         {
             if (enemyWeaponName == null)
             {
@@ -1339,31 +1334,81 @@ public class BattleUI
             }
             return enemyWeaponName;
         }
-    }*/
-    private Image monsterQueuePannel;
-    private Image MonsterQueuePannel
+    }
+    private Image nextMonsterPannel;
+    private Image NextMonsterPannel
     {
         get
         {
-            if (monsterQueuePannel == null)
+            if (nextMonsterPannel == null)
             {
-                monsterQueuePannel = new GameObject("MonsterQueuePreveiwPanel").AddComponent<Image>();
-                monsterQueuePannel.sprite = Managers.instance.Resource.Load<Sprite>("nextmonster_panel");
-                RectTransform tempRect = monsterQueuePannel.rectTransform;
+                nextMonsterPannel = new GameObject("MonsterQueuePreveiwPanel").AddComponent<Image>();
+                nextMonsterPannel.sprite = Managers.instance.Resource.Load<Sprite>("nextmonster_panel");
+                RectTransform tempRect = nextMonsterPannel.rectTransform;
                 tempRect.SetParent(EnemyStatusUI.rectTransform);
-                Managers.instance.UI.SetUISize(ref tempRect, Vector2.zero, new Vector2(1f, 0.3f));
+                nextMonsterPannel.type = Image.Type.Sliced;
+                
+                float parentPercent = EnemyStatusUI.rectTransform.rect.size.x / EnemyStatusUI.rectTransform.rect.size.y;
+                Vector2 centerPos = new Vector2(0.5f, 0.75f);
+                string getOriginSizeNumberSize = ((int)nextMonsterPannel.sprite.rect.width).ToString();
+                float imageScale = 1;
+                for (int i = 0; i < getOriginSizeNumberSize.Length; i++)
+                {
+                    imageScale = imageScale * 0.1f;
+                }
+                Vector2 imageSize = new Vector2(nextMonsterPannel.sprite.rect.width  , nextMonsterPannel.sprite.rect.height * parentPercent) *imageScale;
+                //위 숫자에 x를 곱해주면 원본비율
+                Managers.instance.UI.SetUISize(ref tempRect, centerPos-imageSize, centerPos + imageSize);
+                Debug.Log("ㅁㄴㅇ");
             }
-            return monsterQueuePannel;
+            return nextMonsterPannel;
         }
     }
-    private Image[] queueMonsterIMG;
+    /*    private Image[] queueMonsterIMG;*/
     //array.resize로 재할당
+    private Image nextMonsterIMG;
+    private Image beforeMonsterIMG;
+    private Image BeforeMonsterIMG
+    {
+        get
+        {
+            if (beforeMonsterIMG == null)
+            {
+                beforeMonsterIMG = new GameObject("BeforeMonsterimg").AddComponent<Image>();
+                RectTransform TempRect = beforeMonsterIMG.rectTransform;
+                TempRect.SetParent(NextMonsterPannel.rectTransform);
+                TempRect.anchoredPosition = Vector2.right*400f;
+                TempRect.anchorMax = Vector2.one / 2f;
+                TempRect.anchorMin = Vector2.one / 2f;
+                TempRect.sizeDelta = NextMonsterPannel.rectTransform.rect.size*(2f/3f);
+            }
+            return beforeMonsterIMG;
+        }
+    }
+    private Image NextMonsterIMG
+    {
+        get
+        {
+            if (nextMonsterIMG == null)
+            {
+                nextMonsterIMG = new GameObject("NextMonsterimg").AddComponent<Image>();
+                RectTransform TempRect = nextMonsterIMG.rectTransform;
+                TempRect.SetParent(NextMonsterPannel.rectTransform);
+                TempRect.anchoredPosition = Vector2.zero;
+                TempRect.anchorMax = Vector2.one / 2f;
+                TempRect.anchorMin = Vector2.one / 2f;
+                TempRect.sizeDelta = NextMonsterPannel.rectTransform.rect.size * (2f / 3f);
+
+            }
+            return nextMonsterIMG;
+        }
+    }
     #endregion
     private Image scoreBoardPannel;
-    private Image ScoreBoardPannel 
-    { 
-        get 
-        { 
+    private Image ScoreBoardPannel
+    {
+        get
+        {
             if (scoreBoardPannel == null)
             {
                 scoreBoardPannel = new GameObject("ScoreBoardPannel").AddComponent<Image>();
@@ -1372,7 +1417,7 @@ public class BattleUI
                 scoreBoardPannel.rectTransform.anchorMin = new Vector2(0.398604751f, 0.872544408f);
                 scoreBoardPannel.rectTransform.anchorMax = new Vector2(0.604237199f, 0.987735808f);
                 scoreBoardPannel.rectTransform.anchoredPosition = Vector2.zero;
-                scoreBoardPannel.rectTransform.sizeDelta= Vector2.zero;
+                scoreBoardPannel.rectTransform.sizeDelta = Vector2.zero;
 
             }
             return scoreBoardPannel;
@@ -1381,9 +1426,9 @@ public class BattleUI
     private Text scoreBoardText;
     private Text ScoreBoardText
     {
-        get 
-        { 
-            if(scoreBoardText == null)
+        get
+        {
+            if (scoreBoardText == null)
             {
                 scoreBoardText = new GameObject("enemyWeaponName").AddComponent<Text>();
                 scoreBoardText.rectTransform.SetParent(ScoreBoardPannel.rectTransform);
@@ -1401,9 +1446,9 @@ public class BattleUI
     private RectTransform ballForceSliderParent;
     public RectTransform BallForceSliderParent
     {
-        get 
+        get
         {
-            if(ballForceSliderParent == null)
+            if (ballForceSliderParent == null)
             {
                 ballForceSliderParent = new GameObject("BallForceParent").AddComponent<RectTransform>();
                 ballForceSliderParent.SetParent(Managers.instance.UI.LoadingUIProps.SceneMainCanvas);
@@ -1469,14 +1514,14 @@ public class BattleUI
     Slider[] monsterPriavteHPBar;
 
     #region 관련 함수
-    
-    public void GirlTextAttack(string TXT,Color bubbleColor,Color chattingColor)
+
+    public void GirlTextAttack(string TXT, Color bubbleColor, Color chattingColor)
     {
         girlText.fontSize = 36;
         GirlChatBubble.rectTransform.DOComplete();
         GirlChatBubble.rectTransform.DOPunchScale(Vector3.one, 0.4f, 1, 0.5f).OnComplete(() =>
         {
-            
+
             GirlChatBubble.rectTransform.DOAnchorPos(GirlChatBubble.rectTransform.anchoredPosition, 5).OnComplete(() =>
             {
                 GirlChatBubble.color = Color.white;
@@ -1513,11 +1558,11 @@ public class BattleUI
         }
         WeaponBeforeBTN.onClick.AddListener(Managers.instance.PlayerDataManager.PlayerBeforeBallPick);
         WeaponNextBTN.onClick.AddListener(Managers.instance.PlayerDataManager.PlayerNextBallPick);
-        UpdateScore(0,0);
+        UpdateScore(0, 0);
         //EnemyUISetting();
-        MonsterQueuePannel.enabled = true;
+        NextMonsterPannel.enabled = true;
     }
-    public void WeaponAnim(bool isMoveRight,string ballName,string ballKRName,string PrevBallName)
+    public void WeaponAnim(bool isMoveRight, string ballName, string ballKRName, string PrevBallName)
     {
         WeaponImagePrev.rectTransform.DOComplete();
         WeaponImage.rectTransform.DOComplete();
@@ -1557,9 +1602,9 @@ public class BattleUI
             WeaponImagePrev.rectTransform.DOAnchorMax(Vector2.up, 0.7f);
             WeaponImagePrev.rectTransform.DOAnchorMin(Vector2.left, 0.7f);
         }
-//        ChangeWeaponUI(true, ballName, ballKRName);
+        //        ChangeWeaponUI(true, ballName, ballKRName);
     }
-    public void HPBarUpdate(bool isPlayer,float valueToAdd)
+    public void HPBarUpdate(bool isPlayer, float valueToAdd)
     {
         if (isPlayer)
         {
@@ -1568,14 +1613,14 @@ public class BattleUI
         else
         {
             EnemyHPBar.value = enemyHpBar.value + valueToAdd;
-            if (EnemyHPBar.value<= EnemyHPBar.maxValue/2f&& warningText == null)
+            if (EnemyHPBar.value <= EnemyHPBar.maxValue / 2f && warningText == null)
             {
                 WarningText = "적의 공격력이 2배 증가합니다!";
                 MonsterManager.MonsterManagerInstance.SetFeaverMode();
             }
-            if (EnemyHPBar.value <=0)
+            if (EnemyHPBar.value <= 0)
             {
-                if (Managers.instance.PlayerDataManager.SetPlayerHP.Item2 >=0)
+                if (Managers.instance.PlayerDataManager.SetPlayerHP.Item2 >= 0)
                 {
                     Managers.instance.UI.BattleUICall.ToDialogSceneBTN.enabled = true;
                 }
@@ -1583,12 +1628,12 @@ public class BattleUI
             }
         }
     }
-    public void HPBarActivate(float maxHP,float nowHP)
+    public void HPBarActivate(float maxHP, float nowHP)
     {
         PlayerHPBar.maxValue = maxHP;
         PlayerHPBar.value = nowHP;
     }
-    public void HPBarSetting(bool isPlayer,float maxHP,float nowHP)
+    public void HPBarSetting(bool isPlayer, float maxHP, float nowHP)
     {
         if (isPlayer)
         {
@@ -1601,7 +1646,7 @@ public class BattleUI
             EnemyHPBar.value = nowHP;
         }
     }
-    public void ChangePortrait(bool isPlayer,string spriteName)
+    public void ChangePortrait(bool isPlayer, string spriteName)
     {
         if (isPlayer)
         {
@@ -1612,20 +1657,20 @@ public class BattleUI
             EnemyPortrait.sprite = Managers.instance.Resource.Load<Sprite>(spriteName);
         }
     }
-    public void ChangeWeaponUI(string spriteName,string weaponKoreanName)
+    public void ChangeWeaponUI(string spriteName, string weaponKoreanName)
     {
         WeaponImage.sprite = Managers.instance.Resource.Load<Sprite>(spriteName);
         PlayerWeaponName.text = weaponKoreanName;
-/*        if (isPlayer)
-        {
-            WeaponImage.sprite = Managers.instance.Resource.Load<Sprite>(spriteName);
-            PlayerWeaponName.text = weaponKoreanName;
-        }
-        else
-        {
-            EnemyWeaponImage.sprite = Managers.instance.Resource.Load<Sprite>(spriteName);
-            EnemyWeaponName.text = weaponKoreanName;
-        }*/
+        /*        if (isPlayer)
+                {
+                    WeaponImage.sprite = Managers.instance.Resource.Load<Sprite>(spriteName);
+                    PlayerWeaponName.text = weaponKoreanName;
+                }
+                else
+                {
+                    EnemyWeaponImage.sprite = Managers.instance.Resource.Load<Sprite>(spriteName);
+                    EnemyWeaponName.text = weaponKoreanName;
+                }*/
     }
 
     public void WeaponButtonCheck(bool isZero)
@@ -1634,19 +1679,19 @@ public class BattleUI
         weaponBeforeBTN.interactable = !isZero;
     }
 
-    public void UpdateScore(int PlayerScore,int EnemyScore)
+    public void UpdateScore(int PlayerScore, int EnemyScore)
     {
         ScoreBoardText.text = PlayerScore + " : " + EnemyScore;
     }
-    public void SetBallSliderPos(Vector3 ShooterPosition,bool isSetActive)
+    public void SetBallSliderPos(Vector3 ShooterPosition, bool isSetActive)
     {
         if (isSetActive)
         {
-            Vector3 tempVec = Camera.main.WorldToScreenPoint(ShooterPosition+Vector3.up);
+            Vector3 tempVec = Camera.main.WorldToScreenPoint(ShooterPosition + Vector3.up);
             BallForceSliderParent.position = tempVec;
         }
         BallForceSliderParent.gameObject.SetActive(isSetActive);
-        
+
     }
     public void UpdateBallForce(float value)
     {
@@ -1658,7 +1703,7 @@ public class BattleUI
     }
 
 
-/*    private void EnemyUISetting()
+    private void EnemyUISetting()
     {
         EnemyHPBar.enabled = true;
         EnemyWeaponImage.enabled = true;
@@ -1666,14 +1711,14 @@ public class BattleUI
         EnemyWeaponImage.enabled = true;
         EnemyWeaponNamePannel.enabled = true;
         EnemyWeaponName.text = "무기이름";
-    }*/
+    }
     public void SetTargetUI(Transform targetTR, Vector2 SpriteSize)
     {
         if (targetTR != null)
         {
             Vector2 spriteSizeInCanvasMax = Camera.main.WorldToScreenPoint(targetTR.position + (Vector3)SpriteSize);
             Vector2 spriteSizeInCanvasMin = Camera.main.WorldToScreenPoint(targetTR.position - (Vector3)SpriteSize);
-            MonsterTarget.rectTransform.anchorMin = new Vector2(spriteSizeInCanvasMin.x/ Screen.width, spriteSizeInCanvasMin.y / Screen.height);
+            MonsterTarget.rectTransform.anchorMin = new Vector2(spriteSizeInCanvasMin.x / Screen.width, spriteSizeInCanvasMin.y / Screen.height);
             MonsterTarget.rectTransform.anchorMax = new Vector2(spriteSizeInCanvasMax.x / Screen.width, spriteSizeInCanvasMax.y / Screen.height);
             MonsterTarget.rectTransform.anchoredPosition = Vector2.zero;
             MonsterTarget.rectTransform.sizeDelta = Vector2.zero;
@@ -1689,7 +1734,7 @@ public class BattleUI
     {
         if (turnOn)
         {
-            ComboText = comboStack!= 0? ComboText * 2 : ComboText;
+            ComboText = comboStack != 0 ? ComboText * 2 : ComboText;
             comboText.gameObject.SetActive(true);
             ShoterController.Instance.regionalDamage = ShoterController.Instance.regionalDamage * 2;
             ShoterController.Instance.targetDamage = ShoterController.Instance.targetDamage * 2;
@@ -1701,55 +1746,75 @@ public class BattleUI
         }
 
     }
-    public void SetBulbDamagedText(int max,int now)
+    public void SetBulbDamagedText(int max, int now)
     {
         Text tempText = BulbHPText;
         tempText.gameObject.SetActive(true);
-        tempText.text = (now + "/" + max) ;
+        tempText.text = (now + "/" + max);
     }
     public void ResetBulbDamageText()
     {
         bulbHPText = null;
         bulbHPTweens = null;
     }
-    public void SetUIMonsterImageArray(Queue<Sprite> spriteQueue)
+    public void SetUIMonsterImageArray(/*Queue<Sprite> spriteQueue*/Sprite NextMonsterSprite,SpriteRenderer monsterSR)
     {
-        RectTransform tempRec;
-        float XPerY = MonsterQueuePannel.rectTransform.rect.size.x / MonsterQueuePannel.rectTransform.rect.size.y;
-        float xBlank = 0.025f;
-        float yBlank = xBlank * XPerY;
-        Vector2 ImageSize = new Vector2(0.2f, 0.2f * XPerY);
-        //정사각형 기준
-        int savedQueueCount = spriteQueue.Count;
-        //부모기준으로 된 절반크기
-        if (queueMonsterIMG== null)
+        Sprite tempIMG = NextMonsterIMG.sprite;
+        if (tempIMG == null)
         {
-            queueMonsterIMG = new Image[0];
-        }
-        if (queueMonsterIMG.Length< spriteQueue.Count)
-        {
-            Array.Resize(ref queueMonsterIMG, savedQueueCount);
-        }
-        for (int i = 0; i < savedQueueCount; i++)
-        {
-            if (i % 4 == 0)
+            if (MonsterManager.MonsterManagerInstance.Monsters[0].Item2 != null)
             {
-                xBlank = 0.025f;
+                tempIMG = MonsterManager.MonsterManagerInstance.Monsters[0].Item2.sprite;
+                NextMonsterIMG.sprite = tempIMG;
             }
-            else
-            {
-                xBlank = 0.05f;
-            }
-            float tempYBlank = (yBlank*2) * (i / 4);
-            Vector2 imageMax = new Vector2((((i%4)+1)*(ImageSize.x+xBlank)) , (1 - yBlank) - tempYBlank-((i/4)*ImageSize.y));
-            queueMonsterIMG[i] = new GameObject(i + "THMonster").AddComponent<Image>();
-            tempRec = queueMonsterIMG[i].rectTransform;
-            tempRec.SetParent(MonsterQueuePannel.rectTransform);
-
-            Managers.instance.UI.SetUISize(ref tempRec, (imageMax - ImageSize) - new Vector2(i % 4 != 0 ? 0.025f : 0, 0), imageMax - new Vector2(i % 4 != 0 ? 0.025f : 0, 0));
-
-            queueMonsterIMG[i].sprite = spriteQueue.Dequeue();
         }
+        Vector2 temppos = Camera.main.WorldToScreenPoint(MonsterManager.MonsterManagerInstance.moveSlots[MonsterManager.MonsterManagerInstance.moveSlots.Length-1].slotPosition);
+        NextMonsterIMG.rectTransform.DOJump(temppos, 30,2,1.8f,true).OnComplete(() =>
+        {
+            NextMonsterIMG.rectTransform.anchoredPosition = Vector2.zero;
+            BeforeMonsterIMG.sprite = tempIMG;
+            NextMonsterIMG.sprite = NextMonsterSprite;
+            monsterSR.enabled = true;
+        });
+
+
+        //기존 nextMonster세팅,Queue형식
+        /*        RectTransform tempRec;
+                float XPerY = MonsterQueuePannel.rectTransform.rect.size.x / MonsterQueuePannel.rectTransform.rect.size.y;
+                float xBlank = 0.025f;
+                float yBlank = xBlank * XPerY;
+                Vector2 ImageSize = new Vector2(0.2f, 0.2f * XPerY);
+                //정사각형 기준
+                int savedQueueCount = spriteQueue.Count;
+                //부모기준으로 된 절반크기
+                if (queueMonsterIMG== null)
+                {
+                    queueMonsterIMG = new Image[0];
+                }
+                if (queueMonsterIMG.Length< spriteQueue.Count)
+                {
+                    Array.Resize(ref queueMonsterIMG, savedQueueCount);
+                }
+                for (int i = 0; i < savedQueueCount; i++)
+                {
+                    if (i % 4 == 0)
+                    {
+                        xBlank = 0.025f;
+                    }
+                    else
+                    {
+                        xBlank = 0.05f;
+                    }
+                    float tempYBlank = (yBlank*2) * (i / 4);
+                    Vector2 imageMax = new Vector2((((i%4)+1)*(ImageSize.x+xBlank)) , (1 - yBlank) - tempYBlank-((i/4)*ImageSize.y));
+                    queueMonsterIMG[i] = new GameObject(i + "THMonster").AddComponent<Image>();
+                    tempRec = queueMonsterIMG[i].rectTransform;
+                    tempRec.SetParent(MonsterQueuePannel.rectTransform);
+
+                    Managers.instance.UI.SetUISize(ref tempRec, (imageMax - ImageSize) - new Vector2(i % 4 != 0 ? 0.025f : 0, 0), imageMax - new Vector2(i % 4 != 0 ? 0.025f : 0, 0));
+
+                    queueMonsterIMG[i].sprite = spriteQueue.Dequeue();
+                }*/
     }
     public void InstallMonsterHPBar(int maxSlotCount)
     {
@@ -1778,8 +1843,8 @@ public class BattleUI
             handle.rectTransform.pivot = Vector2.one / 2f;
             handle.rectTransform.sizeDelta = Vector2.right * 50;
             monsterPriavteHPBar[i].handleRect = handle.rectTransform;
-            handle.color = Color.white;
             handle.sprite = Managers.instance.Resource.Load<Sprite>("HP_icon");
+            handle.color = Color.clear;
 
 
             Image BackGround = new GameObject("BackGround").AddComponent<Image>();
@@ -1825,7 +1890,7 @@ public class BattleUI
 
         }
     }
-    public void SetMonsterHPBar(Vector3 SlotPos,int SlotIndex, float maxHP = -100, float nowHP = -100)
+    public void SetMonsterHPBar(Vector3 SlotPos, int SlotIndex, float maxHP = -100, float nowHP = -100)
     {
         if (maxHP == -100)
         {
@@ -1834,33 +1899,33 @@ public class BattleUI
         }
         else
         {
-            if (SlotIndex <=-1)
+            if (SlotIndex <= -1)
             {
                 return;
             }
-            if (monsterPriavteHPBar.Length<=SlotIndex)
+            if (monsterPriavteHPBar.Length <= SlotIndex)
             {
                 return;
             }
             monsterPriavteHPBar[SlotIndex].gameObject.SetActive(true);
-            monsterPriavteHPBar[SlotIndex].transform.position = Camera.main.WorldToScreenPoint(SlotPos+Vector3.up);
+            monsterPriavteHPBar[SlotIndex].transform.position = Camera.main.WorldToScreenPoint(SlotPos + Vector3.up);
             monsterPriavteHPBar[SlotIndex].maxValue = maxHP;
             monsterPriavteHPBar[SlotIndex].value = nowHP;
-            if (nowHP<= 0)
+            if (nowHP <= 0)
             {
                 monsterPriavteHPBar[SlotIndex].gameObject.SetActive(false);
             }
 
         }
     }
-    public void SetMonsterDeadInQueue(int index)
+/*    public void SetMonsterDeadInQueue(int index)
     {
         queueMonsterIMG[index].color = Color.gray;
     }
     public void ResetMonsterQueueIMG()
     {
         queueMonsterIMG = null;
-    }
+    }*/
     #endregion
 }
 public class ShopUI
@@ -2052,11 +2117,11 @@ public class ShopUI
         }
     }
     Button nextBTN;
-    Button NextBTN 
-    { 
-        get 
+    Button NextBTN
+    {
+        get
         {
-            if (nextBTN== null)
+            if (nextBTN == null)
             {
                 Button tempNextBTN = new GameObject("WeaponNextBTN").AddComponent<Button>();
                 RectTransform NextBTRT = tempNextBTN.transform.AddComponent<RectTransform>();
@@ -2081,7 +2146,7 @@ public class ShopUI
     Button beforeBTN;
     Button BeforeBTN
     {
-        get 
+        get
         {
             if (beforeBTN == null)
             {
@@ -2155,11 +2220,11 @@ public class ShopUI
         }
     }
     private (Image, Text)[] inventoryIcons = new (Image, Text)[6];
-    public (Image, Text)[] InventoryIcons 
+    public (Image, Text)[] InventoryIcons
     {
-        get 
+        get
         {
-            if (inventoryIcons.Length == 0) 
+            if (inventoryIcons.Length == 0)
             {
                 inventoryIcons = new (Image, Text)[6];
             }
@@ -2169,17 +2234,17 @@ public class ShopUI
                 {
                     if (inventoryIcons[i].Item1 == null)
                     {
-                        float xAixs = (float)i %2f ==0f ? 0.27f: 0.62f;
+                        float xAixs = (float)i % 2f == 0f ? 0.27f : 0.62f;
                         //i가 홀수일때 x는 오른쪽에 위치하도록,짝수 혹은 0일때 왼쪽에 위치하도록
-                        float yAixs = xAixs == 0.27f? ((float)i / 2f) / 3f : (((float)i - 1f) / 2f) / 3f;
-                        Vector2 maxValue = new Vector2(xAixs,0.93f-yAixs);
+                        float yAixs = xAixs == 0.27f ? ((float)i / 2f) / 3f : (((float)i - 1f) / 2f) / 3f;
+                        Vector2 maxValue = new Vector2(xAixs, 0.93f - yAixs);
                         float percent = PlayerInventoryPanel.rectTransform.rect.size.x / PlayerInventoryPanel.rectTransform.rect.size.y;
-                        Vector2 IconSize = new Vector2(0.11f, 0.11f* percent);
+                        Vector2 IconSize = new Vector2(0.11f, 0.11f * percent);
                         //i를 2로 나눴을때 1이 나오면 y가 중앙에 위치하도록 설정,그렇지 않으면 x에서 구한 홀수 짝수를 이용해 값을 구함
                         inventoryIcons[i].Item1 = new GameObject("WeaponIconImage" + i).AddComponent<Image>();
                         inventoryIcons[i].Item1.rectTransform.SetParent(PlayerInventoryPanel.rectTransform);
                         inventoryIcons[i].Item1.rectTransform.anchorMin = maxValue - (Vector2.up * IconSize.y);
-                        inventoryIcons[i].Item1.rectTransform.anchorMax = maxValue+ (Vector2.right * IconSize.x);
+                        inventoryIcons[i].Item1.rectTransform.anchorMax = maxValue + (Vector2.right * IconSize.x);
                         inventoryIcons[i].Item1.rectTransform.anchoredPosition = Vector2.zero;
                         inventoryIcons[i].Item1.rectTransform.sizeDelta = Vector2.zero;
                     }
@@ -2198,7 +2263,7 @@ public class ShopUI
                     }
                     if (inventoryIcons[i].Item2 == null)
                     {
-                        inventoryIcons[i].Item2 = new GameObject("WeaponAmountText"+i).AddComponent<Text>();
+                        inventoryIcons[i].Item2 = new GameObject("WeaponAmountText" + i).AddComponent<Text>();
                         inventoryIcons[i].Item2.font = Managers.instance.Resource.Load<Font>("InGameFont");
                         inventoryIcons[i].Item2.fontSize = 40;
                         inventoryIcons[i].Item2.alignment = TextAnchor.LowerLeft;
@@ -2212,17 +2277,17 @@ public class ShopUI
                     else
                     {
                         inventoryIcons[i].Item2.rectTransform.SetParent(inventoryIcons[i].Item1.rectTransform);
-                        inventoryIcons[i].Item2.rectTransform.anchorMax = Vector2.one+ Vector2.right;
+                        inventoryIcons[i].Item2.rectTransform.anchorMax = Vector2.one + Vector2.right;
                         inventoryIcons[i].Item2.rectTransform.anchorMin = Vector2.right;
-                        inventoryIcons[i].Item2.rectTransform.anchoredPosition= Vector2.zero;
-                        inventoryIcons[i].Item2.rectTransform.sizeDelta= Vector2.zero;
+                        inventoryIcons[i].Item2.rectTransform.anchoredPosition = Vector2.zero;
+                        inventoryIcons[i].Item2.rectTransform.sizeDelta = Vector2.zero;
 
                     }
                 }
             }
 
             return inventoryIcons;
-        }    
+        }
     }
     public List<(Sprite, string)> Inventory = new List<(Sprite, string)>();
     int invenPage;
@@ -2230,11 +2295,11 @@ public class ShopUI
     {
         set
         {
-            if (value <=0)
+            if (value <= 0)
             {
                 BeforeBTN.interactable = false;
             }
-            else 
+            else
             {
                 BeforeBTN.interactable = true;
             }
@@ -2259,7 +2324,7 @@ public class ShopUI
                 shoppingPanel = new GameObject("shoppingPanel").AddComponent<Image>();
                 shoppingPanel.rectTransform.SetParent(ShopInnerShopPanel.rectTransform);
                 shoppingPanel.rectTransform.anchorMax = Vector2.one;
-                shoppingPanel.rectTransform.anchorMin = new Vector2(0.33f,0f);
+                shoppingPanel.rectTransform.anchorMin = new Vector2(0.33f, 0f);
                 shoppingPanel.rectTransform.sizeDelta = Vector2.zero;
                 shoppingPanel.rectTransform.anchoredPosition = Vector2.zero;
                 shoppingPanel.sprite = Managers.instance.Resource.Load<Sprite>("shop_buy_panel");
@@ -2268,13 +2333,13 @@ public class ShopUI
         }
     }
     public Button[] shopWeaponItems;
-    public void CreateWeaponBuyButtons(ExtraBallStat stat,int ballArray)
+    public void CreateWeaponBuyButtons(ExtraBallStat stat, int ballArray)
     {
         if (shopWeaponItems == null)
         {
             shopWeaponItems = new Button[0];
         }
-        if (ballArray>= shopWeaponItems.Length)
+        if (ballArray >= shopWeaponItems.Length)
         {
             Array.Resize(ref shopWeaponItems, shopWeaponItems.Length + 1);
             int arrayNum = shopWeaponItems.Length - 1;
@@ -2333,7 +2398,7 @@ public class ShopUI
         {
             shopWeaponItems[ballArray].GetComponent<Image>().sprite = Managers.instance.Resource.Load<Sprite>(stat.ballName);
             shopWeaponItems[ballArray].transform.parent.Find("ShopWeaponPriceText" + ballArray + 1);
-            for (int i = ballArray+1; i < shopWeaponItems.Length; i++)
+            for (int i = ballArray + 1; i < shopWeaponItems.Length; i++)
             {
                 shopWeaponItems[i].transform.parent.transform.gameObject.SetActive(false);
             }
@@ -2351,7 +2416,7 @@ public class ShopUI
     #endregion
     public void InvenBeforeBTN()
     {
-        NowPage = invenPage -1;
+        NowPage = invenPage - 1;
     }
     public void InvenNextBTN()
     {
@@ -2362,7 +2427,7 @@ public class ShopUI
         (Sprite, string) tempSet;
         for (int i = 0; i < ballList.Count; i++)
         {
-            if (i >= Inventory.Count|| Inventory.Count == 0)
+            if (i >= Inventory.Count || Inventory.Count == 0)
             {
                 NowPage = i / 6;
                 tempSet.Item1 = Managers.instance.Resource.Load<Sprite>(ballList[i].ballName);
@@ -2392,7 +2457,7 @@ public class ShopUI
                 }
             }
 
-            if (invenPage<0)
+            if (invenPage < 0)
             {
                 NowPage = 0;
             }
@@ -2407,9 +2472,9 @@ public class ShopUI
         }
         int caculatePage = 1 + targetPage;
         int arrayUI = 0;
-        for (int i = targetPage*6; i <= (caculatePage*5)+targetPage; i++)
+        for (int i = targetPage * 6; i <= (caculatePage * 5) + targetPage; i++)
         {
-            if (Inventory.Count>i)
+            if (Inventory.Count > i)
             {
                 NextBTN.interactable = true;
                 InventoryIcons[arrayUI].Item1.sprite = Inventory[i].Item1;
@@ -2424,7 +2489,7 @@ public class ShopUI
                 InventoryIcons[arrayUI].Item2.text = string.Empty;
                 InventoryIcons[arrayUI].Item1.gameObject.SetActive(false);
                 InventoryIcons[arrayUI].Item2.gameObject.SetActive(false);
-                
+
             }
             arrayUI++;
         }
@@ -2447,9 +2512,9 @@ public class ShopUI
         BeforeBTN.enabled = true;
         ShoppingPanel.enabled = true;
     }
-    
+
 }
 public class OptionUI
 {
-    
+
 }

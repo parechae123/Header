@@ -154,12 +154,11 @@ public class MonsterManager : MonoBehaviour
         NextTurn();
 
         targetPosition = playerPos+Vector3.right*4;
-        Queue<Sprite> monsterQueue = new Queue<Sprite>();
+/*        Queue<Sprite> monsterQueue = new Queue<Sprite>();
         for (int i = 0; i < MonsterSpawnOrder.Length; i++)
         {
             monsterQueue.Enqueue(monsterPrefabs[MonsterSpawnOrder[i]].prefab.GetComponent<SpriteRenderer>().sprite);
-        }
-        Managers.instance.UI.BattleUICall.SetUIMonsterImageArray(monsterQueue);
+        }*/
     }
     private void Update()
     {
@@ -410,7 +409,7 @@ public class MonsterManager : MonoBehaviour
                         {
                             Debug.Log(moveSlots[i].MonsterTR.name+ Monsters[E].Item1.monsterHPNow);
                             Monsters[E].Item2.gameObject.SetActive(false);
-                            Managers.instance.UI.BattleUICall.SetMonsterDeadInQueue(E);
+//                            Managers.instance.UI.BattleUICall.SetMonsterDeadInQueue(E);
                             Managers.instance.UI.BattleUICall.SetMonsterHPBar(moveSlots[i].slotPosition, i);
                             moveSlots[i].MonsterTR = null;
                         }
@@ -455,17 +454,20 @@ public class MonsterManager : MonoBehaviour
     {
         GameObject tempGOBJ = Instantiate(monsterPrefabs[prefabNum].prefab, moveSlots[moveSlots.Length - 1].slotPosition, Quaternion.identity, null);
         //TODO : 몬스터 이름을 해당 배열로 바꿔서 클릭시 이름을 가져오고 해당 배열이 타겟이 되도록
-
+        
         tempGOBJ.name = arrayOrder.ToString();
         Monsters[arrayOrder].Item1 = new MonsterStats(monsterPrefabs[prefabNum].stat);
         SpriteRenderer tempComponent = Monsters[arrayOrder].Item1.SetMonsterSprite(ref tempGOBJ);
         Monsters[arrayOrder].Item2 = tempComponent;
+        Monsters[arrayOrder].Item2.enabled = false;
+
         if (Managers.instance.UI.BattleUICall.isInFeverMode)
         {
             Monsters[arrayOrder].Item2.color = Color.red;
             Monsters[arrayOrder].Item1.monsterAD = monsterPrefabs[prefabNum].stat.monsterAD * 2;
         }
         moveSlots[moveSlots.Length - 1].MonsterTR = tempComponent.transform;
+        Managers.instance.UI.BattleUICall.SetUIMonsterImageArray(monsterPrefabs[MonsterSpawnOrder[arrayOrder + 1]].prefab.GetComponent<SpriteRenderer>().sprite, Monsters[arrayOrder].Item2);
         Managers.instance.UI.BattleUICall.SetMonsterHPBar(moveSlots[moveSlots.Length - 1].slotPosition, moveSlots.Length - 1, Monsters[arrayOrder].Item1.monsterHPMax, Monsters[arrayOrder].Item1.monsterHPNow);
     }
     IEnumerator DamagedAnim(int index,bool isTargetAttack, Action isDone)
@@ -497,7 +499,7 @@ public class MonsterManager : MonoBehaviour
         Debug.Log("여기서 못나가네"+index);
         if (Monsters[index].Item1.isMonsterDie)
         {
-            Managers.instance.UI.BattleUICall.SetMonsterDeadInQueue(index);
+/*            Managers.instance.UI.BattleUICall.SetMonsterDeadInQueue(index);*/
             Monsters[index].Item2.gameObject.SetActive(false);
             for (int i = 0; i < monsterSlotCount; i++)
             {
