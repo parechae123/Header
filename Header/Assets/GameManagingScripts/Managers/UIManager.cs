@@ -49,7 +49,7 @@ public class UIManager
         UIStack.Clear();
         ShopUICall.shopWeaponItems = null;
         MoveAbleCheckerList.Clear();
-//        BattleUICall.ResetMonsterQueueIMG();
+        //        BattleUICall.ResetMonsterQueueIMG();
     }
 
     private bool MoveAbleChecker()
@@ -1250,6 +1250,82 @@ public class BattleUI
             return enemyHpBar;
         }
     }
+    private Text enemyHPBarText;
+    public string EnemyHPBarText
+    {
+        set
+        {
+            if (enemyHPBarText == null)
+            {
+                Image tempHeartIcon = new GameObject("HeartIconOnTheHPBar").AddComponent<Image>();
+                RectTransform tempIconTR = tempHeartIcon.rectTransform;
+                tempIconTR.SetParent(EnemyHPBar.fillRect.parent);
+                RectTransform tempParentRectTR = EnemyHPBar.fillRect.parent as RectTransform;
+                tempHeartIcon.sprite = Managers.instance.Resource.Load<Sprite>("HP_icon");
+                float tempParentSizePercent = tempParentRectTR.rect.size.x / tempParentRectTR.rect.size.y;
+
+                int heartIconNumberLenght = ((int)tempHeartIcon.sprite.rect.size.x).ToString().Length;
+                float scaler = 1;
+                for (int i = 0; i < heartIconNumberLenght; i++)
+                {
+                    scaler = scaler * 0.1f;
+                }
+                Vector2 tempEndPos = new Vector2(tempHeartIcon.sprite.rect.width, tempHeartIcon.sprite.rect.height * tempParentSizePercent) / 2;
+                Managers.instance.UI.SetUISize(ref tempIconTR, Vector2.up, (tempEndPos * scaler) + Vector2.up);
+
+
+
+                enemyHPBarText = new GameObject("enemyHPBarText").AddComponent<Text>();
+                RectTransform tempRect = enemyHPBarText.rectTransform;
+                tempRect.SetParent(EnemyHPBar.fillRect.parent);
+                Managers.instance.UI.SetUISize(ref tempRect, new Vector2(tempIconTR.anchorMax.x, 1f), Vector2.right + (Vector2.up * tempIconTR.anchorMax.y));
+                enemyHPBarText.font = Managers.instance.Resource.Load<Font>("InGameFont");
+                enemyHPBarText.color = new Color(0.7169812f, 0.7169812f, 0.7169812f, 1);
+                enemyHPBarText.resizeTextForBestFit = true;
+                enemyHPBarText.alignment = TextAnchor.MiddleLeft;
+            }
+            enemyHPBarText.text = value;
+        }
+    }
+    private Text playerHPBarText;
+    public string PlayerHPBarText
+    {
+        set
+        {
+            if (playerHPBarText == null)
+            {
+                Image tempHeartIcon = new GameObject("HeartIconOnTheHPBar").AddComponent<Image>();
+                RectTransform tempIconTR = tempHeartIcon.rectTransform;
+                tempIconTR.SetParent(PlayerHPBar.fillRect.parent);
+                RectTransform tempParentRectTR = PlayerHPBar.fillRect.parent as RectTransform;
+                tempHeartIcon.sprite = Managers.instance.Resource.Load<Sprite>("HP_icon");
+                float tempParentSizePercent = tempParentRectTR.rect.size.x / tempParentRectTR.rect.size.y;
+
+                int heartIconNumberLenght = ((int)tempHeartIcon.sprite.rect.size.x).ToString().Length;
+                float scaler = 1;
+                for (int i = 0; i < heartIconNumberLenght; i++)
+                {
+                    scaler = scaler * 0.1f;
+                }
+                Vector2 tempEndPos = new Vector2(tempHeartIcon.sprite.rect.width, tempHeartIcon.sprite.rect.height * tempParentSizePercent) / 2;
+                Managers.instance.UI.SetUISize(ref tempIconTR, Vector2.up, (tempEndPos * scaler) + Vector2.up);
+
+
+
+                playerHPBarText = new GameObject("PlayerHPText").AddComponent<Text>();
+                RectTransform tempRect = playerHPBarText.rectTransform;
+                tempRect.SetParent(PlayerHPBar.fillRect.parent);
+                Managers.instance.UI.SetUISize(ref tempRect, new Vector2(tempIconTR.anchorMax.x, 1f), Vector2.right + (Vector2.up * tempIconTR.anchorMax.y));
+                playerHPBarText.font = Managers.instance.Resource.Load<Font>("InGameFont");
+                playerHPBarText.color = new Color(0.7169812f, 0.7169812f, 0.7169812f, 1);
+                playerHPBarText.resizeTextForBestFit = true;
+                playerHPBarText.alignment = TextAnchor.MiddleLeft;
+            }
+            playerHPBarText.text = value;
+        }
+    }
+
+
     private Text warningText;
     public string WarningText
     {
@@ -1347,21 +1423,57 @@ public class BattleUI
                 RectTransform tempRect = nextMonsterPannel.rectTransform;
                 tempRect.SetParent(EnemyStatusUI.rectTransform);
                 nextMonsterPannel.type = Image.Type.Sliced;
-                
+
                 float parentPercent = EnemyStatusUI.rectTransform.rect.size.x / EnemyStatusUI.rectTransform.rect.size.y;
-                Vector2 centerPos = new Vector2(0.5f, 0.75f);
-                string getOriginSizeNumberSize = ((int)nextMonsterPannel.sprite.rect.width).ToString();
+                //위 숫자에 y를 곱해주면 원본비율
+                Vector2 centerPos = new Vector2(0.5f, 0.7493f);
+                Vector2 PanelSize = new Vector2(nextMonsterPannel.sprite.rect.width, nextMonsterPannel.sprite.rect.height) * 1.5f;
+                string getOriginSizeNumberSize = ((int)PanelSize.x).ToString();
                 float imageScale = 1;
                 for (int i = 0; i < getOriginSizeNumberSize.Length; i++)
                 {
                     imageScale = imageScale * 0.1f;
                 }
-                Vector2 imageSize = new Vector2(nextMonsterPannel.sprite.rect.width  , nextMonsterPannel.sprite.rect.height * parentPercent) *imageScale;
-                //위 숫자에 x를 곱해주면 원본비율
-                Managers.instance.UI.SetUISize(ref tempRect, centerPos-imageSize, centerPos + imageSize);
+                Vector2 imageSize = new Vector2(PanelSize.x, PanelSize.y * parentPercent) * imageScale;
+                Managers.instance.UI.SetUISize(ref tempRect, centerPos - imageSize, centerPos + imageSize);
                 Debug.Log("ㅁㄴㅇ");
+                NextMonsterIcon.enabled = true;
             }
             return nextMonsterPannel;
+        }
+    }
+    private Image nextMonsterIcon;
+    private Image NextMonsterIcon
+    {
+        get
+        {
+            if (nextMonsterIcon == null)
+            {
+                nextMonsterIcon = new GameObject("NextMonsterIcon").AddComponent<Image>();
+                nextMonsterIcon.sprite = Managers.instance.Resource.Load<Sprite>("Next_Monster_icon");
+                RectTransform tempRect = nextMonsterIcon.rectTransform;
+                tempRect.SetParent(NextMonsterPannel.rectTransform);
+                Vector2 minPos = new Vector2(0f, 1f);
+                float parentPercent = NextMonsterPannel.rectTransform.rect.size.x / NextMonsterPannel.rectTransform.rect.size.y;
+                int sizeLength = ((int)nextMonsterIcon.sprite.rect.width).ToString().Length;
+                float tempScaledNum = 1;
+                for (int i = 0; i < sizeLength; i++)
+                {
+                    tempScaledNum = tempScaledNum * 0.1f;
+                }
+                Vector2 maxPos = (new Vector2(nextMonsterIcon.sprite.rect.width, nextMonsterIcon.sprite.rect.height * parentPercent) * tempScaledNum) * 0.5f;
+                Managers.instance.UI.SetUISize(ref tempRect, minPos, maxPos + Vector2.up);
+                Text tempText = new GameObject("nextMonsterText").AddComponent<Text>();
+                tempText.alignment = TextAnchor.MiddleLeft;
+                tempText.text = " Next";
+                tempText.font = Managers.instance.Resource.Load<Font>("InGameFont");
+                tempText.resizeTextForBestFit = true;
+                tempText.color = new Color(0.7169812f, 0.7169812f, 0.7169812f, 1);
+                RectTransform tempTextRect = tempText.rectTransform;
+                tempTextRect.SetParent(NextMonsterPannel.rectTransform);
+                Managers.instance.UI.SetUISize(ref tempTextRect, new Vector2(maxPos.x, 1), (Vector2.up * maxPos.y) + Vector2.one);
+            }
+            return nextMonsterIcon;
         }
     }
     /*    private Image[] queueMonsterIMG;*/
@@ -1377,10 +1489,10 @@ public class BattleUI
                 nextMonsterIMG = new GameObject("BeforeMonsterimg").AddComponent<Image>();
                 RectTransform TempRect = nextMonsterIMG.rectTransform;
                 TempRect.SetParent(NextMonsterPannel.rectTransform);
-                TempRect.anchoredPosition = Vector2.right*400f;
+                TempRect.anchoredPosition = Vector2.right * 400f;
                 TempRect.anchorMax = Vector2.one / 2f;
                 TempRect.anchorMin = Vector2.one / 2f;
-                TempRect.sizeDelta = NextMonsterPannel.rectTransform.rect.size*(2f/3f);
+                TempRect.sizeDelta = NextMonsterPannel.rectTransform.rect.size * (2f / 3f);
             }
             return nextMonsterIMG;
         }
@@ -1604,28 +1716,22 @@ public class BattleUI
         }
         //        ChangeWeaponUI(true, ballName, ballKRName);
     }
-    public void HPBarUpdate(bool isPlayer, float valueToAdd)
+    public void HPBarUpdate( float valueToAdd)
     {
-        if (isPlayer)
+        EnemyHPBar.value = enemyHpBar.value + valueToAdd;
+        EnemyHPBarText = "HP " + EnemyHPBar.value + "/" + EnemyHPBar.maxValue;
+        if (EnemyHPBar.value <= EnemyHPBar.maxValue / 2f && warningText == null)
         {
-            PlayerHPBar.value = PlayerHPBar.value + valueToAdd;
+            WarningText = "적의 공격력이 2배 증가합니다!";
+            MonsterManager.MonsterManagerInstance.SetFeaverMode();
         }
-        else
+        if (EnemyHPBar.value <= 0)
         {
-            EnemyHPBar.value = enemyHpBar.value + valueToAdd;
-            if (EnemyHPBar.value <= EnemyHPBar.maxValue / 2f && warningText == null)
+            if (Managers.instance.PlayerDataManager.SetPlayerHP.Item2 >= 0)
             {
-                WarningText = "적의 공격력이 2배 증가합니다!";
-                MonsterManager.MonsterManagerInstance.SetFeaverMode();
+                Managers.instance.UI.BattleUICall.ToDialogSceneBTN.enabled = true;
             }
-            if (EnemyHPBar.value <= 0)
-            {
-                if (Managers.instance.PlayerDataManager.SetPlayerHP.Item2 >= 0)
-                {
-                    Managers.instance.UI.BattleUICall.ToDialogSceneBTN.enabled = true;
-                }
-                ShoterController.Instance.isReadyFire = false;
-            }
+            ShoterController.Instance.isReadyFire = false;
         }
     }
     public void HPBarActivate(float maxHP, float nowHP)
@@ -1639,11 +1745,13 @@ public class BattleUI
         {
             PlayerHPBar.maxValue = maxHP;
             PlayerHPBar.value = nowHP;
+            PlayerHPBarText = "HP " + PlayerHPBar.value + "/" + PlayerHPBar.maxValue;
         }
         else
         {
             EnemyHPBar.maxValue = maxHP;
             EnemyHPBar.value = nowHP;
+            EnemyHPBarText = "HP" + nowHP + "/" + maxHP;
         }
     }
     public void ChangePortrait(bool isPlayer, string spriteName)
@@ -1757,7 +1865,7 @@ public class BattleUI
         bulbHPText = null;
         bulbHPTweens = null;
     }
-    public void SetUIMonsterImageArray(/*Queue<Sprite> spriteQueue*/Sprite NextMonsterSprite,SpriteRenderer monsterSR)
+    public void SetUIMonsterImageArray(/*Queue<Sprite> spriteQueue*/Sprite NextMonsterSprite, SpriteRenderer monsterSR)
     {
         Sprite tempIMG = BeforeMonsterIMG.sprite;
         if (tempIMG == null)
@@ -1768,20 +1876,31 @@ public class BattleUI
                 BeforeMonsterIMG.sprite = tempIMG;
             }
         }
+        else if (NextMonsterSprite == null)
+        {
+
+            NextMonsterIMG.color = Color.clear;
+        }
+        else
+        {
+            NextMonsterIMG.color = Color.white;
+            BeforeMonsterIMG.color = Color.white;
+        }
         BeforeMonsterIMG.DOComplete();
         NextMonsterIMG.DOComplete();
         BeforeMonsterIMG.rectTransform.localScale = Vector3.one;
         BeforeMonsterIMG.rectTransform.anchoredPosition = Vector2.zero;
         NextMonsterIMG.rectTransform.anchoredPosition = Vector2.right * 300;
 
+
         Vector3 targetPos = MonsterManager.MonsterManagerInstance.moveSlots[MonsterManager.MonsterManagerInstance.moveSlots.Length - 1].slotPosition;
         Vector2 temppos = Camera.main.WorldToScreenPoint(targetPos);
-        Vector2 PosMin = Camera.main.WorldToScreenPoint(targetPos+monsterSR.bounds.min);
-        Vector2 PosMax = Camera.main.WorldToScreenPoint(targetPos+monsterSR.bounds.max);
+        Vector2 PosMin = Camera.main.WorldToScreenPoint(targetPos + monsterSR.bounds.min);
+        Vector2 PosMax = Camera.main.WorldToScreenPoint(targetPos + monsterSR.bounds.max);
         float ScaleValue = Vector2.Distance(PosMin, PosMax) / Vector2.Distance(BeforeMonsterIMG.rectTransform.rect.min, BeforeMonsterIMG.rectTransform.rect.max);
         NextMonsterIMG.sprite = NextMonsterSprite;
         BeforeMonsterIMG.rectTransform.DOScale(ScaleValue, 1f);
-        BeforeMonsterIMG.rectTransform.DOJump(temppos, 30,2,1.8f,true).OnComplete(() =>
+        BeforeMonsterIMG.rectTransform.DOJump(temppos, 30, 2, 1.8f, true).OnComplete(() =>
         {
 
             BeforeMonsterIMG.rectTransform.localScale = Vector3.one;
@@ -1789,9 +1908,19 @@ public class BattleUI
             NextMonsterIMG.sprite = tempIMG;
             BeforeMonsterIMG.sprite = NextMonsterSprite;
             monsterSR.enabled = true;
+            if (NextMonsterSprite == null)
+            {
+                NextMonsterIMG.color = Color.clear;
+                BeforeMonsterIMG.color = Color.clear;
+            }
         });
         NextMonsterIMG.rectTransform.DOJump(NextMonsterPannel.rectTransform.position, 40f, 4, 1.8f, true).OnComplete(() =>
         {
+            if (NextMonsterSprite == null)
+            {
+                NextMonsterIMG.color = Color.clear;
+                BeforeMonsterIMG.color = Color.clear;
+            }
             NextMonsterIMG.rectTransform.anchoredPosition = Vector2.right * 300;
         });
 
@@ -1935,14 +2064,14 @@ public class BattleUI
 
         }
     }
-/*    public void SetMonsterDeadInQueue(int index)
-    {
-        queueMonsterIMG[index].color = Color.gray;
-    }
-    public void ResetMonsterQueueIMG()
-    {
-        queueMonsterIMG = null;
-    }*/
+    /*    public void SetMonsterDeadInQueue(int index)
+        {
+            queueMonsterIMG[index].color = Color.gray;
+        }
+        public void ResetMonsterQueueIMG()
+        {
+            queueMonsterIMG = null;
+        }*/
     #endregion
 }
 public class ShopUI

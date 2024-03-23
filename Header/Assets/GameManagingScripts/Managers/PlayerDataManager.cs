@@ -41,7 +41,7 @@ public class PlayerDataManager
             if (Managers.instance.UI.BattleUICall.IsInBattleScene)
             {
                 Managers.instance.UI.BattleUICall.SettingPlayerBattleUI();
-                Managers.instance.UI.BattleUICall.HPBarSetting(true,value.Item1,value.Item2);
+                Managers.instance.UI.BattleUICall.HPBarSetting(true, value.Item1, value.Item2);
             }
             
         }
@@ -52,18 +52,19 @@ public class PlayerDataManager
     public float girlAD = 20;
     public void PlayerGetDamage(float Damage)
     {
-        playerHPNow -= Damage;
+        SetPlayerHP = (Managers.instance.PlayerDataManager.SetPlayerHP.Item1, Managers.instance.PlayerDataManager.SetPlayerHP.Item2 - Damage);
         if (playerHPNow <= 0)
         {
             ShoterController.Instance.isReadyFire = false;
             Managers.instance.UI.BattleUICall.GameOverBTN.enabled = true;
             Managers.instance.UI.BattleUICall.ToDialogSceneBTN.gameObject.SetActive(false);
+
         }
 
         if (Managers.instance.UI.BattleUICall.IsInBattleScene)
         {
             Managers.instance.UI.BattleUICall.SettingPlayerBattleUI();
-            Managers.instance.UI.BattleUICall.HPBarUpdate(true, -Damage);
+
         }
     }
     

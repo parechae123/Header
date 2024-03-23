@@ -8,6 +8,7 @@ using Newtonsoft.Json.Linq;
 using UnityEditor;
 using DG.Tweening;
 using static UnityEngine.GraphicsBuffer;
+using static UnityEngine.Rendering.DebugUI;
 
 public class MonsterManager : MonoBehaviour
 {
@@ -141,6 +142,7 @@ public class MonsterManager : MonoBehaviour
         Managers.instance.UI.BattleUICall.InstallMonsterHPBar(monsterSlotCount);
         (float, float) TempDoubleFloat = CarculateMonsterFullHP;
         Managers.instance.UI.BattleUICall.HPBarSetting(false, TempDoubleFloat.Item1, TempDoubleFloat.Item2);
+        Managers.instance.UI.BattleUICall.HPBarSetting(true, Managers.instance.PlayerDataManager.SetPlayerHP.Item1, Managers.instance.PlayerDataManager.SetPlayerHP.Item2);
         Array.Resize(ref Monsters, MonsterSpawnOrder.Length);
         Array.Resize(ref moveSlots, monsterSlotCount);
         PlayerSprite.color = Color.white;

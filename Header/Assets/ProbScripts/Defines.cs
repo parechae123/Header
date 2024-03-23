@@ -252,7 +252,7 @@ namespace MonsterDefines
                 }
                 MonsterHP -= damage;
 
-                Managers.instance.UI.BattleUICall.HPBarUpdate(false, -tempDMG);
+                Managers.instance.UI.BattleUICall.HPBarUpdate( -tempDMG);
             }
 
         }
