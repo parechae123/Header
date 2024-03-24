@@ -577,10 +577,8 @@ public class BattleUI
             {
                 playerStatusUI = new GameObject("PlayerStatusPanel").AddComponent<Image>();
                 playerStatusUI.rectTransform.SetParent(BattleSceneUI);
-                playerStatusUI.rectTransform.anchorMax = new Vector2(0.172000006f, 1f);
-                playerStatusUI.rectTransform.anchorMin = Vector2.zero;
-                playerStatusUI.rectTransform.sizeDelta = Vector2.zero;
-                playerStatusUI.rectTransform.anchoredPosition = Vector2.zero;
+                RectTransform tempRectTransform= playerStatusUI.rectTransform;
+                Managers.instance.UI.SetUISize(ref tempRectTransform, Vector2.zero, new Vector2(0.169283211f, 0.709656119f));
                 playerStatusUI.sprite = Managers.instance.Resource.Load<Sprite>("battle_panel");
                 playerStatusUI.raycastTarget = false;
             }
@@ -594,13 +592,21 @@ public class BattleUI
         {
             if (playerPortrait == null)
             {
-                playerPortrait = new GameObject("PlayerStatusPanel").AddComponent<Image>();
+                playerPortrait = new GameObject("PlayerPortrait").AddComponent<Image>();
                 playerPortrait.rectTransform.SetParent(PlayerStatusUI.rectTransform);
-                playerPortrait.rectTransform.anchorMax = new Vector2(0.899999976f, 0.847f);
-                playerPortrait.rectTransform.anchorMin = new Vector2(0.100000001f, 0.597f);
-                playerPortrait.rectTransform.sizeDelta = Vector2.zero;
-                playerPortrait.rectTransform.anchoredPosition = Vector2.zero;
                 playerPortrait.sprite = Managers.instance.Resource.Load<Sprite>("battle_portrait");
+                RectTransform tempRect = playerPortrait.rectTransform;
+                float parentSizePercent = PlayerStatusUI.rectTransform.rect.width / PlayerStatusUI.rectTransform.rect.height;
+                Vector2 centerPos = new Vector2(0.5f, 0.6414825f);
+                int widthNumberSize = ((int)playerPortrait.sprite.rect.width).ToString().Length;
+                float getCurrentMag = 1;
+                for (int i = 0; i < widthNumberSize; i++)
+                {
+                    getCurrentMag = getCurrentMag * 0.1f;
+                }
+                Vector2 halfSize = (new Vector2(playerPortrait.sprite.rect.width, playerPortrait.sprite.rect.height * parentSizePercent) * getCurrentMag)*1.5f;
+                Managers.instance.UI.SetUISize(ref tempRect,centerPos- halfSize, centerPos+ halfSize);
+
             }
             return playerStatusUI;
         }
@@ -674,10 +680,7 @@ public class BattleUI
 
                 tempHpTR.SetParent(PlayerStatusUI.rectTransform);
                 tempHpTR.SetAsLastSibling();
-                tempHpTR.anchorMin = new Vector2(0.1f, 0.88f);
-                tempHpTR.anchorMax = new Vector2(0.9f, 0.93f);
-                tempHpTR.sizeDelta = Vector2.zero;
-                tempHpTR.anchoredPosition = Vector2.zero;
+                Managers.instance.UI.SetUISize(ref tempHpTR, new Vector2(0.0956228f, 0.7894221f), new Vector2(0.9043772f, 0.95f));
                 tempPlayerHPbar.interactable = false;
                 tempPlayerHPbar.enabled = true;
                 tempHandleArea.SetAsLastSibling();
@@ -700,10 +703,11 @@ public class BattleUI
                 weaponImagePanel.rectTransform.SetParent(PlayerStatusUI.rectTransform);
                 weaponImagePanel.sprite = null;
                 weaponImagePanel.color = new Color(0, 0, 0, 0);
-                weaponImagePanel.rectTransform.anchorMin = new Vector2(0.330525041f, 0.483485878f);
-                weaponImagePanel.rectTransform.anchorMax = new Vector2(0.669326663f, 0.582539618f);
-                weaponImagePanel.rectTransform.sizeDelta = Vector2.zero;
-                weaponImagePanel.rectTransform.anchoredPosition = Vector2.zero;
+                RectTransform tempRect = weaponImagePanel.rectTransform;
+                Vector2 centerPos = new Vector2(0.5f, 0.38013975f);
+                float percent = PlayerStatusUI.rectTransform.rect.width / PlayerStatusUI.rectTransform.rect.height;
+                Vector2 Size = new Vector2(0.6f, 0.6f * percent)/2;
+                Managers.instance.UI.SetUISize(ref tempRect, centerPos- Size, centerPos+ Size);
                 WeaponImagePanel.AddComponent<RectMask2D>();
                 weaponImagePanel.raycastTarget = false;
             }
@@ -758,10 +762,17 @@ public class BattleUI
                 weaponNamePannel = new GameObject("WeaponNamePannel").AddComponent<Image>();
                 weaponNamePannel.rectTransform.SetParent(PlayerStatusUI.rectTransform);
                 weaponNamePannel.sprite = Managers.instance.Resource.Load<Sprite>("select_panel");
-                weaponNamePannel.rectTransform.anchorMin = new Vector2(0.23300001f, 0.390000015f);
-                weaponNamePannel.rectTransform.anchorMax = new Vector2(0.771000028f, 0.474000037f);
-                weaponNamePannel.rectTransform.sizeDelta = Vector2.zero;
-                weaponNamePannel.rectTransform.anchoredPosition = Vector2.zero;
+                RectTransform tempRect = weaponNamePannel.rectTransform;
+                Vector2 centerPos = new Vector2(0.5f, 0.2260147f);
+                int imgSizeLength = ((int)weaponNamePannel.sprite.rect.width).ToString().Length;
+                float scaleMag = 1;
+                for (int i = 0; i < imgSizeLength; i++)
+                {
+                    scaleMag = scaleMag * 0.1f;
+                }
+                float percent = PlayerStatusUI.rectTransform.rect.width / PlayerStatusUI.rectTransform.rect.height;
+                Vector2 Size = (new Vector2(weaponNamePannel.sprite.rect.width, weaponNamePannel.sprite.rect.height * percent)* scaleMag)*1.5f;
+                Managers.instance.UI.SetUISize(ref tempRect, centerPos - Size, centerPos + Size);
             }
             return weaponNamePannel;
         }
@@ -830,6 +841,21 @@ public class BattleUI
             return weaponNextBTN;
         }
     }
+    private RectTransform girlParentRT;
+    public RectTransform GirlParentRT
+    {
+        get
+        {
+            if (girlParentRT == null)
+            {
+                girlParentRT = new GameObject("GirlParent").AddComponent<RectTransform>();
+                girlParentRT.SetParent(BattleSceneUI);
+
+                Managers.instance.UI.SetUISize(ref girlParentRT, Vector2.zero, Vector2.one);
+            }
+            return girlParentRT;
+        }
+    }
     private Image girlPortrait;
     public Image GirlPortrait
     {
@@ -838,12 +864,20 @@ public class BattleUI
             if (girlPortrait == null)
             {
                 girlPortrait = new GameObject("BattleSceneGirlPortrait").AddComponent<Image>();
-                girlPortrait.rectTransform.SetParent(PlayerStatusUI.rectTransform);
-                girlPortrait.rectTransform.anchorMax = new Vector2(0.784737825f, 0.217769772f);
-                girlPortrait.rectTransform.anchorMin = new Vector2(0.216160953f, 0.0475479327f);
-                girlPortrait.rectTransform.anchoredPosition = Vector2.zero;
-                girlPortrait.rectTransform.sizeDelta = Vector2.zero;
+                girlPortrait.rectTransform.SetParent(GirlParentRT);
                 girlPortrait.sprite = Managers.instance.Resource.Load<Sprite>("battle_portrait_girl");
+                RectTransform tempRect = girlPortrait.rectTransform;
+                Vector2 centerPos = Vector2.one / 2f;
+                float percent = GirlParentRT.rect.width / GirlParentRT.rect.height;
+                float ScaleMag = 1;
+                int SizeLenght = ((int)GirlParentRT.rect.width.ToString().Length);
+                for (int i = 0; i < SizeLenght; i++)
+                {
+                    ScaleMag = 0.1f * ScaleMag;
+                }
+                Vector2 portraitSize = (new Vector2(girlPortrait.sprite.rect.width, girlPortrait.sprite.rect.height*percent)* ScaleMag)*2f;
+                Managers.instance.UI.SetUISize(ref tempRect, centerPos- portraitSize, centerPos+ portraitSize);
+
             }
             return girlPortrait;
         }
@@ -856,12 +890,22 @@ public class BattleUI
             if (girlChatBubble == null)
             {
                 girlChatBubble = new GameObject("girlChatBubble").AddComponent<Image>();
-                girlChatBubble.rectTransform.SetParent(PlayerStatusUI.rectTransform);
-                girlChatBubble.rectTransform.anchorMax = new Vector2(0.86668098f, 0.371693075f);
-                girlChatBubble.rectTransform.anchorMin = new Vector2(0.132425845f, 0.226054743f);
-                girlChatBubble.rectTransform.anchoredPosition = Vector2.zero;
-                girlChatBubble.rectTransform.sizeDelta = Vector2.zero;
-                girlChatBubble.sprite = Managers.instance.Resource.Load<Sprite>("chatbubble ");
+                girlChatBubble.rectTransform.SetParent(GirlParentRT);
+                RectTransform tempRect = girlChatBubble.rectTransform;
+                girlChatBubble.sprite = Managers.instance.Resource.Load<Sprite>("chatbubble");
+                float percent = GirlParentRT.rect.width / GirlParentRT.rect.height;
+                float magScaler = 1;
+                int widthLength = (int)girlChatBubble.sprite.rect.width.ToString().Length;
+                for (int i = 0; i < widthLength; i++)
+                {
+                    magScaler = magScaler * 0.1f;
+                }
+                Vector2 imageSize = (new Vector2(girlChatBubble.sprite.rect.width, girlChatBubble.sprite.rect.height*percent) * magScaler)/3f;
+                Vector2 GetCenterPos = new Vector2(0.5f, GirlPortrait.rectTransform.anchorMax.y+imageSize.y);
+
+
+                Managers.instance.UI.SetUISize(ref tempRect, GetCenterPos - imageSize, GetCenterPos + imageSize);
+
             }
             return girlChatBubble;
         }
@@ -910,9 +954,18 @@ public class BattleUI
     {
         set
         {
+            GirlParentRT.gameObject.SetActive(true);
+            GirlText.DOComplete();
+            GirlChatBubble.rectTransform.DOComplete();
+            GirlText.text = string.Empty;
             GirlChatBubble.color = Color.gray;
-            GirlText.color = Color.black;
-            GirlText.text = value;
+            GirlText.color = Color.white;
+            DG.Tweening.Sequence tempSeq = DOTween.Sequence();
+            tempSeq.Append(GirlText.DOText(value, 2f));
+            tempSeq.AppendInterval(3).OnComplete(() =>
+            {
+                GirlParentRT.gameObject.SetActive(false);
+            });
         }
     }
     private RectTransform sceneBTNParet;
@@ -1629,7 +1682,10 @@ public class BattleUI
 
     public void GirlTextAttack(string TXT, Color bubbleColor, Color chattingColor)
     {
-        girlText.fontSize = 36;
+        GirlText.DOComplete();
+        GirlChatBubble.rectTransform.DOComplete();
+        GirlParentRT.gameObject.SetActive(true);
+        GirlText.fontSize = 36;
         GirlChatBubble.rectTransform.DOComplete();
         GirlChatBubble.rectTransform.DOPunchScale(Vector3.one, 0.4f, 1, 0.5f).OnComplete(() =>
         {
@@ -1640,6 +1696,7 @@ public class BattleUI
                 GirlText.color = Color.black;
                 GirlText.text = string.Empty;
                 GirlChatBubble.rectTransform.DOKill();
+                GirlParentRT.gameObject.SetActive(false);
             });
         });
         GirlChatBubble.color = bubbleColor;
@@ -1655,8 +1712,7 @@ public class BattleUI
         //PlayerHPBar.maxValue = ;
         //PlayerPortrait.sprite = ;
         //WeaponImage =
-        GirlText.enabled = true;
-        GirlPortrait.enabled = true;
+        GirlParentRT.gameObject.SetActive(false);
         PlayerHPBar.enabled = true;
         WeaponImage.enabled = true;
         PlayerPortrait.enabled = true;
