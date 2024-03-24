@@ -848,9 +848,10 @@ public class BattleUI
         {
             if (girlParentRT == null)
             {
+                
                 girlParentRT = new GameObject("GirlParent").AddComponent<RectTransform>();
                 girlParentRT.SetParent(BattleSceneUI);
-
+                
                 Managers.instance.UI.SetUISize(ref girlParentRT, Vector2.zero, Vector2.one);
             }
             return girlParentRT;
@@ -866,6 +867,7 @@ public class BattleUI
                 girlPortrait = new GameObject("BattleSceneGirlPortrait").AddComponent<Image>();
                 girlPortrait.rectTransform.SetParent(GirlParentRT);
                 girlPortrait.sprite = Managers.instance.Resource.Load<Sprite>("battle_portrait_girl");
+                girlPortrait.raycastTarget = false;
                 RectTransform tempRect = girlPortrait.rectTransform;
                 Vector2 centerPos = Vector2.one / 2f;
                 float percent = GirlParentRT.rect.width / GirlParentRT.rect.height;
@@ -893,6 +895,7 @@ public class BattleUI
                 girlChatBubble.rectTransform.SetParent(GirlParentRT);
                 RectTransform tempRect = girlChatBubble.rectTransform;
                 girlChatBubble.sprite = Managers.instance.Resource.Load<Sprite>("chatbubble");
+                girlChatBubble.raycastTarget = false;
                 float percent = GirlParentRT.rect.width / GirlParentRT.rect.height;
                 float magScaler = 1;
                 int widthLength = (int)girlChatBubble.sprite.rect.width.ToString().Length;
@@ -921,7 +924,7 @@ public class BattleUI
                 girlText.rectTransform.SetParent(GirlChatBubble.rectTransform);
                 RectTransform rectTemp = girlText.rectTransform;
                 Managers.instance.UI.SetUISize(ref rectTemp, Vector2.zero, Vector2.one);
-
+                girlText.raycastTarget = false;
                 girlText.font = Managers.instance.Resource.Load<Font>("InGameFont");
                 girlText.alignment = TextAnchor.MiddleCenter;
                 girlText.color = Color.black;
@@ -949,23 +952,45 @@ public class BattleUI
             return girlBomb;
         }
     }
-
     public string GirlBulbExplane
     {
         set
         {
-            GirlParentRT.gameObject.SetActive(true);
-            GirlText.DOComplete();
-            GirlChatBubble.rectTransform.DOComplete();
-            GirlText.text = string.Empty;
-            GirlChatBubble.color = Color.gray;
-            GirlText.color = Color.white;
-            DG.Tweening.Sequence tempSeq = DOTween.Sequence();
-            tempSeq.Append(GirlText.DOText(value, 2f));
-            tempSeq.AppendInterval(3).OnComplete(() =>
+            if (value.Contains("라고 하네요"))
             {
-                GirlParentRT.gameObject.SetActive(false);
-            });
+                GirlText.DOKill();
+                GirlText.DOComplete();
+                GirlChatBubble.rectTransform.DOComplete();
+                GirlParentRT.gameObject.SetActive(true);
+
+                GirlText.text = string.Empty;
+                GirlChatBubble.color = Color.gray;
+                GirlText.color = Color.white;
+
+                GirlText.DOText(value, 1).OnComplete(() =>
+                {
+                    GirlText.DOColor(Color.white, 3).OnComplete(() =>
+                    {
+                        GirlParentRT.gameObject.SetActive(false);
+                    });
+                });
+            }
+            else
+            {
+                GirlText.DOKill();
+                GirlText.DOComplete();
+                GirlChatBubble.rectTransform.DOComplete();
+                GirlParentRT.gameObject.SetActive(true);
+                
+                GirlText.text = string.Empty;
+                GirlText.text = value;
+                GirlChatBubble.color = Color.gray;
+                GirlText.color = Color.white;
+                GirlText.DOColor(Color.white, 3).OnComplete(() =>
+                {
+                    GirlParentRT.gameObject.SetActive(false);
+                });
+            }
         }
     }
     private RectTransform sceneBTNParet;

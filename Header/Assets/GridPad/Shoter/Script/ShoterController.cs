@@ -25,6 +25,7 @@ public class ShoterController : MonoBehaviour
     public BallScript targetBall;
     public float regionalDamage = 0;
     public float targetDamage = 0;
+    private short forceDirrection = 1;
     private Transform targetMonsterTR = null;
     public Transform TargetMonsterTR
     {
@@ -272,14 +273,18 @@ public class ShoterController : MonoBehaviour
             }
             else if (Input.GetMouseButton(0) && !UnityEngine.EventSystems.EventSystem.current.IsPointerOverGameObject())
             {
-                if (NowBallStat.ballStartForce > fireForce)
+                if (NowBallStat.ballStartForce <= fireForce || fireForce <= 0)
                 {
-                    fireForce += Time.deltaTime * NowBallStat.ballStartForce;
+                    if (forceDirrection == 1)
+                    {
+                        forceDirrection = -1;
+                    }
+                    else
+                    {
+                        forceDirrection = 1;
+                    }
                 }
-                else
-                {
-                    fireForce = NowBallStat.ballStartForce;
-                }
+                fireForce += (Time.deltaTime * NowBallStat.ballStartForce) * forceDirrection;
                 Managers.instance.UI.BattleUICall.UpdateBallForce( fireForce/ NowBallStat.ballStartForce);
             }
 
