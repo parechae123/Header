@@ -19,7 +19,30 @@ public abstract class BulbSkills
     public abstract void BreakEventSkills();
     public abstract void Reset();
 }
-
+public class torchBulbSKill : BulbSkills
+{
+    public override void InitializeSetting()
+    {
+        base.InitializeSetting();
+    }
+    public override void StartEventSkills()
+    {
+        
+    }
+    public override void UpdateSkills()
+    {
+        
+    }
+    public override void BreakEventSkills()
+    {
+        GameObject tempTorch = new GameObject("");
+        tempTorch.AddComponent<TorchScript>();
+    }
+    public override void Reset()
+    {
+        
+    }
+}
 public class DecoBulbSkill : BulbSkills
 {
     private SpriteShapeController decoShapeCtrler;

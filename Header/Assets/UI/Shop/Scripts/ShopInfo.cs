@@ -74,7 +74,7 @@ public class ShopInfo : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            Managers.instance.PlayerDataManager.PlayerMoney += 10;
+            Managers.instance.PlayerDataManager.PlayerMoney += 1000;
             
         }
         if (Input.GetKeyDown(KeyCode.V))

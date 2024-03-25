@@ -5,6 +5,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Rendering.Universal;
 using UnityEngine.UI;
 
 public class Hogisim : MonoBehaviour
@@ -50,6 +51,20 @@ public class Hogisim : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Space))
         {
             outPutNum = MathF.Sin(targetNum);
+        }
+        if (Input.GetKeyDown(KeyCode.H))
+        {
+            Light2D tempGOBJ = new GameObject("Torch").AddComponent<Light2D>();
+            tempGOBJ.transform.position = Vector2.zero;
+            tempGOBJ.lightType = Light2D.LightType.Point;
+            tempGOBJ.intensity = 10;
+            tempGOBJ.pointLightOuterRadius = 1;
+            tempGOBJ.pointLightInnerRadius = 0;
+            tempGOBJ.pointLightInnerAngle = 360;
+            tempGOBJ.pointLightOuterAngle= 360;
+            SpriteRenderer tempSprite = tempGOBJ.gameObject.AddComponent<SpriteRenderer>();
+           
+
         }
     }
 }
