@@ -127,7 +127,12 @@ public class ShoterController : MonoBehaviour
     private void Start()
     {
         Managers.instance.UI.BattleUICall.SettingPlayerBattleUI();
+        Managers.instance.UI.BattleUICall.RegistListener();
         lineRenderer = transform.AddComponent<LineRenderer>();
+        lineRenderer.textureMode = LineTextureMode.Tile;
+        List<Material> TempMat = new List<Material>();
+        TempMat.Add(Managers.instance.Resource.Load<Material>("ShootLine"));
+        lineRenderer.SetMaterials(TempMat);
         lineRenderer.startWidth = 0.2f;
         lineRenderer.endWidth = 0.3f;
         lineRenderer.positionCount = numPoints;
@@ -397,6 +402,7 @@ public class ShoterController : MonoBehaviour
     }
     public void SetBallOnBehind()
     {
+        
         string tempName = NowBallStat.ballName;
         ExtraBallStat[] TempBallStat = ballStatQueue.ToArray();
         ballStatQueue.Clear();
@@ -416,7 +422,21 @@ public class ShoterController : MonoBehaviour
         Managers.instance.UI.BattleUICall.WeaponAnim(false, NowBallStat.ballName, NowBallStat.ballKoreanName, tempName);
         TargetBall.ChangeBallSprite(NowBallStat.ballName);
     }
-
+    public void ResetBallQueue(string NowBallName)
+    {
+        ballStatQueue.Clear();
+        for (int i = 0; i < Managers.instance.PlayerDataManager.playerOwnBalls.Count; i++)
+        {
+            if (Managers.instance.PlayerDataManager.playerOwnBalls[i].amount != 0 && Managers.instance.PlayerDataManager.playerOwnBalls[i].ballName != NowBallName)
+            {
+                ballStatQueue.Enqueue(Managers.instance.PlayerDataManager.playerOwnBalls[i]);
+            }
+            else if (Managers.instance.PlayerDataManager.playerOwnBalls[i].amount != 0 && Managers.instance.PlayerDataManager.playerOwnBalls[i].ballName == NowBallName)
+            {
+                NowBallStat = Managers.instance.PlayerDataManager.playerOwnBalls[i];
+            }
+        }
+    }
     public void SetBall()
     {
         if (ballStatQueue.Count <= 0 && Managers.instance.PlayerDataManager.playerOwnBalls.Count <= 0 && NowBallStat == null)
@@ -489,9 +509,13 @@ public class ShoterController : MonoBehaviour
             case "metal_bulb":
                 /*TargetBall.bulbSkills = new DecoBulbSkill(); */
                 break;
+            case "torch_bulb":
+                TargetBall.bulbSkills = new TorchBulbSKill();
+                TargetBall.bulbSkills.InitializeSetting();
+                break;
             default:
                 Debug.Log("스킬이 없어용");
-            TargetBall.bulbSkills = null;
+                TargetBall.bulbSkills = null;
                 break;
         }
     }

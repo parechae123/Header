@@ -24,7 +24,7 @@ namespace DataDefines
     public enum ResourceType
     {
         // MAINTANCE : 리소스 타입 추가할때 여기서 Enum 추가작업 필요
-        GameObject, Sprites,DataSheets,Fonts,RenderTexture,Video,Texture2D
+        GameObject, Sprites,DataSheets,Fonts,RenderTexture,Video,Texture2D,Materials
     }
     [System.Serializable]
     public class DialogDatas

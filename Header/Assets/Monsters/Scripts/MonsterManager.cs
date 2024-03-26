@@ -85,7 +85,8 @@ public class MonsterManager : MonoBehaviour
             {
                 playerSprite = new GameObject("PlayerBattleSceneCharactor").AddComponent<SpriteRenderer>();
                 playerSprite.sprite = Managers.instance.Resource.Load<Sprite>("PlayerTopViewWalkR_1");
-                playerSprite.transform.position = playerPos;
+                playerSprite.transform.localScale = new Vector3(2.57189608f, 2.0783f, 2.0783f);
+                playerSprite.transform.position = playerPos+Vector3.up;
             }
             return playerSprite;
         }

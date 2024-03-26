@@ -154,9 +154,12 @@ public class PlayerDataManager
     {
         ShoterController.Instance.SetBallOnBehind();
         
+
+
     }
     public void PlayerNextBallPick()
     {
+
         ShoterController.Instance.SetBallOnNext();
     }
     public void ResetPlayer()

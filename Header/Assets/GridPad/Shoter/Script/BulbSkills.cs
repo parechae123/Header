@@ -19,7 +19,7 @@ public abstract class BulbSkills
     public abstract void BreakEventSkills();
     public abstract void Reset();
 }
-public class torchBulbSKill : BulbSkills
+public class TorchBulbSKill : BulbSkills
 {
     public override void InitializeSetting()
     {
@@ -35,7 +35,9 @@ public class torchBulbSKill : BulbSkills
     }
     public override void BreakEventSkills()
     {
-        GameObject tempTorch = new GameObject("");
+        GameObject tempTorch = new GameObject("InstalledTorch");
+        tempTorch.transform.position = OriginBall.transform.position;
+        tempTorch.transform.rotation = OriginBall.transform.rotation;
         tempTorch.AddComponent<TorchScript>();
     }
     public override void Reset()

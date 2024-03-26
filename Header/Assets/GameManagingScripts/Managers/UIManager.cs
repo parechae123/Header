@@ -706,7 +706,7 @@ public class BattleUI
                 RectTransform tempRect = weaponImagePanel.rectTransform;
                 Vector2 centerPos = new Vector2(0.5f, 0.38013975f);
                 float percent = PlayerStatusUI.rectTransform.rect.width / PlayerStatusUI.rectTransform.rect.height;
-                Vector2 Size = new Vector2(0.6f, 0.6f * percent)/2;
+                Vector2 Size = new Vector2(0.6f, 0.6f * percent)/4;
                 Managers.instance.UI.SetUISize(ref tempRect, centerPos- Size, centerPos+ Size);
                 WeaponImagePanel.AddComponent<RectMask2D>();
                 weaponImagePanel.raycastTarget = false;
@@ -1749,11 +1749,18 @@ public class BattleUI
         {
             PlayerWeaponName.text = "무기가 없어!!";
         }
-        WeaponBeforeBTN.onClick.AddListener(Managers.instance.PlayerDataManager.PlayerBeforeBallPick);
-        WeaponNextBTN.onClick.AddListener(Managers.instance.PlayerDataManager.PlayerNextBallPick);
+
+
         UpdateScore(0, 0);
         //EnemyUISetting();
         NextMonsterPannel.enabled = true;
+    }
+    public void RegistListener()
+    {
+        WeaponBeforeBTN.onClick.RemoveAllListeners();
+        WeaponBeforeBTN.onClick.AddListener(Managers.instance.PlayerDataManager.PlayerBeforeBallPick);
+        WeaponNextBTN.onClick.RemoveAllListeners();
+        WeaponNextBTN.onClick.AddListener(Managers.instance.PlayerDataManager.PlayerNextBallPick);
     }
     public void WeaponAnim(bool isMoveRight, string ballName, string ballKRName, string PrevBallName)
     {

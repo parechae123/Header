@@ -22,6 +22,7 @@ public class TorchScript : MonoBehaviour
         torchLight.pointLightInnerRadius = 0;
         torchLight.pointLightOuterRadius = 1;
         torchSR = gameObject.AddComponent<SpriteRenderer>();
+        torchSR.sprite = Managers.instance.Resource.Load<Sprite>("torch_bulb");
         torchSR.sortingLayerName = "Ball";
     }
 
