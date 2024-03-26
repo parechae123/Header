@@ -166,3 +166,52 @@ public class DecoBulbSkill : BulbSkills
         
     }
 }
+public class ShineBulbSkill : BulbSkills
+{
+    public Transform CloneBall;
+    public override void InitializeSetting()
+    {
+        base.InitializeSetting();
+    }
+    public override void StartEventSkills()
+    {
+        CloneBall = new GameObject("CloneBall").transform;
+        CloneBall.AddComponent<CloneBalls>().OnBallCreate(OriginBall.BallCol.radius, OriginBall.IMG.sprite);
+    }
+    public override void UpdateSkills()
+    {
+        CloneBall.transform.position = new Vector3(OriginBall.transform.position.x*-1, OriginBall.transform.position.y, OriginBall.transform.position.z);
+        CloneBall.transform.rotation = OriginBall.transform.rotation;
+    }
+    public override void BreakEventSkills()
+    {
+        GameObject.Destroy(CloneBall.gameObject);
+    }
+    public override void Reset()
+    {
+
+    }
+}
+public class DefaultBulbSkillForm : BulbSkills
+{
+    public override void InitializeSetting()
+    {
+        base.InitializeSetting();
+    }
+    public override void StartEventSkills()
+    {
+
+    }
+    public override void UpdateSkills()
+    {
+
+    }
+    public override void BreakEventSkills()
+    {
+
+    }
+    public override void Reset()
+    {
+
+    }
+}

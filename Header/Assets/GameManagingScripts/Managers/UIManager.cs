@@ -1990,7 +1990,10 @@ public class BattleUI
         BeforeMonsterIMG.rectTransform.DOScale(ScaleValue, 1f);
         BeforeMonsterIMG.rectTransform.DOJump(temppos, 30, 2, 1.8f, true).OnComplete(() =>
         {
-
+            if (beforeMonsterIMG == null)
+            {
+                return;
+            }
             BeforeMonsterIMG.rectTransform.localScale = Vector3.one;
             BeforeMonsterIMG.rectTransform.anchoredPosition = Vector2.zero;
             NextMonsterIMG.sprite = tempIMG;
@@ -2004,6 +2007,10 @@ public class BattleUI
         });
         NextMonsterIMG.rectTransform.DOJump(NextMonsterPannel.rectTransform.position, 40f, 4, 1.8f, true).OnComplete(() =>
         {
+            if (beforeMonsterIMG == null)
+            {
+                return;
+            }
             if (NextMonsterSprite == null)
             {
                 NextMonsterIMG.color = Color.clear;

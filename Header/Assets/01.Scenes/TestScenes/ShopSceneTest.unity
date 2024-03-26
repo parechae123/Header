@@ -689,6 +689,7 @@ MonoBehaviour:
   - stone_bulb
   - torch_bulb
   - nine_bulb
+  - shine_bulb
   shopBalls: []
 --- !u!4 &1586822671
 Transform:

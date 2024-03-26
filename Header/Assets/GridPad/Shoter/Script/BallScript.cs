@@ -15,6 +15,7 @@ public class BallScript : MonoBehaviour
     public int breakBlockCount;
     public BulbSkills bulbSkills;
     private Light2D bulbLight;
+    public bool isPlayerShooting = false;
     public Light2D BulbLight 
     {
         get 
@@ -50,7 +51,7 @@ public class BallScript : MonoBehaviour
         }    
     }
     CircleCollider2D ballCol;
-    CircleCollider2D BallCol
+    public CircleCollider2D BallCol
     {
         get
         { 
@@ -106,7 +107,7 @@ public class BallScript : MonoBehaviour
             blinkTimer += Time.deltaTime;
             BulbLight.intensity = SinFunc(blinkTimer);
         }
-        if (bulbSkills != null)
+        if (bulbSkills != null&& isPlayerShooting)
         {
             bulbSkills.UpdateSkills();
         }
@@ -121,6 +122,7 @@ public class BallScript : MonoBehaviour
         if (bulbSkills != null)
         {
             bulbSkills.BreakEventSkills();
+            isPlayerShooting = false;
         }
         BulbLight.intensity = 0;
         BallRB.simulated = false;
@@ -151,6 +153,7 @@ public class BallScript : MonoBehaviour
         if (bulbSkills != null)
         {
             bulbSkills.StartEventSkills();
+            isPlayerShooting = true;
         }
         ShoterController.Instance.testTR.gameObject.SetActive(false);
         Managers.instance.UI.BattleUICall.WeaponButtonCheck(true);

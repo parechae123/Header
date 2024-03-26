@@ -513,6 +513,10 @@ public class ShoterController : MonoBehaviour
                 TargetBall.bulbSkills = new TorchBulbSKill();
                 TargetBall.bulbSkills.InitializeSetting();
                 break;
+            case "shine_bulb":
+                TargetBall.bulbSkills = new ShineBulbSkill();
+                TargetBall.bulbSkills.InitializeSetting();
+                break;
             default:
                 Debug.Log("스킬이 없어용");
                 TargetBall.bulbSkills = null;
