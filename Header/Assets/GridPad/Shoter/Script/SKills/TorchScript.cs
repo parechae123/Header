@@ -21,6 +21,8 @@ public class TorchScript : MonoBehaviour
         torchLight.pointLightOuterAngle = 360;
         torchLight.pointLightInnerRadius = 0;
         torchLight.pointLightOuterRadius = 1;
+        torchLight.color = new Color(0.3018868f, 0.3018868f, 0.3018868f, 1);
+        torchLight.intensity = 15.44f;
         torchSR = gameObject.AddComponent<SpriteRenderer>();
         torchSR.sprite = Managers.instance.Resource.Load<Sprite>("torch_bulb");
         torchSR.sortingLayerName = "Ball";
