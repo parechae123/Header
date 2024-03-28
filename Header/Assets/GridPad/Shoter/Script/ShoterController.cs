@@ -27,6 +27,7 @@ public class ShoterController : MonoBehaviour
     public float targetDamage = 0;
     private short forceDirrection = 1;
     private Transform targetMonsterTR = null;
+
     public Transform TargetMonsterTR
     {
         get 

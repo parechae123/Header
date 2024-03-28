@@ -16,6 +16,7 @@ public class BallScript : MonoBehaviour
     public BulbSkills bulbSkills;
     private Light2D bulbLight;
     public bool isPlayerShooting = false;
+    public ParticleSystem BreakParticle;
     public Light2D BulbLight 
     {
         get 
@@ -178,6 +179,8 @@ public class BallScript : MonoBehaviour
         }
         if (ballNowHP== 1)
         {
+            BreakParticle.transform.position = transform.position;
+            BreakParticle.Play();
             ballNowHP--;
             BallPause();
 
