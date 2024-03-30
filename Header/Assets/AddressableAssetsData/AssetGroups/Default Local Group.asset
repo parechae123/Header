@@ -173,6 +173,18 @@ MonoBehaviour:
     m_SerializedLabels:
     - Materials
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 250f1a2f52549734eb211d4180f62a96
+    m_Address: HPbar_1
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - UI
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: bdf410d6a723d4344929896fddb0b9df
+    m_Address: HPbar_1_empty
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - UI
+    FlaggedDuringContentUpdateRestriction: 0
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: 489b40023fd66be419d08d79841125b1, type: 2}
   m_SchemaSet:

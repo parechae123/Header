@@ -577,7 +577,7 @@ public class BattleUI
             {
                 playerStatusUI = new GameObject("PlayerStatusPanel").AddComponent<Image>();
                 playerStatusUI.rectTransform.SetParent(BattleSceneUI);
-                RectTransform tempRectTransform= playerStatusUI.rectTransform;
+                RectTransform tempRectTransform = playerStatusUI.rectTransform;
                 Managers.instance.UI.SetUISize(ref tempRectTransform, Vector2.zero, new Vector2(0.169283211f, 0.709656119f));
                 playerStatusUI.sprite = Managers.instance.Resource.Load<Sprite>("battle_panel");
                 playerStatusUI.raycastTarget = false;
@@ -597,22 +597,58 @@ public class BattleUI
                 playerPortrait.sprite = Managers.instance.Resource.Load<Sprite>("battle_portrait");
                 RectTransform tempRect = playerPortrait.rectTransform;
                 float parentSizePercent = PlayerStatusUI.rectTransform.rect.width / PlayerStatusUI.rectTransform.rect.height;
-                Vector2 centerPos = new Vector2(0.5f, 0.6414825f);
+                Vector2 centerPos = new Vector2(0.5f, 0.5009767f);
                 int widthNumberSize = ((int)playerPortrait.sprite.rect.width).ToString().Length;
                 float getCurrentMag = 1;
                 for (int i = 0; i < widthNumberSize; i++)
                 {
                     getCurrentMag = getCurrentMag * 0.1f;
                 }
-                Vector2 halfSize = (new Vector2(playerPortrait.sprite.rect.width, playerPortrait.sprite.rect.height * parentSizePercent) * getCurrentMag)*1.5f;
-                Managers.instance.UI.SetUISize(ref tempRect,centerPos- halfSize, centerPos+ halfSize);
+                Vector2 halfSize = (new Vector2(playerPortrait.sprite.rect.width, playerPortrait.sprite.rect.height * parentSizePercent) * getCurrentMag) * 1.5f;
+                Managers.instance.UI.SetUISize(ref tempRect, centerPos - halfSize, centerPos + halfSize);
 
             }
             return playerStatusUI;
         }
     }
+    private Image playerHPBarFrontIMG;
+    public Image PlayerHPBarFrontIMG
+    {
+        get 
+        {
+            if (playerHPBarFrontIMG == null)
+            {
 
-    private Slider playerHpBar = null;
+                Image tempBackGround = new GameObject("playerHPBarBackGround").AddComponent<Image>();
+                tempBackGround.sprite = Managers.instance.Resource.Load<Sprite>("HPbar_1_empty");
+                RectTransform tempBackRect = tempBackGround.rectTransform;
+                tempBackRect.SetParent(PlayerStatusUI.rectTransform);
+                int imageSizeLength = (int)tempBackGround.sprite.rect.height.ToString().Length;
+                float ScaledSize = 1;
+                float ScalePercent = PlayerStatusUI.rectTransform.rect.width / PlayerStatusUI.rectTransform.rect.height;
+                Vector2 CenterPos = new Vector2(0.5f, 0.80f);
+                
+                for (int i = 0; i < imageSizeLength; i++)
+                {
+                    ScaledSize = ScaledSize * 0.1f;
+                }
+                Vector2 ImgSize = (new Vector2(tempBackGround.sprite.rect.width, tempBackGround.sprite.rect.height*ScalePercent)*ScaledSize)*2;
+                Managers.instance.UI.SetUISize(ref tempBackRect, CenterPos-ImgSize,CenterPos+ImgSize);
+                playerHPBarFrontIMG = new GameObject("playerHPBarFront").AddComponent<Image>();
+                playerHPBarFrontIMG.sprite = Managers.instance.Resource.Load<Sprite>("HPbar_1");
+                playerHPBarFrontIMG.type = Image.Type.Filled;
+                playerHPBarFrontIMG.fillMethod = Image.FillMethod.Vertical;
+                playerHPBarFrontIMG.fillAmount = 1;
+                RectTransform HPFrontRT = playerHPBarFrontIMG.rectTransform;
+                HPFrontRT.SetParent(tempBackRect);
+                Managers.instance.UI.SetUISize(ref HPFrontRT, Vector2.zero, Vector2.one);
+
+            }
+            return playerHPBarFrontIMG;
+        }
+    }
+
+/*    private Slider playerHpBar = null;
     private Slider PlayerHPBar
     {
         get
@@ -691,7 +727,7 @@ public class BattleUI
             }
             return playerHpBar;
         }
-    }
+    }*/
     private Image weaponImagePanel;
     private Image WeaponImagePanel
     {
@@ -704,7 +740,7 @@ public class BattleUI
                 weaponImagePanel.sprite = null;
                 weaponImagePanel.color = new Color(0, 0, 0, 0);
                 RectTransform tempRect = weaponImagePanel.rectTransform;
-                Vector2 centerPos = new Vector2(0.5f, 0.38013975f);
+                Vector2 centerPos = new Vector2(0.5f, 0.25330975f);
                 float percent = PlayerStatusUI.rectTransform.rect.width / PlayerStatusUI.rectTransform.rect.height;
                 Vector2 Size = new Vector2(0.6f, 0.6f * percent)/4;
                 Managers.instance.UI.SetUISize(ref tempRect, centerPos- Size, centerPos+ Size);
@@ -763,7 +799,7 @@ public class BattleUI
                 weaponNamePannel.rectTransform.SetParent(PlayerStatusUI.rectTransform);
                 weaponNamePannel.sprite = Managers.instance.Resource.Load<Sprite>("select_panel");
                 RectTransform tempRect = weaponNamePannel.rectTransform;
-                Vector2 centerPos = new Vector2(0.5f, 0.2260147f);
+                Vector2 centerPos = new Vector2(0.5f, 0.1496811f);
                 int imgSizeLength = ((int)weaponNamePannel.sprite.rect.width).ToString().Length;
                 float scaleMag = 1;
                 for (int i = 0; i < imgSizeLength; i++)
@@ -1266,7 +1302,7 @@ public class BattleUI
                 //TODO : enemy 체력 구현하면 여기에 넣어줘야함
 
                 RectTransform tempHpTR = tempEnemyHPbar.transform as RectTransform;
-
+                tempHpTR.gameObject.SetActive(false);
 
                 RectTransform tempHandleArea = new GameObject("HandleArea").AddComponent<RectTransform>();
                 tempHandleArea.SetParent(tempHpTR);
@@ -1336,6 +1372,7 @@ public class BattleUI
             if (enemyHPBarText == null)
             {
                 Image tempHeartIcon = new GameObject("HeartIconOnTheHPBar").AddComponent<Image>();
+
                 RectTransform tempIconTR = tempHeartIcon.rectTransform;
                 tempIconTR.SetParent(EnemyHPBar.fillRect.parent);
                 RectTransform tempParentRectTR = EnemyHPBar.fillRect.parent as RectTransform;
@@ -1361,6 +1398,7 @@ public class BattleUI
                 enemyHPBarText.color = new Color(0.7169812f, 0.7169812f, 0.7169812f, 1);
                 enemyHPBarText.resizeTextForBestFit = true;
                 enemyHPBarText.alignment = TextAnchor.MiddleLeft;
+
             }
             enemyHPBarText.text = value;
         }
@@ -1374,8 +1412,8 @@ public class BattleUI
             {
                 Image tempHeartIcon = new GameObject("HeartIconOnTheHPBar").AddComponent<Image>();
                 RectTransform tempIconTR = tempHeartIcon.rectTransform;
-                tempIconTR.SetParent(PlayerHPBar.fillRect.parent);
-                RectTransform tempParentRectTR = PlayerHPBar.fillRect.parent as RectTransform;
+                tempIconTR.SetParent(PlayerHPBarFrontIMG.rectTransform);
+                RectTransform tempParentRectTR = PlayerHPBarFrontIMG.rectTransform;
                 tempHeartIcon.sprite = Managers.instance.Resource.Load<Sprite>("HP_icon");
                 float tempParentSizePercent = tempParentRectTR.rect.size.x / tempParentRectTR.rect.size.y;
 
@@ -1392,12 +1430,14 @@ public class BattleUI
 
                 playerHPBarText = new GameObject("PlayerHPText").AddComponent<Text>();
                 RectTransform tempRect = playerHPBarText.rectTransform;
-                tempRect.SetParent(PlayerHPBar.fillRect.parent);
+                tempRect.SetParent(PlayerHPBarFrontIMG.rectTransform);
                 Managers.instance.UI.SetUISize(ref tempRect, new Vector2(tempIconTR.anchorMax.x, 1f), Vector2.right + (Vector2.up * tempIconTR.anchorMax.y));
                 playerHPBarText.font = Managers.instance.Resource.Load<Font>("InGameFont");
                 playerHPBarText.color = new Color(0.7169812f, 0.7169812f, 0.7169812f, 1);
                 playerHPBarText.resizeTextForBestFit = true;
                 playerHPBarText.alignment = TextAnchor.MiddleLeft;
+                tempHeartIcon.enabled = false;
+                //UI 구조 수정으로 아이콘 임시삭제
             }
             playerHPBarText.text = value;
         }
@@ -1738,7 +1778,7 @@ public class BattleUI
         //PlayerPortrait.sprite = ;
         //WeaponImage =
         GirlParentRT.gameObject.SetActive(false);
-        PlayerHPBar.enabled = true;
+        PlayerHPBarFrontIMG.enabled = true;
         WeaponImage.enabled = true;
         PlayerPortrait.enabled = true;
         if (ShoterController.Instance.NowBallStat != null)
@@ -1824,16 +1864,16 @@ public class BattleUI
     }
     public void HPBarActivate(float maxHP, float nowHP)
     {
-        PlayerHPBar.maxValue = maxHP;
-        PlayerHPBar.value = nowHP;
+        float MaxPerNow = nowHP / maxHP;
+        PlayerHPBarFrontIMG.fillAmount = MaxPerNow;
     }
     public void HPBarSetting(bool isPlayer, float maxHP, float nowHP)
     {
         if (isPlayer)
         {
-            PlayerHPBar.maxValue = maxHP;
-            PlayerHPBar.value = nowHP;
-            PlayerHPBarText = "HP " + PlayerHPBar.value + "/" + PlayerHPBar.maxValue;
+            float MaxPerNow = nowHP / maxHP;
+            PlayerHPBarFrontIMG.fillAmount = MaxPerNow;
+            PlayerHPBarText = (MaxPerNow * 100) + "%";
         }
         else
         {
