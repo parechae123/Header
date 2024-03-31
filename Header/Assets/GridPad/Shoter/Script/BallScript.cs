@@ -16,7 +16,20 @@ public class BallScript : MonoBehaviour
     public BulbSkills bulbSkills;
     private Light2D bulbLight;
     public bool isPlayerShooting = false;
-    public ParticleSystem BreakParticle;
+    public ParticleSystem breakParticle;
+    public ParticleSystem bounceParticle;
+    private Queue<ParticleSystem> bounceParticleQueue = new Queue<ParticleSystem>();
+    public Queue<ParticleSystem> BounceParticleQueue
+    {
+        get
+        {
+            if (bounceParticleQueue.Count == 0)
+            {
+                bounceParticleQueue.Enqueue(GameObject.Instantiate<ParticleSystem>(bounceParticle, bounceParticle.transform.parent));
+            }
+            return bounceParticleQueue;
+        }
+    }
     public Light2D BulbLight 
     {
         get 
@@ -179,10 +192,10 @@ public class BallScript : MonoBehaviour
         }
         if (ballNowHP== 1)
         {
-            BreakParticle.transform.position = transform.position;
-            BreakParticle.Play();
+
             ballNowHP--;
-            BallPause();
+
+            StartCoroutine(BreakParticleChecker(breakParticle));
 
             MonsterManager.MonsterManagerInstance.NextTurnFunctions(ShoterController.Instance.regionalDamage, ShoterController.Instance.targetDamage, ShoterController.Instance.TargetMonsterTR, () =>
             {
@@ -215,6 +228,10 @@ public class BallScript : MonoBehaviour
         else
         {
             ballNowHP--;
+            ParticleSystem tempBounceParticle = BounceParticleQueue.Dequeue();
+            tempBounceParticle.transform.position = transform.position;
+            tempBounceParticle.Play();
+            StartCoroutine(BounceParticleChecker(tempBounceParticle));
             Managers.instance.UI.BattleUICall.SetBulbDamagedText(ShoterController.Instance.NowBallStat.ballHealth,ballNowHP);
         }
     }
@@ -250,6 +267,32 @@ public class BallScript : MonoBehaviour
         BulbLight.intensity = 15;
         ShoterController.Instance.SetBall();
         blinkTimer = 0;
+    }
+    public IEnumerator BounceParticleChecker(ParticleSystem target)
+    {
+        while (target.IsAlive())
+        {
+            yield return null;
+        }
+        bounceParticleQueue.Enqueue(target);
+        Debug.LogError("파티클 현재 " + bounceParticleQueue.Count);
+    }
+    public IEnumerator BreakParticleChecker(ParticleSystem target)
+    {
+        BallRB.velocity = Vector2.zero;
+        BallCol.enabled = false;
+        BallRB.simulated = false;
+        breakParticle.Play();
+        while (!target.IsAlive())
+        {
+            yield return null;
+        }
+        breakParticle.transform.position = transform.position;
+        while (target.IsAlive())
+        {
+            yield return null;
+        }
+        BallPause();
     }
 }
 

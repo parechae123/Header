@@ -45,6 +45,11 @@ public class MonsterManager : MonoBehaviour
     //인스펙터에서 수정
     public MonsterPrefab[] monsterPrefabs = new MonsterPrefab[0];
     //인스팩터창에서 수정
+    public ParticleSystem BerserkModeEffectPrefab;
+    public ParticleSystem[] BerserkModeEffectObject = new ParticleSystem[0];
+    public ParticleSystem ExplosionEffect;
+    public ParticleSystem ExplosionSmokeEffect;
+    //awake함수에서 수정
     public Transform SetTargetMonsters
     {
         get
@@ -140,6 +145,7 @@ public class MonsterManager : MonoBehaviour
 
     private void Awake()
     {
+
         Managers.instance.UI.BattleUICall.InstallMonsterHPBar(monsterSlotCount);
         (float, float) TempDoubleFloat = CarculateMonsterFullHP;
         Managers.instance.UI.BattleUICall.HPBarSetting(false, TempDoubleFloat.Item1, TempDoubleFloat.Item2);
@@ -155,7 +161,13 @@ public class MonsterManager : MonoBehaviour
             moveSlots[i].slotPosition = playerPos + (Vector3.right * slotByXSize) + (Vector3.right * (slotByXSize * i));
         }
         NextTurn();
-
+        Array.Resize(ref BerserkModeEffectObject, monsterSlotCount);
+        for (int i = 0; i < monsterSlotCount; i++)
+        {
+            BerserkModeEffectObject[i] = GameObject.Instantiate<ParticleSystem>(BerserkModeEffectPrefab, BerserkModeEffectPrefab.transform);
+            BerserkModeEffectObject[i].transform.SetParent(BerserkModeEffectPrefab.transform.parent);
+            BerserkModeEffectObject[i].transform.position = moveSlots[i].slotPosition-Vector3.up;
+        }
         targetPosition = playerPos+Vector3.right*4;
 /*        Queue<Sprite> monsterQueue = new Queue<Sprite>();
         for (int i = 0; i < MonsterSpawnOrder.Length; i++)
@@ -253,6 +265,7 @@ public class MonsterManager : MonoBehaviour
                                         BombAttackBulb.gameObject.SetActive(false);
                                         Managers.instance.UI.BattleUICall.SetTargetUI(ShoterController.Instance.TargetMonsterTR, MonsterManager.MonsterManagerInstance.ReturnMonsterSpriteSize(ShoterController.Instance.TargetMonsterTR));
                                         isDamageDone.Invoke(total, count);
+
                                     }
                                     actionTime++;
                                 }));
@@ -466,7 +479,7 @@ public class MonsterManager : MonoBehaviour
 
         if (Managers.instance.UI.BattleUICall.isInFeverMode)
         {
-            Monsters[arrayOrder].Item2.color = Color.red;
+            BerserkModeEffectObject[BerserkModeEffectObject.Length - 1].Play();
             Monsters[arrayOrder].Item1.monsterAD = monsterPrefabs[prefabNum].stat.monsterAD * 2;
         }
         moveSlots[moveSlots.Length - 1].MonsterTR = tempComponent.transform;
@@ -476,10 +489,6 @@ public class MonsterManager : MonoBehaviour
     IEnumerator DamagedAnim(int index,bool isTargetAttack, Action isDone)
     {
         Color tempColor = Monsters[index].Item2.color;
-        if (Managers.instance.UI.BattleUICall.isInFeverMode)
-        {
-            tempColor = Color.red;
-        }
         if (isTargetAttack)
         {
             Vector3 tempPlrPos = Monsters[index].Item2.transform.position - playerPos;
@@ -580,6 +589,7 @@ public class MonsterManager : MonoBehaviour
                 Vector3 tempVec = new Vector3(timeX, (tempY * bounceForce) / (float)(i + 1), 0);
                 if (counter >= vectorArray.Length)
                 {
+
                     Debug.Log(counter);
                 }
                 vectorArray[counter] = playerPos + tempVec;
@@ -631,6 +641,10 @@ public class MonsterManager : MonoBehaviour
 
                 bombTR.position = vectors[i];
             }
+            ExplosionEffect.transform.position = bombTR.position + (Vector3.back * 4);
+            ExplosionSmokeEffect.transform.position = bombTR.position;
+            ExplosionEffect.Play();
+            ExplosionSmokeEffect.Play();
             isDone.Invoke();
         }
         else
@@ -644,6 +658,10 @@ public class MonsterManager : MonoBehaviour
 
                 Managers.instance.UI.BattleUICall.GirlBomb.rectTransform.position = vectors[i];
             }
+            ExplosionEffect.transform.position = moveSlots[0].slotPosition + (Vector3.back*4);
+            ExplosionSmokeEffect.transform.position = moveSlots[0].slotPosition;
+            ExplosionEffect.Play();
+            ExplosionSmokeEffect.Play();
             isDone.Invoke();
         }
     }
@@ -665,6 +683,7 @@ public class MonsterManager : MonoBehaviour
     }
     public void SetFeaverMode()
     {
+
         if (Managers.instance.UI.BattleUICall.isInFeverMode)
         {
             for (int i = 0; i < Monsters.Length; i++)
@@ -673,6 +692,15 @@ public class MonsterManager : MonoBehaviour
                 {
                     Monsters[i].Item1.monsterAD = Monsters[i].Item1.monsterAD * 2;
                     Monsters[i].Item2.color = Color.red;
+                    int tempArray = ReturnMonstersToSlotArray(Monsters[i].Item2.transform);
+                    if (tempArray == 0)
+                    {
+                        BerserkModeEffectObject[tempArray].Play();
+                    }
+                    Monsters[i].Item2.DOColor(Color.red, 4).OnComplete(() =>
+                    {
+                        Monsters[i].Item2.color = Color.white;
+                    });
                 }
                 else
                 {
