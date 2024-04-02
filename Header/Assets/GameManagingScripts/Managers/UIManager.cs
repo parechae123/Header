@@ -586,7 +586,7 @@ public class BattleUI
         }
     }
     private Image playerPortrait;
-    private Image PlayerPortrait
+    public Image PlayerPortrait
     {
         get
         {
@@ -608,7 +608,7 @@ public class BattleUI
                 Managers.instance.UI.SetUISize(ref tempRect, centerPos - halfSize, centerPos + halfSize);
 
             }
-            return playerStatusUI;
+            return playerPortrait;
         }
     }
     private Image playerHPBarFrontIMG;
@@ -905,7 +905,7 @@ public class BattleUI
                 girlPortrait.sprite = Managers.instance.Resource.Load<Sprite>("battle_portrait_girl");
                 girlPortrait.raycastTarget = false;
                 RectTransform tempRect = girlPortrait.rectTransform;
-                Vector2 centerPos = Vector2.one / 2f;
+                Vector2 centerPos = new Vector2(0.304383963f, 0.4f);
                 float percent = GirlParentRT.rect.width / GirlParentRT.rect.height;
                 float ScaleMag = 1;
                 int SizeLenght = ((int)GirlParentRT.rect.width.ToString().Length);
@@ -940,7 +940,7 @@ public class BattleUI
                     magScaler = magScaler * 0.1f;
                 }
                 Vector2 imageSize = (new Vector2(girlChatBubble.sprite.rect.width, girlChatBubble.sprite.rect.height*percent) * magScaler)/3f;
-                Vector2 GetCenterPos = new Vector2(0.5f, GirlPortrait.rectTransform.anchorMax.y+imageSize.y);
+                Vector2 GetCenterPos = new Vector2((GirlPortrait.rectTransform.anchorMax.x + GirlPortrait.rectTransform.anchorMin.x)/2, GirlPortrait.rectTransform.anchorMax.y+imageSize.y);
 
 
                 Managers.instance.UI.SetUISize(ref tempRect, GetCenterPos - imageSize, GetCenterPos + imageSize);

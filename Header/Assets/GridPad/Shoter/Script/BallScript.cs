@@ -27,6 +27,7 @@ public class BallScript : MonoBehaviour
             if (breakAnimSprite == null)
             {
                 breakAnimSprite = new GameObject("BreakBulbAnim").AddComponent<SpriteRenderer>();
+                breakAnimSprite.sortingLayerID = IMG.sortingLayerID;
                 breakAnimSprite.gameObject.SetActive(false);
             }
             return breakAnimSprite;

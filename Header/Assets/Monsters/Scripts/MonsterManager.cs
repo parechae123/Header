@@ -12,6 +12,7 @@ using static UnityEngine.Rendering.DebugUI;
 
 public class MonsterManager : MonoBehaviour
 {
+    [SerializeField]ParticleSystem playerDamagedParticle;
     private static MonsterManager monsterManagerInstance;
     public static MonsterManager MonsterManagerInstance
     {
@@ -678,15 +679,21 @@ public class MonsterManager : MonoBehaviour
     {
         Vector3 originPos = monster.transform.position;
         yield return monster.DOJump(playerPos, 0.7f, 1, 0.5f).WaitForCompletion();
+        playerDamagedParticle.transform.position = playerPos;
+        playerDamagedParticle.Play();
         for (int i = 0; i < 2; i++)
         {
+            Managers.instance.UI.BattleUICall.PlayerPortrait.color = Color.red;
             PlayerSprite.color = Color.red;
             yield return new WaitForSeconds(0.12f);
+            Managers.instance.UI.BattleUICall.PlayerPortrait.color = Color.white;
             PlayerSprite.color = Color.white;
             yield return new WaitForSeconds(0.12f);
         }
+
         monster.DOComplete();
         yield return monster.DOJump(originPos, 0.7f, 1, 0.5f).WaitForCompletion();
+        
         isDone.Invoke();
 
     }
