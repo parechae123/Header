@@ -111,6 +111,15 @@ public class MonsterManager : MonoBehaviour
             if (attackBulb == null)
             {
                 attackBulb = new GameObject("AttackBulb").AddComponent<SpriteRenderer>();
+                TrailRenderer tempTR = attackBulb.AddComponent<TrailRenderer>();
+                tempTR.time = 0.4f;
+                tempTR.widthCurve = new AnimationCurve(  new Keyframe(0, 0.4f), new Keyframe(1f, 0f));
+                tempTR.endColor = Color.red;
+                tempTR.startColor = Color.red;
+                Material[] TempMat = new Material[1];
+                TempMat[0] = Managers.instance.Resource.Load<Material>("BulbTrailMat");
+                tempTR.materials = TempMat;
+
             }
             attackBulb.sprite = Managers.instance.Resource.Load<Sprite>(ShoterController.Instance.NowBallStat == null ? string.Empty : ShoterController.Instance.NowBallStat.ballName);
             return attackBulb;

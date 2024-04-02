@@ -1,0 +1,1393 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
+  m_Name: BreakBulbs
+  m_EditorClassIdentifier: 
+  m_GroupName: BreakBulbs
+  m_Data:
+    m_SerializedData: []
+  m_GUID: 6a3d71af934f5f945b419954a3ca657e
+  m_SerializeEntries:
+  - m_GUID: 9edb4badc4a5e364e88618872569d7c9
+    m_Address: aim_bulb001
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - InGameSprites
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 0f76635a70a2f1b4fa86a11b8451f6b8
+    m_Address: aim_bulb000
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - InGameSprites
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 4a0f5f72bc7f6af48bb1e61b2b37b275
+    m_Address: aim_bulb002
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - InGameSprites
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 668cf9ed70e83354d9f73498547870c3
+    m_Address: aim_bulb003
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - InGameSprites
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: e640c806599fe7f40b62a77680383ee6
+    m_Address: aim_bulb004
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - InGameSprites
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 693b8e9596d5b5349b31684e5ef1f619
+    m_Address: aim_bulb005
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - InGameSprites
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: b02ac41458881a9468fc4dca3825a371
+    m_Address: aim_bulb006
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - InGameSprites
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 95f4a96d336006541b9554f67593a32a
+    m_Address: aim_bulb007
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - InGameSprites
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 3c34d0544d666c649a9eab18cdf86185
+    m_Address: aim_bulb008
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - InGameSprites
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 4e1695e7a59f8f04dbadac7fa75c5bdb
+    m_Address: aim_bulb009
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - InGameSprites
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: bd1673d428b70ad4592176b372b485d8
+    m_Address: aim_bulb010
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - InGameSprites
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: e672e0cf01daa884a8f8fed37c3fdd31
+    m_Address: aim_bulb011
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - InGameSprites
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 832fcaa76ec7b6943bb679c050ffcb7c
+    m_Address: aim_bulb012
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - InGameSprites
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: d808c445659c5724abb444abf022ed54
+    m_Address: aim_bulb013
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - InGameSprites
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 6c6d41fd69f8ec5479bcd8450c6cef29
+    m_Address: aim_bulb014
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - InGameSprites
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 3ba202e52b0f72f4082ddd2454a033eb
+    m_Address: aim_bulb015
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - InGameSprites
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 82af98a7831f2d54a9f45f86597eeddb
+    m_Address: cotton_bulb000
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - InGameSprites
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: a14278df0b25cf64eaa443d34e9824d9
+    m_Address: cotton_bulb001
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - InGameSprites
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: c0f4183c5f9b3514087e0001b0f11b79
+    m_Address: cotton_bulb002
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - InGameSprites
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 4241b61c9e3980643b879a6c50119127
+    m_Address: cotton_bulb003
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - InGameSprites
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 2d070c4b480754740aef8bf6419cb1a5
+    m_Address: cotton_bulb004
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - InGameSprites
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: d268b8c53237906479984e950a99fe56
+    m_Address: cotton_bulb005
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - InGameSprites
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 0208462e6d049c64fbf663bbe2b2da6e
+    m_Address: cotton_bulb006
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - InGameSprites
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 904c05565abcd64438eece97a9c4372c
+    m_Address: cotton_bulb007
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - InGameSprites
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: fe64b246cdc3b4d49919b27b8284d2be
+    m_Address: cotton_bulb008
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - InGameSprites
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 3fcc4c5af6ba0ee48beb330866315b82
+    m_Address: cotton_bulb009
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - InGameSprites
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 4d911117cc2f708448d345182d207997
+    m_Address: cotton_bulb010
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - InGameSprites
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: c7c4ff38501aa704ab58fdb10c505895
+    m_Address: cotton_bulb011
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - InGameSprites
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 5a64003bc7d9d2b49b55fda448fe1220
+    m_Address: cotton_bulb012
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - InGameSprites
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 1d93772daee4aa348bbb6e5b0f7949ed
+    m_Address: cotton_bulb013
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - InGameSprites
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 2c488705ac666934282088a9dc9b8a58
+    m_Address: cotton_bulb014
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - InGameSprites
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 9b11555e24542344d8a395692672f888
+    m_Address: cotton_bulb015
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - InGameSprites
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 840cc11ec3f08f946994e50b0066eda3
+    m_Address: cotton_bulb016
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - InGameSprites
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 0dd1a7d2e4492bd47bc1f9d19cff519d
+    m_Address: cotton_bulb017
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - InGameSprites
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: fbc81c7e39908bb4cbef2ecfc2725237
+    m_Address: cotton_bulb018
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - InGameSprites
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: edfd8995aa46756488e7518876613d0a
+    m_Address: deco_bulb000
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - InGameSprites
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 941bd4b7f2b3b634fa28121eb4828829
+    m_Address: deco_bulb001
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - InGameSprites
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 6cdc151cce7afae48837d21703102254
+    m_Address: deco_bulb002
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - InGameSprites
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 5f5bf720202c2b348a9028015ca8599e
+    m_Address: deco_bulb003
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - InGameSprites
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 2e3de5c12128aa94094fe7ff967c07ef
+    m_Address: deco_bulb004
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - InGameSprites
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: d9b5770f68a53b74c8535c9236ddc084
+    m_Address: deco_bulb005
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - InGameSprites
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 189a702c99f3b5e49ade1f10f153309f
+    m_Address: deco_bulb006
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - InGameSprites
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: d1ffae981285b074eaf84933090d81b5
+    m_Address: deco_bulb007
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - InGameSprites
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: b2ca67043bc3ca74f984e299ff84936f
+    m_Address: deco_bulb008
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - InGameSprites
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: cc06c40511aa9ce48b6b581a67dcae70
+    m_Address: deco_bulb009
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - InGameSprites
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: b5c1d595e4a60c6478d6b066b30c6b80
+    m_Address: deco_bulb010
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - InGameSprites
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: dea18f07bff9d334b95a9f3b85e59da8
+    m_Address: deco_bulb011
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - InGameSprites
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: cc03ed38b1e66424587d71ba9aa2ee0c
+    m_Address: deco_bulb012
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - InGameSprites
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: b5aa3069a631c764ba35ddbc63232b12
+    m_Address: deco_bulb013
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - InGameSprites
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 0c27c0f0486537748b2c3f60b32613c6
+    m_Address: deco_bulb014
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - InGameSprites
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 963af364b274fb34384cdc2830d97f0b
+    m_Address: deco_bulb015
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - InGameSprites
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: e1ecbbc4a4c69f24d9c62508080f9223
+    m_Address: deco_bulb016
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - InGameSprites
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: b6db296d4ab44e84db80b9a4749ebeb4
+    m_Address: deco_bulb017
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - InGameSprites
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 3a4ea012992e15f4d81dc2e9c8c06a0c
+    m_Address: funny_bulb000
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - InGameSprites
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 674e7d7ef54b3dc4399a7fcddddef783
+    m_Address: funny_bulb001
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - InGameSprites
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: c120501401601b64b86e3cd1d941d552
+    m_Address: funny_bulb002
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - InGameSprites
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 55387e56e7c77b84e9cc5e357350d915
+    m_Address: funny_bulb003
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - InGameSprites
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: ad8fd7180c520e14ea91f1b6db16b560
+    m_Address: funny_bulb004
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - InGameSprites
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: a6670818b8f7b904eab986042a49d6f9
+    m_Address: funny_bulb005
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - InGameSprites
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: f3dca11701de4a24dba7884f2e739b64
+    m_Address: funny_bulb006
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - InGameSprites
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: f64a18b353f3f804ba79dfa58471672f
+    m_Address: funny_bulb007
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - InGameSprites
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 3d61f2f4e20e6034287be00dd66efe41
+    m_Address: funny_bulb008
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - InGameSprites
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: cb3518d5e71b90348a777dcdb6afcaaf
+    m_Address: funny_bulb009
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - InGameSprites
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: bb7c62d5e3e8b0b43b88150094f7041b
+    m_Address: funny_bulb010
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - InGameSprites
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 85010710d7bc4244988e6b6ea90aa533
+    m_Address: funny_bulb011
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - InGameSprites
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 436de79628c191f4a836001f9fb600ad
+    m_Address: funny_bulb012
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - InGameSprites
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: b5f88e6cafb0eb648bb2bfd625349a44
+    m_Address: funny_bulb013
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - InGameSprites
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 391b788f9a34cb6408d140b5763f718a
+    m_Address: funny_bulb014
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - InGameSprites
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 72ae8782aa5ed9a439f3fa3010bd340c
+    m_Address: funny_bulb015
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - InGameSprites
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: c1c3f4fa34e4ba3498c7410904166a3c
+    m_Address: funny_bulb016
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - InGameSprites
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 6190a9bfe82c531498f9650e8531d2e8
+    m_Address: funny_bulb017
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - InGameSprites
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 00c170241acf25e40a6e6c5f4706f20b
+    m_Address: gold_bulb000
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - InGameSprites
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 1dccdb848b3c899479172f1705b0c641
+    m_Address: gold_bulb001
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - InGameSprites
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: badbed4b9b78d5e488ae505f3fafe020
+    m_Address: gold_bulb002
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - InGameSprites
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 765da5d376816264d9579c94e49c9ff9
+    m_Address: gold_bulb003
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - InGameSprites
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 206ba8e1e67c53844a0fca91788c5ace
+    m_Address: gold_bulb004
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - InGameSprites
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 025376c59de1e914081c621fc4cfd821
+    m_Address: gold_bulb005
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - InGameSprites
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 72557579e7dafda4b8ad1e639bad8034
+    m_Address: gold_bulb006
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - InGameSprites
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 11c34a52b6ea26c41b80678bc1debe5a
+    m_Address: gold_bulb007
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - InGameSprites
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 1ecedfaf58eb90747b39d072cf800cc6
+    m_Address: gold_bulb008
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - InGameSprites
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 2b739ac2acebc7d40bf53255897f1b7c
+    m_Address: gold_bulb009
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - InGameSprites
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 4f6a9dfed344c7a458af89abef53b233
+    m_Address: gold_bulb010
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - InGameSprites
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: ff7a09f050206fc44bac6884787891f0
+    m_Address: HP_bulb000
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - InGameSprites
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 435a09d15d0c9d541b96128ed3f100c5
+    m_Address: HP_bulb001
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - InGameSprites
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 1a261aa9ef1c7ad469a9d8b8451bb31f
+    m_Address: HP_bulb002
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - InGameSprites
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 3ec48a85131cb7e40b0127fd52f0c05b
+    m_Address: HP_bulb003
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - InGameSprites
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 622a258fd9506d242a74c0fb961f4ae5
+    m_Address: HP_bulb004
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - InGameSprites
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: de2e18c41d38a8d4dac48c534722a347
+    m_Address: HP_bulb005
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - InGameSprites
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 0096af323ef357d4380cbb2bb776ad91
+    m_Address: HP_bulb006
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - InGameSprites
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 88c1bc4a86d003e4b8bebe611f9ef6c0
+    m_Address: HP_bulb007
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - InGameSprites
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 1121f4fa48249a3448c84dcb56f5bb9f
+    m_Address: HP_bulb008
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - InGameSprites
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: cd12b4f29bbda0c4c92f513ebe3963e9
+    m_Address: HP_bulb009
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - InGameSprites
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: eb44168fae53df54a9b722066b950b0f
+    m_Address: HP_bulb010
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - InGameSprites
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 58cbe946cfa0fe04f9addcd8b9d2539f
+    m_Address: HP_bulb011
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - InGameSprites
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 8c4fec7b7deab8344a8cc92645c30a99
+    m_Address: HP_bulb012
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - InGameSprites
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 70437647790645749a4acf179401432c
+    m_Address: HP_bulb013
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - InGameSprites
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: d988cab8d6e780d4cb3d853526c7fb1a
+    m_Address: HP_bulb014
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - InGameSprites
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: a06d5a6480a3b1c4db65b6421db407e0
+    m_Address: HP_bulb015
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - InGameSprites
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 95ab6b57a0589a64e84daec725f43a83
+    m_Address: HP_bulb016
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - InGameSprites
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: ad1b0eda542558a4e8c457df84a3006f
+    m_Address: ink_bulb000
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - InGameSprites
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 37383055a58294a4aa35ec1a261f45dd
+    m_Address: ink_bulb001
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - InGameSprites
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 8c67f208a0b909a458e76db6ad0ae692
+    m_Address: ink_bulb002
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - InGameSprites
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 10e0f5e774469e34fba91530836de936
+    m_Address: ink_bulb003
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - InGameSprites
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: fcd49745f95b9b243b85cae9a9adb1ef
+    m_Address: ink_bulb004
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - InGameSprites
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: e1b8311e8fa93bb429af6864df94657e
+    m_Address: ink_bulb005
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - InGameSprites
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 7203f937bc0253f4eb5f40d369d5b3a3
+    m_Address: ink_bulb006
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - InGameSprites
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: af1ff12caa1b388448ad16992f302bdd
+    m_Address: ink_bulb007
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - InGameSprites
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 4249daa4aac67844bb2b1f841a60bed4
+    m_Address: ink_bulb008
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - InGameSprites
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: a07877787f2db77418cd72c26fd9a5af
+    m_Address: ink_bulb009
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - InGameSprites
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 5fcf297d96fdbe0498576d7c2eb1034c
+    m_Address: ink_bulb010
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - InGameSprites
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 612bb010e7599e647ab8c6cc3d8f98c0
+    m_Address: ink_bulb011
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - InGameSprites
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: a87fe3399b2605e4191d49a372724be1
+    m_Address: ink_bulb012
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - InGameSprites
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: f93ee102e0cd91e4ea97e9eda699f83f
+    m_Address: ink_bulb013
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - InGameSprites
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 368845c88966af74cadfe0950e503917
+    m_Address: ink_bulb014
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - InGameSprites
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 7432606aefb9f1d4aa0300b608737925
+    m_Address: ink_bulb015
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - InGameSprites
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: cc408f89ad7cd4f45ab98d34efbe90aa
+    m_Address: ink_bulb016
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - InGameSprites
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 43bb98373aa59f9478d544b71a7a0fd3
+    m_Address: ink_bulb017
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - InGameSprites
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 50ce169012bf742449d9f521bfc75358
+    m_Address: metal_bulb000
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - InGameSprites
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: f598647be0e1f7e42a4ea92d56b8b929
+    m_Address: metal_bulb001
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - InGameSprites
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 034535f4455ded24392904217cdbb669
+    m_Address: metal_bulb002
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - InGameSprites
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: abb8f5d2555406649b038534c5851074
+    m_Address: metal_bulb003
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - InGameSprites
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 1e7add7223a5a3e4582aeb8b249d6bca
+    m_Address: metal_bulb004
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - InGameSprites
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 1a13a56a96e6e874b9c2a962a62704fb
+    m_Address: metal_bulb005
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - InGameSprites
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: e972ad177f58cda46ba94a2943800030
+    m_Address: metal_bulb006
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - InGameSprites
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 2af1692662a1ceb459a2e84aa8cff206
+    m_Address: metal_bulb007
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - InGameSprites
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 49b807c620adf66458fea2b385bfc3be
+    m_Address: metal_bulb008
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - InGameSprites
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: ed01c173d08e154419f1bc1aaa8efbe1
+    m_Address: metal_bulb009
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - InGameSprites
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 196ccd71a36c41a40987448d053fa050
+    m_Address: metal_bulb010
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - InGameSprites
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: f55fe189f8b201a4fb0db19362f3ee64
+    m_Address: metal_bulb011
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - InGameSprites
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 416850e6504f6264ca669105f13aa997
+    m_Address: metal_bulb012
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - InGameSprites
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: fc456eb015ee4454495868f1804338e5
+    m_Address: metal_bulb013
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - InGameSprites
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: d9e54f33b1a14244ca8c9c31509d14d6
+    m_Address: metal_bulb014
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - InGameSprites
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: c079c2338cf6bdd4d8e4bfc3f54d4af4
+    m_Address: metal_bulb015
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - InGameSprites
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 2026a8e47e62be9408c30b82e6b2aad6
+    m_Address: metal_bulb016
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - InGameSprites
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 5099e5712460f9a46b5da886582ac23c
+    m_Address: metal_bulb017
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - InGameSprites
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 1b2c27f5d60224042aa1682cea60fc63
+    m_Address: most_perfect_bulb000
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - InGameSprites
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 64c9130df216dbe4a91d0e9c7881041a
+    m_Address: most_perfect_bulb001
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - InGameSprites
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 6a0d9a10942edef469ef3c6da2ac2862
+    m_Address: most_perfect_bulb002
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - InGameSprites
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 59a374fd0e010f54ba313ac22be59c7c
+    m_Address: most_perfect_bulb003
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - InGameSprites
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 5fad870ee3e129d4b97266d3d0a45b95
+    m_Address: most_perfect_bulb004
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - InGameSprites
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 5215241ab57b12443b209b4d8550c10f
+    m_Address: most_perfect_bulb005
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - InGameSprites
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 0ef39f6ab77aa144a9253bd3bb915a75
+    m_Address: most_perfect_bulb006
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - InGameSprites
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: cc94e4cb3846a0f41afcec1348d03204
+    m_Address: most_perfect_bulb007
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - InGameSprites
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 8ef686d678da62748b8a405158aef1ec
+    m_Address: most_perfect_bulb008
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - InGameSprites
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 9ceac0ae357fad74d833ee2eaad12d60
+    m_Address: most_perfect_bulb009
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - InGameSprites
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 0bfbccf16765b3d4b87eaf28af7f2da5
+    m_Address: most_perfect_bulb010
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - InGameSprites
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 1c1260fdba8e1a24da4598ca85450b3f
+    m_Address: most_perfect_bulb011
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - InGameSprites
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: c05cd6197855f994983c71830092f6e6
+    m_Address: most_perfect_bulb012
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - InGameSprites
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 9337201ad133ab347b79f89774321da2
+    m_Address: most_perfect_bulb013
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - InGameSprites
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 98a8ddcf4e5a48b4bbd59010a9253ffc
+    m_Address: most_perfect_bulb014
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - InGameSprites
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: ba7248093dc82144790474cd97861263
+    m_Address: most_perfect_bulb015
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - InGameSprites
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: f39c90a5034559c45adf009b8677cb21
+    m_Address: most_perfect_bulb016
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - InGameSprites
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 543e1c29984a8ee4c82f54382971dc70
+    m_Address: nine_bulb000
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - InGameSprites
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: fcd0be9eda2455f43b1c0ed26db3bbe8
+    m_Address: nine_bulb001
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - InGameSprites
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: d6a955769452b6f43b8304ee2bbefb2c
+    m_Address: nine_bulb002
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - InGameSprites
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 61f4e099e34d54745bbbf02e23450147
+    m_Address: nine_bulb003
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - InGameSprites
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 679bd4efd5ba4714e9a29c518991860a
+    m_Address: nine_bulb004
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - InGameSprites
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 7bafe1e0bd91ee34b85a7eed45d06ffb
+    m_Address: nine_bulb005
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - InGameSprites
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: c20d659f7b8b40b4cb62aa3d945c8e20
+    m_Address: nine_bulb006
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - InGameSprites
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 000ec9eb841e7ae41a192c769d57506b
+    m_Address: nine_bulb007
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - InGameSprites
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 992824ec49996c34d8b1ddb68663a482
+    m_Address: nine_bulb008
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - InGameSprites
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: b7b2cd587203e0348a35a77dac155884
+    m_Address: nine_bulb009
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - InGameSprites
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 50b379eae3c855e43bcf5a098648fb3f
+    m_Address: nine_bulb010
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - InGameSprites
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 1d7d5ad10f7f1374db1d515d3fd33c33
+    m_Address: nine_bulb011
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - InGameSprites
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: b4bf740fe2b82e1418909061ade6ea32
+    m_Address: nine_bulb012
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - InGameSprites
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 1620da7c1729dac4983f74b3923c4050
+    m_Address: nine_bulb013
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - InGameSprites
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 4fcdc55212dd81d4f8dd88960c716d11
+    m_Address: nine_bulb014
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - InGameSprites
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: ac0918bddeba43f4b802089f2ae562f0
+    m_Address: nine_bulb015
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - InGameSprites
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: a3730241fd09d8f42b094863a75e09f6
+    m_Address: nine_bulb016
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - InGameSprites
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: fd4e5a27eafbaa34ebfef6a14937ae38
+    m_Address: nine_bulb017
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - InGameSprites
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 06cc50232b2a3e644af5b6b86d60d08c
+    m_Address: normal_bulb000
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - InGameSprites
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 9c4f3edc3125e5d45a9a15f981e5b168
+    m_Address: normal_bulb001
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - InGameSprites
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 236693e208b7fd649976d843f6ff43da
+    m_Address: normal_bulb002
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - InGameSprites
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: daa30c07d31eed249aa6074326c9ffde
+    m_Address: normal_bulb003
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - InGameSprites
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: ca0e215332d9e8743a8ef68dfbb26d6d
+    m_Address: normal_bulb004
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - InGameSprites
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: d42519a85c630fd4f88c9a637238d0ca
+    m_Address: normal_bulb005
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - InGameSprites
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 9a2bd55d5882e164da705e0ade299395
+    m_Address: normal_bulb006
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - InGameSprites
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: f52bcbf251a53c14aa99144f0e4206e1
+    m_Address: normal_bulb007
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - InGameSprites
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 390d0c5e0444618449e5ac80fc83ae89
+    m_Address: normal_bulb008
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - InGameSprites
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: cf889e200f245294bb0d736615745dab
+    m_Address: normal_bulb009
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - InGameSprites
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 027c0cfadc4152b469e5cc437c9b931b
+    m_Address: normal_bulb010
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - InGameSprites
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: cd3db5ad8d1bedb4fb6fd127035c1601
+    m_Address: normal_bulb011
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - InGameSprites
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: d295613cbce8e1b49a07d0614b7d89fc
+    m_Address: normal_bulb012
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - InGameSprites
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 6da1dd544fb9f744e817c2e85b3e54bb
+    m_Address: normal_bulb013
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - InGameSprites
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 7c17946eec495114fb4ae773edfc490d
+    m_Address: normal_bulb014
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - InGameSprites
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: b3407a1d840e51e4b943ff5a40029501
+    m_Address: normal_bulb015
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - InGameSprites
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: dd299833cbf88f340bd3667110e0d6c7
+    m_Address: normal_bulb016
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - InGameSprites
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: ef3f18153691aaa4f86f177601b4148f
+    m_Address: shine_bulb000
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - InGameSprites
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 769e25b0896ef8144ac8a1d0768db607
+    m_Address: shine_bulb001
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - InGameSprites
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 8be36bce97728c246bfd04b80d34f208
+    m_Address: shine_bulb002
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - InGameSprites
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 1cf046556d2e0a1498126c2d10ec896b
+    m_Address: shine_bulb003
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - InGameSprites
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 09e4ad086cfafd14eb78a4ad3986b8a2
+    m_Address: shine_bulb004
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - InGameSprites
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 0ba74b0d112ac6143962f5ff24de49d2
+    m_Address: shine_bulb005
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - InGameSprites
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: bbacd424b6c0b514e80698d075123c29
+    m_Address: shine_bulb006
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - InGameSprites
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 1f172ec8179c2b248acc80794aca609b
+    m_Address: shine_bulb007
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - InGameSprites
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: ae12fbcfa8448c443aa4996f5ac498df
+    m_Address: shine_bulb008
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - InGameSprites
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: bafb88e46f72d1945a08c404f41bcc97
+    m_Address: shine_bulb009
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - InGameSprites
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 0364b10a7c50ebc44838cd098f00c812
+    m_Address: shine_bulb010
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - InGameSprites
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: fba91e6c48268ce46aa6f77b2d1be35b
+    m_Address: shine_bulb011
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - InGameSprites
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 12fb5f0fb54784b428ff4cf66dddca86
+    m_Address: shine_bulb012
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - InGameSprites
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: a576b3e01b4922346b4d4e154a1b7d46
+    m_Address: stone_bulb000
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - InGameSprites
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 28c245a496a82ab4cbe6f0c35eab61fe
+    m_Address: stone_bulb001
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - InGameSprites
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 2149d5a77a82674499c107fc678b359b
+    m_Address: stone_bulb002
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - InGameSprites
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: a5e85ef2d7ebd34429dee7fe04401797
+    m_Address: stone_bulb003
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - InGameSprites
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 5c4e5ae2b0c28e8478a5fa1e7d69c7e4
+    m_Address: stone_bulb004
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - InGameSprites
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 20a19a9fde7d2444b9015b270c012b46
+    m_Address: stone_bulb005
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - InGameSprites
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 9b367d642c0f48442b223fdaa79ce0bb
+    m_Address: stone_bulb006
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - InGameSprites
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 113ae520b3de83b4b9ac152ab2237105
+    m_Address: stone_bulb007
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - InGameSprites
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 5cd3f1147047f9940842a1d900b0781c
+    m_Address: stone_bulb008
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - InGameSprites
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 512837877aaf3e54c9bf5b8616c02fc4
+    m_Address: stone_bulb009
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - InGameSprites
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: df20c326e0b81e94d911d2e76968a4d9
+    m_Address: stone_bulb010
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - InGameSprites
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: ca7aff5ac057eda44b70f4c5207bbb44
+    m_Address: stone_bulb011
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - InGameSprites
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: a1c49f8f40d737d4cb8296b9f2470639
+    m_Address: stone_bulb012
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - InGameSprites
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 8dbd851fcc55daa46b5fad4fe3e55582
+    m_Address: stone_bulb013
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - InGameSprites
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 9183df50698f88c4ab75912e9fc0542a
+    m_Address: stone_bulb014
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - InGameSprites
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: a84e3379543427544a70c8832ad618b3
+    m_Address: stone_bulb015
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - InGameSprites
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 3ea606ddaceb88c488b3452eb99920ac
+    m_Address: torch_bulb000
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - InGameSprites
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 063085a1418c2b241aa93ae867259b74
+    m_Address: torch_bulb001
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - InGameSprites
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: f36d4af6b64568841ab6f0e7264dd552
+    m_Address: torch_bulb002
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - InGameSprites
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 00600a089a212ff48b3496087c386667
+    m_Address: torch_bulb003
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - InGameSprites
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 2d7c760f891896f40b20446f695de6bd
+    m_Address: torch_bulb004
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - InGameSprites
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: cd151631f0d1f3241824b64619c7fbcd
+    m_Address: torch_bulb005
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - InGameSprites
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 694510a8295218e4096fe86d173d6596
+    m_Address: torch_bulb006
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - InGameSprites
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: ab0484264f0d0ee42afa6ba1609532b9
+    m_Address: torch_bulb007
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - InGameSprites
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 03a9202193af67841a76d6aff3bf2c95
+    m_Address: torch_bulb008
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - InGameSprites
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 79be964a3eb43c449bf55f414c5f93b1
+    m_Address: torch_bulb009
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - InGameSprites
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 398d7f5500593994bacd718f9001820b
+    m_Address: torch_bulb010
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - InGameSprites
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 690ad4550c46aa648bd0bcef5c9ffe5e
+    m_Address: torch_bulb011
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - InGameSprites
+    FlaggedDuringContentUpdateRestriction: 0
+  m_ReadOnly: 0
+  m_Settings: {fileID: 11400000, guid: 489b40023fd66be419d08d79841125b1, type: 2}
+  m_SchemaSet:
+    m_Schemas:
+    - {fileID: 11400000, guid: db56b9e13886a4f4aaccae34ccbf5068, type: 2}
+    - {fileID: 11400000, guid: e6b06853d0ab2964eac2b19919050c3c, type: 2}

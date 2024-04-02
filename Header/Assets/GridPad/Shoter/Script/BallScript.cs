@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
@@ -18,6 +19,19 @@ public class BallScript : MonoBehaviour
     public bool isPlayerShooting = false;
     public ParticleSystem breakParticle;
     public ParticleSystem bounceParticle;
+    private SpriteRenderer breakAnimSprite;
+    public SpriteRenderer BreakAnimSprite
+    {
+        get
+        {
+            if (breakAnimSprite == null)
+            {
+                breakAnimSprite = new GameObject("BreakBulbAnim").AddComponent<SpriteRenderer>();
+                breakAnimSprite.gameObject.SetActive(false);
+            }
+            return breakAnimSprite;
+        }
+    }
     private Queue<ParticleSystem> bounceParticleQueue = new Queue<ParticleSystem>();
     public Queue<ParticleSystem> BounceParticleQueue
     {
@@ -133,6 +147,7 @@ public class BallScript : MonoBehaviour
     } 
     public void BallPause()
     {
+        IMG.enabled = true;
         if (bulbSkills != null)
         {
             bulbSkills.BreakEventSkills();
@@ -195,35 +210,38 @@ public class BallScript : MonoBehaviour
 
             ballNowHP--;
 
-            StartCoroutine(BreakParticleChecker(breakParticle));
-
-            MonsterManager.MonsterManagerInstance.NextTurnFunctions(ShoterController.Instance.regionalDamage, ShoterController.Instance.targetDamage, ShoterController.Instance.TargetMonsterTR, () =>
+            StartCoroutine(BreakParticleChecker(breakParticle, () =>
             {
-                if (100-Managers.instance.PlayerDataManager.girlAttackChance<=Random.Range(0,101))
+
+                MonsterManager.MonsterManagerInstance.NextTurnFunctions(ShoterController.Instance.regionalDamage, ShoterController.Instance.targetDamage, ShoterController.Instance.TargetMonsterTR, () =>
                 {
-                    MonsterManager.MonsterManagerInstance.DamageToAllMonsters(Managers.instance.PlayerDataManager.girlAD, (total, count) =>
+                    if (100 - Managers.instance.PlayerDataManager.girlAttackChance <= UnityEngine.Random.Range(0, 101))
                     {
+                        MonsterManager.MonsterManagerInstance.DamageToAllMonsters(Managers.instance.PlayerDataManager.girlAD, (total, count) =>
+                        {
+                            ResetBall();
+                            ShoterController.Instance.regionalDamage = 0;
+                            ShoterController.Instance.targetDamage = 0;
+                        }, true);
+                        Managers.instance.UI.BattleUICall.GirlTextAttack("영차!!", Color.blue, Color.white);
+                        //TODO : 소녀 공격 구현
+                    }
+                    else
+                    {
+                        Managers.instance.UI.BattleUICall.GirlTextAttack("아쉬운거죠 뭐", Color.red, Color.white);
                         ResetBall();
                         ShoterController.Instance.regionalDamage = 0;
                         ShoterController.Instance.targetDamage = 0;
-                    },true);
-                    Managers.instance.UI.BattleUICall.GirlTextAttack("영차!!",Color.blue,Color.white);
-                    //TODO : 소녀 공격 구현
-                }
-                else
-                {
-                    Managers.instance.UI.BattleUICall.GirlTextAttack("아쉬운거죠 뭐", Color.red, Color.white);
-                    ResetBall();
-                    ShoterController.Instance.regionalDamage = 0;
-                    ShoterController.Instance.targetDamage = 0;
-                }
-                if (Managers.instance.PlayerDataManager.RemoveBall(ShoterController.Instance.NowBallStat))
-                {
-                    ShoterController.Instance.SetBallOnNext();
-                }
+                    }
+                    if (Managers.instance.PlayerDataManager.RemoveBall(ShoterController.Instance.NowBallStat))
+                    {
+                        ShoterController.Instance.SetBallOnNext();
+                    }
 
-            }
-            );
+                }
+                );
+            }));
+
         }
         else
         {
@@ -277,22 +295,52 @@ public class BallScript : MonoBehaviour
         bounceParticleQueue.Enqueue(target);
         Debug.LogError("파티클 현재 " + bounceParticleQueue.Count);
     }
-    public IEnumerator BreakParticleChecker(ParticleSystem target)
+    public IEnumerator BreakParticleChecker(ParticleSystem target,Action callBack)
     {
         BallRB.velocity = Vector2.zero;
         BallCol.enabled = false;
         BallRB.simulated = false;
-        breakParticle.Play();
+        Sprite[] tempSprites = new Sprite[1];
+        string tempNum = "000";
+       for (int i = 0; i < int.MaxValue;i++)
+        {
+            tempNum = tempNum.Remove(tempNum.Length- (i.ToString().Length));
+            tempNum = tempNum + i;
+
+            Sprite singleSprite = Managers.instance.Resource.Load<Sprite>(ShoterController.Instance.NowBallStat.ballName + tempNum);
+            if (singleSprite != null)
+            {
+                Array.Resize(ref tempSprites, tempSprites.Length + 1);
+                tempSprites[i] = singleSprite;
+            }
+            else
+            {
+                Array.Resize(ref tempSprites, tempSprites.Length - 1);
+                break;
+            }
+        }
+        target.transform.position = transform.position;
+        target.Play();
         while (!target.IsAlive())
         {
             yield return null;
         }
-        breakParticle.transform.position = transform.position;
+        BreakAnimSprite.transform.position = transform.position+new Vector3(-0.0467124f, 1.15405947f, 0);
+        IMG.enabled = false;
+        BreakAnimSprite.transform.localScale = new Vector3(0.451990008f, 0.451990008f, 0.451990008f);
+        BreakAnimSprite.gameObject.SetActive(true);
+        for (int i = 0; i < tempSprites.Length; i++)
+        {
+            BreakAnimSprite.sprite = tempSprites[i];
+            yield return new WaitForSeconds(1f / tempSprites.Length >= Time.deltaTime? 1f / tempSprites.Length : Time.deltaTime*tempSprites.Length);
+        }
+        BreakAnimSprite.gameObject.SetActive(false);
         while (target.IsAlive())
         {
             yield return null;
         }
         BallPause();
+        callBack.Invoke();
     }
 }
 
