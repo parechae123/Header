@@ -21,6 +21,7 @@ public class UIManager
     public DialogSystem DialogCall = new DialogSystem();
     public BattleUI BattleUICall = new BattleUI();
     public ShopUI ShopUICall = new ShopUI();
+    public OptionUI OptionUICall = new OptionUI();
 
     private Stack<Transform> UIStack = new Stack<Transform>();
     public List<Transform> MoveAbleCheckerList = new List<Transform>();
@@ -37,7 +38,11 @@ public class UIManager
             {
                 TopViewPlayer.Instance.isMoveAble = MoveAbleChecker();
             }
-
+        }
+        else
+        {
+            OptionUICall.OptionPannel.gameObject.SetActive(true);
+            UIStack.Push(OptionUICall.OptionPannel.rectTransform);
         }
     }
     public void CheckerRegist(Transform tr)
@@ -2797,5 +2802,72 @@ public class ShopUI
 }
 public class OptionUI
 {
+    private Image optionPannel;
+    public Image OptionPannel 
+    { 
+        get 
+        {
+            if (optionPannel == null)
+            {
+                optionPannel = new GameObject("OptionPannel").AddComponent<Image>();
+                RectTransform tempRect = optionPannel.rectTransform;
+                optionPannel.rectTransform.SetParent(Managers.instance.UI.LoadingUIProps.SceneMainCanvas);
+                Sprite tempSprite = Managers.instance.Resource.Load<Sprite>("");
+                float GetPercent = 1;
+                //TODO : 키값 입력필요
+                for (int i = 0; i < ((int)tempSprite.rect.height).ToString().Length; i++)
+                {
+                    GetPercent = GetPercent * 0.1f;
+                }
+                Vector2 size = new Vector2(tempSprite.rect.width, tempSprite.rect.height)*GetPercent;
+                Vector2 pos = new Vector2(0.5f,0.5f);
+                Managers.instance.UI.SetUISize(ref tempRect, size-pos, size+pos);
+            }
+            return optionPannel; 
+        }
+    }
+    private Button exitButton;
+    public Button ExitButton
+    {
+        get 
+        { 
+            if (exitButton == null)
+            {
+                exitButton = new GameObject("OptionExitBTN").AddComponent<Button>();
+                RectTransform TempBTN = exitButton.transform as RectTransform;
+                
+                exitButton.onClick.AddListener(() =>
+                {
+                    Managers.instance.UI.TargetUIOnOff(OptionPannel.rectTransform, false);
+                });
+            }
+            return exitButton;
+        }
+    }
+
+    private Image optionInsidePannel;
+    public Image OptionInsidePannel
+    {
+        get
+        {
+            if (optionInsidePannel == null)
+            {
+                optionInsidePannel = new GameObject("OptionPannel").AddComponent<Image>();
+                RectTransform tempRect = optionInsidePannel.rectTransform;
+                optionInsidePannel.rectTransform.SetParent(Managers.instance.UI.LoadingUIProps.SceneMainCanvas);
+                Sprite tempSprite = Managers.instance.Resource.Load<Sprite>("");
+                float GetPercent = 1;
+                //TODO : 키값 입력필요
+                for (int i = 0; i < ((int)tempSprite.rect.height).ToString().Length; i++)
+                {
+                    GetPercent = GetPercent * 0.1f;
+                }
+                Vector2 size = new Vector2(tempSprite.rect.width, tempSprite.rect.height) * GetPercent;
+                Vector2 pos = new Vector2(0.5f, 0.5f);
+                Managers.instance.UI.SetUISize(ref tempRect, size - pos, size + pos);
+            }
+            return optionInsidePannel;
+        }
+    }
 
 }

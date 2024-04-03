@@ -65,10 +65,6 @@ public class TopViewPlayer : MonoBehaviour
                 }
             }
         }
-        if (Input.GetKeyDown(KeyCode.Escape))
-        {
-            Managers.instance.UI.CloseUIStack();
-        }
         if (Input.GetKeyDown(KeyCode.Space))
         {
             Managers.instance.Grid.GridCheck(transform.position + playerColliderCenter);

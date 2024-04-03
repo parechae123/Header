@@ -40,6 +40,13 @@ public class Managers : MonoBehaviour
             return soundManager;
         } 
     }
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            UI.CloseUIStack();
+        }
+    }
     public void ResetManagingArrays()
     {
         UI.ResetUI();

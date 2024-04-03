@@ -81,9 +81,5 @@ public class ShopInfo : MonoBehaviour
         {
             Managers.instance.UI.ShopUICall.IsShopActivate = Managers.instance.UI.ShopUICall.IsShopActivate == true ? false : true;
         }
-        if (Input.GetKeyDown(KeyCode.Escape))
-        {
-            Managers.instance.UI.CloseUIStack();
-        }
     }
 }
