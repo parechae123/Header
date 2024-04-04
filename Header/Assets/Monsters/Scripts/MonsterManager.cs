@@ -489,6 +489,7 @@ public class MonsterManager : MonoBehaviour
 
         if (Managers.instance.UI.BattleUICall.isInFeverMode)
         {
+            Monsters[arrayOrder].Item2.color = Color.red;
             BerserkModeEffectObject[BerserkModeEffectObject.Length - 1].Play();
             Monsters[arrayOrder].Item1.monsterAD = monsterPrefabs[prefabNum].stat.monsterAD * 2;
         }
@@ -499,6 +500,10 @@ public class MonsterManager : MonoBehaviour
     IEnumerator DamagedAnim(int index,bool isTargetAttack, Action isDone)
     {
         Color tempColor = Monsters[index].Item2.color;
+        if (Managers.instance.UI.BattleUICall.isInFeverMode)
+        {
+            tempColor = Color.red;
+        }
         if (isTargetAttack)
         {
             Vector3 tempPlrPos = Monsters[index].Item2.transform.position - playerPos;
@@ -715,7 +720,7 @@ public class MonsterManager : MonoBehaviour
                     }
                     Monsters[i].Item2.DOColor(Color.red, 4).OnComplete(() =>
                     {
-                        Monsters[i].Item2.color = Color.white;
+                        
                     });
                 }
                 else

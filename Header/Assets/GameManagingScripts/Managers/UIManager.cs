@@ -1851,11 +1851,14 @@ public class BattleUI
     }
     public void HPBarUpdate( float valueToAdd)
     {
+
         EnemyHPBar.value = enemyHpBar.value + valueToAdd;
         EnemyHPBarText = "HP " + EnemyHPBar.value + "/" + EnemyHPBar.maxValue;
+
         if (EnemyHPBar.value <= EnemyHPBar.maxValue / 2f && warningText == null)
         {
             WarningText = "적의 공격력이 2배 증가합니다!";
+            warningText.gameObject.SetActive(false);
             MonsterManager.MonsterManagerInstance.SetFeaverMode();
         }
         if (EnemyHPBar.value <= 0)
@@ -2033,6 +2036,11 @@ public class BattleUI
         float ScaleValue = Vector2.Distance(PosMin, PosMax) / Vector2.Distance(BeforeMonsterIMG.rectTransform.rect.min, BeforeMonsterIMG.rectTransform.rect.max);
         NextMonsterIMG.sprite = NextMonsterSprite;
         BeforeMonsterIMG.rectTransform.DOScale(ScaleValue, 1f);
+        if (isInFeverMode)
+        {
+            NextMonsterIMG.color = Color.red;
+            BeforeMonsterIMG.color = Color.red;
+        }
         BeforeMonsterIMG.rectTransform.DOJump(temppos, 30, 2, 1.8f, true).OnComplete(() =>
         {
             if (beforeMonsterIMG == null)
