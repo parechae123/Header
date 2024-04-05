@@ -2821,15 +2821,17 @@ public class OptionUI
                 RectTransform tempRect = optionPannel.rectTransform;
                 optionPannel.rectTransform.SetParent(Managers.instance.UI.LoadingUIProps.SceneMainCanvas);
                 Sprite tempSprite = Managers.instance.Resource.Load<Sprite>("Option_background");
+                optionPannel.sprite = tempSprite;
                 float GetPercent = 1;
                 //TODO : 키값 입력필요
                 for (int i = 0; i < ((int)tempSprite.rect.height).ToString().Length; i++)
                 {
                     GetPercent = GetPercent * 0.1f;
                 }
-                Vector2 size = new Vector2(tempSprite.rect.width, tempSprite.rect.height)*GetPercent;
+                Vector2 size = (new Vector2(tempSprite.rect.width* (Managers.instance.UI.LoadingUIProps.SceneMainCanvas.rect.height/Managers.instance.UI.LoadingUIProps.SceneMainCanvas.rect.width), tempSprite.rect.height) * GetPercent)/2f;
                 Vector2 pos = new Vector2(0.5f,0.5f);
-                Managers.instance.UI.SetUISize(ref tempRect, size-pos, size+pos);
+                Managers.instance.UI.SetUISize(ref tempRect, pos-size , pos + size);
+                ParabolaCheckBox.gameObject.SetActive(true);
             }
             return optionPannel; 
         }
@@ -2853,32 +2855,6 @@ public class OptionUI
         }
     }
 
-    private Image optionInsidePannel;
-    public Image OptionInsidePannel
-    {
-        get
-        {
-            if (optionInsidePannel == null)
-            {
-                optionInsidePannel = new GameObject("OptionPannel").AddComponent<Image>();
-                RectTransform tempRect = optionInsidePannel.rectTransform;
-                optionInsidePannel.rectTransform.SetParent(Managers.instance.UI.LoadingUIProps.SceneMainCanvas);
-                Sprite tempSprite = Managers.instance.Resource.Load<Sprite>("Option_background");
-                optionInsidePannel.sprite = tempSprite;
-                float GetPercent = 1;
-                //TODO : 키값 입력필요
-                for (int i = 0; i < ((int)tempSprite.rect.height).ToString().Length; i++)
-                {
-                    GetPercent = GetPercent * 0.1f;
-                }
-                Vector2 size = new Vector2(tempSprite.rect.width, tempSprite.rect.height) * GetPercent;
-                Vector2 pos = new Vector2(0.5f, 0.5f);
-                Managers.instance.UI.SetUISize(ref tempRect, size - pos, size + pos);
-                ParabolaCheckBox.gameObject.SetActive(true);
-            }
-            return optionInsidePannel;
-        }
-    }
 
     private Toggle parabolaCheckBox;
     public Toggle ParabolaCheckBox
@@ -2890,13 +2866,41 @@ public class OptionUI
 
                 parabolaCheckBox = new GameObject("parabolaCheckbox").AddComponent<Toggle>();
                 RectTransform CheckBoxParent = parabolaCheckBox.transform as RectTransform;
-                CheckBoxParent.SetParent(OptionInsidePannel.rectTransform);
-                Vector2 centerPosition = new Vector2(0.6f,0.4f);
-                Vector2 parentHalfSize = new Vector2(0.1666f, 0.05f);
+                CheckBoxParent.SetParent(OptionPannel.rectTransform);
+                Vector2 centerPosition = new Vector2(0.5f,0.4f);
+                Vector2 parentHalfSize = new Vector2(0.2666f, 0.05f);
                 Managers.instance.UI.SetUISize(ref CheckBoxParent,centerPosition-parentHalfSize, centerPosition + parentHalfSize);
                 Image CheckBoxTarget = new GameObject("CheckBoxBackGround").AddComponent<Image>();
+                CheckBoxTarget.rectTransform.SetParent(CheckBoxParent);
+
+
+                RectTransform CheckBoxRect = CheckBoxTarget.rectTransform;
+                Managers.instance.UI.SetUISize(ref CheckBoxRect,new Vector2(1f- (CheckBoxParent.rect.height / CheckBoxParent.rect.width ), 0),Vector2.one);
                 CheckBoxTarget.sprite = Managers.instance.Resource.Load<Sprite>("Option_checkbox");
+
+                Image Checker = new GameObject("parabolaChecker").AddComponent<Image>();
+                RectTransform checkerRect = Checker.rectTransform;
+                checkerRect.SetParent(CheckBoxRect);
+                Managers.instance.UI.SetUISize(ref checkerRect,Vector2.zero,Vector2.one);
+                Text tempText = new GameObject("PrabolaText").AddComponent<Text>();
+                tempText.text = "궤적 표시";
+                tempText.rectTransform.SetParent(CheckBoxParent);
+                tempText.font = Managers.instance.Resource.Load<Font>("InGameFont");
+                tempText.color = Color.black;
+                tempText.resizeTextForBestFit = true;
+                tempText.rectTransform.SetParent(CheckBoxParent);
+                tempText.alignment = TextAnchor.MiddleCenter;
+                RectTransform tempTextRect = tempText.rectTransform;
+                Managers.instance.UI.SetUISize(ref tempTextRect, Vector2.zero, CheckBoxRect.anchorMin+Vector2.up);
+                
+                Outline TextOutLine = tempText.AddComponent<Outline>();
+                TextOutLine.effectColor = Color.white;
+                TextOutLine.effectDistance = Vector2.down + Vector2.right;
+                TextOutLine.useGraphicAlpha = true;
+
+
                 parabolaCheckBox.targetGraphic = CheckBoxTarget;
+                parabolaCheckBox.graphic = Checker;
             }
             return parabolaCheckBox;
         }

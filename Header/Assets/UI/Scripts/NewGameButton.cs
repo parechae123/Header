@@ -29,10 +29,16 @@ public class NewGameButton : MonoBehaviour
         Managers.instance.Resource.LoadAllAsync<Sprite>("PreLoadUI", (TempString, Num) =>
         {
             Debug.Log("프리로드 UI 로드 완료");
-            newGameBTN.onClick.AddListener(OnClickBTN);
+
+        });
+        Managers.instance.Resource.LoadAllAsync<Font>("Font", (TempString, Num) =>
+        {
+            Debug.Log("프리로드 UI 로드 완료");
+
         });
         splashArt.DOFade(0, 3f).OnComplete(() =>
         {
+            newGameBTN.onClick.AddListener(OnClickBTN);
             splashArt.gameObject.SetActive(false);
         });
         
