@@ -15,7 +15,7 @@ MonoBehaviour:
   m_DefaultGroup: 2c470aee28d213248b7eba9a93cb50c6
   m_currentHash:
     serializedVersion: 2
-    Hash: 0392c91e13be75d72a2a76ee1a86940f
+    Hash: 00000000000000000000000000000000
   m_OptimizeCatalogSize: 0
   m_BuildRemoteCatalog: 0
   m_BundleLocalCatalog: 0
@@ -53,6 +53,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 0ca68b348fc198742ad70682a36e5a0e, type: 2}
   - {fileID: 11400000, guid: 67ec71c3496e71643a3bb47563ced260, type: 2}
   - {fileID: 11400000, guid: 8142f7aed21dcdf45b2d6d7d994d9c04, type: 2}
+  - {fileID: 11400000, guid: 8153d8a276c731b4bb26503951e7d17c, type: 2}
   m_BuildSettings:
     m_CompileScriptsInVirtualMode: 0
     m_CleanupStreamingAssetsAfterBuilds: 1
@@ -104,6 +105,7 @@ MonoBehaviour:
     - Mixer
     - Prefabs
     - Materials
+    - PreLoadUI
   m_SchemaTemplates: []
   m_GroupTemplateObjects:
   - {fileID: 11400000, guid: c6ef9c20331d5e649a2617b27fb0ed50, type: 2}

@@ -2820,7 +2820,7 @@ public class OptionUI
                 optionPannel = new GameObject("OptionPannel").AddComponent<Image>();
                 RectTransform tempRect = optionPannel.rectTransform;
                 optionPannel.rectTransform.SetParent(Managers.instance.UI.LoadingUIProps.SceneMainCanvas);
-                Sprite tempSprite = Managers.instance.Resource.Load<Sprite>("");
+                Sprite tempSprite = Managers.instance.Resource.Load<Sprite>("Option_background");
                 float GetPercent = 1;
                 //TODO : 키값 입력필요
                 for (int i = 0; i < ((int)tempSprite.rect.height).ToString().Length; i++)
@@ -2863,7 +2863,8 @@ public class OptionUI
                 optionInsidePannel = new GameObject("OptionPannel").AddComponent<Image>();
                 RectTransform tempRect = optionInsidePannel.rectTransform;
                 optionInsidePannel.rectTransform.SetParent(Managers.instance.UI.LoadingUIProps.SceneMainCanvas);
-                Sprite tempSprite = Managers.instance.Resource.Load<Sprite>("");
+                Sprite tempSprite = Managers.instance.Resource.Load<Sprite>("Option_background");
+                optionInsidePannel.sprite = tempSprite;
                 float GetPercent = 1;
                 //TODO : 키값 입력필요
                 for (int i = 0; i < ((int)tempSprite.rect.height).ToString().Length; i++)
@@ -2873,8 +2874,31 @@ public class OptionUI
                 Vector2 size = new Vector2(tempSprite.rect.width, tempSprite.rect.height) * GetPercent;
                 Vector2 pos = new Vector2(0.5f, 0.5f);
                 Managers.instance.UI.SetUISize(ref tempRect, size - pos, size + pos);
+                ParabolaCheckBox.gameObject.SetActive(true);
             }
             return optionInsidePannel;
+        }
+    }
+
+    private Toggle parabolaCheckBox;
+    public Toggle ParabolaCheckBox
+    {
+        get
+        {
+            if (parabolaCheckBox == null)
+            {
+
+                parabolaCheckBox = new GameObject("parabolaCheckbox").AddComponent<Toggle>();
+                RectTransform CheckBoxParent = parabolaCheckBox.transform as RectTransform;
+                CheckBoxParent.SetParent(OptionInsidePannel.rectTransform);
+                Vector2 centerPosition = new Vector2(0.6f,0.4f);
+                Vector2 parentHalfSize = new Vector2(0.1666f, 0.05f);
+                Managers.instance.UI.SetUISize(ref CheckBoxParent,centerPosition-parentHalfSize, centerPosition + parentHalfSize);
+                Image CheckBoxTarget = new GameObject("CheckBoxBackGround").AddComponent<Image>();
+                CheckBoxTarget.sprite = Managers.instance.Resource.Load<Sprite>("Option_checkbox");
+                parabolaCheckBox.targetGraphic = CheckBoxTarget;
+            }
+            return parabolaCheckBox;
         }
     }
 

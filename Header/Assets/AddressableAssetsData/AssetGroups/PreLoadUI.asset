@@ -1,0 +1,55 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
+  m_Name: PreLoadUI
+  m_EditorClassIdentifier: 
+  m_GroupName: PreLoadUI
+  m_Data:
+    m_SerializedData: []
+  m_GUID: be55059abae772146afbdd5899280223
+  m_SerializeEntries:
+  - m_GUID: 4b959b0c7471d814cbbf199b8edbf41b
+    m_Address: Option_soundbar_full
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - PreLoadUI
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 713cad6bd05fe024d8909750216f9f43
+    m_Address: Option_soundbar_empty
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - PreLoadUI
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 07b16cf6c05ebdf4d90b472501f1c39d
+    m_Address: Option_point
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - PreLoadUI
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: e572cbc6a5dacc14aa9efbff559dff31
+    m_Address: Option_background
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - PreLoadUI
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: de88c9149f2c3cd429c9a9a8af8f226d
+    m_Address: Option_checkbox
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - PreLoadUI
+    FlaggedDuringContentUpdateRestriction: 0
+  m_ReadOnly: 0
+  m_Settings: {fileID: 11400000, guid: 489b40023fd66be419d08d79841125b1, type: 2}
+  m_SchemaSet:
+    m_Schemas:
+    - {fileID: 11400000, guid: 364673f9ffa027b41886d272cdc03330, type: 2}
+    - {fileID: 11400000, guid: f5145418ed1fd374ea1c869a774c6578, type: 2}

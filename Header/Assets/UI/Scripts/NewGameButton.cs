@@ -3,24 +3,39 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.AddressableAssets;
+using UnityEngine.UI;
+using DG.Tweening;
 
 public class NewGameButton : MonoBehaviour
 {
     public int sceneNumber = 0;
     public Transform loadToHideThings;
+    [SerializeField]private Image splashArt;
     [SerializeField] private DataDefines.ResourceDefine[] labelNames;
+
     [SerializeField] private UnityEngine.UI.Button newGameBTN;
     Queue<Vector2> LoadingPercent = new Queue<Vector2>();
     (byte, byte) IlustMinMax;
     // Start is called before the first frame update
     private void Start()
     {
+
         Managers.instance.Resource.LoadAllAsync<AudioClip>("TItleAudios", (TempString, Num) =>
         {
             Managers.instance.SoundManager.BGM.enabled = true;
             Managers.instance.SoundManager.SFX.enabled = true;
+
+        });
+        Managers.instance.Resource.LoadAllAsync<Sprite>("PreLoadUI", (TempString, Num) =>
+        {
+            Debug.Log("프리로드 UI 로드 완료");
             newGameBTN.onClick.AddListener(OnClickBTN);
         });
+        splashArt.DOFade(0, 3f).OnComplete(() =>
+        {
+            splashArt.gameObject.SetActive(false);
+        });
+        
     }
     private void Update()
     {
