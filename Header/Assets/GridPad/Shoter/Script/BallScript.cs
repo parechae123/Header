@@ -302,7 +302,7 @@ public class BallScript : MonoBehaviour
         BallCol.enabled = false;
         BallRB.simulated = false;
         Sprite[] tempSprites = new Sprite[1];
-        string tempNum = "000";
+        string tempNum = "00";
        for (int i = 0; i < int.MaxValue;i++)
         {
             tempNum = tempNum.Remove(tempNum.Length- (i.ToString().Length));
@@ -326,9 +326,11 @@ public class BallScript : MonoBehaviour
         {
             yield return null;
         }
-        BreakAnimSprite.transform.position = transform.position+new Vector3(-0.0467124f, 1.15405947f, 0);
+        BreakAnimSprite.transform.position = transform.position;
+        BreakAnimSprite.transform.rotation = transform.rotation;
+
         IMG.enabled = false;
-        BreakAnimSprite.transform.localScale = new Vector3(0.451990008f, 0.451990008f, 0.451990008f);
+        BreakAnimSprite.transform.localScale = Vector3.one;
         BreakAnimSprite.gameObject.SetActive(true);
         for (int i = 0; i < tempSprites.Length; i++)
         {
