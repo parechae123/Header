@@ -13,6 +13,7 @@ using System.Reflection;
 public class ShoterController : MonoBehaviour
 {
     public bool isReadyFire = false;
+    public bool isParabolaOn;
     public LineRenderer lineRenderer;
     private int numPoints = 50;
     private float timeInterval = 0.1f;
@@ -130,6 +131,8 @@ public class ShoterController : MonoBehaviour
         Managers.instance.UI.BattleUICall.SettingPlayerBattleUI();
         Managers.instance.UI.BattleUICall.RegistListener();
         lineRenderer = transform.AddComponent<LineRenderer>();
+        isParabolaOn = Managers.instance.PlayerDataManager.isParabolaTurnOn;
+        ParabolaOnOFF(isParabolaOn);
         lineRenderer.textureMode = LineTextureMode.Tile;
         List<Material> TempMat = new List<Material>();
         TempMat.Add(Managers.instance.Resource.Load<Material>("ShootLine"));
@@ -184,75 +187,84 @@ public class ShoterController : MonoBehaviour
     }
     private void GetBulbPoints()
     {
-        if (fireForce != 0)
+        if (isParabolaOn)
         {
-            normalizedRelValue = pos();
-            TargetBall.transform.rotation = Quaternion.Euler(0, 0, Rot());
-            for (int i = 0; i < numPoints; i++)
+            if (fireForce != 0)
             {
-                float time = i * timeInterval;
-                float time2 = (i + 1) * timeInterval;
-                Vector2 tempVec = normalizedRelValue * fireForce;
-                float x = tempVec.x * time;
-                float y = (tempVec.y * time) + (0.5f * (gravity * NowBallStat.weight) * time * time);
-                float x2 = tempVec.x * time2;
-                float y2 = (tempVec.y * time2) + (0.5f * (gravity * NowBallStat.weight) * time2 * time2);
-
-                Vector3 firstPos = new Vector3(x, y) + transform.position;
-                Vector3 secondPos = new Vector3(x2, y2) + transform.position;
-                float nowAndNextDistance = Vector2.Distance(firstPos, secondPos);
-                lineRenderer.SetPosition(i, firstPos);
-                RaycastHit2D colInfo = Physics2D.Raycast(firstPos, secondPos - firstPos, nowAndNextDistance, layerBallCollision);
-                if (colInfo)
+                normalizedRelValue = pos();
+                TargetBall.transform.rotation = Quaternion.Euler(0, 0, Rot());
+                for (int i = 0; i < numPoints; i++)
                 {
-                    testTR.position = colInfo.point;
-                    lineRenderer.SetPosition(i + 1, colInfo.point);
-                    float reflectedBallVelocity = NowBallStat.ballBouncienss * (Vector2.Distance(firstPos, secondPos) / timeInterval);
-                    Vector2 normalizedRefVector = (Vector2.Reflect(secondPos - firstPos, colInfo.normal)).normalized;
-                    Vector2 refTempVec = reflectedBallVelocity * normalizedRefVector;
-                    for (int E = i + 2; E < lineRenderer.positionCount; E++)
+                    float time = i * timeInterval;
+                    float time2 = (i + 1) * timeInterval;
+                    Vector2 tempVec = normalizedRelValue * fireForce;
+                    float x = tempVec.x * time;
+                    float y = (tempVec.y * time) + (0.5f * (gravity * NowBallStat.weight) * time * time);
+                    float x2 = tempVec.x * time2;
+                    float y2 = (tempVec.y * time2) + (0.5f * (gravity * NowBallStat.weight) * time2 * time2);
+
+                    Vector3 firstPos = new Vector3(x, y) + transform.position;
+                    Vector3 secondPos = new Vector3(x2, y2) + transform.position;
+                    float nowAndNextDistance = Vector2.Distance(firstPos, secondPos);
+                    lineRenderer.SetPosition(i, firstPos);
+                    RaycastHit2D colInfo = Physics2D.Raycast(firstPos, secondPos - firstPos, nowAndNextDistance, layerBallCollision);
+                    if (colInfo)
                     {
-                        float timeScaler = (E - i) * timeInterval;
-
-                        if (E < lineRenderer.positionCount)
+                        testTR.position = colInfo.point;
+                        lineRenderer.SetPosition(i + 1, colInfo.point);
+                        float reflectedBallVelocity = NowBallStat.ballBouncienss * (Vector2.Distance(firstPos, secondPos) / timeInterval);
+                        Vector2 normalizedRefVector = (Vector2.Reflect(secondPos - firstPos, colInfo.normal)).normalized;
+                        Vector2 refTempVec = reflectedBallVelocity * normalizedRefVector;
+                        for (int E = i + 2; E < lineRenderer.positionCount; E++)
                         {
+                            float timeScaler = (E - i) * timeInterval;
 
-                            float reflectedX = refTempVec.x * timeScaler;
-                            float reflectedY = (refTempVec.y * timeScaler) + (0.5f * (gravity * NowBallStat.weight) * timeScaler * timeScaler);
-                            lineRenderer.SetPosition(E, colInfo.point + new Vector2(reflectedX, reflectedY));
-                            if (E - 1 != i)
+                            if (E < lineRenderer.positionCount)
                             {
-                                float reflectedNowNextDistance = Vector2.Distance(lineRenderer.GetPosition(E), lineRenderer.GetPosition(E - 1));
-                                RaycastHit2D reflectedColl = Physics2D.Raycast(lineRenderer.GetPosition(E - 1), lineRenderer.GetPosition(E) - lineRenderer.GetPosition(E - 1), reflectedNowNextDistance, layerBallCollision);
-                                if (reflectedColl)
-                                {
-                                    if (reflectedColl.point != colInfo.point)
-                                    {
-                                        for (int o = E; o < lineRenderer.positionCount; o++)
-                                        {
-                                            lineRenderer.SetPosition(o, reflectedColl.point);
-                                        }
-                                        break;
 
+                                float reflectedX = refTempVec.x * timeScaler;
+                                float reflectedY = (refTempVec.y * timeScaler) + (0.5f * (gravity * NowBallStat.weight) * timeScaler * timeScaler);
+                                lineRenderer.SetPosition(E, colInfo.point + new Vector2(reflectedX, reflectedY));
+                                if (E - 1 != i)
+                                {
+                                    float reflectedNowNextDistance = Vector2.Distance(lineRenderer.GetPosition(E), lineRenderer.GetPosition(E - 1));
+                                    RaycastHit2D reflectedColl = Physics2D.Raycast(lineRenderer.GetPosition(E - 1), lineRenderer.GetPosition(E) - lineRenderer.GetPosition(E - 1), reflectedNowNextDistance, layerBallCollision);
+                                    if (reflectedColl)
+                                    {
+                                        if (reflectedColl.point != colInfo.point)
+                                        {
+                                            for (int o = E; o < lineRenderer.positionCount; o++)
+                                            {
+                                                lineRenderer.SetPosition(o, reflectedColl.point);
+                                            }
+                                            break;
+
+                                        }
                                     }
                                 }
                             }
                         }
+                        break;
                     }
-                    break;
                 }
             }
+            else
+            {
+                normalizedRelValue = pos();
+                TargetBall.transform.rotation = Quaternion.Euler(0, 0, Rot());
+                lineRenderer.SetPosition(0, (Vector2)transform.position);
+                for (int i = 1; i < lineRenderer.positionCount; i++)
+                {
+                    lineRenderer.SetPosition(i, (normalizedRelValue * 4) + (Vector2)transform.position);
+                }
+
+            } 
         }
         else
         {
             normalizedRelValue = pos();
             TargetBall.transform.rotation = Quaternion.Euler(0, 0, Rot());
-            lineRenderer.SetPosition(0, (Vector2)transform.position);
-            for (int i = 1; i < lineRenderer.positionCount; i++)
-            {
-                lineRenderer.SetPosition(i, (normalizedRelValue * 4) + (Vector2)transform.position);
-            }
-
+            
         }
     }
     private void ShotBall()
@@ -523,5 +535,9 @@ public class ShoterController : MonoBehaviour
                 TargetBall.bulbSkills = null;
                 break;
         }
+    }
+    public void ParabolaOnOFF(bool value)
+    {
+        lineRenderer.enabled = value;
     }
 }

@@ -14,6 +14,9 @@ public class NewGameButton : MonoBehaviour
     [SerializeField] private DataDefines.ResourceDefine[] labelNames;
 
     [SerializeField] private UnityEngine.UI.Button newGameBTN;
+    [SerializeField] private UnityEngine.UI.Button optionBTN;
+    [SerializeField] private UnityEngine.UI.Button exitGameBTN;
+
     Queue<Vector2> LoadingPercent = new Queue<Vector2>();
     (byte, byte) IlustMinMax;
     // Start is called before the first frame update
@@ -39,6 +42,25 @@ public class NewGameButton : MonoBehaviour
         splashArt.DOFade(0, 3f).OnComplete(() =>
         {
             newGameBTN.onClick.AddListener(OnClickBTN);
+            if (optionBTN != null)
+            {
+                optionBTN.onClick.AddListener(() =>
+                {
+                    Managers.instance.UI.CloseUIStack();
+                });
+            }
+            else
+            {
+                Debug.LogError("옵션 버튼 지정안됨");
+            }
+            if (exitGameBTN != null)
+            {
+                exitGameBTN.onClick.AddListener(Managers.instance.GameExitBTN);
+            }
+            else
+            {
+                Debug.LogError("게임종료 버튼 지정안됨");
+            }
             splashArt.gameObject.SetActive(false);
         });
         
@@ -47,7 +69,7 @@ public class NewGameButton : MonoBehaviour
     {
         if (LoadingPercent.Count > 0)
         {
-            Debug.Log("슬라이더 업데이트중");
+            
             Vector2 tempValue = LoadingPercent.Dequeue();
             Managers.instance.UI.LoadingUIProps.LoadingSlider.maxValue = tempValue.x;
             Managers.instance.UI.LoadingUIProps.LoadingSlider.value = tempValue.y;
@@ -80,6 +102,7 @@ public class NewGameButton : MonoBehaviour
             else
             {
                 LoadingPercent.Enqueue(new Vector2(TotalCount, resourceCount));
+                Debug.Log(LoadingPercent.Count);
             }
 
         }

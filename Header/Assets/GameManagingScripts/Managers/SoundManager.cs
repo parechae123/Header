@@ -30,7 +30,7 @@ public class SoundManager
                 
                 AudioMixerGroup[] tempGroup = Mixer.FindMatchingGroups("Master/SoundEffect");
                 sfx.outputAudioMixerGroup = tempGroup[0];
-                
+                sfx.volume = 0.5f;
             }
             return sfx;
         } 
@@ -45,8 +45,21 @@ public class SoundManager
                 bgm = Managers.instance.gameObject.AddComponent<AudioSource>();
                 AudioMixerGroup[] tempGroup = Mixer.FindMatchingGroups("Master/BGM");
                 bgm.outputAudioMixerGroup = tempGroup[0];
+                bgm.volume = 0.5f;
             }
             return bgm;
         } 
+    }
+
+    public void SetSoundValue(bool isBGM,float value)
+    {
+        if (isBGM)
+        {
+            BGM.volume = value;
+        }
+        else
+        {
+            SFX.volume = value;
+        }
     }
 }

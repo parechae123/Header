@@ -30,15 +30,15 @@ public class Managers : MonoBehaviour
     private GridManager grid = new GridManager();
     public GridManager Grid { get { return instance?.grid; } }
 
-    [SerializeField]private PlayerDataManager playerDataManager = new PlayerDataManager();
-    public PlayerDataManager PlayerDataManager { get {  return instance?.playerDataManager; } }
+    [SerializeField] private PlayerDataManager playerDataManager = new PlayerDataManager();
+    public PlayerDataManager PlayerDataManager { get { return instance?.playerDataManager; } }
     private SoundManager soundManager = new SoundManager();
-    public SoundManager SoundManager 
-    { 
-        get 
-        { 
+    public SoundManager SoundManager
+    {
+        get
+        {
             return soundManager;
-        } 
+        }
     }
     private void Update()
     {
@@ -75,5 +75,9 @@ public class Managers : MonoBehaviour
     {
         Managers.instance.ResetManagingArrays();
         SceneManager.LoadScene(SceneNumber);
+    }
+    public void GameExitBTN()
+    {
+        Application.Quit();
     }
 }

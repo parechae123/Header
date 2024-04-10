@@ -12,6 +12,8 @@ using UnityEngine.Video;
 using HeaderPadDefines;
 using System.Threading.Tasks;
 using MonsterDefines;
+using UnityEngine.EventSystems;
+using static UnityEngine.Rendering.VirtualTexturing.Debugging;
 
 
 public class UIManager
@@ -41,8 +43,7 @@ public class UIManager
         }
         else
         {
-            OptionUICall.OptionPannel.gameObject.SetActive(true);
-            UIStack.Push(OptionUICall.OptionPannel.rectTransform);
+            TargetUIOnOff(OptionUICall.OptionPannel.rectTransform, true);
         }
     }
     public void CheckerRegist(Transform tr)
@@ -2832,32 +2833,18 @@ public class OptionUI
                 Vector2 pos = new Vector2(0.5f,0.5f);
                 Managers.instance.UI.SetUISize(ref tempRect, pos-size , pos + size);
                 ParabolaCheckBox.gameObject.SetActive(true);
+                SFXSlider.gameObject.SetActive(true);
+                BGMSlider.gameObject.SetActive(true);
+                ExitGameBTN.gameObject.SetActive(true);
+                ExitOptionBTN.gameObject.SetActive(true);
             }
             return optionPannel; 
-        }
-    }
-    private Button exitButton;
-    public Button ExitButton
-    {
-        get 
-        { 
-            if (exitButton == null)
-            {
-                exitButton = new GameObject("OptionExitBTN").AddComponent<Button>();
-                RectTransform TempBTN = exitButton.transform as RectTransform;
-                
-                exitButton.onClick.AddListener(() =>
-                {
-                    Managers.instance.UI.TargetUIOnOff(OptionPannel.rectTransform, false);
-                });
-            }
-            return exitButton;
         }
     }
 
 
     private Toggle parabolaCheckBox;
-    public Toggle ParabolaCheckBox
+    private Toggle ParabolaCheckBox
     {
         get
         {
@@ -2867,8 +2854,8 @@ public class OptionUI
                 parabolaCheckBox = new GameObject("parabolaCheckbox").AddComponent<Toggle>();
                 RectTransform CheckBoxParent = parabolaCheckBox.transform as RectTransform;
                 CheckBoxParent.SetParent(OptionPannel.rectTransform);
-                Vector2 centerPosition = new Vector2(0.5f,0.4f);
-                Vector2 parentHalfSize = new Vector2(0.2666f, 0.05f);
+                Vector2 centerPosition = new Vector2(0.5f,0.3f);
+                Vector2 parentHalfSize = new Vector2(0.2666f, 0.05f)/2f;
                 Managers.instance.UI.SetUISize(ref CheckBoxParent,centerPosition-parentHalfSize, centerPosition + parentHalfSize);
                 Image CheckBoxTarget = new GameObject("CheckBoxBackGround").AddComponent<Image>();
                 CheckBoxTarget.rectTransform.SetParent(CheckBoxParent);
@@ -2888,7 +2875,6 @@ public class OptionUI
                 tempText.font = Managers.instance.Resource.Load<Font>("InGameFont");
                 tempText.color = Color.black;
                 tempText.resizeTextForBestFit = true;
-                tempText.rectTransform.SetParent(CheckBoxParent);
                 tempText.alignment = TextAnchor.MiddleCenter;
                 RectTransform tempTextRect = tempText.rectTransform;
                 Managers.instance.UI.SetUISize(ref tempTextRect, Vector2.zero, CheckBoxRect.anchorMin+Vector2.up);
@@ -2901,9 +2887,393 @@ public class OptionUI
 
                 parabolaCheckBox.targetGraphic = CheckBoxTarget;
                 parabolaCheckBox.graphic = Checker;
+                parabolaCheckBox.isOn = Managers.instance.PlayerDataManager.isParabolaTurnOn;
+
+                parabolaCheckBox.onValueChanged.AddListener((checkStatus) =>
+                {
+                    ChangedCheckBoxValue();
+                });
             }
             return parabolaCheckBox;
         }
     }
+    public bool ChangedCheckBoxValue()
+    {
+        bool value = ParabolaCheckBox.isOn;
+        Managers.instance.PlayerDataManager.isParabolaTurnOn = value;
+        if (ShoterController.Instance != null)
+        {
+            ShoterController.Instance.isParabolaOn = value;
+            ShoterController.Instance.ParabolaOnOFF(value);
+
+        }
+        ParabolaCheckBox.isOn = value;
+        return value;
+
+    }
+
+    private Slider sfxSlider = null;
+    private Slider SFXSlider
+    {
+        get
+        {
+            if (sfxSlider == null)
+            {
+                Slider tempSFX = new GameObject("SFXSlider").AddComponent<Slider>();
+                tempSFX.wholeNumbers = false;
+                tempSFX.maxValue = 1;
+                //TODO : enemy 체력 구현하면 여기에 넣어줘야함
+
+                RectTransform tempSFXRect = tempSFX.transform as RectTransform;
+                tempSFXRect.gameObject.SetActive(false);
+
+                RectTransform tempHandleArea = new GameObject("HandleArea").AddComponent<RectTransform>();
+                tempHandleArea.SetParent(tempSFXRect);
+
+                tempHandleArea.pivot = new Vector2(0.5f, 0.5f); // 부모의 왼쪽 중간을 기준으로
+                tempHandleArea.sizeDelta = Vector2.zero;
+                tempHandleArea.anchoredPosition = Vector2.zero;
+
+
+                Image handle = new GameObject("handle").AddComponent<Image>();
+                handle.rectTransform.SetParent(tempHandleArea);
+                handle.rectTransform.anchorMax = Vector2.up;
+                handle.rectTransform.anchorMin = Vector2.zero;
+                handle.rectTransform.pivot = Vector2.one / 2f;
+                tempSFX.handleRect = handle.rectTransform;
+                handle.sprite = Managers.instance.Resource.Load<Sprite>("Option_point");
+
+                Vector2 handleSize = new Vector2(handle.sprite.rect.size.x, handle.sprite.rect.size.y);
+
+
+                handle.rectTransform.anchoredPosition = Vector2.zero;
+                handle.rectTransform.sizeDelta = handleSize;
+                handle.color = Color.white;
+
+
+                Image BackGround = new GameObject("BackGround").AddComponent<Image>();
+                BackGround.rectTransform.SetParent(tempSFXRect);
+                BackGround.rectTransform.anchorMax = Vector2.one;
+                BackGround.rectTransform.anchorMin = Vector2.zero;
+                BackGround.rectTransform.sizeDelta = Vector2.zero;
+                BackGround.rectTransform.pivot = Vector2.one / 2f;
+                BackGround.color = Color.white;
+                BackGround.sprite = Managers.instance.Resource.Load<Sprite>("Option_soundbar_empty");
+                BackGround.rectTransform.SetAsFirstSibling();
+
+
+                RectTransform tempFillArea = new GameObject("FillArea").AddComponent<RectTransform>();
+                tempFillArea.SetParent(tempSFXRect);
+                tempFillArea.anchorMin = Vector2.zero; // 부모의 왼쪽 하단을 기준으로
+                tempFillArea.anchorMax = Vector2.one; // 부모의 왼쪽 상단을 기준으로
+                tempFillArea.pivot = new Vector2(0.5f, 0.5f); // 부모의 왼쪽 중간을 기준으로
+                tempFillArea.sizeDelta = Vector2.zero;
+                tempFillArea.anchoredPosition = Vector2.zero;
+                Image tempIMG = new GameObject("FillRect").AddComponent<Image>();
+                tempIMG.rectTransform.SetParent(tempFillArea);
+                tempIMG.rectTransform.sizeDelta = Vector2.zero;
+                tempIMG.color = Color.white;
+                tempIMG.sprite = Managers.instance.Resource.Load<Sprite>("Option_soundbar_full");
+                tempSFX.fillRect = tempIMG.rectTransform;
+
+                // Slider의 부모-자식 관계 설정  
+
+
+                //슬라이더바 위치 설정
+                Vector2 CenterPos = new Vector2(0.5f, 0.486111f);
+                Vector2 BackgroundSize = BackGround.sprite.bounds.size * (4f/5f);
+                float percent = 1;
+                for (int i = 0; i < ((int)BackgroundSize.x).ToString().Length; i++)
+                {
+                    percent = percent * 0.1f;
+                }
+                BackgroundSize.x = BackgroundSize.x * (OptionPannel.rectTransform.rect.size.x / OptionPannel.rectTransform.rect.size.y);
+                BackgroundSize = BackgroundSize * percent;
+
+                tempSFXRect.SetParent(OptionPannel.rectTransform);
+                tempSFXRect.SetAsLastSibling();
+                Managers.instance.UI.SetUISize(ref tempSFXRect, CenterPos - BackgroundSize, CenterPos + BackgroundSize);
+                tempSFX.interactable = true;
+                tempSFX.enabled = true;
+                tempSFX.SetDirection(Slider.Direction.LeftToRight, true);
+
+                //핸들 부모 크기 설정
+                Vector2 handleParentSize = handleSize;
+                float widPerHei = tempSFXRect.rect.size.y / tempSFXRect.rect.size.x;
+                percent = 1;
+                for (int i = 0; i < ((int)handle.sprite.rect.size.x).ToString().Length; i++)
+                {
+                    percent = percent * 0.1f;
+                }
+                handleParentSize = handleParentSize * percent;
+                handleParentSize = new Vector2(handleParentSize.x , handleParentSize.y * widPerHei)/2;
+
+
+                tempHandleArea.anchorMin = new Vector2(0f, (-1f / 3f)- (handleParentSize.y*2)); // 부모의 왼쪽 하단을 기준으로
+                tempHandleArea.anchorMax = new Vector2(1f, (-1f / 3f)- handleParentSize.y); // 부모의 왼쪽 상단을 기준으로
+                tempHandleArea.anchoredPosition = Vector2.down * BackGround.sprite.rect.size.y / 3f;
+                sfxSlider = tempSFX;
+                sfxSlider.value = Managers.instance.SoundManager.SFX.volume;
+                tempHandleArea.SetAsLastSibling();
+
+                sfxSlider.onValueChanged.RemoveAllListeners();
+                sfxSlider.onValueChanged.AddListener((value) =>
+                {
+                    Managers.instance.SoundManager.SetSoundValue(false, value);
+                });
+
+
+                Text tempText = new GameObject("BGMText").AddComponent<Text>();
+                tempText.text = "배경음악";
+                tempText.rectTransform.SetParent(tempSFXRect);
+                tempText.font = Managers.instance.Resource.Load<Font>("InGameFont");
+                tempText.color = Color.black;
+                tempText.resizeTextForBestFit = true;
+                tempText.alignment = TextAnchor.MiddleCenter;
+                RectTransform tempTextRect = tempText.rectTransform;
+                Managers.instance.UI.SetUISize(ref tempTextRect, Vector2.up, Vector2.one + (Vector2.up * 4f));
+
+                Outline TextOutLine = tempText.AddComponent<Outline>();
+                TextOutLine.effectColor = Color.white;
+                TextOutLine.effectDistance = Vector2.down + Vector2.right;
+                TextOutLine.useGraphicAlpha = true;
+
+
+            }
+            return sfxSlider;
+        }
+    }
+    private Slider bgmSlider = null;
+    private Slider BGMSlider
+    {
+        get
+        {
+            if (bgmSlider == null)
+            {
+                Slider tempBGMSlider = new GameObject("BGMSlider").AddComponent<Slider>();
+                tempBGMSlider.wholeNumbers = false;
+                tempBGMSlider.maxValue = 1;
+                //TODO : enemy 체력 구현하면 여기에 넣어줘야함
+
+                RectTransform tempBGMSliderRect = tempBGMSlider.transform as RectTransform;
+                tempBGMSliderRect.gameObject.SetActive(false);
+
+                RectTransform tempHandleArea = new GameObject("HandleArea").AddComponent<RectTransform>();
+                tempHandleArea.SetParent(tempBGMSliderRect);
+
+                tempHandleArea.pivot = new Vector2(0.5f, 0.5f); // 부모의 왼쪽 중간을 기준으로
+                tempHandleArea.sizeDelta = Vector2.zero;
+                tempHandleArea.anchoredPosition = Vector2.zero;
+
+
+                Image handle = new GameObject("handle").AddComponent<Image>();
+                handle.rectTransform.SetParent(tempHandleArea);
+                handle.rectTransform.anchorMax = Vector2.up;
+                handle.rectTransform.anchorMin = Vector2.zero;
+                handle.rectTransform.pivot = Vector2.one / 2f;
+                tempBGMSlider.handleRect = handle.rectTransform;
+                handle.sprite = Managers.instance.Resource.Load<Sprite>("Option_point");
+
+                Vector2 handleSize = new Vector2(handle.sprite.rect.size.x, handle.sprite.rect.size.y);
+
+
+                handle.rectTransform.anchoredPosition = Vector2.zero;
+                handle.rectTransform.sizeDelta = handleSize;
+                handle.color = Color.white;
+
+
+                Image BackGround = new GameObject("BackGround").AddComponent<Image>();
+                BackGround.rectTransform.SetParent(tempBGMSliderRect);
+                BackGround.rectTransform.anchorMax = Vector2.one;
+                BackGround.rectTransform.anchorMin = Vector2.zero;
+                BackGround.rectTransform.sizeDelta = Vector2.zero;
+                BackGround.rectTransform.pivot = Vector2.one / 2f;
+                BackGround.color = Color.white;
+                BackGround.sprite = Managers.instance.Resource.Load<Sprite>("Option_soundbar_empty");
+                BackGround.rectTransform.SetAsFirstSibling();
+
+
+                RectTransform tempFillArea = new GameObject("FillArea").AddComponent<RectTransform>();
+                tempFillArea.SetParent(tempBGMSliderRect);
+                tempFillArea.anchorMin = Vector2.zero; // 부모의 왼쪽 하단을 기준으로
+                tempFillArea.anchorMax = Vector2.one; // 부모의 왼쪽 상단을 기준으로
+                tempFillArea.pivot = new Vector2(0.5f, 0.5f); // 부모의 왼쪽 중간을 기준으로
+                tempFillArea.sizeDelta = Vector2.zero;
+                tempFillArea.anchoredPosition = Vector2.zero;
+                Image tempIMG = new GameObject("FillRect").AddComponent<Image>();
+                tempIMG.rectTransform.SetParent(tempFillArea);
+                tempIMG.rectTransform.sizeDelta = Vector2.zero;
+                tempIMG.color = Color.white;
+                tempIMG.sprite = Managers.instance.Resource.Load<Sprite>("Option_soundbar_full");
+                tempBGMSlider.fillRect = tempIMG.rectTransform;
+
+                // Slider의 부모-자식 관계 설정  
+
+
+                //슬라이더바 위치 설정
+                Vector2 CenterPos = new Vector2(0.5f, 1 - 0.309722f);
+
+                Vector2 BackgroundSize = BackGround.sprite.bounds.size*(4f/5f);
+                float percent = 1;
+                for (int i = 0; i < ((int)BackgroundSize.x).ToString().Length; i++)
+                {
+                    percent = percent * 0.1f;
+                }
+                BackgroundSize.x = BackgroundSize.x * (OptionPannel.rectTransform.rect.size.x / OptionPannel.rectTransform.rect.size.y);
+                BackgroundSize = BackgroundSize * percent;
+
+                tempBGMSliderRect.SetParent(OptionPannel.rectTransform);
+                tempBGMSliderRect.SetAsLastSibling();
+                Managers.instance.UI.SetUISize(ref tempBGMSliderRect, CenterPos - BackgroundSize, CenterPos + BackgroundSize);
+                tempBGMSlider.interactable = true;
+                tempBGMSlider.enabled = true;
+                tempBGMSlider.SetDirection(Slider.Direction.LeftToRight, true);
+
+                //핸들 부모 크기 설정
+                Vector2 handleParentSize = handleSize;
+                float widPerHei = tempBGMSliderRect.rect.size.y / tempBGMSliderRect.rect.size.x;
+                percent = 1;
+                for (int i = 0; i < ((int)handle.sprite.rect.size.x).ToString().Length; i++)
+                {
+                    percent = percent * 0.1f;
+                }
+                handleParentSize = handleParentSize * percent;
+                handleParentSize = new Vector2(handleParentSize.x, handleParentSize.y * widPerHei) / 2;
+
+
+                tempHandleArea.anchorMin = new Vector2(0f, (-1f / 3f) - (handleParentSize.y * 2)); // 부모의 왼쪽 하단을 기준으로
+                tempHandleArea.anchorMax = new Vector2(1f, (-1f / 3f) - handleParentSize.y); // 부모의 왼쪽 상단을 기준으로
+                tempHandleArea.anchoredPosition = Vector2.down * BackGround.sprite.rect.size.y / 3f;
+                bgmSlider = tempBGMSlider;
+                bgmSlider.value = Managers.instance.SoundManager.BGM.volume;
+                tempHandleArea.SetAsLastSibling();
+                bgmSlider.onValueChanged.RemoveAllListeners();
+                bgmSlider.onValueChanged.AddListener((value) =>
+                {
+                    Managers.instance.SoundManager.SetSoundValue(true, value);
+                });
+
+
+
+                Text tempText = new GameObject("BGMText").AddComponent<Text>();
+                tempText.text = "배경음악";
+                tempText.rectTransform.SetParent(tempBGMSliderRect);
+                tempText.font = Managers.instance.Resource.Load<Font>("InGameFont");
+                tempText.color = Color.black;
+                tempText.resizeTextForBestFit = true;
+                tempText.alignment = TextAnchor.MiddleCenter;
+                RectTransform tempTextRect = tempText.rectTransform;
+                Managers.instance.UI.SetUISize(ref tempTextRect, Vector2.up, Vector2.one+(Vector2.up*4f));
+
+                Outline TextOutLine = tempText.AddComponent<Outline>();
+                TextOutLine.effectColor = Color.white;
+                TextOutLine.effectDistance = Vector2.down + Vector2.right;
+                TextOutLine.useGraphicAlpha = true;
+            }
+            return bgmSlider;
+        }
+    }
+
+    private Button exitGameBTN;
+    public Button ExitGameBTN
+    {
+        get 
+        {
+            if (exitGameBTN == null)
+            {
+                exitGameBTN = new GameObject("ExitGameBTN").AddComponent<Button>();
+                exitGameBTN.AddComponent<Image>().color = Color.clear;
+                RectTransform tempRect = exitGameBTN.transform as RectTransform;
+                tempRect.SetParent(OptionPannel.rectTransform);
+                Vector2 centerPos = new Vector2(0.5f, 0.139f) ;
+                Vector2 BTNSize = new Vector2(0.1f,0.025f);
+                Managers.instance.UI.SetUISize(ref tempRect,centerPos-BTNSize, centerPos + BTNSize);
+                Text tempText = new GameObject("ExitText").AddComponent<Text>();
+                exitGameBTN.targetGraphic = tempText;
+                RectTransform textTR = tempText.rectTransform;
+
+                textTR.SetParent(tempRect);
+                tempText.text = "게임종료";
+                tempText.font = Managers.instance.Resource.Load<Font>("InGameFont");
+                tempText.color = Color.red;
+                tempText.resizeTextForBestFit = true;
+                tempText.alignment = TextAnchor.MiddleCenter;
+                tempText.resizeTextMaxSize = 1000;
+                Managers.instance.UI.SetUISize(ref textTR, Vector2.zero, Vector2.one);
+
+                Outline TextOutLine = tempText.AddComponent<Outline>();
+                TextOutLine.effectColor = Color.white;
+                TextOutLine.effectDistance = Vector2.down + Vector2.right;
+                TextOutLine.useGraphicAlpha = true;
+                exitGameBTN.onClick.RemoveAllListeners();
+                exitGameBTN.onClick.AddListener(() =>
+                {
+                    Managers.instance.GameExitBTN();
+                });
+
+            }
+            return exitGameBTN;
+        }
+    }
+    private Button exitOptionBTN;
+    public Button ExitOptionBTN
+    {
+        get
+        {
+            if (exitOptionBTN == null)
+            {
+                exitOptionBTN = new GameObject("OptionExitBTn").AddComponent<Button>();
+                //가장 우측 상단에 위치함으로 vector2.one을 기준으로 사이즈만큼 깎아서 min을 산정
+                Image tempImage = exitOptionBTN.AddComponent<Image>();
+                tempImage.sprite = Managers.instance.Resource.Load<Sprite>("Option_quit_button");
+                RectTransform BTNRT = tempImage.rectTransform;
+                BTNRT.SetParent(OptionPannel.rectTransform);
+                float heiPerWid = OptionPannel.rectTransform.rect.size.x / OptionPannel.rectTransform.rect.size.y;
+                Vector2 tempVec = tempImage.sprite.rect.size;
+                tempVec.y = tempVec.y * heiPerWid;
+
+                for (int i = 0; i < ((int)tempImage.sprite.rect.size.x).ToString().Length; i++)
+                {
+                    tempVec = tempVec * 0.1f;
+                }
+
+                Vector2 CenterPos = new Vector2(0.94252491f, 0.952696085f);
+                tempVec = tempVec / 6f;
+
+                Managers.instance.UI.SetUISize(ref BTNRT, CenterPos - tempVec, CenterPos);
+                exitOptionBTN.targetGraphic = tempImage;
+                exitOptionBTN.onClick.RemoveAllListeners();
+                exitOptionBTN.onClick.AddListener(() =>
+                {
+                    Managers.instance.UI.TargetUIOnOff(OptionPannel.rectTransform, false);
+                });
+            }
+            return exitOptionBTN;
+        }
+    }
+
+
+    /*    public bool CheckBoxValue
+        {
+            get
+            {
+                if (OptionPannel.gameObject.activeSelf)
+                {
+                    Managers.instance.UI.TargetUIOnOff(OptionPannel.rectTransform, false);
+                }
+                return ParabolaCheckBox.isOn;
+            }
+            set
+            {
+
+                Managers.instance.PlayerDataManager.isParabolaTurnOn = value;
+                if (ShoterController.Instance != null)
+                {
+                    ShoterController.Instance.isPrabolaOn = value;
+                }
+                ParabolaCheckBox.isOn = value;
+            }
+        }*/
+
 
 }

@@ -50,6 +50,7 @@ public class PlayerDataManager
     public int girlAttackChance = 30;
     //1´ç 1% ÃÑ 100%È®·ü
     public float girlAD = 20;
+    public bool isParabolaTurnOn = true;
     public void PlayerGetDamage(float Damage)
     {
         SetPlayerHP = (Managers.instance.PlayerDataManager.SetPlayerHP.Item1, Managers.instance.PlayerDataManager.SetPlayerHP.Item2 - Damage);
@@ -67,7 +68,6 @@ public class PlayerDataManager
 
         }
     }
-    
 
     public void AddBall(ExtraBallStat balls,bool isCalledItOnShop = false)
     {

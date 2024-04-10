@@ -47,6 +47,12 @@ MonoBehaviour:
     m_SerializedLabels:
     - PreLoadUI
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: cf84e0cf771883e46b03ebb4ffc40a56
+    m_Address: Option_quit_button
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - PreLoadUI
+    FlaggedDuringContentUpdateRestriction: 0
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: 489b40023fd66be419d08d79841125b1, type: 2}
   m_SchemaSet:

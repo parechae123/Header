@@ -53,6 +53,7 @@ public class ResourceManager
                                 {
                                     loadingName = loadResource;
                                     loadCount++;
+                                    CB.Invoke(loadResource, loadCount, totalCount);
                                     if (loadCount == totalCount)
                                     {
                                         JObject tempJson = JObject.Parse(Managers.instance.Resource.Load<TextAsset>("Weapon_Table").text);
@@ -65,7 +66,7 @@ public class ResourceManager
                                         loadDone = true;
                                         isDone.Invoke(true, true);
                                     }
-                                    CB.Invoke(loadResource, loadCount, totalCount);
+
                                 });
                                 continue;
                             case ResourceType.Sprites:
@@ -75,6 +76,7 @@ public class ResourceManager
                                 {
                                     loadingName = loadResource;
                                     loadCount++;
+                                    CB.Invoke(loadResource, loadCount, totalCount);
                                     if (loadCount == totalCount)
                                     {
                                         JObject tempJson = JObject.Parse(Managers.instance.Resource.Load<TextAsset>("Weapon_Table").text);
@@ -87,7 +89,7 @@ public class ResourceManager
                                         loadDone = true;
                                         isDone.Invoke(true, true);
                                     }
-                                    CB.Invoke(loadResource, loadCount, totalCount);
+
                                 });
                                 continue;
                             case ResourceType.DataSheets:
@@ -97,6 +99,7 @@ public class ResourceManager
                                 {
                                     loadingName = loadResource;
                                     loadCount++;
+                                    CB.Invoke(loadResource, loadCount, totalCount);
                                     if (loadCount == totalCount)
                                     {
                                         JObject tempJson = JObject.Parse(Managers.instance.Resource.Load<TextAsset>("Weapon_Table").text);
@@ -109,7 +112,7 @@ public class ResourceManager
                                         loadDone = true;
                                         isDone.Invoke(true, true);
                                     }
-                                    CB.Invoke(loadResource, loadCount, totalCount);
+
                                 });
                                 continue;
                             case ResourceType.Fonts:
@@ -119,6 +122,7 @@ public class ResourceManager
                                 {
                                     loadingName = loadResource;
                                     loadCount++;
+                                    CB.Invoke(loadResource, loadCount, totalCount);
                                     if (loadCount == totalCount)
                                     {
                                         JObject tempJson = JObject.Parse(Managers.instance.Resource.Load<TextAsset>("Weapon_Table").text);
@@ -131,7 +135,7 @@ public class ResourceManager
                                         loadDone = true;
                                         isDone.Invoke(true, true);
                                     }
-                                    CB.Invoke(loadResource, loadCount, totalCount);
+
                                 });
                                 continue;
                             case ResourceType.RenderTexture:
@@ -141,6 +145,7 @@ public class ResourceManager
                                 {
                                     loadingName = loadResource;
                                     loadCount++;
+                                    CB.Invoke(loadResource, loadCount, totalCount);
                                     if (loadCount == totalCount)
                                     {
                                         JObject tempJson = JObject.Parse(Managers.instance.Resource.Load<TextAsset>("Weapon_Table").text);
@@ -153,7 +158,7 @@ public class ResourceManager
                                         loadDone = true;
                                         isDone.Invoke(true, true);
                                     }
-                                    CB.Invoke(loadResource, loadCount, totalCount);
+
                                 });
                                 continue;
                             case ResourceType.Video:
@@ -163,6 +168,7 @@ public class ResourceManager
                                 {
                                     loadingName = loadResource;
                                     loadCount++;
+                                    CB.Invoke(loadResource, loadCount, totalCount);
                                     if (loadCount == totalCount)
                                     {
                                         JObject tempJson = JObject.Parse(Managers.instance.Resource.Load<TextAsset>("Weapon_Table").text);
@@ -175,7 +181,7 @@ public class ResourceManager
                                         loadDone = true;
                                         isDone.Invoke(true, true);
                                     }
-                                    CB.Invoke(loadResource, loadCount, totalCount);
+
                                 });
                                 continue;
                             case ResourceType.Texture2D:
@@ -185,6 +191,7 @@ public class ResourceManager
                                 {
                                     loadingName = loadResource;
                                     loadCount++;
+                                    CB.Invoke(loadResource, loadCount, totalCount);
                                     if (loadCount == totalCount)
                                     {
                                         JObject tempJson = JObject.Parse(Managers.instance.Resource.Load<TextAsset>("Weapon_Table").text);
@@ -197,7 +204,7 @@ public class ResourceManager
                                         loadDone = true;
                                         isDone.Invoke(true, true);
                                     }
-                                    CB.Invoke(loadResource, loadCount, totalCount);
+
 
                                 });
                                 continue;
@@ -208,6 +215,7 @@ public class ResourceManager
                                 {
                                     loadingName = loadResource;
                                     loadCount++;
+                                    CB.Invoke(loadResource, loadCount, totalCount);
                                     if (loadCount == totalCount)
                                     {
                                         JObject tempJson = JObject.Parse(Managers.instance.Resource.Load<TextAsset>("Weapon_Table").text);
@@ -220,7 +228,7 @@ public class ResourceManager
                                         loadDone = true;
                                         isDone.Invoke(true, true);
                                     }
-                                    CB.Invoke(loadResource, loadCount, totalCount);
+
 
                                 });
                                 continue;
