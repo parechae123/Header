@@ -54,6 +54,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 67ec71c3496e71643a3bb47563ced260, type: 2}
   - {fileID: 11400000, guid: 8142f7aed21dcdf45b2d6d7d994d9c04, type: 2}
   - {fileID: 11400000, guid: 8153d8a276c731b4bb26503951e7d17c, type: 2}
+  - {fileID: 11400000, guid: de45a60e4d6b832419282f09d6daee5c, type: 2}
   m_BuildSettings:
     m_CompileScriptsInVirtualMode: 0
     m_CleanupStreamingAssetsAfterBuilds: 1
@@ -106,6 +107,7 @@ MonoBehaviour:
     - Prefabs
     - Materials
     - PreLoadUI
+    - Sound
   m_SchemaTemplates: []
   m_GroupTemplateObjects:
   - {fileID: 11400000, guid: c6ef9c20331d5e649a2617b27fb0ed50, type: 2}

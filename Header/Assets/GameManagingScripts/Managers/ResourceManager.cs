@@ -232,6 +232,30 @@ public class ResourceManager
 
                                 });
                                 continue;
+                            case ResourceType.AudioClip:
+                                OpHandle = Addressables.LoadResourceLocationsAsync(ResourceDefines[i].LabelName, typeof(AudioClip));
+                                totalCount += OpHandle.Result.Count;
+                                LoadAllAsync<AudioClip>(ResourceDefines[i].LabelName, (loadResource, total) =>
+                                {
+                                    loadingName = loadResource;
+                                    loadCount++;
+                                    CB.Invoke(loadResource, loadCount, totalCount);
+                                    if (loadCount == totalCount)
+                                    {
+                                        JObject tempJson = JObject.Parse(Managers.instance.Resource.Load<TextAsset>("Weapon_Table").text);
+                                        JToken tempJToken = tempJson["Weapon_Table"];
+                                        ExtraBallStat[] tempBallTable = tempJToken.ToObject<ExtraBallStat[]>();
+                                        for (int E = 0; E < tempBallTable.Length; E++)
+                                        {
+                                            _weaponDictionary.Add(tempBallTable[E].ballName, tempBallTable[E]);
+                                        }
+                                        loadDone = true;
+                                        isDone.Invoke(true, true);
+                                    }
+
+
+                                });
+                                continue;
                         }
 
                     }

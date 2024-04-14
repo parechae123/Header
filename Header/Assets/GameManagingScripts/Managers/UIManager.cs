@@ -1162,6 +1162,7 @@ public class BattleUI
                 monsterTarget.rectTransform.SetParent(BattleSceneUI);
                 monsterTarget.sprite = Managers.instance.Resource.Load<Sprite>("TargetImg");
                 monsterTarget.color = Color.red;
+                monsterTarget.raycastTarget = false;
             }
             return monsterTarget;
         }
@@ -3023,8 +3024,8 @@ public class OptionUI
                 });
 
 
-                Text tempText = new GameObject("BGMText").AddComponent<Text>();
-                tempText.text = "배경음악";
+                Text tempText = new GameObject("SFXText").AddComponent<Text>();
+                tempText.text = "효과음";
                 tempText.rectTransform.SetParent(tempSFXRect);
                 tempText.font = Managers.instance.Resource.Load<Font>("InGameFont");
                 tempText.color = Color.black;

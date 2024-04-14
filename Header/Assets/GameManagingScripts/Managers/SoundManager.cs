@@ -51,6 +51,24 @@ public class SoundManager
         } 
     }
 
+    public void SFXPlayOneshot(AudioClip Sound,bool ballSound = false,bool resetPitch = false)
+    {
+        if (ballSound)
+        {
+            Debug.LogError(SFX.pitch);
+            SFX.pitch = sfx.pitch+1;
+        }
+        else if(!ballSound)
+        {
+            SFX.pitch = 1;
+        }
+        if (resetPitch)
+        {
+            SFX.pitch = 1;
+        }
+        
+        SFX.PlayOneShot(Sound);
+    }
     public void SetSoundValue(bool isBGM,float value)
     {
         if (isBGM)

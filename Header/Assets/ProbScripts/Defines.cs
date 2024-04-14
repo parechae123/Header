@@ -24,7 +24,7 @@ namespace DataDefines
     public enum ResourceType
     {
         // MAINTANCE : 리소스 타입 추가할때 여기서 Enum 추가작업 필요
-        GameObject, Sprites,DataSheets,Fonts,RenderTexture,Video,Texture2D,Materials
+        GameObject, Sprites,DataSheets,Fonts,RenderTexture,Video,Texture2D,Materials,AudioClip
     }
     [System.Serializable]
     public class DialogDatas
@@ -82,6 +82,7 @@ namespace HeaderPadDefines
                 case BlockStatus.Destroyed:
                     break;
                 case BlockStatus.Emptied:
+                    Managers.instance.SoundManager.SFXPlayOneshot(Managers.instance.Resource.Load<AudioClip>("EmptyBlock"),true);
                     blockCondition = BlockStatus.Destroyed;
                     targetIMG.transform.GetComponent<PolygonCollider2D>().enabled = false;
                     targetIMG.sprite = Managers.instance.Resource.Load<Sprite>("HeaderBlock_Destroyed");
@@ -90,12 +91,14 @@ namespace HeaderPadDefines
                     //TODO : 볼 충돌시 갱신되는 모든걸 여기에 넣으면될듯,EX : 데미지
                     break;
                 case BlockStatus.FIlled:
+                    Managers.instance.SoundManager.SFXPlayOneshot(Managers.instance.Resource.Load<AudioClip>("FilledBlock"),true);
                     blockCondition = BlockStatus.Emptied;
                     targetIMG.sprite = Managers.instance.Resource.Load<Sprite>("HeaderBlock_Emptied");
                     ShoterController.Instance.targetDamage += 3;
                     Managers.instance.UI.BattleUICall.SetComboNumber(true);
                     break;
                 case BlockStatus.FilledCoin:
+                    Managers.instance.SoundManager.SFXPlayOneshot(Managers.instance.Resource.Load<AudioClip>("AllBlocks"), true);
                     blockCondition = BlockStatus.Emptied;
                     targetIMG.sprite = Managers.instance.Resource.Load<Sprite>("HeaderBlock_Emptied");
                     Managers.instance.PlayerDataManager.PlayerMoney += 1;
@@ -104,11 +107,13 @@ namespace HeaderPadDefines
                 case BlockStatus.BoombBlock:
                     if (BlockHP>= 0)
                     {
+                        Managers.instance.SoundManager.SFXPlayOneshot(Managers.instance.Resource.Load<AudioClip>("AllBlocks"), true);
                         //targetIMG.sprite = Managers.instance.Resource.Load<Sprite>("HeaderBlock_Emptied"+BlockHP);
                         BlockHP--;
                     }
                     else
                     {
+                        Managers.instance.SoundManager.SFXPlayOneshot(Managers.instance.Resource.Load<AudioClip>("AllBlocks"), true);
                         ShoterController.Instance.regionalDamage += 40;
                         blockCondition = BlockStatus.Emptied;
                         targetIMG.transform.GetComponent<PolygonCollider2D>().enabled = false;
@@ -117,6 +122,7 @@ namespace HeaderPadDefines
                     }
                     break;
                 case BlockStatus.reroll:
+                    Managers.instance.SoundManager.SFXPlayOneshot(Managers.instance.Resource.Load<AudioClip>("AllBlocks"),true);
                     Managers.instance.Grid.OnReset();
                     blockCondition = BlockStatus.Emptied;
                     targetIMG.sprite = Managers.instance.Resource.Load<Sprite>("HeaderBlock_Emptied");

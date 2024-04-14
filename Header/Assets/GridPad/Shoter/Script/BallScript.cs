@@ -303,6 +303,8 @@ public class BallScript : MonoBehaviour
         BallRB.simulated = false;
         Sprite[] tempSprites = new Sprite[1];
         string tempNum = "00";
+        Managers.instance.SoundManager.SFXPlayOneshot(Managers.instance.Resource.Load<AudioClip>("Bulb_Broken_Sounds1"),true,true);
+
        for (int i = 0; i < int.MaxValue;i++)
         {
             tempNum = tempNum.Remove(tempNum.Length- (i.ToString().Length));
