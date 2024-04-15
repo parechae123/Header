@@ -3541,8 +3541,8 @@ MonoBehaviour:
   m_ShadowVolumeIntensityEnabled: 0
   m_ShadowVolumeIntensity: 0.75
   m_LocalBounds:
-    m_Center: {x: -0.0397501, y: -0.5099001, z: 0}
-    m_Extent: {x: 18.50045, y: 3.5, z: 0}
+    m_Center: {x: -0.03995037, y: -0.51055014, z: 0}
+    m_Extent: {x: 18.49995, y: 3.5001502, z: 0}
   m_PointLightInnerAngle: 360
   m_PointLightOuterAngle: 360
   m_PointLightInnerRadius: 0
@@ -9421,6 +9421,14 @@ PrefabInstance:
     - target: {fileID: 787538671998616087, guid: 138683e0436525a49b1c8322f018a9b5, type: 3}
       propertyPath: m_Name
       value: BattleSceneSet
+      objectReference: {fileID: 0}
+    - target: {fileID: 2514581415889689841, guid: 138683e0436525a49b1c8322f018a9b5, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0.05
+      objectReference: {fileID: 0}
+    - target: {fileID: 2514581415889689841, guid: 138683e0436525a49b1c8322f018a9b5, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 6.93
       objectReference: {fileID: 0}
     - target: {fileID: 6720493979012511920, guid: 138683e0436525a49b1c8322f018a9b5, type: 3}
       propertyPath: m_LocalPosition.x
