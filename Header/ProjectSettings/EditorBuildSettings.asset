@@ -17,5 +17,20 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/01.Scenes/TestScenes/ShopSceneTest.unity
     guid: 3aacf381ca025ed4d98c724340eb05d4
+  - enabled: 1
+    path: Assets/01.Scenes/ChallengeScenes/New Scene 1.unity
+    guid: 9e02a869b62f54749b94864b2c8586e6
+  - enabled: 1
+    path: Assets/01.Scenes/ChallengeScenes/New Scene 2.unity
+    guid: 7b039a1b9dcd32c4088b0fa796fa5888
+  - enabled: 1
+    path: Assets/01.Scenes/ChallengeScenes/New Scene 3.unity
+    guid: 1fe3cc65fe6419e4c8716ec4cf2fce05
+  - enabled: 1
+    path: Assets/01.Scenes/ChallengeScenes/New Scene 4.unity
+    guid: f090b58438d83664f8a8c2c1b6138551
+  - enabled: 1
+    path: Assets/01.Scenes/ChallengeScenes/New Scene.unity
+    guid: d723f4e017c26a7468d9df58fbc1928d
   m_configObjects:
     com.unity.addressableassets: {fileID: 11400000, guid: 50cf2aef1c09d094297ef51fe9b7fa03, type: 2}

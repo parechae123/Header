@@ -179,7 +179,7 @@ public class BallScript : MonoBehaviour
     }
     public void BallFire(Vector2 FireToward,float FireForce)
     {
-
+        Managers.instance.SoundManager.SFXPlayOneshot(Managers.instance.Resource.Load<AudioClip>("BulbThrowing1"), true, true);
         if (bulbSkills != null)
         {
             bulbSkills.StartEventSkills();

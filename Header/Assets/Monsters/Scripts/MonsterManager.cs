@@ -156,6 +156,7 @@ public class MonsterManager : MonoBehaviour
     private void Awake()
     {
 
+
         Managers.instance.UI.BattleUICall.InstallMonsterHPBar(monsterSlotCount);
         (float, float) TempDoubleFloat = CarculateMonsterFullHP;
         Managers.instance.UI.BattleUICall.HPBarSetting(false, TempDoubleFloat.Item1, TempDoubleFloat.Item2);

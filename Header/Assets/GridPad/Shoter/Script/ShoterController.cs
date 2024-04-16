@@ -128,6 +128,12 @@ public class ShoterController : MonoBehaviour
     }
     private void Start()
     {
+        if (Managers.instance.PlayerDataManager.playerOwnBalls == null || Managers.instance.PlayerDataManager.playerOwnBalls.Count <= 0)
+        {
+            isReadyFire = false;
+            Managers.instance.UI.BattleUICall.GameOverBTN.enabled = true;
+            return;
+        }
         Managers.instance.UI.BattleUICall.SettingPlayerBattleUI();
         Managers.instance.UI.BattleUICall.RegistListener();
         lineRenderer = transform.AddComponent<LineRenderer>();
@@ -137,8 +143,8 @@ public class ShoterController : MonoBehaviour
         List<Material> TempMat = new List<Material>();
         TempMat.Add(Managers.instance.Resource.Load<Material>("ShootLine"));
         lineRenderer.SetMaterials(TempMat);
-        lineRenderer.startWidth = 0.2f;
-        lineRenderer.endWidth = 0.3f;
+        lineRenderer.startWidth = 1;
+        lineRenderer.endWidth = 1f;
         lineRenderer.positionCount = numPoints;
         ReloadBalls(Managers.instance.PlayerDataManager.playerOwnBalls);
     }
