@@ -50,6 +50,7 @@ public class ShopInfo : MonoBehaviour
                 Array.Resize<BallStat>(ref shopBalls, i + 1);
                 int tempRandomNumber = UnityEngine.Random.Range(0, tempStatArray.Length);
                 shopBalls[i] = tempStatArray[tempRandomNumber];
+                if(Managers.instance.PlayerDataManager.isChallengeMode)shopBalls[i].ballPrice = 0;
                 Managers.instance.UI.ShopUICall.CreateWeaponBuyButtons(tempStatArray[tempRandomNumber], i);
             }
         }
@@ -61,6 +62,7 @@ public class ShopInfo : MonoBehaviour
                 if (Managers.instance.Resource._weaponDictionary.TryGetValue(sellableBallNames[i],out ExtraBallStat targetStat))
                 {
                     shopBalls[i] = targetStat;
+                    if (Managers.instance.PlayerDataManager.isChallengeMode) shopBalls[i].ballPrice = 0;
                     Managers.instance.UI.ShopUICall.CreateWeaponBuyButtons(targetStat, i);
                 }
                 else

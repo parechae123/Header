@@ -46,7 +46,7 @@ public class PlayerDataManager
             
         }
     }
-
+    public bool isChallengeMode = false;
     public int girlAttackChance = 30;
     //1´ç 1% ÃÑ 100%È®·ü
     public float girlAD = 20;

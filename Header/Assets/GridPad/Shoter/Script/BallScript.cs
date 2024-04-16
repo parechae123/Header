@@ -177,6 +177,8 @@ public class BallScript : MonoBehaviour
             BallRB.sharedMaterial = phyMat;
         }
     }
+    public AudioClip tempAC;
+    public AudioSource AS;
     public void BallFire(Vector2 FireToward,float FireForce)
     {
         Managers.instance.SoundManager.SFXPlayOneshot(Managers.instance.Resource.Load<AudioClip>("BulbThrowing1"), true, true);
@@ -185,7 +187,7 @@ public class BallScript : MonoBehaviour
             bulbSkills.StartEventSkills();
             isPlayerShooting = true;
         }
-        ShoterController.Instance.testTR.gameObject.SetActive(false);
+        if(ShoterController.Instance.collPointPreview != null) ShoterController.Instance.collPointPreview.gameObject.SetActive(false);
         Managers.instance.UI.BattleUICall.WeaponButtonCheck(true);
         ShoterController.Instance.isReadyFire = false;
         ShoterController.Instance.lineRenderer.enabled = false;

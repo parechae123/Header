@@ -14,6 +14,7 @@ using System.Threading.Tasks;
 using MonsterDefines;
 using UnityEngine.EventSystems;
 using static UnityEngine.Rendering.VirtualTexturing.Debugging;
+using static UnityEditor.ShaderGraph.Internal.KeywordDependentCollection;
 
 
 public class UIManager
@@ -88,6 +89,65 @@ public class UIManager
                 TopViewPlayer.Instance.isMoveAble = MoveAbleChecker();
             }
         }
+    }
+
+    public void RegistEventTrigger(RectTransform target)
+    {
+        EventTrigger tempET = target.GetOrAddComponent<EventTrigger>();
+        tempET.TryGetComponent<Button>(out Button TargetBTN);
+        Button tempBTN = TargetBTN;
+
+        var pointerClick = new EventTrigger.Entry
+        {
+            eventID = EventTriggerType.PointerClick
+        };
+        var pointerHover = new EventTrigger.Entry
+        {
+            eventID = EventTriggerType.PointerEnter
+        };
+        if (tempBTN != null)
+        {
+            pointerClick.callback.AddListener((data) =>
+            {
+                if (tempBTN.interactable)
+                {
+                    Managers.instance.UI.OnMouseHover();
+                }
+
+            });
+            pointerHover.callback.AddListener((data) =>
+            {
+                if (tempBTN.interactable)
+                {
+                    Managers.instance.UI.OnMouseClick();
+                }
+            });
+        }
+        else
+        {
+            pointerClick.callback.AddListener((data) =>
+            {
+                Managers.instance.UI.OnMouseHover();
+
+            });
+            pointerHover.callback.AddListener((data) =>
+            {
+                Managers.instance.UI.OnMouseHover();
+            });
+        }
+
+
+        tempET.triggers.Add(pointerClick);
+        tempET.triggers.Add(pointerHover);
+    }
+
+    public void OnMouseHover()
+    {
+        Managers.instance.SoundManager.SFXPlayOneshot(Managers.instance.Resource.Load<AudioClip>("ButtonMouseOver"), false, true);
+    }
+    public void OnMouseClick()
+    {
+        Managers.instance.SoundManager.SFXPlayOneshot(Managers.instance.Resource.Load<AudioClip>("ButtonMouseClick"), false, true);
     }
     public void SetUISize(ref RectTransform TargetRect, Vector2 min, Vector2 max)
     {
@@ -859,6 +919,9 @@ public class BattleUI
                 tempIMG.rectTransform.anchoredPosition = Vector2.zero;
                 tempIMG.rectTransform.sizeDelta = Vector2.zero;
                 tempIMG.sprite = Managers.instance.Resource.Load<Sprite>("select_arrow_panel_L");
+
+
+
             }
             return weaponBeforeBTN;
         }
@@ -1108,6 +1171,7 @@ public class BattleUI
                 tempText.fontSize = (int)BTNRect.rect.size.y / 9;
                 tempText.color = Color.white;
                 gameOverBTN.onClick.AddListener(() => { Managers.instance.OnBTNChangeScene(0); });
+                Managers.instance.UI.RegistEventTrigger(BTNRect);
                 GameOverText = "You DIed";
                 gameOverText.color = Color.red;
             }
@@ -1141,10 +1205,19 @@ public class BattleUI
                 tempText.rectTransform.sizeDelta = Vector2.zero;
                 tempText.alignment = TextAnchor.MiddleCenter;
                 tempText.text = "Continue";
+                
                 tempText.font = Managers.instance.Resource.Load<Font>("InGameFont");
                 tempText.fontSize = (int)BTNRect.rect.size.y / 9;
                 tempText.color = Color.white;
-                toDialogSceneBTN.onClick.AddListener(() => { Managers.instance.OnBTNChangeScene(1); });
+                toDialogSceneBTN.onClick.RemoveAllListeners();
+                toDialogSceneBTN.onClick.AddListener(() => 
+                {
+                    Managers.instance.OnBTNChangeScene(Managers.instance.PlayerDataManager.isChallengeMode ? 4 : ShoterController.Instance.nextSceneBuildIndex);
+
+                     
+                }
+                );
+                Managers.instance.UI.RegistEventTrigger(BTNRect);
                 GameOverText = "Clear!";
             }
             return toDialogSceneBTN;
@@ -1804,6 +1877,8 @@ public class BattleUI
     }
     public void RegistListener()
     {
+        Managers.instance.UI.RegistEventTrigger(WeaponBeforeBTN.transform as RectTransform);
+        Managers.instance.UI.RegistEventTrigger(WeaponNextBTN.transform as RectTransform);
         WeaponBeforeBTN.onClick.RemoveAllListeners();
         WeaponBeforeBTN.onClick.AddListener(Managers.instance.PlayerDataManager.PlayerBeforeBallPick);
         WeaponNextBTN.onClick.RemoveAllListeners();
@@ -2434,6 +2509,7 @@ public class ShopUI
                 NextBTRT.anchoredPosition = Vector2.zero;
                 NextBTRT.sizeDelta = Vector2.zero;
                 tempNextBTN.onClick.AddListener(InvenNextBTN);
+                Managers.instance.UI.RegistEventTrigger(NextBTRT);
                 nextBTN = tempNextBTN;
             }
             return nextBTN;
@@ -2462,6 +2538,7 @@ public class ShopUI
                 BeforeBTRT.anchoredPosition = Vector2.zero;
                 BeforeBTRT.sizeDelta = Vector2.zero;
                 tempBeforeBTN.onClick.AddListener(InvenBeforeBTN);
+                Managers.instance.UI.RegistEventTrigger(BeforeBTRT);
                 beforeBTN = tempBeforeBTN;
             }
             return beforeBTN;
@@ -2700,8 +2777,8 @@ public class ShopUI
             }
             shopWeaponItems[ballArray].transform.parent.transform.gameObject.SetActive(true);
         }
+        Managers.instance.UI.RegistEventTrigger(shopWeaponItems[ballArray].transform as RectTransform);
         shopWeaponItems[ballArray].onClick.RemoveAllListeners();
-
         shopWeaponItems[ballArray].onClick.AddListener(() =>
         {
             Managers.instance.PlayerDataManager.AddBall(stat, true);
@@ -2889,7 +2966,7 @@ public class OptionUI
                 parabolaCheckBox.targetGraphic = CheckBoxTarget;
                 parabolaCheckBox.graphic = Checker;
                 parabolaCheckBox.isOn = Managers.instance.PlayerDataManager.isParabolaTurnOn;
-
+                Managers.instance.UI.RegistEventTrigger(CheckBoxParent);
                 parabolaCheckBox.onValueChanged.AddListener((checkStatus) =>
                 {
                     ChangedCheckBoxValue();
@@ -3022,7 +3099,6 @@ public class OptionUI
                 {
                     Managers.instance.SoundManager.SetSoundValue(false, value);
                 });
-
 
                 Text tempText = new GameObject("SFXText").AddComponent<Text>();
                 tempText.text = "È¿°úÀ½";
@@ -3211,6 +3287,7 @@ public class OptionUI
                 {
                     Managers.instance.GameExitBTN();
                 });
+                Managers.instance.UI.RegistEventTrigger(tempRect);
 
             }
             return exitGameBTN;
@@ -3248,6 +3325,7 @@ public class OptionUI
                 {
                     Managers.instance.UI.TargetUIOnOff(OptionPannel.rectTransform, false);
                 });
+                Managers.instance.UI.RegistEventTrigger(BTNRT);
             }
             return exitOptionBTN;
         }

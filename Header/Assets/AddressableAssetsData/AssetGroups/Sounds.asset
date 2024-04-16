@@ -47,11 +47,23 @@ MonoBehaviour:
     m_SerializedLabels:
     - Sound
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 901d56c03b2ef9b46a1ede7e161d7aae
+  - m_GUID: 3771806e33340724ca6c5b18b2ce4278
     m_Address: BulbThrowing1
     m_ReadOnly: 0
     m_SerializedLabels:
     - Sound
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 803b3904652b71540bdef355256f3c8d
+    m_Address: ButtonMouseOver
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - PreLoadAudios
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 7075bd07094c8d84fb4888120b4fae40
+    m_Address: ButtonMouseClick
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - PreLoadAudios
     FlaggedDuringContentUpdateRestriction: 0
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: 489b40023fd66be419d08d79841125b1, type: 2}

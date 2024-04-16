@@ -37,28 +37,33 @@ namespace ChallengeSceneData
 #endif
     public class SceneDataSetter : MonoBehaviour
     {
-        [SerializeField]private Button shopUI;
-        [SerializeField]private RectTransform challengeScenePickPannel;
-        [SerializeField]public Button[] challengeSceneButtons;
-        [SerializeField]public string[] challengeScenes;
+        [SerializeField]private Button shopUIBTN;
+        [SerializeField]private RectTransform scenePickPannel;
+        [SerializeField]public Button sceneUIBTN;
+        [SerializeField]public Button[] sceneButtons;
+        [SerializeField]public string[] challengeSceneNames;
 
         private void Awake()
         {
-/*            shopUI.onClick.RemoveAllListeners();
-            shopUI.onClick.AddListener(() =>
+            shopUIBTN.onClick.RemoveAllListeners();
+            sceneUIBTN.onClick.AddListener(() =>
+            {
+                Managers.instance.UI.TargetUIOnOff(scenePickPannel, !scenePickPannel.gameObject.activeSelf);
+            });
+            shopUIBTN.onClick.AddListener(() =>
             {
                 Managers.instance.UI.ShopUICall.IsShopActivate = Managers.instance.UI.ShopUICall.IsShopActivate == true ? false : true;
-            });*/
-            if (challengeScenes != null)
+            });
+            if (challengeSceneNames != null)
             {
-                for (int i = 0; i < challengeScenes.Length; i++)
+                for (int i = 0; i < challengeSceneNames.Length; i++)
                 {
-                    Array.Resize(ref challengeSceneButtons,i+1);
+                    Array.Resize(ref sceneButtons,i+1);
                     int tempArray = i;
                     //closure 이슈로 인해 변수를 따로 만들어줌
-                    challengeSceneButtons[i] = challengeScenePickPannel.GetChild(i).GetComponent<Button>();
-                    challengeSceneButtons[i].onClick.RemoveAllListeners();
-                    challengeSceneButtons[i].onClick.AddListener(() => 
+                    sceneButtons[i] = scenePickPannel.GetChild(i).GetComponent<Button>();
+                    sceneButtons[i].onClick.RemoveAllListeners();
+                    sceneButtons[i].onClick.AddListener(() => 
                     {
                         
                         ToChallengeScene(tempArray);
@@ -81,29 +86,29 @@ namespace ChallengeSceneData
                 return; 
             }
             var scenePaths = Directory.GetFiles(folderPath, "*.unity", SearchOption.AllDirectories);
-            Array.Resize(ref challengeScenes, 0);
+            Array.Resize(ref challengeSceneNames, 0);
             foreach (var path in scenePaths)
             {
                 Debug.Log("Found scene: " + path);
-                Debug.Log(challengeScenes.Length + 1);
+                Debug.Log(challengeSceneNames.Length + 1);
 
-                Array.Resize(ref challengeScenes, challengeScenes.Length+1);
+                Array.Resize(ref challengeSceneNames, challengeSceneNames.Length+1);
                 string tempNameSceneName = path.Replace(".unity", "");
                 tempNameSceneName = tempNameSceneName.Replace(folderPath+ "\\", "");
-                challengeScenes[challengeScenes.Length -1] = tempNameSceneName;
+                challengeSceneNames[challengeSceneNames.Length -1] = tempNameSceneName;
             }
         }
         public void CheckSceneInfo()
         {
-            for (int i = 0; i < challengeScenes.Length; i++)
+            for (int i = 0; i < challengeSceneNames.Length; i++)
             {
-                Debug.Log(challengeScenes[i]);
+                Debug.Log(challengeSceneNames[i]);
             }
         }
         public void ToChallengeScene(int targetArray)
         {
 
-            SceneManager.LoadScene(challengeScenes[targetArray]);
+            SceneManager.LoadScene(challengeSceneNames[targetArray]);
         }
 
 #endif

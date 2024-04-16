@@ -10,7 +10,7 @@ public class NewGameButton : MonoBehaviour
 {
     public int sceneNumber = 0;
     public Transform loadToHideThings;
-    [SerializeField]private Image splashArt;
+    [SerializeField] private Image splashArt;
     [SerializeField] private DataDefines.ResourceDefine[] labelNames;
 
     [SerializeField] private UnityEngine.UI.Button newGameBTN;
@@ -18,64 +18,84 @@ public class NewGameButton : MonoBehaviour
     [SerializeField] private UnityEngine.UI.Button exitGameBTN;
 
     Queue<Vector2> LoadingPercent = new Queue<Vector2>();
+    [SerializeField] bool isChallengeModeBTN = false;
     (byte, byte) IlustMinMax;
     // Start is called before the first frame update
     private void Start()
     {
-
-        Managers.instance.Resource.LoadAllAsync<AudioClip>("TItleAudios", (TempString, Num) =>
+        if (!isChallengeModeBTN)
         {
-            Managers.instance.SoundManager.BGM.enabled = true;
-            Managers.instance.SoundManager.SFX.enabled = true;
-
-        });
-        Managers.instance.Resource.LoadAllAsync<Sprite>("PreLoadUI", (TempString, Num) =>
-        {
-            Debug.Log("프리로드 UI 로드 완료");
-
-        });
-        Managers.instance.Resource.LoadAllAsync<Font>("Font", (TempString, Num) =>
-        {
-            Debug.Log("프리로드 UI 로드 완료");
-
-        });
-        splashArt.DOFade(0, 3f).OnComplete(() =>
-        {
-            newGameBTN.onClick.AddListener(OnClickBTN);
-            if (optionBTN != null)
+            if (!Managers.instance.Resource.isResourceLoadDone)
             {
-                optionBTN.onClick.AddListener(() =>
+                Managers.instance.Resource.LoadAllAsync<AudioClip>("PreLoadAudios", (TempString, Num) =>
                 {
-                    Managers.instance.UI.CloseUIStack();
+                    Managers.instance.SoundManager.BGM.enabled = true;
+                    Managers.instance.SoundManager.SFX.enabled = true;
+
+                });
+                Managers.instance.Resource.LoadAllAsync<Sprite>("PreLoadUI", (TempString, Num) =>
+                {
+                    Debug.Log("프리로드 UI 로드 완료");
+
+                });
+                Managers.instance.Resource.LoadAllAsync<Font>("Font", (TempString, Num) =>
+                {
+                    Debug.Log("프리로드 UI 로드 완료");
+
+                });
+                splashArt.DOFade(0, 3f).OnComplete(() =>
+                {
+                    Managers.instance.UI.RegistEventTrigger(newGameBTN.transform as RectTransform);
+                    newGameBTN.onClick.AddListener(OnClickBTN);
+                    if (optionBTN != null)
+                    {
+                        Managers.instance.UI.RegistEventTrigger(optionBTN.transform as RectTransform);
+                        optionBTN.onClick.AddListener(() =>
+                        {
+                            Managers.instance.UI.CloseUIStack();
+                        });
+                    }
+                    else
+                    {
+                        Debug.LogError("옵션 버튼 지정안됨");
+                    }
+                    if (exitGameBTN != null)
+                    {
+                        Managers.instance.UI.RegistEventTrigger(exitGameBTN.transform as RectTransform);
+                        exitGameBTN.onClick.AddListener(Managers.instance.GameExitBTN);
+                    }
+                    else
+                    {
+                        Debug.LogError("게임종료 버튼 지정안됨");
+                    }
+                    splashArt.gameObject.SetActive(false);
                 });
             }
             else
             {
-                Debug.LogError("옵션 버튼 지정안됨");
+                newGameBTN.onClick.RemoveAllListeners();
+                newGameBTN.onClick.AddListener(OnClickBTN);
+                splashArt.gameObject.SetActive(false);
             }
-            if (exitGameBTN != null)
-            {
-                exitGameBTN.onClick.AddListener(Managers.instance.GameExitBTN);
-            }
-            else
-            {
-                Debug.LogError("게임종료 버튼 지정안됨");
-            }
-            splashArt.gameObject.SetActive(false);
-        });
-        
+        }
+        else
+        {
+            Managers.instance.UI.RegistEventTrigger(newGameBTN.transform as RectTransform);
+            newGameBTN.onClick.AddListener(OnClickBTN);
+        }
+
     }
     private void Update()
     {
         if (LoadingPercent.Count > 0)
         {
-            
+
             Vector2 tempValue = LoadingPercent.Dequeue();
             Managers.instance.UI.LoadingUIProps.LoadingSlider.maxValue = tempValue.x;
             Managers.instance.UI.LoadingUIProps.LoadingSlider.value = tempValue.y;
 
-/*            Managers.instance.UI.LoadingUIProps.LoadingSlider.enabled = false;
-            Managers.instance.UI.LoadingUIProps.LoadingSlider.enabled = true;*/
+            /*            Managers.instance.UI.LoadingUIProps.LoadingSlider.enabled = false;
+                        Managers.instance.UI.LoadingUIProps.LoadingSlider.enabled = true;*/
         }
     }
     public void OnClickBTN()
@@ -130,13 +150,14 @@ public class NewGameButton : MonoBehaviour
 
     IEnumerator LoadSceneAsyncCoroutine()
     {
+        Managers.instance.PlayerDataManager.isChallengeMode = isChallengeModeBTN;
         // 비동기적으로 씬을 로드합니다.
-        while (LoadingPercent.Count>0) 
-        { 
+        while (LoadingPercent.Count > 0)
+        {
             yield return null;
         }
         AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(sceneNumber, LoadSceneMode.Single);
-        
+
 
         // 씬 로딩이 완료될 때까지 대기합니다.
         while (!asyncLoad.isDone)

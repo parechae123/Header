@@ -12,6 +12,7 @@ using System.Reflection;
 
 public class ShoterController : MonoBehaviour
 {
+    public int nextSceneBuildIndex = 1;
     public bool isReadyFire = false;
     public bool isParabolaOn;
     public LineRenderer lineRenderer;
@@ -19,7 +20,7 @@ public class ShoterController : MonoBehaviour
     private float timeInterval = 0.1f;
     private float gravity = -9.8f;
     [SerializeField] public Vector2 normalizedRelValue;
-    [SerializeField] public UnityEngine.Transform testTR;
+    [SerializeField] public UnityEngine.Transform collPointPreview;
     [SerializeField] LayerMask layerBallCollision;
     public static ShoterController Instance;
     [SerializeField]private float fireForce = 0;
@@ -216,7 +217,7 @@ public class ShoterController : MonoBehaviour
                     RaycastHit2D colInfo = Physics2D.Raycast(firstPos, secondPos - firstPos, nowAndNextDistance, layerBallCollision);
                     if (colInfo)
                     {
-                        testTR.position = colInfo.point;
+                        if(collPointPreview != null)collPointPreview.position = colInfo.point;
                         lineRenderer.SetPosition(i + 1, colInfo.point);
                         float reflectedBallVelocity = NowBallStat.ballBouncienss * (Vector2.Distance(firstPos, secondPos) / timeInterval);
                         Vector2 normalizedRefVector = (Vector2.Reflect(secondPos - firstPos, colInfo.normal)).normalized;
@@ -273,6 +274,7 @@ public class ShoterController : MonoBehaviour
             
         }
     }
+
     private void ShotBall()
     {
         Vector2 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
@@ -292,7 +294,7 @@ public class ShoterController : MonoBehaviour
             }
             else if (Input.GetMouseButtonDown(0) && !UnityEngine.EventSystems.EventSystem.current.IsPointerOverGameObject())
             {
-                testTR.gameObject.SetActive(true);
+                if(collPointPreview != null)collPointPreview.gameObject.SetActive(true);
                 Managers.instance.UI.BattleUICall.SetBallSliderPos(transform.position, true);
             }
             else if (Input.GetMouseButton(0) && !UnityEngine.EventSystems.EventSystem.current.IsPointerOverGameObject())
