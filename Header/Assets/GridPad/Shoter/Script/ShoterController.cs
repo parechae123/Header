@@ -144,8 +144,9 @@ public class ShoterController : MonoBehaviour
         List<Material> TempMat = new List<Material>();
         TempMat.Add(Managers.instance.Resource.Load<Material>("ShootLine"));
         lineRenderer.SetMaterials(TempMat);
-        lineRenderer.startWidth = 1;
-        lineRenderer.endWidth = 1f;
+        lineRenderer.textureScale = new Vector2(3.47f, 1f);
+        lineRenderer.startWidth = 0.22f;
+        lineRenderer.endWidth = 0.22f;
         lineRenderer.positionCount = numPoints;
         ReloadBalls(Managers.instance.PlayerDataManager.playerOwnBalls);
     }

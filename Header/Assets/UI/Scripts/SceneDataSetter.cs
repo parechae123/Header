@@ -65,14 +65,16 @@ namespace ChallengeSceneData
                     sceneButtons[i].onClick.RemoveAllListeners();
                     sceneButtons[i].onClick.AddListener(() => 
                     {
-                        
                         ToChallengeScene(tempArray);
                     });
                 }
             }
             else
             {
+#if UNITY_EDITOR
                 GetArrayScenesInFolder();
+#endif
+
             }
         }
 
@@ -105,13 +107,13 @@ namespace ChallengeSceneData
                 Debug.Log(challengeSceneNames[i]);
             }
         }
+
+#endif
         public void ToChallengeScene(int targetArray)
         {
 
             SceneManager.LoadScene(challengeSceneNames[targetArray]);
         }
-
-#endif
     }
 }
 
