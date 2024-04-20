@@ -532,12 +532,23 @@ public class DialogSystem
         DialogText.text = dialogData.dialogue;
         DialogCharactorIMG.sprite = Managers.instance.Resource.Load<Sprite>(dialogData.Portrait);
         VideoClip tempVideo = Managers.instance.Resource.Load<VideoClip>(dialogData.Background);
+        if (dialogData.Background !="None")
+        {
+            DialogueBackGround.color = Color.white;
+        }
+        else
+        {
+            DialogueBackGround.color = Color.black;
+            DialogueBackGround.texture = null;
+            return;
+        }
         if (tempVideo != null)
         {
             BackGroundVideo.enabled = true;
             BackGroundVideo.clip = tempVideo;
             DialogueBackGround.texture = Managers.instance.Resource.Load<Texture>("BackGroundVideoTexture");
             BackGroundVideo.Play();
+            
         }
         else
         {
