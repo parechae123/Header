@@ -25,6 +25,7 @@ public class NewGameButton : MonoBehaviour
     {
         if (!isChallengeModeBTN)
         {
+
             if (!Managers.instance.Resource.isResourceLoadDone)
             {
                 Managers.instance.Resource.LoadAllAsync<AudioClip>("PreLoadAudios", (TempString, Num) =>
@@ -75,6 +76,17 @@ public class NewGameButton : MonoBehaviour
             {
                 newGameBTN.onClick.RemoveAllListeners();
                 newGameBTN.onClick.AddListener(OnClickBTN);
+
+                optionBTN.onClick.RemoveAllListeners();
+                optionBTN.onClick.AddListener(() =>
+                {
+                    Managers.instance.UI.CloseUIStack();
+                });
+
+                exitGameBTN.onClick.RemoveAllListeners();
+                exitGameBTN.onClick.AddListener(Managers.instance.GameExitBTN);
+
+
                 splashArt.gameObject.SetActive(false);
             }
         }

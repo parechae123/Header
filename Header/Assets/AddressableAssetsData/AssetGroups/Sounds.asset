@@ -58,12 +58,74 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels:
     - PreLoadAudios
+    - Sound
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 7075bd07094c8d84fb4888120b4fae40
     m_Address: ButtonMouseClick
     m_ReadOnly: 0
     m_SerializedLabels:
     - PreLoadAudios
+    - Sound
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 707ebaa495a5e4d47a6ef76817ac1d17
+    m_Address: Clock Chimes
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Sound
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: bfa87978e1ded2044a159fa0249b91a9
+    m_Address: Crash Glass1
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Sound
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 6f3a8db151517d54cac0e9e3877995a3
+    m_Address: Anxiety
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Sound
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 649b4a71c6889a24a8b63eb0c51a974d
+    m_Address: walking1
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Sound
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 49c5da28037312f43a119ef179b8c11e
+    m_Address: clothes
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Sound
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 349cfa0462466dc4b8cb5f06cb14c335
+    m_Address: walking2
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Sound
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 4451ee18b99714b48b62ab0253b1c6cc
+    m_Address: glass_touch
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Sound
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: c7facc82f3d86884f8253b0bdaaaa7bb
+    m_Address: screw
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Sound
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: e0dbc481e6e64da409ea24ccb54ccee4
+    m_Address: Crash Glass2
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Sound
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 007c4759e99383944a0d46023fd6ca6a
+    m_Address: Clock single
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Sound
     FlaggedDuringContentUpdateRestriction: 0
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: 489b40023fd66be419d08d79841125b1, type: 2}

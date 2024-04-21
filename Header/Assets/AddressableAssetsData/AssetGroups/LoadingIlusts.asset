@@ -17,14 +17,20 @@ MonoBehaviour:
     m_SerializedData: []
   m_GUID: e101081f62183f24cb1c17854192e0fe
   m_SerializeEntries:
-  - m_GUID: 499401f89a50cec46b636dc8e45dd02c
+  - m_GUID: e5a9ece15f9580a45947735a9203aff7
+    m_Address: LoadingIlust_0
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - LoadingIlusts
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: c17dca608132b5a479aeb8f25ef05710
     m_Address: LoadingIlust_1
     m_ReadOnly: 0
     m_SerializedLabels:
     - LoadingIlusts
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: e150b009db3ef314eb28d40daccc9447
-    m_Address: LoadingIlust_0
+  - m_GUID: 850372ea8b66d2b4a82d9a99afe74bd7
+    m_Address: LoadingIlust_2
     m_ReadOnly: 0
     m_SerializedLabels:
     - LoadingIlusts

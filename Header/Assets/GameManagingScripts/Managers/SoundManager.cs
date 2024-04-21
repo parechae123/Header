@@ -50,13 +50,34 @@ public class SoundManager
             return bgm;
         } 
     }
-
-    public void SFXPlayOneshot(AudioClip Sound,bool ballSound = false,bool resetPitch = false)
+    public bool SFXLoopCheck
     {
+        set
+        {
+            if (!value)
+            {
+                SFX.clip = null;
+            }
+
+            SFX.loop = value;
+        }
+    }
+    public void SFXLoop(AudioClip sound)
+    {
+        SFXLoopCheck = true;
+        SFX.pitch = 1;
+        SFX.clip = sound;
+        SFX.Play();
+
+    }
+    public void SFXPlayOneshot(AudioClip sound,bool ballSound = false,bool resetPitch = false)
+    {
+        SFXLoopCheck = false;
         if (ballSound)
         {
+            //TODO : 추후 사운드 피치별로 실행시켜야함
             Debug.LogError(SFX.pitch);
-            SFX.pitch = sfx.pitch+1;
+            SFX.pitch = sfx.pitch+0.3f;
         }
         else if(!ballSound)
         {
@@ -67,7 +88,7 @@ public class SoundManager
             SFX.pitch = 1;
         }
         
-        SFX.PlayOneShot(Sound);
+        SFX.PlayOneShot(sound);
     }
     public void SetSoundValue(bool isBGM,float value)
     {

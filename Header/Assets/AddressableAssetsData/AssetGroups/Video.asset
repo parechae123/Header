@@ -53,6 +53,12 @@ MonoBehaviour:
     m_SerializedLabels:
     - Texture2D
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 4af88ea2872048d49815f6014ade9126
+    m_Address: background_3
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Texture2D
+    FlaggedDuringContentUpdateRestriction: 0
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: 489b40023fd66be419d08d79841125b1, type: 2}
   m_SchemaSet:

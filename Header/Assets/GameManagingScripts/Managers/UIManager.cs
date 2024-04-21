@@ -13,7 +13,6 @@ using HeaderPadDefines;
 using System.Threading.Tasks;
 using MonsterDefines;
 using UnityEngine.EventSystems;
-using static UnityEngine.Rendering.VirtualTexturing.Debugging;
 
 
 public class UIManager
@@ -169,7 +168,8 @@ public class LoadingUI
                 GameObject targetTempOBJ = GameObject.Find("Canvas");
 
                 RectTransform tempTR = targetTempOBJ == null ? new GameObject("Canvas").AddComponent<Canvas>().transform as RectTransform : targetTempOBJ.transform as RectTransform;
-                tempTR.GetComponent<Canvas>().renderMode = RenderMode.ScreenSpaceCamera;
+                tempTR.GetComponent<Canvas>().renderMode = RenderMode.ScreenSpaceOverlay;
+                
                 tempTR.gameObject.layer = 5;
                 sceneMainCanvas = tempTR;
             }
@@ -329,16 +329,21 @@ public class DialogSystem
         {
             if (fullDialogPanel == null)
             {
-                Image UIBackGround = new GameObject { name = "dialogPanel" }.AddComponent<Image>();
+                Image UIBackGround = new GameObject { name = "fullDialogPanel" }.AddComponent<Image>();
                 fullDialogPanel = UIBackGround.rectTransform;
                 fullDialogPanel.SetParent(DialogueBackGround.rectTransform);
                 UIBackGround.sprite = Managers.instance.Resource.Load<Sprite>("dialogue_panel");
                 //UIBackGround.sprite = 변경할 에셋 이름;
                 //TODO : 키 인터렉션 안내판넬 받으면 UIBackGround 변수의 sprite 변경해주어야함
-                fullDialogPanel.anchorMin = new Vector2(0.05f, 0.05f);
-                fullDialogPanel.anchorMax = new Vector2(0.95f, 0.3f);
-                fullDialogPanel.sizeDelta = Vector2.zero;
-                fullDialogPanel.anchoredPosition = Vector2.zero;
+                Vector2 spriteSize = UIBackGround.sprite.rect.size*2;
+                float percent = DialogueBackGround.rectTransform.rect.size.x / DialogueBackGround.rectTransform.rect.size.y;
+                for (int i = 0; i < ((int)UIBackGround.sprite.rect.size.x).ToString().Length; i++)
+                {
+                    spriteSize = spriteSize * 0.1f;
+                }
+                spriteSize.y = spriteSize.y*percent;
+                Vector2 center = new Vector2(0.5f,spriteSize.y);
+                Managers.instance.UI.SetUISize(ref fullDialogPanel,center-spriteSize, center + spriteSize);
             }
             return fullDialogPanel;
         }
@@ -350,22 +355,9 @@ public class DialogSystem
         {
             if (dialogCharactorIMG == null)
             {
-                Image TempParent = new GameObject { name = "dialogueCharactorIlustPanel" }.AddComponent<Image>();
-                TempParent.sprite = Managers.instance.Resource.Load<Sprite>("dialogue_protraitpanel");
-                TempParent.rectTransform.SetParent(FullDialogPanel);
-                //UIBackGround.sprite = 변경할 에셋 이름;
-                //TODO : 키 인터렉션 안내판넬 받으면 UIBackGround 변수의 sprite 변경해주어야함
-                TempParent.rectTransform.anchorMin = new Vector2(0.02f, 1);
-                TempParent.rectTransform.anchorMax = new Vector2(0.14f, 2.1f);
-                TempParent.rectTransform.sizeDelta = Vector2.zero;
-                TempParent.rectTransform.anchoredPosition = Vector2.zero;
                 dialogCharactorIMG = new GameObject { name = "dialogueCharactorIlust" }.AddComponent<Image>();
+                dialogCharactorIMG.rectTransform.SetParent(FullDialogPanel);
 
-                dialogCharactorIMG.rectTransform.SetParent(TempParent.rectTransform);
-                dialogCharactorIMG.rectTransform.anchorMin = Vector2.zero;
-                dialogCharactorIMG.rectTransform.anchorMax = Vector2.one;
-                dialogCharactorIMG.rectTransform.sizeDelta = Vector2.zero;
-                dialogCharactorIMG.rectTransform.anchoredPosition = Vector2.zero;
 
 
             }
@@ -385,8 +377,8 @@ public class DialogSystem
                 UIBackGround.color = Color.clear;
                 //UIBackGround.sprite = 변경할 에셋 이름;
                 //TODO : 키 인터렉션 안내판넬 받으면 UIBackGround 변수의 sprite 변경해주어야함
-                dialogPanel.anchorMin = Vector2.zero;
-                dialogPanel.anchorMax = new Vector2(1f, 1f - (1f / 4f));
+                dialogPanel.anchorMin = new Vector2(NamePanel.anchorMax.x, 0);
+                dialogPanel.anchorMax = new Vector2(1f- NamePanel.anchorMax.x, 1f);
                 dialogPanel.sizeDelta = Vector2.zero;
                 dialogPanel.anchoredPosition = Vector2.zero;
             }
@@ -406,11 +398,19 @@ public class DialogSystem
                 UIBackGround.sprite = Managers.instance.Resource.Load<Sprite>("dialogue_namebar");
                 //UIBackGround.sprite = 변경할 에셋 이름;
                 //TODO : 키 인터렉션 안내판넬 받으면 UIBackGround 변수의 sprite 변경해주어야함
-                UIBackGround.color = Color.gray;
-                namePanel.anchorMin = new Vector2(0f, 3f / 4f);
-                namePanel.anchorMax = new Vector2(1f / 6f, 1);
-                namePanel.sizeDelta = Vector2.zero;
-                namePanel.anchoredPosition = Vector2.zero;
+                Vector2 tempVec = UIBackGround.sprite.bounds.size;
+                //사이즈 불일치로 보정값 추가, size이기에 원래는 2f여야함
+                tempVec = tempVec / 4f;
+                for (int i = 0; i < ((int)UIBackGround.sprite.bounds.size.x).ToString().Length; i++)
+                {
+                    tempVec = tempVec * 0.1f;
+                }
+                float parentSIzePercent = FullDialogPanel.rect.size.x/FullDialogPanel.rect.size.y;
+                tempVec.y = tempVec.y * parentSIzePercent;
+                Vector2 centerPos = Vector2.zero;
+                centerPos.x = tempVec.x + 0.01f;
+                centerPos.y = 0.14827601f;
+                Managers.instance.UI.SetUISize(ref namePanel,centerPos-tempVec, centerPos + tempVec);
             }
             return namePanel;
         }
@@ -428,7 +428,10 @@ public class DialogSystem
                 nameText.rectTransform.anchorMax = Vector2.one;
                 nameText.rectTransform.sizeDelta = Vector2.zero;
                 nameText.rectTransform.anchoredPosition = Vector2.zero;
-                nameText.fontSize = 25;
+                nameText.fontSize = 50;
+                nameText.resizeTextForBestFit = true;
+                nameText.resizeTextMaxSize = 50;
+
                 nameText.color = Color.black;
                 nameText.font = Managers.instance.Resource.Load<Font>("InGameFont");
                 nameText.alignment = TextAnchor.MiddleCenter;
@@ -449,11 +452,14 @@ public class DialogSystem
                 dialogText.rectTransform.anchorMax = Vector2.one;
                 dialogText.rectTransform.sizeDelta = Vector2.zero;
                 dialogText.rectTransform.anchoredPosition = Vector2.zero;
-                dialogText.fontSize = 25;
+                dialogText.fontSize = 40;
+                dialogText.resizeTextForBestFit = true;
+                DialogText.resizeTextMaxSize=50;
+                DialogText.resizeTextMinSize=30;
                 dialogText.color = Color.white;
                 dialogText.font = Managers.instance.Resource.Load<Font>("InGameFont");
                 dialogText.alignment = TextAnchor.MiddleCenter; ;
-                dialogText.horizontalOverflow = HorizontalWrapMode.Overflow;
+                dialogText.horizontalOverflow = HorizontalWrapMode.Wrap;
             }
             return dialogText;
         }
@@ -531,6 +537,17 @@ public class DialogSystem
         //TODO : 사운드 출력 함수 구문 추가필요
         DialogText.text = dialogData.dialogue;
         DialogCharactorIMG.sprite = Managers.instance.Resource.Load<Sprite>(dialogData.Portrait);
+        RectTransform tempCharImgRect = DialogCharactorIMG.rectTransform;
+        Vector2 charactorIMGSizeCharactorIMG = DialogCharactorIMG.sprite.rect.size/2f;
+        float percent = FullDialogPanel.rect.size.y / FullDialogPanel.rect.size.x;
+        int forTimes = ((int)DialogCharactorIMG.sprite.rect.size.y).ToString().Length;
+        for (int i = 0; i < forTimes; i++)
+        {
+            charactorIMGSizeCharactorIMG = charactorIMGSizeCharactorIMG * 0.1f;
+        }
+        charactorIMGSizeCharactorIMG.x = charactorIMGSizeCharactorIMG.x * percent;
+        Vector2 charactorIMGCenterPos = new Vector2((NamePanel.anchorMin.x + NamePanel.anchorMax.x)/2f, NamePanel.anchorMax.y+charactorIMGSizeCharactorIMG.y);
+        Managers.instance.UI.SetUISize(ref tempCharImgRect,charactorIMGCenterPos- charactorIMGSizeCharactorIMG, charactorIMGCenterPos + charactorIMGSizeCharactorIMG);
         VideoClip tempVideo = Managers.instance.Resource.Load<VideoClip>(dialogData.Background);
         if (dialogData.Background !="None")
         {
@@ -540,13 +557,32 @@ public class DialogSystem
         {
             DialogueBackGround.color = Color.black;
             DialogueBackGround.texture = null;
-            return;
         }
+        if (dialogData.sound == "None"|| dialogData.sound == string.Empty)
+        {
+            Managers.instance.SoundManager.SFXLoopCheck = false;
+        }
+        else
+        {
+            //TODO : 데이터테이블 추후 한글 제거필요
+            if (dialogData.sound.Contains("(반복재생)"))
+            {
+                string tempSoundName = dialogData.sound.Replace("(반복재생)", string.Empty);
+                Managers.instance.SoundManager.SFXLoop(Managers.instance.Resource.Load<AudioClip>(tempSoundName));
+
+            }
+            else
+            {
+                Managers.instance.SoundManager.SFXPlayOneshot(Managers.instance.Resource.Load<AudioClip>(dialogData.sound));
+
+            }
+        }
+
         if (tempVideo != null)
         {
             BackGroundVideo.enabled = true;
-            BackGroundVideo.clip = tempVideo;
             DialogueBackGround.texture = Managers.instance.Resource.Load<Texture>("BackGroundVideoTexture");
+            BackGroundVideo.clip = tempVideo;
             BackGroundVideo.Play();
             
         }
