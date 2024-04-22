@@ -5,6 +5,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 
 //MAINTANCE : 인터렉션 추가 시 클래스 작업필요
@@ -131,7 +132,7 @@ public class ToBattleSceneInteraction : Interactions
     }
     public override void Interaction()
     {
-
+        SceneManager.LoadScene(interactionKeyNumber);
     }
     public override void OutIt()
     {

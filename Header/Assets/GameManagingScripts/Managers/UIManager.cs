@@ -646,7 +646,7 @@ public class DialogSystem
 public class BattleUI
 {
     private RectTransform battleSceneUI;
-    private RectTransform BattleSceneUI
+    public RectTransform BattleSceneUI
     {
         get
         {

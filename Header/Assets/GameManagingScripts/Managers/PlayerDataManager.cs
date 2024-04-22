@@ -8,7 +8,7 @@ using System;
 public class PlayerDataManager
 {
     public List<ExtraBallStat> playerOwnBalls = new List<ExtraBallStat>();
-    private int playerMoney;
+    [SerializeField]private int playerMoney;
     public int PlayerMoney
     {
         get 

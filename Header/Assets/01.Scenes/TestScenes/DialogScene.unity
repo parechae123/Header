@@ -1067,6 +1067,20 @@ MonoBehaviour:
     - nine_bulb
     - nine_bulb
     - nine_bulb
+  - interactionPosition: {x: 2, y: -1}
+    detail:
+      installedInteractionPosition: {x: 0, y: 10}
+      interactionRemoveSelf: 1
+    interactionTypes: 3
+    keyNumber: 2
+    weaponNameList: []
+  - interactionPosition: {x: -2, y: -1}
+    detail:
+      installedInteractionPosition: {x: 0, y: 10}
+      interactionRemoveSelf: 1
+    interactionTypes: 3
+    keyNumber: 3
+    weaponNameList: []
 --- !u!1 &1272116825
 GameObject:
   m_ObjectHideFlags: 0
