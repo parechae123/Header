@@ -151,12 +151,12 @@ public class MonsterManager : MonoBehaviour
     private float bounceForce=1.6f;
     private Vector3 targetPosition;
     private float movementTime = 1.2f;
-
+    private Vector3 cameraOriginPos;
 
     private void Awake()
     {
 
-
+        cameraOriginPos = Camera.main.transform.localPosition;
         Managers.instance.UI.BattleUICall.InstallMonsterHPBar(monsterSlotCount);
         (float, float) TempDoubleFloat = CarculateMonsterFullHP;
         Managers.instance.UI.BattleUICall.HPBarSetting(false, TempDoubleFloat.Item1, TempDoubleFloat.Item2);
@@ -665,6 +665,10 @@ public class MonsterManager : MonoBehaviour
             }
             ExplosionEffect.transform.position = bombTR.position + (Vector3.back * 4);
             ExplosionSmokeEffect.transform.position = bombTR.position;
+            Camera.main.DOShakePosition(0.5f, 1.2f, 30).OnComplete(() =>
+            {
+                Camera.main.transform.localPosition = cameraOriginPos;
+            });
             ExplosionEffect.Play();
             ExplosionSmokeEffect.Play();
             Managers.instance.SoundManager.SFXPlayOneshot(Managers.instance.Resource.Load<AudioClip>("BombSound1"), false, true);
@@ -678,11 +682,15 @@ public class MonsterManager : MonoBehaviour
             for (int i = 0; i < vectors.Length; i++)
             {
                 yield return new WaitForSeconds(timeDelay);
-
                 Managers.instance.UI.BattleUICall.GirlBomb.rectTransform.position = vectors[i];
             }
             ExplosionEffect.transform.position = moveSlots[0].slotPosition + (Vector3.back*4);
             ExplosionSmokeEffect.transform.position = moveSlots[0].slotPosition;
+
+            Camera.main.DOShakePosition(0.5f, 1.2f, 30).OnComplete(() =>
+            {
+                Camera.main.transform.localPosition = cameraOriginPos;
+            });
             ExplosionEffect.Play();
             ExplosionSmokeEffect.Play();
             Managers.instance.SoundManager.SFXPlayOneshot(Managers.instance.Resource.Load<AudioClip>("BombSound1"), false, true);

@@ -13,22 +13,36 @@ MonoBehaviour:
   m_Name: TutorialUiEvent
   m_EditorClassIdentifier: 
   Events:
-  - girlText: "\uC774 \uD654\uC0B4\uD45C\uB97C \uB20C\uB7EC \uBB34\uAE30\uB97C \uBC14\uAFC0
-      \uC218 \uC788\uC5B4!!"
-    uiTargetName: weaponNextBTN
+  - girlText: "\uC774\uAC74 \uD604\uC7AC \uC7A5\uCC29\uB418\uC5B4 \uC788\uB294 \uC804\uAD6C\uC5D0\uC694!
+      \uC6B0\uD074\uB9AD\uC744 \uD558\uC5EC \uC815\uBCF4\uB97C \uBCFC \uC218 \uC788\uC5B4\uC694"
+    uiTargetName: weaponIMG
     eventArrayInTrigger: 0
     isTargetUI: 1
-  - girlText: "\uB2E4\uC74C\uC5D0 \uB098\uC624\uB294 \uBAAC\uC2A4\uD130\uB294 \uC5EC\uAE30\uC11C
-      \uD655\uC778 \uD560 \uC218 \uC788\uC5B4!"
-    uiTargetName: MonsterQueuePreveiwPanel
+  - girlText: "\uC804\uAD6C \uC774\uB984\uACFC \uC804\uAD6C \uAD50\uCCB4\uBC84\uD2BC\uC774\uC5D0\uC694!"
+    uiTargetName: WeaponNamePannel
     eventArrayInTrigger: 1
-    isTargetUI: 0
-  - girlText: "\uC774\uAC74 \uB108\uC758 \uCCB4\uB825\uC774\uC57C"
+    isTargetUI: 1
+  - girlText: "\uC774\uAC74 \uD604\uC7AC\uB0A8\uC740 \uCCB4\uB825\uC774\uC5D0\uC694!"
     uiTargetName: playerHPBarBackGround
     eventArrayInTrigger: 2
     isTargetUI: 1
   - girlText: "\uBAAC\uC2A4\uD130\uC758 \uCCB4\uB825\uC740 \uC5EC\uAE30\uC11C \uD655\uC778
-      \uD560 \uC218\uC788\uC5B4!"
+      \uD560 \uC218\uC788\uC5B4\uC694!"
     uiTargetName: Slot2Bar
     eventArrayInTrigger: 3
+    isTargetUI: 1
+  - girlText: "\uB2E4\uC74C\uC5D0 \uB098\uC624\uB294 \uBAAC\uC2A4\uD130\uB294 \uC5EC\uAE30\uC11C
+      \uD655\uC778 \uD560 \uC218 \uC788\uC5B4\uC694!"
+    uiTargetName: MonsterQueuePreveiwPanel
+    eventArrayInTrigger: 4
+    isTargetUI: 1
+  - girlText: "\uB9C8\uC6B0\uC2A4 \uC704\uCE58\uC5D0 \uB530\uB77C \uBC1C\uC0AC \uAC01\uB3C4\uB97C
+      \uC815\uD560 \uC218\uC788\uC5B4\uC694"
+    uiTargetName: 
+    eventArrayInTrigger: 5
+    isTargetUI: 1
+  - girlText: "\uB9C8\uC6B0\uC2A4\uB97C \uB204\uB974\uACE0 \uC788\uC73C\uBA74 \uD798\uC744
+      \uBAA8\uC73C\uACE0 \uB193\uC73C\uBA74 \uBC1C\uC0AC\uB418\uC694!"
+    uiTargetName: 
+    eventArrayInTrigger: 6
     isTargetUI: 1

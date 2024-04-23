@@ -2883,8 +2883,8 @@ MonoBehaviour:
   m_ShadowVolumeIntensityEnabled: 0
   m_ShadowVolumeIntensity: 0.75
   m_LocalBounds:
-    m_Center: {x: -0.040100098, y: -0.51020014, z: 0}
-    m_Extent: {x: 18.5008, y: 3.5005002, z: 0}
+    m_Center: {x: -0.03999996, y: -0.51030004, z: 0}
+    m_Extent: {x: 18.5001, y: 3.5007, z: 0}
   m_PointLightInnerAngle: 360
   m_PointLightOuterAngle: 360
   m_PointLightInnerRadius: 0
@@ -5061,6 +5061,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   targetEvent: {fileID: 11400000, guid: cfab68573ada53d47ab9bb2728880333, type: 2}
+  nextEventNumber: 0
 --- !u!4 &1358228841
 Transform:
   m_ObjectHideFlags: 0
@@ -8172,10 +8173,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: BattleSceneSet
       objectReference: {fileID: 0}
-    - target: {fileID: 3573091334418124651, guid: 138683e0436525a49b1c8322f018a9b5, type: 3}
-      propertyPath: testTR
-      value: 
-      objectReference: {fileID: 230922376}
     - target: {fileID: 6720493979012511920, guid: 138683e0436525a49b1c8322f018a9b5, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0

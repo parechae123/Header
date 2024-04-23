@@ -5,21 +5,22 @@ using Unity.VisualScripting;
 using UnityEditor.PackageManager;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEditor;
 using static UnityEngine.GraphicsBuffer;
+using ChallengeSceneData;
 [CreateAssetMenu(fileName = "new SceneEventChannel",menuName ="Scriptables/SceneEvents",order = 50)]
 public class SceneEventChannel : ScriptableObject
 {
     [SerializeField]public List<TutorialEventChannel> Events;
-    public int eventChecker
+#if UNITY_EDITOR
+    public void SetEventArray()
     {
-        set
+        for (int i = 0; i < Events.Count; i++)
         {
-            if (Events.Count> value)
-            {
-                Events[value + 1].UIPointing();
-            }
+            Events[i].eventArrayInTrigger = i;
         }
     }
+#endif
 }
 
 [System.Serializable]
@@ -27,7 +28,7 @@ public class TutorialEventChannel
 {
     [SerializeField]private string girlText;
     [SerializeField] private string uiTargetName;
-    [SerializeField] private int eventArrayInTrigger;
+    [SerializeField] public int eventArrayInTrigger;
     [SerializeField] private bool isTargetUI;
     private Transform targetParent;
     private Transform targetTR;
@@ -36,11 +37,16 @@ public class TutorialEventChannel
 
         if (isTargetUI)
         {
-            targetTR = GameObject.Find(uiTargetName).transform;
-            //targetTR = Managers.instance.UI.LoadingUIProps.SceneMainCanvas.transform.Find(uiTargetName);
-            targetParent = targetTR.parent;
-            Managers.instance.UI.BattleUICall.SceneBTNParet.gameObject.SetActive(true);
-            targetTR.SetParent(Managers.instance.UI.BattleUICall.SceneBTNParet);
+            if (uiTargetName != string.Empty)
+            {
+                targetTR = GameObject.Find(uiTargetName).transform;
+                //targetTR = Managers.instance.UI.LoadingUIProps.SceneMainCanvas.transform.Find(uiTargetName);
+                targetParent = targetTR.parent;
+                targetTR.SetParent(Managers.instance.UI.BattleUICall.SceneBTNParet.parent);
+            }
+            Managers.instance.UI.BattleUICall.SceneBTNParet.parent.gameObject.SetActive(true);
+            Managers.instance.UI.BattleUICall.SceneBTNParet.gameObject.SetActive(false);
+
         }
         else
         {
@@ -50,20 +56,52 @@ public class TutorialEventChannel
         if (girlText != string.Empty)
         {
             Managers.instance.UI.BattleUICall.GirlBulbExplane = girlText;
-            Managers.instance.UI.BattleUICall.GirlParentRT.SetParent(Managers.instance.UI.BattleUICall.SceneBTNParet);
+            Managers.instance.UI.BattleUICall.GirlParentRT.SetParent(Managers.instance.UI.BattleUICall.SceneBTNParet.parent);
         }
 
     }
 
-    public void EventDone(Action<int> cb)
+    public void EventDone(Action<int> cb = null)
     {
+        if (isTargetUI)
+        {
+            if (uiTargetName != string.Empty)
+            {
+                targetTR.SetParent(targetParent);
+            }
+        }
 
         if (girlText != string.Empty)
         {
             Managers.instance.UI.BattleUICall.GirlParentRT.SetParent(Managers.instance.UI.BattleUICall.BattleSceneUI);
         }
-        targetTR.SetParent(targetParent);
-        cb.Invoke(eventArrayInTrigger);
+
+        Managers.instance.UI.BattleUICall.SceneBTNParet.gameObject.SetActive(true );
+        Managers.instance.UI.BattleUICall.SceneBTNParet.parent.gameObject.SetActive(false);
+        Managers.instance.UI.BattleUICall.SceneBTNParet.parent.SetAsLastSibling();
+
+        if (cb != null)
+        {
+            cb.Invoke(eventArrayInTrigger);
+        }
     }
 
+
+
 }
+#if UNITY_EDITOR
+[CustomEditor(typeof(SceneEventChannel))]
+public class EventButons : Editor
+{
+    public override void OnInspectorGUI()           //유니티의 인스펙터 함수를 재정의
+    {
+        base.OnInspectorGUI();
+        SceneEventChannel eventScriptableObject = (SceneEventChannel)target;//유니티 인스펙터 함수 동작을 같이 한다.(Base)
+
+        if (GUILayout.Button("GetArray"))
+        {
+            eventScriptableObject.SetEventArray();
+        }
+    }
+}
+#endif
