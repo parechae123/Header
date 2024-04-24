@@ -2760,62 +2760,10 @@ MonoBehaviour:
     interactionTypes: 1
     keyNumber: 1
     weaponNameList: []
-  - interactionPosition: {x: 0, y: -2}
-    detail:
-      installedInteractionPosition: {x: 0, y: -2}
-      interactionRemoveSelf: 1
-    interactionTypes: 1
-    keyNumber: 1
-    weaponNameList: []
-  - interactionPosition: {x: 0, y: 10}
+  - interactionPosition: {x: 1, y: -1}
     detail:
       installedInteractionPosition: {x: 0, y: 10}
-      interactionRemoveSelf: 1
-    interactionTypes: 1
-    keyNumber: 1
-    weaponNameList: []
-  - interactionPosition: {x: 5, y: 1}
-    detail:
-      installedInteractionPosition: {x: 0, y: 10}
-      interactionRemoveSelf: 1
-    interactionTypes: 2
-    keyNumber: 1
-    weaponNameList:
-    - aim_bulb
-    - cotton_bulb
-    - deco_bulb
-    - funny_bulb
-    - funny_bulb
-    - funny_bulb
-    - funny_bulb
-    - funny_bulb
-  - interactionPosition: {x: 3, y: -2}
-    detail:
-      installedInteractionPosition: {x: 0, y: 10}
-      interactionRemoveSelf: 1
-    interactionTypes: 2
-    keyNumber: 1
-    weaponNameList:
-    - aim_bulb
-    - cotton_bulb
-    - deco_bulb
-    - funny_bulb
-    - funny_bulb
-    - funny_bulb
-    - funny_bulb
-    - funny_bulb
-    - funny_bulb
-    - funny_bulb
-    - funny_bulb
-    - funny_bulb
-    - funny_bulb
-    - funny_bulb
-    - funny_bulb
-    - funny_bulb
-  - interactionPosition: {x: 5, y: 5}
-    detail:
-      installedInteractionPosition: {x: 0, y: 10}
-      interactionRemoveSelf: 1
+      interactionRemoveSelf: 0
     interactionTypes: 2
     keyNumber: 1
     weaponNameList:
@@ -2835,19 +2783,19 @@ MonoBehaviour:
     - nine_bulb
     - nine_bulb
     - nine_bulb
-  - interactionPosition: {x: 2, y: -1}
+  - interactionPosition: {x: 0, y: -5}
     detail:
       installedInteractionPosition: {x: 0, y: 10}
       interactionRemoveSelf: 1
     interactionTypes: 3
     keyNumber: 2
     weaponNameList: []
-  - interactionPosition: {x: -2, y: -1}
+  - interactionPosition: {x: 1, y: -5}
     detail:
       installedInteractionPosition: {x: 0, y: 10}
       interactionRemoveSelf: 1
     interactionTypes: 3
-    keyNumber: 3
+    keyNumber: 2
     weaponNameList: []
 --- !u!1 &1128633436
 GameObject:
@@ -3608,8 +3556,8 @@ Camera:
   m_GameObject: {fileID: 1572329807}
   m_Enabled: 1
   serializedVersion: 2
-  m_ClearFlags: 1
-  m_BackGroundColor: {r: 0.19215687, g: 0.3019608, b: 0.4745098, a: 0}
+  m_ClearFlags: 2
+  m_BackGroundColor: {r: 0, g: 0, b: 0, a: 0}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
   m_FOVAxisMode: 0
@@ -3634,7 +3582,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 2.23
+  orthographic size: 4.02
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -3659,7 +3607,7 @@ Transform:
   m_GameObject: {fileID: 1572329807}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -10}
+  m_LocalPosition: {x: 0, y: -1.5, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

@@ -38,7 +38,7 @@ public class TorchBulbSKill : BulbSkills
         GameObject tempTorch = new GameObject("InstalledTorch");
         tempTorch.transform.position = OriginBall.transform.position;
         tempTorch.transform.rotation = OriginBall.transform.rotation;
-        tempTorch.AddComponent<TorchScript>();
+        tempTorch.AddComponent<TorchScript>().SetStart();
     }
     public override void Reset()
     {
@@ -56,9 +56,6 @@ public class DecoBulbSkill : BulbSkills
     public override void InitializeSetting()
     {
         base.InitializeSetting();
-
-
-
         isBulbFired = false;
         isUpdateDone = false;
         

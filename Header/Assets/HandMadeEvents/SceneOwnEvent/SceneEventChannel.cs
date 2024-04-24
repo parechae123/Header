@@ -1,13 +1,7 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
-using UnityEditor.PackageManager;
 using UnityEngine;
-using UnityEngine.Events;
 using UnityEditor;
-using static UnityEngine.GraphicsBuffer;
-using ChallengeSceneData;
 [CreateAssetMenu(fileName = "new SceneEventChannel",menuName ="Scriptables/SceneEvents",order = 50)]
 public class SceneEventChannel : ScriptableObject
 {
@@ -42,10 +36,9 @@ public class TutorialEventChannel
                 targetTR = GameObject.Find(uiTargetName).transform;
                 //targetTR = Managers.instance.UI.LoadingUIProps.SceneMainCanvas.transform.Find(uiTargetName);
                 targetParent = targetTR.parent;
-                targetTR.SetParent(Managers.instance.UI.BattleUICall.SceneBTNParet.parent);
+                targetTR.SetParent(Managers.instance.UI.BattleUICall.AmbientPanel);
             }
-            Managers.instance.UI.BattleUICall.SceneBTNParet.parent.gameObject.SetActive(true);
-            Managers.instance.UI.BattleUICall.SceneBTNParet.gameObject.SetActive(false);
+            Managers.instance.UI.BattleUICall.AmbientPanel.gameObject.SetActive(true);
 
         }
         else
@@ -56,7 +49,7 @@ public class TutorialEventChannel
         if (girlText != string.Empty)
         {
             Managers.instance.UI.BattleUICall.GirlBulbExplane = girlText;
-            Managers.instance.UI.BattleUICall.GirlParentRT.SetParent(Managers.instance.UI.BattleUICall.SceneBTNParet.parent);
+            Managers.instance.UI.BattleUICall.GirlParentRT.SetParent(Managers.instance.UI.BattleUICall.AmbientPanel);
         }
 
     }
@@ -76,9 +69,8 @@ public class TutorialEventChannel
             Managers.instance.UI.BattleUICall.GirlParentRT.SetParent(Managers.instance.UI.BattleUICall.BattleSceneUI);
         }
 
-        Managers.instance.UI.BattleUICall.SceneBTNParet.gameObject.SetActive(true );
-        Managers.instance.UI.BattleUICall.SceneBTNParet.parent.gameObject.SetActive(false);
-        Managers.instance.UI.BattleUICall.SceneBTNParet.parent.SetAsLastSibling();
+        Managers.instance.UI.BattleUICall.AmbientPanel.gameObject.SetActive(false);
+        Managers.instance.UI.BattleUICall.AmbientPanel.SetAsLastSibling();
 
         if (cb != null)
         {

@@ -6,19 +6,19 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/01.Scenes/TestScenes/MainTitle.unity
+    path: Assets/01.Scenes/LobbyScenes/MainTitle.unity
     guid: fa9db4a52db83b8489e8adc1b348cc0b
   - enabled: 1
-    path: Assets/01.Scenes/TestScenes/DialogScene.unity
+    path: Assets/01.Scenes/DialogScenes/DialogScene0.unity
     guid: 69fc9c8cdeedd0e428d2cd5dc08f755d
   - enabled: 1
     path: Assets/01.Scenes/ProjectScenes/BattleScene.unity
     guid: 66aea7091d93e924bb63ac95fe2bf1c5
   - enabled: 1
-    path: Assets/01.Scenes/TestScenes/ShopSceneTest.unity
+    path: Assets/01.Scenes/LobbyScenes/ShopSceneTest.unity
     guid: 3aacf381ca025ed4d98c724340eb05d4
   - enabled: 1
-    path: Assets/01.Scenes/TestScenes/ChallengeModeLobby.unity
+    path: Assets/01.Scenes/LobbyScenes/ChallengeModeLobby.unity
     guid: 042a4808587b6a841bf78663b8c651df
   - enabled: 1
     path: Assets/01.Scenes/ChallengeScenes/level_battle.unity

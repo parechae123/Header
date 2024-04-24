@@ -12,7 +12,8 @@ public class TorchScript : MonoBehaviour
     private float lightForce = 0;
     public float maxOuterRadius = 2;
     public float minRadious = 4;
-    void Start()
+    private bool isSetted = false;
+    public void SetStart()
     {
         torchLight = gameObject.AddComponent<Light2D>();
         torchLight.lightType = Light2D.LightType.Point;
@@ -25,14 +26,17 @@ public class TorchScript : MonoBehaviour
         torchSR = gameObject.AddComponent<SpriteRenderer>();
         torchSR.sprite = Managers.instance.Resource.Load<Sprite>("torch_bulb");
         torchSR.sortingLayerName = "Ball";
+        isSetted = true;
     }
-
     // Update is called once per frame
     void Update()
     {
-        fireValue += Time.deltaTime;
-        lightForce = (Mathf.Sin(fireValue) + 1f)/2f;
-        
-        torchLight.pointLightOuterRadius = (lightForce* maxOuterRadius)+minRadious;
+        if (isSetted)
+        {
+            fireValue += Time.deltaTime;
+            lightForce = (Mathf.Sin(fireValue) + 1f) / 2f;
+
+            torchLight.pointLightOuterRadius = (lightForce * maxOuterRadius) + minRadious;
+        }
     }
 }

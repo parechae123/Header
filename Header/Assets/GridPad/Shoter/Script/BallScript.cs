@@ -334,7 +334,8 @@ public class BallScript : MonoBehaviour
         BreakAnimSprite.transform.rotation = transform.rotation;
 
         IMG.enabled = false;
-        BreakAnimSprite.transform.localScale = Vector3.one;
+        //보정값 추가
+        BreakAnimSprite.transform.localScale = new Vector3(0.483031034f, 0.483031034f, 0.483031034f);
         BreakAnimSprite.gameObject.SetActive(true);
         for (int i = 0; i < tempSprites.Length; i++)
         {

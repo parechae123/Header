@@ -1,11 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
-using UnityEditor.PackageManager;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class SceneEventTrigger : MonoBehaviour
 {
     [SerializeField]private SceneEventChannel targetEvent;
+    [SerializeField] private Text targetText;
     public int nextEventNumber = 0;
     public int eventChecker
     {
@@ -29,7 +30,7 @@ public class SceneEventTrigger : MonoBehaviour
     }
     void Start()
     {
-        targetEvent.Events[eventChecker].UIPointing();
+        StartCoroutine(TempTimer());
     }
     // Update is called once per frame
     void Update()
@@ -53,5 +54,10 @@ public class SceneEventTrigger : MonoBehaviour
 
         }
 
+    }
+    IEnumerator TempTimer()
+    {
+        yield return new WaitForEndOfFrame();
+        targetEvent.Events[eventChecker].UIPointing();
     }
 }

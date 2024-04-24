@@ -1020,7 +1020,6 @@ public class BattleUI
                 girlPortrait.sprite = Managers.instance.Resource.Load<Sprite>("battle_portrait_girl");
                 girlPortrait.raycastTarget = false;
                 RectTransform tempRect = girlPortrait.rectTransform;
-                Vector2 centerPos = new Vector2(0.304383963f, 0.4f);
                 float percent = GirlParentRT.rect.width / GirlParentRT.rect.height;
                 float ScaleMag = 1;
                 int SizeLenght = ((int)GirlParentRT.rect.width.ToString().Length);
@@ -1028,7 +1027,11 @@ public class BattleUI
                 {
                     ScaleMag = 0.1f * ScaleMag;
                 }
-                Vector2 portraitSize = (new Vector2(girlPortrait.sprite.rect.width, girlPortrait.sprite.rect.height*percent)* ScaleMag)*2f;
+                Vector2 portraitSize = (new Vector2(girlPortrait.sprite.rect.width, girlPortrait.sprite.rect.height*percent)* ScaleMag);
+                Vector2 centerPos = new Vector2(0f, 1f);
+                centerPos.x = centerPos.x + portraitSize.x;
+                centerPos.y = centerPos.y - portraitSize.y;
+
                 Managers.instance.UI.SetUISize(ref tempRect, centerPos- portraitSize, centerPos+ portraitSize);
 
             }
@@ -1055,7 +1058,7 @@ public class BattleUI
                     magScaler = magScaler * 0.1f;
                 }
                 Vector2 imageSize = (new Vector2(girlChatBubble.sprite.rect.width, girlChatBubble.sprite.rect.height*percent) * magScaler)/3f;
-                Vector2 GetCenterPos = new Vector2((GirlPortrait.rectTransform.anchorMax.x + GirlPortrait.rectTransform.anchorMin.x)/2, GirlPortrait.rectTransform.anchorMax.y+imageSize.y);
+                Vector2 GetCenterPos = new Vector2(GirlPortrait.rectTransform.anchorMax.x +imageSize.x, 1- imageSize.y);
 
 
                 Managers.instance.UI.SetUISize(ref tempRect, GetCenterPos - imageSize, GetCenterPos + imageSize);
@@ -1144,25 +1147,39 @@ public class BattleUI
             }
         }
     }
+    private RectTransform ambientPanel;
+    public RectTransform AmbientPanel
+    {
+        get
+        {
+            if (ambientPanel == null)
+            {
+                Image parentBackGround = new GameObject("GameOverParentBackground").AddComponent<Image>();
+                parentBackGround.color = new Color32(0, 0, 0, 100);
+                RectTransform parentBackGroundRect = parentBackGround.rectTransform;
+                parentBackGroundRect.SetParent(BattleSceneUI);
+                Managers.instance.UI.SetUISize(ref parentBackGroundRect, Vector2.zero, Vector2.one);
+                parentBackGround.rectTransform.SetAsLastSibling();
+                ambientPanel = parentBackGroundRect;
+            }
+            ambientPanel.SetAsLastSibling();
+            return ambientPanel;
+        }
+    }
     private RectTransform sceneBTNParet;
     public RectTransform SceneBTNParet
     {
         get
         {
+
             if (sceneBTNParet == null)
             {
 
                 sceneBTNParet = new GameObject("GameOverParent").AddComponent<RectTransform>();
                 sceneBTNParet.gameObject.AddComponent<Image>().sprite = Managers.instance.Resource.Load<Sprite>("shop_bag_panel");
-                Image parentBackGround = new GameObject("GameOverParentBackground").AddComponent<Image>();
-                parentBackGround.color = new Color32(0, 0, 0, 219);
-                RectTransform parentBackGroundRect = parentBackGround.rectTransform;
-                parentBackGroundRect.SetParent(BattleSceneUI);
-                Managers.instance.UI.SetUISize(ref parentBackGroundRect, Vector2.zero, Vector2.one);
-                parentBackGround.rectTransform.SetAsLastSibling();
-                sceneBTNParet.SetParent(parentBackGround.rectTransform);
-                Managers.instance.UI.SetUISize(ref sceneBTNParet, new Vector2(0.3f, 0.4f), new Vector2(0.7f, 0.6f));
 
+                sceneBTNParet.SetParent(AmbientPanel);
+                Managers.instance.UI.SetUISize(ref sceneBTNParet, new Vector2(0.3f, 0.4f), new Vector2(0.7f, 0.6f));
             }
             return sceneBTNParet;
         }
@@ -1177,6 +1194,7 @@ public class BattleUI
                 gameOverText = new GameObject("WarningText").AddComponent<Text>();
                 RectTransform warningTextRect = gameOverText.rectTransform;
                 gameOverText.rectTransform.SetParent(SceneBTNParet);
+                SceneBTNParet.parent.gameObject.SetActive(true);
                 Managers.instance.UI.SetUISize(ref warningTextRect, new Vector2(0, 1), new Vector2(1, 2));
                 gameOverText.raycastTarget = false;
                 gameOverText.color = Color.white;
@@ -1198,6 +1216,7 @@ public class BattleUI
                 gameOverBTN = new GameObject("GameOverBTN").AddComponent<Button>();
                 RectTransform BTNRect = gameOverBTN.AddComponent<RectTransform>();
                 BTNRect.SetParent(SceneBTNParet);
+                SceneBTNParet.parent.gameObject.SetActive(true);
                 Image btnImage = BTNRect.gameObject.AddComponent<Image>();
                 btnImage.sprite = Managers.instance.Resource.Load<Sprite>("shop_portrait_panel");
                 gameOverBTN.targetGraphic = btnImage;
