@@ -1155,7 +1155,7 @@ public class BattleUI
             if (ambientPanel == null)
             {
                 Image parentBackGround = new GameObject("GameOverParentBackground").AddComponent<Image>();
-                parentBackGround.color = new Color32(0, 0, 0, 100);
+                parentBackGround.color = new Color32(0, 0, 0, 200);
                 RectTransform parentBackGroundRect = parentBackGround.rectTransform;
                 parentBackGroundRect.SetParent(BattleSceneUI);
                 Managers.instance.UI.SetUISize(ref parentBackGroundRect, Vector2.zero, Vector2.one);
