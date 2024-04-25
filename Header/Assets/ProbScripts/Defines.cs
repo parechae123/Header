@@ -53,6 +53,7 @@ namespace InteractionDefines
         
         public InteractionTypes interactionTypes;
         public short keyNumber;
+        public string SceneName;
         [Header("merchant¸¸ ÇØ´ç")]
         public string[] weaponNameList;
     }

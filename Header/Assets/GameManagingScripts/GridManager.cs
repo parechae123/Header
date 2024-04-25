@@ -27,7 +27,7 @@ public class GridManager
                 interactionGrid.Add(tempInteractionData.interactionPosition, new MerchantInteraction { detail = tempInteractionData.detail, interactionKeyNumber = tempInteractionData.keyNumber, sellableBallNames = tempInteractionData.weaponNameList });
                 break;
             case InteractionDefines.InteractionTypes.ToBattleScene:
-                interactionGrid.Add(tempInteractionData.interactionPosition, new ToBattleSceneInteraction { detail = tempInteractionData.detail, interactionKeyNumber = tempInteractionData.keyNumber });
+                interactionGrid.Add(tempInteractionData.interactionPosition, new ToBattleSceneInteraction { detail = tempInteractionData.detail,sceneName = tempInteractionData.SceneName });
                 break;
         }
     }    

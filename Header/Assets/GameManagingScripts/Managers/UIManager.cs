@@ -488,8 +488,9 @@ public class DialogSystem
         {
             if (untillVideoBackGround == null)
             {
-                untillVideoBackGround = new GameObject { name = "DialogueBackGroundPanel" }.AddComponent<RawImage>();
+                untillVideoBackGround = new GameObject { name = "DialoueUntilVideoPanel" }.AddComponent<RawImage>();
                 untillVideoBackGround.rectTransform.SetParent(Managers.instance.UI.LoadingUIProps.SceneMainCanvas);
+                untillVideoBackGround.texture = Managers.instance.Resource.Load<Texture>("BackGroundVideoTexture");
                 RectTransform TempRect = untillVideoBackGround.rectTransform;
                 Managers.instance.UI.SetUISize(ref TempRect,Vector2.zero,Vector2.one);
                 TempRect.SetAsLastSibling();
@@ -543,7 +544,7 @@ public class DialogSystem
     public void DialogNextOnly()
     {
         DataDefines.DialogDatas dialogData = dataQueue.Dequeue();
-        UntillVideoBackground.texture = DialogueBackGround.texture;
+        Debug.Log(dataQueue.Count);
         if (dialogData.Name.Contains("None"))
         {
             NameText.text = string.Empty;
@@ -638,7 +639,7 @@ public class DialogSystem
         }
         else
         {
-            Managers.instance.UI.TargetUIOnOff(DialogueBackGround.rectTransform, false, false);
+            Managers.instance.UI.TargetUIOnOff(UntillVideoBackground.rectTransform, false, false);
         }
     }
     public void DialogTextChanger(Vector2Int RemoveInteractionPosition)
@@ -650,7 +651,7 @@ public class DialogSystem
         else
         {
             Managers.instance.Grid.RemoveInteraction(RemoveInteractionPosition);
-            Managers.instance.UI.TargetUIOnOff(DialogueBackGround.rectTransform, false, false);
+            Managers.instance.UI.TargetUIOnOff(UntillVideoBackground.rectTransform, false, false);
         }
     }
     public void DialogTextChanger(Vector2Int RemoveInteractionPosition, InteractionInstallerProps AddInteraction)
@@ -663,7 +664,7 @@ public class DialogSystem
         {
             Managers.instance.Grid.RemoveInteraction(RemoveInteractionPosition);
             Managers.instance.Grid.AddInteraction(AddInteraction);
-            Managers.instance.UI.TargetUIOnOff(DialogueBackGround.rectTransform, false, false);
+            Managers.instance.UI.TargetUIOnOff(UntillVideoBackground.rectTransform, false, false);
         }
     }
     #endregion
@@ -672,8 +673,8 @@ public class DialogSystem
         DialogCharactorIMG.IsActive();
         DialogText.text = "테스트12";
         NameText.text = "테스트12";
-        Managers.instance.UI.CheckerRegist(DialogueBackGround.rectTransform);
-        DialogueBackGround.gameObject.SetActive(false);
+        Managers.instance.UI.CheckerRegist(UntillVideoBackground.rectTransform);
+        UntillVideoBackground.gameObject.SetActive(false);
     }
 
 }
@@ -1269,7 +1270,7 @@ public class BattleUI
                 tempText.font = Managers.instance.Resource.Load<Font>("InGameFont");
                 tempText.fontSize = (int)BTNRect.rect.size.y / 9;
                 tempText.color = Color.white;
-                gameOverBTN.onClick.AddListener(() => { Managers.instance.OnBTNChangeScene(0); });
+                gameOverBTN.onClick.AddListener(() => { Managers.instance.OnBTNChangeScene("MainTitle"); });
                 Managers.instance.UI.RegistEventTrigger(BTNRect);
                 GameOverText = "You DIed";
                 gameOverText.color = Color.red;
@@ -1311,7 +1312,7 @@ public class BattleUI
                 toDialogSceneBTN.onClick.RemoveAllListeners();
                 toDialogSceneBTN.onClick.AddListener(() => 
                 {
-                    Managers.instance.OnBTNChangeScene(Managers.instance.PlayerDataManager.isChallengeMode ? 4 : ShoterController.Instance.nextSceneBuildIndex);
+                    Managers.instance.OnBTNChangeScene(Managers.instance.PlayerDataManager.isChallengeMode ? "ChallengeModeLobby" : ShoterController.Instance.nextSceneName);
 
                      
                 }

@@ -12,7 +12,7 @@ using System.Reflection;
 
 public class ShoterController : MonoBehaviour
 {
-    public int nextSceneBuildIndex = 1;
+    public string nextSceneName = "";
     public bool isReadyFire = false;
     public bool isParabolaOn;
     public LineRenderer lineRenderer;

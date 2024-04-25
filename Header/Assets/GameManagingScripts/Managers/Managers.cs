@@ -71,7 +71,7 @@ public class Managers : MonoBehaviour
         }
     }
 
-    public void OnBTNChangeScene(int SceneNumber)
+    public void OnBTNChangeScene(string SceneNumber)
     {
         Managers.instance.ResetManagingArrays();
         SceneManager.LoadScene(SceneNumber);

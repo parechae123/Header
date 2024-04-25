@@ -31,10 +31,10 @@ public class DialogInteraction : Interactions
     }
     public override void Interaction()
     {
-        if (!Managers.instance.UI.DialogCall.DialogueBackGround.gameObject.activeSelf)
+        if (!Managers.instance.UI.DialogCall.UntillVideoBackground.gameObject.activeSelf)
         {
             Managers.instance.UI.TargetUIOnOff(Managers.instance.UI.DialogCall.FullDialogPanel,true,false);
-            Managers.instance.UI.TargetUIOnOff(Managers.instance.UI.DialogCall.DialogueBackGround.rectTransform, true, false);
+            Managers.instance.UI.TargetUIOnOff(Managers.instance.UI.DialogCall.UntillVideoBackground.rectTransform, true, false);
             Managers.instance.UI.DialogCall.SetDialogueData(interactionKeyNumber);
             InteractionKeyUI(false);
         }
@@ -125,6 +125,7 @@ public class MerchantInteraction : Interactions
 
 public class ToBattleSceneInteraction : Interactions
 {
+    public string sceneName;
     public override void Init()
     {
         Debug.Log("µé¾î¿È");
@@ -132,7 +133,7 @@ public class ToBattleSceneInteraction : Interactions
     }
     public override void Interaction()
     {
-        SceneManager.LoadScene(interactionKeyNumber);
+        SceneManager.LoadScene(sceneName);
     }
     public override void OutIt()
     {

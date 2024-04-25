@@ -3105,6 +3105,7 @@ MonoBehaviour:
       interactionRemoveSelf: 1
     interactionTypes: 1
     keyNumber: 1
+    SceneName: 
     weaponNameList: []
   - interactionPosition: {x: 1, y: -1}
     detail:
@@ -3112,6 +3113,7 @@ MonoBehaviour:
       interactionRemoveSelf: 0
     interactionTypes: 2
     keyNumber: 1
+    SceneName: 
     weaponNameList:
     - nine_bulb
     - aim_bulb
@@ -3135,6 +3137,7 @@ MonoBehaviour:
       interactionRemoveSelf: 1
     interactionTypes: 3
     keyNumber: 2
+    SceneName: BattleScene
     weaponNameList: []
   - interactionPosition: {x: 1, y: -5}
     detail:
@@ -3142,6 +3145,7 @@ MonoBehaviour:
       interactionRemoveSelf: 1
     interactionTypes: 3
     keyNumber: 2
+    SceneName: BattleScene
     weaponNameList: []
 --- !u!1 &1128633436
 GameObject:

@@ -3255,8 +3255,8 @@ MonoBehaviour:
   m_ShadowVolumeIntensityEnabled: 0
   m_ShadowVolumeIntensity: 0.75
   m_LocalBounds:
-    m_Center: {x: -0.04025078, y: -0.5101501, z: 0}
-    m_Extent: {x: 18.50025, y: 3.5008502, z: 0}
+    m_Center: {x: -0.040450096, y: -0.51, z: 0}
+    m_Extent: {x: 18.500252, y: 3.5008, z: 0}
   m_PointLightInnerAngle: 360
   m_PointLightOuterAngle: 360
   m_PointLightInnerRadius: 0
@@ -13081,7 +13081,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: de9c99f63305bef4b83be2460c992dec, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  nextSceneBuildIndex: 3
+  nextSceneName: DialogScene1
   isReadyFire: 0
   isParabolaOn: 0
   lineRenderer: {fileID: 0}
