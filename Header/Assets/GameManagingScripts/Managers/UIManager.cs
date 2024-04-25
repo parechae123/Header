@@ -481,6 +481,23 @@ public class DialogSystem
             return backGroundVideo;
         }
     }
+    private RawImage untillVideoBackGround;
+    public RawImage UntillVideoBackground
+    {
+        get
+        {
+            if (untillVideoBackGround == null)
+            {
+                untillVideoBackGround = new GameObject { name = "DialogueBackGroundPanel" }.AddComponent<RawImage>();
+                untillVideoBackGround.rectTransform.SetParent(Managers.instance.UI.LoadingUIProps.SceneMainCanvas);
+                RectTransform TempRect = untillVideoBackGround.rectTransform;
+                Managers.instance.UI.SetUISize(ref TempRect,Vector2.zero,Vector2.one);
+                TempRect.SetAsLastSibling();
+            }
+            return untillVideoBackGround;
+        }
+    }
+
     private RawImage dialogueBackGround;
     public RawImage DialogueBackGround
     {
@@ -490,7 +507,7 @@ public class DialogSystem
             {
                 dialogueBackGround = new GameObject { name = "DialogueBackGroundPanel" }.AddComponent<RawImage>();
                 dialogueBackGround.texture = BackGroundVideo.targetTexture;
-                dialogueBackGround.rectTransform.SetParent(Managers.instance.UI.LoadingUIProps.SceneMainCanvas);
+                dialogueBackGround.rectTransform.SetParent(UntillVideoBackground.rectTransform);
                 dialogueBackGround.rectTransform.anchorMin = Vector2.zero;
                 dialogueBackGround.rectTransform.anchorMax = Vector2.one;
                 dialogueBackGround.rectTransform.sizeDelta = Vector2.zero;
@@ -526,28 +543,44 @@ public class DialogSystem
     public void DialogNextOnly()
     {
         DataDefines.DialogDatas dialogData = dataQueue.Dequeue();
+        UntillVideoBackground.texture = DialogueBackGround.texture;
         if (dialogData.Name.Contains("None"))
         {
             NameText.text = string.Empty;
+            DialogCharactorIMG.GameObject().SetActive(false);
+            NamePanel.gameObject.SetActive(false);
+            if (dialogData.dialogue == string.Empty|| dialogData.dialogue == null)
+            {
+                FullDialogPanel.gameObject.SetActive(false);
+            }
+            else
+            {
+                FullDialogPanel.gameObject.SetActive(true);
+            }
         }
         else
         {
+            FullDialogPanel.gameObject.SetActive(true);
+            DialogCharactorIMG.GameObject().SetActive(true);
+            NamePanel.gameObject.SetActive(true);
             NameText.text = dialogData.Name;
+
+            DialogText.text = dialogData.dialogue;
+            DialogCharactorIMG.sprite = Managers.instance.Resource.Load<Sprite>(dialogData.Portrait);
+            RectTransform tempCharImgRect = DialogCharactorIMG.rectTransform;
+            Vector2 charactorIMGSizeCharactorIMG = DialogCharactorIMG.sprite.rect.size / 2f;
+            float percent = FullDialogPanel.rect.size.y / FullDialogPanel.rect.size.x;
+            int forTimes = ((int)DialogCharactorIMG.sprite.rect.size.y).ToString().Length;
+            for (int i = 0; i < forTimes; i++)
+            {
+                charactorIMGSizeCharactorIMG = charactorIMGSizeCharactorIMG * 0.1f;
+            }
+            charactorIMGSizeCharactorIMG.x = charactorIMGSizeCharactorIMG.x * percent;
+            Vector2 charactorIMGCenterPos = new Vector2((NamePanel.anchorMin.x + NamePanel.anchorMax.x) / 2f, NamePanel.anchorMax.y + charactorIMGSizeCharactorIMG.y);
+            Managers.instance.UI.SetUISize(ref tempCharImgRect, charactorIMGCenterPos - charactorIMGSizeCharactorIMG, charactorIMGCenterPos + charactorIMGSizeCharactorIMG);
         }
         //TODO : 사운드 출력 함수 구문 추가필요
-        DialogText.text = dialogData.dialogue;
-        DialogCharactorIMG.sprite = Managers.instance.Resource.Load<Sprite>(dialogData.Portrait);
-        RectTransform tempCharImgRect = DialogCharactorIMG.rectTransform;
-        Vector2 charactorIMGSizeCharactorIMG = DialogCharactorIMG.sprite.rect.size/2f;
-        float percent = FullDialogPanel.rect.size.y / FullDialogPanel.rect.size.x;
-        int forTimes = ((int)DialogCharactorIMG.sprite.rect.size.y).ToString().Length;
-        for (int i = 0; i < forTimes; i++)
-        {
-            charactorIMGSizeCharactorIMG = charactorIMGSizeCharactorIMG * 0.1f;
-        }
-        charactorIMGSizeCharactorIMG.x = charactorIMGSizeCharactorIMG.x * percent;
-        Vector2 charactorIMGCenterPos = new Vector2((NamePanel.anchorMin.x + NamePanel.anchorMax.x)/2f, NamePanel.anchorMax.y+charactorIMGSizeCharactorIMG.y);
-        Managers.instance.UI.SetUISize(ref tempCharImgRect,charactorIMGCenterPos- charactorIMGSizeCharactorIMG, charactorIMGCenterPos + charactorIMGSizeCharactorIMG);
+
         VideoClip tempVideo = Managers.instance.Resource.Load<VideoClip>(dialogData.Background);
         if (dialogData.Background !="None")
         {
@@ -580,6 +613,7 @@ public class DialogSystem
 
         if (tempVideo != null)
         {
+
             BackGroundVideo.enabled = true;
             DialogueBackGround.texture = Managers.instance.Resource.Load<Texture>("BackGroundVideoTexture");
             BackGroundVideo.clip = tempVideo;

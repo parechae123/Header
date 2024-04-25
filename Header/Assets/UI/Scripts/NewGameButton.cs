@@ -191,6 +191,7 @@ public class NewGameButton : MonoBehaviour
 
             yield return null;
         }
+
         // 로딩이 완료되면 실행될 코드를 여기에 추가합니다.
     }
 }
