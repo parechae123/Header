@@ -191,6 +191,12 @@ MonoBehaviour:
     m_SerializedLabels:
     - Materials
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 986e0f06b4827314489bb7626b5eefac
+    m_Address: InstalledTorch
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Prefabs
+    FlaggedDuringContentUpdateRestriction: 0
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: 489b40023fd66be419d08d79841125b1, type: 2}
   m_SchemaSet:

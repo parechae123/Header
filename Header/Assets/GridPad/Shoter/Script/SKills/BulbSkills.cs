@@ -35,10 +35,10 @@ public class TorchBulbSKill : BulbSkills
     }
     public override void BreakEventSkills()
     {
-        GameObject tempTorch = new GameObject("InstalledTorch");
+        GameObject tempTorch = GameObject.Instantiate<GameObject>(Managers.instance.Resource.Load<GameObject>("InstalledTorch"), null);
         tempTorch.transform.position = OriginBall.transform.position;
         tempTorch.transform.rotation = OriginBall.transform.rotation;
-        tempTorch.AddComponent<TorchScript>().SetStart();
+        tempTorch.GetComponent<TorchScript>().SetStart();
     }
     public override void Reset()
     {
