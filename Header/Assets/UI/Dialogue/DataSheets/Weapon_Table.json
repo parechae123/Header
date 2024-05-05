@@ -22,7 +22,7 @@
   "weight": 0.7,
   "skillValueOne": 10,
   "skillValueTwo": 10,
-  "flavorText": "파괴한 적 개체의 개수의 10% 만큼 체력을 회복한다.",
+  "flavorText": "따스한 기분이 느껴지는 전구다. 쓰라린 고통이 점차 잦아든다.",
   "ballPrice": 15,
   "ballHealth": 5
  },
@@ -61,7 +61,7 @@
   "weight": 0.8,
   "skillValueOne": 0,
   "skillValueTwo": 0,
-  "flavorText": "굳이 왜 합쳤는지 모르겠는 전구. 얼음을 녹이는데 유용하다.",
+  "flavorText": "굳이 왜 합쳤는지 모르겠는 전구. 주변을 밝혀주고 얼음을 녹이는데 유용하다.",
   "ballPrice": 15,
   "ballHealth": 5
  },
@@ -74,7 +74,7 @@
   "weight": 0.1,
   "skillValueOne": 0,
   "skillValueTwo": 0,
-  "flavorText": "솜으로 이루어져 있어 깨질 위험이 덜하다. 위력은 약하지만 소리를 막는 기능이 있다.",
+  "flavorText": "솜으로 이루어져 있어 매우 가볍다. 튕기는게 예측이 될 것 같지가 않다.",
   "ballPrice": 20,
   "ballHealth": 5
  },
@@ -87,7 +87,7 @@
   "weight": 0.9,
   "skillValueOne": 0,
   "skillValueTwo": 0,
-  "flavorText": "빛을 발하는 전구와는 정반대인 전구. 깨뜨리면 잠시동안 앞이 보이지 않게 된다.",
+  "flavorText": "검은 액체가 들어 있다. 끈적이는 것을 보아 발화성인 것 같아 조심히 다뤄야 할 것 같다.",
   "ballPrice": 20,
   "ballHealth": 5
  },
@@ -139,7 +139,7 @@
   "weight": 1,
   "skillValueOne": 0,
   "skillValueTwo": 0,
-  "flavorText": "한개의 적 개체를 정확하게 명중시킨다.",
+  "flavorText": "조준경을 연상케하는 전구이다. 던지고자 하는 곳으로 정확하게 날라갈 것 같다.",
   "ballPrice": 30,
   "ballHealth": 5
  },
@@ -178,8 +178,8 @@
   "weight": 1,
   "skillValueOne": 9,
   "skillValueTwo": 9,
-  "flavorText": "(일회용 전구) 9번 튕기는 전구, 만드는데 꽤나 오래 걸려 스테이지당 한 개씩만 가져갈 수 있다. ",
-  "ballPrice": 99,
+  "flavorText": "평범해 보이는 전구다 전구에 적힌 숫자를 보니 9번 튕기는 전구 같다.",
+  "ballPrice": 15,
   "ballHealth": 9
  },
  {
@@ -194,6 +194,41 @@
   "flavorText": "장식용 전구, 파괴되지 않고 처음 충돌판정 시 해당 맵의 지형으로 굳어진다. ",
   "ballPrice": 15,
   "ballHealth": 1
+ },
+ null,
+ null,
+ {
+  "skillValueTwo": "의견"
+ },
+ {
+  "ballfriction": "회의 필요",
+  "skillValueTwo": "거울 전구",
+  "flavorText": "(공격을 1회 방어한다, 반사한다 등)[바꾸는 의견]"
+ },
+ {
+  "ballfriction": "금속 전구",
+  "skillValueTwo": "광택 전구",
+  "flavorText": "(그대로 유지해도 괜찮을 것 같음. 단 보스전 과 같이 특정 스테이지 에선 데미지 조절 필요)"
+ },
+ {
+  "ballfriction": "금이 간 전구",
+  "skillValueTwo": "장식용 전구",
+  "flavorText": "(잘 모르는 상태.)"
+ },
+ {
+  "ballfriction": "웃긴 전구"
+ },
+ null,
+ {
+  "skillValueTwo": "바꾸는가?"
+ },
+ {
+  "skillValueTwo": "가장 완벽한 전구",
+  "flavorText": "(광범위 확정 공격)[가장 비싸고 강한 1티어 전구 인걸로 기억]"
+ },
+ {
+  "skillValueTwo": "황금 전구",
+  "flavorText": "(황금 전구로 부딪쳤을 때 골드로 바뀜.)"
  }
 ],
 "Weapon_Description":[
@@ -205,7 +240,7 @@
  {
   "ballName": "hp_bulb",
   "ball Korean Name": "체력 전구",
-  "Description": "파괴한 적 개체의 개수의 10% 만큼 체력을 회복한다."
+  "Description": "전구가 깨진 후 내 체력을 10% 만큼 회복한다."
  },
  {
   "ballName": "metal_bulb",
@@ -220,7 +255,7 @@
  {
   "ballName": "torch_bulb",
   "ball Korean Name": "횃불 전구",
-  "Description": "굳이 왜 합쳤는지 모르겠는 전구. 얼음을 녹이는데 유용하다."
+  "Description": "주변을 밝혀주며 잉크 전구가 깨지면서 흘러 나온 액체와 상호작용하여 발화 공격이 가능함."
  },
  {
   "ballName": "cotton_bulb",
@@ -230,7 +265,7 @@
  {
   "ballName": "ink_bulb",
   "ball Korean Name": "잉크 전구",
-  "Description": "빛을 발하는 전구와는 정반대인 전구. 깨뜨리면 잠시동안 앞이 보이지 않게 된다."
+  "Description": "검은 액체가 들어 있다. 끈적이는 것을 보아 발화성인 것 같아 조심히 다뤄야 할 것 같다."
  },
  {
   "ballName": "mirror_bulb",
@@ -250,7 +285,7 @@
  {
   "ballName": "aim_bulb",
   "ball Korean Name": "조준 전구",
-  "Description": "한개의 적 개체를 정확하게 명중시킨다."
+  "Description": "던지고자 하는 장소를 향해 정확하게 날아간다."
  },
  {
   "ballName": "gold_bulb",
@@ -265,7 +300,7 @@
  {
   "ballName": "nine_bulb",
   "ball Korean Name": "전9",
-  "Description": "(일회용 전구) 9번 튕기는 전구, 만드는데 꽤나 오래 걸려 스테이지당 한 개씩만 가져갈 수 있다."
+  "Description": "평범해 보이는 전구다 전구에 적힌 숫자를 보니 9번 튕기는 전구 같다."
  },
  {
   "ballName": "deco_bulb",
