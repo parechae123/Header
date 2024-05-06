@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using HeaderPadDefines;
 using System;
+using DG.Tweening;
 
 [System.Serializable]
 public class PlayerDataManager
@@ -36,12 +37,20 @@ public class PlayerDataManager
         }
         set
         {
-            playerHPMax = value.Item1;
-            playerHPNow = value.Item2;
+            if (playerHPMax >= value.Item2 || playerHPMax ==0)
+            {
+                playerHPMax = value.Item1;
+                playerHPNow = value.Item2;
+            }
+            else
+            {
+                playerHPNow = value.Item1;
+            }
+
             if (Managers.instance.UI.BattleUICall.IsInBattleScene)
             {
                 Managers.instance.UI.BattleUICall.SettingPlayerBattleUI();
-                Managers.instance.UI.BattleUICall.HPBarSetting(true, value.Item1, value.Item2);
+                Managers.instance.UI.BattleUICall.HPBarSetting(true, playerHPMax, playerHPNow);
             }
             
         }
@@ -51,7 +60,7 @@ public class PlayerDataManager
     //1´ç 1% ÃÑ 100%È®·ü
     public float girlAD = 20;
     public bool isParabolaTurnOn = true;
-    public void PlayerGetDamage(float Damage)
+    public void ChangePlayerHP(float Damage)
     {
         SetPlayerHP = (Managers.instance.PlayerDataManager.SetPlayerHP.Item1, Managers.instance.PlayerDataManager.SetPlayerHP.Item2 - Damage);
         if (playerHPNow <= 0)
@@ -59,7 +68,20 @@ public class PlayerDataManager
             ShoterController.Instance.isReadyFire = false;
             Managers.instance.UI.BattleUICall.GameOverBTN.enabled = true;
             Managers.instance.UI.BattleUICall.ToDialogSceneBTN.gameObject.SetActive(false);
-
+        }
+        if (Damage <= 0)
+        {
+            Managers.instance.UI.BattleUICall.PlayerHPBarFrontIMG.DOComplete();
+            Managers.instance.UI.BattleUICall.PlayerHPBarFrontIMG.DOColor(Color.green, 0.1f).OnComplete(() =>
+            {
+                Managers.instance.UI.BattleUICall.PlayerHPBarFrontIMG.DOColor(Color.white, 0.1f).OnComplete(() =>
+                {
+                    Managers.instance.UI.BattleUICall.PlayerHPBarFrontIMG.DOColor(Color.green, 0.1f).OnComplete(() =>
+                    {
+                        Managers.instance.UI.BattleUICall.PlayerHPBarFrontIMG.DOColor(Color.white, 0.1f);
+                    });
+                });
+            });
         }
 
         if (Managers.instance.UI.BattleUICall.IsInBattleScene)

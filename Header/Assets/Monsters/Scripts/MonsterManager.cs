@@ -345,7 +345,7 @@ public class MonsterManager : MonoBehaviour
                     StartCoroutine(PlayerDamagedAnim(Monsters[tempArray].Item2.transform, () =>
                     {
                         Debug.Log("µ¥¹ÌÁö");
-                        Managers.instance.PlayerDataManager.PlayerGetDamage(Monsters[tempArray].Item1.monsterAD);
+                        Managers.instance.PlayerDataManager.ChangePlayerHP(Monsters[tempArray].Item1.monsterAD);
                         isDone.Invoke();
                     }));
                 }

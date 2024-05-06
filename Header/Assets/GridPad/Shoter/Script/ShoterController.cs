@@ -525,7 +525,7 @@ public class ShoterController : MonoBehaviour
 
             case "hp_bulb":
                 //TODO : 전구 스킬구현시 해당위치에 스크립트 넣어주면됨
-                /*TargetBall.bulbSkills = new DecoBulbSkill(); */
+                TargetBall.bulbSkills = new HPBulbSkill();
                 break;
 
             case "metal_bulb":
@@ -537,6 +537,10 @@ public class ShoterController : MonoBehaviour
                 break;
             case "shine_bulb":
                 TargetBall.bulbSkills = new ShineBulbSkill();
+                TargetBall.bulbSkills.InitializeSetting();
+                break;
+            case "aim_bulb":
+                TargetBall.bulbSkills = new AimBulbSkill();
                 TargetBall.bulbSkills.InitializeSetting();
                 break;
             default:

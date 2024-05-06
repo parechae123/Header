@@ -2026,7 +2026,7 @@ public class BattleUI
         }
         //        ChangeWeaponUI(true, ballName, ballKRName);
     }
-    public void HPBarUpdate( float valueToAdd)
+    public void EnemyHPBarUpdate( float valueToAdd)
     {
 
         EnemyHPBar.value = enemyHpBar.value + valueToAdd;

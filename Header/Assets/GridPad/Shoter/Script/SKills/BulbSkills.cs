@@ -189,6 +189,93 @@ public class ShineBulbSkill : BulbSkills
 
     }
 }
+public class AimBulbSkill : BulbSkills
+{
+    public Vector3 targetPosition;
+    public Vector3 targetPositionRel;
+    private float arriveTime;
+    private float firedTime;
+    public override void InitializeSetting()
+    {
+        base.InitializeSetting();
+
+    }
+    public override void StartEventSkills()
+    {
+        targetPosition = Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, 0));
+        firedTime = 0;
+        arriveTime = 0;
+        arriveTime = BallArriveTime();
+        isBulbFired = true;
+        OriginBall.BallCol.enabled = false;
+    }
+    public override void UpdateSkills()
+    {
+        if (isBulbFired)
+        {
+            firedTime += Time.deltaTime;
+            Debug.Log("발사 시간 " + firedTime + "," + "활성화 시간 " + arriveTime);
+            if (firedTime >= arriveTime)
+            {
+                if (!OriginBall.BallCol.enabled)
+                {
+                    Debug.LogError("발사 시간 " + firedTime + "," + "활성화 시간 " + arriveTime);
+                    OriginBall.BallCol.enabled = true;
+                    OriginBall.BallRB.gravityScale = ShoterController.Instance.NowBallStat.SkillValueOne;
+                }
+            }
+        }
+    }
+    public override void BreakEventSkills()
+    {
+        if (ShoterController.Instance.NowBallStat != null)
+        {
+            OriginBall.BallRB.gravityScale = ShoterController.Instance.NowBallStat.weight;
+        }
+
+        isBulbFired = false;
+    }
+    public override void Reset()
+    {
+        isBulbFired = false;
+    }
+    private float BallArriveTime()
+    {
+        float time = 0;
+        Vector3 originPos = ShoterController.Instance.transform.position;
+        float targetDistance = Vector2.Distance(originPos, targetPosition);
+        float relDistance = OriginBall.BallRB.velocity.magnitude;
+        time = targetDistance / relDistance;
+
+        return time;
+    }
+}
+
+public class HPBulbSkill : BulbSkills
+{
+    public override void InitializeSetting()
+    {
+        base.InitializeSetting();
+    }
+    public override void StartEventSkills()
+    {
+
+    }
+    public override void UpdateSkills()
+    {
+
+    }
+    public override void BreakEventSkills()
+    {
+        Managers.instance.PlayerDataManager.ChangePlayerHP((-ShoterController.Instance.targetDamage)/ShoterController.Instance.NowBallStat.SkillValueOne);
+    }
+    public override void Reset()
+    {
+
+    }
+}
+
+/*
 public class DefaultBulbSkillForm : BulbSkills
 {
     public override void InitializeSetting()
@@ -212,3 +299,4 @@ public class DefaultBulbSkillForm : BulbSkills
 
     }
 }
+*/

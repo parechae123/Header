@@ -136,8 +136,8 @@
   "ballStartForce": 10,
   "ballBouncienss": 1,
   "ballfriction": 1,
-  "weight": 1,
-  "skillValueOne": 0,
+  "weight": 0,
+  "skillValueOne": 1,
   "skillValueTwo": 0,
   "flavorText": "조준경을 연상케하는 전구이다. 던지고자 하는 곳으로 정확하게 날라갈 것 같다.",
   "ballPrice": 30,
@@ -194,41 +194,6 @@
   "flavorText": "장식용 전구, 파괴되지 않고 처음 충돌판정 시 해당 맵의 지형으로 굳어진다. ",
   "ballPrice": 15,
   "ballHealth": 1
- },
- null,
- null,
- {
-  "skillValueTwo": "의견"
- },
- {
-  "ballfriction": "회의 필요",
-  "skillValueTwo": "거울 전구",
-  "flavorText": "(공격을 1회 방어한다, 반사한다 등)[바꾸는 의견]"
- },
- {
-  "ballfriction": "금속 전구",
-  "skillValueTwo": "광택 전구",
-  "flavorText": "(그대로 유지해도 괜찮을 것 같음. 단 보스전 과 같이 특정 스테이지 에선 데미지 조절 필요)"
- },
- {
-  "ballfriction": "금이 간 전구",
-  "skillValueTwo": "장식용 전구",
-  "flavorText": "(잘 모르는 상태.)"
- },
- {
-  "ballfriction": "웃긴 전구"
- },
- null,
- {
-  "skillValueTwo": "바꾸는가?"
- },
- {
-  "skillValueTwo": "가장 완벽한 전구",
-  "flavorText": "(광범위 확정 공격)[가장 비싸고 강한 1티어 전구 인걸로 기억]"
- },
- {
-  "skillValueTwo": "황금 전구",
-  "flavorText": "(황금 전구로 부딪쳤을 때 골드로 바뀜.)"
  }
 ],
 "Weapon_Description":[
@@ -306,6 +271,38 @@
   "ballName": "deco_bulb",
   "ball Korean Name": "장식용 전구",
   "Description": "장식용 전구, 파괴되지 않고 처음 충돌판정 시 해당 맵의 지형으로 굳어진다."
+ }
+],
+"Memo":[
+ {
+  "Column1": "회의 필요",
+  "의견": "거울 전구",
+  "Column5": "(공격을 1회 방어한다, 반사한다 등)[바꾸는 의견]"
+ },
+ {
+  "Column1": "금속 전구",
+  "의견": "광택 전구",
+  "Column5": "(그대로 유지해도 괜찮을 것 같음. 단 보스전 과 같이 특정 스테이지 에선 데미지 조절 필요)"
+ },
+ {
+  "Column1": "금이 간 전구",
+  "의견": "장식용 전구",
+  "Column5": "(잘 모르는 상태.)"
+ },
+ {
+  "Column1": "웃긴 전구"
+ },
+ null,
+ {
+  "의견": "바꾸는가?"
+ },
+ {
+  "의견": "가장 완벽한 전구",
+  "Column5": "(광범위 확정 공격)[가장 비싸고 강한 1티어 전구 인걸로 기억]"
+ },
+ {
+  "의견": "황금 전구",
+  "Column5": "(황금 전구로 부딪쳤을 때 골드로 바뀜.)"
  }
 ]
 }

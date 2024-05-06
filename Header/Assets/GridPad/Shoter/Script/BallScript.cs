@@ -182,11 +182,6 @@ public class BallScript : MonoBehaviour
     public void BallFire(Vector2 FireToward,float FireForce)
     {
         Managers.instance.SoundManager.SFXPlayOneshot(Managers.instance.Resource.Load<AudioClip>("BulbThrowing1"), true, true);
-        if (bulbSkills != null)
-        {
-            bulbSkills.StartEventSkills();
-            isPlayerShooting = true;
-        }
         if(ShoterController.Instance.collPointPreview != null) ShoterController.Instance.collPointPreview.gameObject.SetActive(false);
         Managers.instance.UI.BattleUICall.WeaponButtonCheck(true);
         ShoterController.Instance.isReadyFire = false;
@@ -196,6 +191,18 @@ public class BallScript : MonoBehaviour
         FireToward = FireToward * FireForce;
         FireToward.y += 0.5f * BallRB.gravityScale * BallRB.mass * Mathf.Pow(Time.fixedDeltaTime, 2);
         BallRB.velocity = FireToward;
+        if (bulbSkills != null)
+        {
+            bulbSkills.StartEventSkills();
+            isPlayerShooting = true;
+
+            //타입을 비교하는 비교문
+            if (bulbSkills is AimBulbSkill)
+            {
+                AimBulbSkill tempAimSkill = bulbSkills as AimBulbSkill;
+                tempAimSkill.targetPositionRel = FireToward;
+            }
+        }
     }
     protected void OnCollisionEnter2D(Collision2D collision)
     {
