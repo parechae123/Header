@@ -15,7 +15,7 @@ TagManager:
   - headerBoardBottom
   - Effects
   - BackGround
-  - 
+  - AimBulb
   - 
   - 
   - 
@@ -46,4 +46,7 @@ TagManager:
     locked: 0
   - name: Effects
     uniqueID: 2430278629
+    locked: 0
+  - name: NoLight
+    uniqueID: 286551503
     locked: 0

@@ -63,7 +63,8 @@ public class DecoBulbSkill : BulbSkills
     }
     public override void StartEventSkills()
     {
-        decoShapeCtrler = GameObject.Instantiate(Managers.instance.Resource.Load<GameObject>("DecoBulbLIne"), null).GetComponent<SpriteShapeController>();
+        GameObject tempGOBJ = GameObject.Instantiate(Managers.instance.Resource.Load<GameObject>("DecoBulbLIne"), null);
+        decoShapeCtrler = tempGOBJ.GetComponent<SpriteShapeController>();
         decoShape = decoShapeCtrler.gameObject.GetComponent<SpriteShapeRenderer>();
         lineArray = new Vector2[3];
         //컴포넌트 할당
@@ -78,23 +79,11 @@ public class DecoBulbSkill : BulbSkills
     {
         if (!isUpdateDone&&isBulbFired)
         {
-            if (isStartedForceNegative)
+            if (Vector2.Distance(OriginBall.transform.position, lineArray[0])>= Vector2.Distance(ShoterController.Instance.transform.position, lineArray[0]))
             {
-                if (OriginBall.BallRB.velocity.y <= 0)
-                {
-                    lineArray[1] = OriginBall.transform.position;
-                    decoShapeCtrler.RefreshSpriteShape();
-                    isUpdateDone = true;
-                }
-            }
-            else
-            {
-                if (OriginBall.BallRB.velocity.y >= 0)
-                {
-                    lineArray[1] = OriginBall.transform.position;
-                    decoShapeCtrler.RefreshSpriteShape();
-                    isUpdateDone = true;
-                }
+                lineArray[1] = OriginBall.transform.position;
+                decoShapeCtrler.RefreshSpriteShape();
+                isUpdateDone = true;
             }
         }
 
@@ -114,8 +103,7 @@ public class DecoBulbSkill : BulbSkills
 
             if (Vector2.Distance(lineArray[i],ShoterController.Instance.transform.position)<= 1)
             {
-                GameObject.Destroy(decoShape.gameObject);
-                return;
+                lineArray[i] = (lineArray[0] + lineArray[2])/2f;
             }
             if (i == 0)
             {
@@ -207,7 +195,7 @@ public class AimBulbSkill : BulbSkills
         arriveTime = 0;
         arriveTime = BallArriveTime();
         isBulbFired = true;
-        OriginBall.BallCol.enabled = false;
+        OriginBall.gameObject.layer = 10;
     }
     public override void UpdateSkills()
     {
@@ -217,10 +205,10 @@ public class AimBulbSkill : BulbSkills
             Debug.Log("발사 시간 " + firedTime + "," + "활성화 시간 " + arriveTime);
             if (firedTime >= arriveTime)
             {
-                if (!OriginBall.BallCol.enabled)
+                if (OriginBall.gameObject.layer != 0)
                 {
                     Debug.LogError("발사 시간 " + firedTime + "," + "활성화 시간 " + arriveTime);
-                    OriginBall.BallCol.enabled = true;
+                    OriginBall.gameObject.layer = 0;
                     OriginBall.BallRB.gravityScale = ShoterController.Instance.NowBallStat.SkillValueOne;
                 }
             }
@@ -233,6 +221,7 @@ public class AimBulbSkill : BulbSkills
             OriginBall.BallRB.gravityScale = ShoterController.Instance.NowBallStat.weight;
         }
 
+        OriginBall.gameObject.layer = 0;
         isBulbFired = false;
     }
     public override void Reset()
