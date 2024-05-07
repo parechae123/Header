@@ -263,7 +263,42 @@ public class HPBulbSkill : BulbSkills
 
     }
 }
+public class metalBulbSkill : BulbSkills
+{
+    
+    private int MainBulbHP
+    {
+        get
+        {
+            return OriginBall.ballNowHP;
+        }
+    }
+    private int triggerHP;
+    public override void InitializeSetting()
+    {
+        base.InitializeSetting();
+        triggerHP = OriginBall.ballNowHP - 1;
+    }
+    public override void StartEventSkills()
+    {
+        triggerHP = OriginBall.ballNowHP - 1;
+    }
+    public override void UpdateSkills()
+    {
+        if (MainBulbHP == triggerHP )
+        {
 
+        }
+    }
+    public override void BreakEventSkills()
+    {
+
+    }
+    public override void Reset()
+    {
+
+    }
+}
 /*
 public class DefaultBulbSkillForm : BulbSkills
 {

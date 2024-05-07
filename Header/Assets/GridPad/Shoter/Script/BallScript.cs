@@ -219,39 +219,7 @@ public class BallScript : MonoBehaviour
         {
 
             ballNowHP--;
-
-            StartCoroutine(BreakParticleChecker(breakParticle, () =>
-            {
-
-                MonsterManager.MonsterManagerInstance.NextTurnFunctions(ShoterController.Instance.regionalDamage, ShoterController.Instance.targetDamage, ShoterController.Instance.TargetMonsterTR, () =>
-                {
-                    if (100 - Managers.instance.PlayerDataManager.girlAttackChance <= UnityEngine.Random.Range(0, 101))
-                    {
-                        MonsterManager.MonsterManagerInstance.DamageToAllMonsters(Managers.instance.PlayerDataManager.girlAD, (total, count) =>
-                        {
-                            ResetBall();
-                            ShoterController.Instance.regionalDamage = 0;
-                            ShoterController.Instance.targetDamage = 0;
-                        }, true);
-                        Managers.instance.UI.BattleUICall.GirlTextAttack("영차!!", Color.blue, Color.white);
-                        //TODO : 소녀 공격 구현
-                    }
-                    else
-                    {
-                        Managers.instance.UI.BattleUICall.GirlTextAttack("아쉬운거죠 뭐", Color.red, Color.white);
-                        ResetBall();
-                        ShoterController.Instance.regionalDamage = 0;
-                        ShoterController.Instance.targetDamage = 0;
-                    }
-                    if (Managers.instance.PlayerDataManager.RemoveBall(ShoterController.Instance.NowBallStat))
-                    {
-                        ShoterController.Instance.SetBallOnNext();
-                    }
-
-                }
-                );
-            }));
-
+            EndPlayerTurn();
         }
         else
         {
@@ -356,6 +324,40 @@ public class BallScript : MonoBehaviour
         }
         BallPause();
         callBack.Invoke();
+    }
+    public void EndPlayerTurn()
+    {
+        StartCoroutine(BreakParticleChecker(breakParticle, () =>
+        {
+
+            MonsterManager.MonsterManagerInstance.NextTurnFunctions(ShoterController.Instance.regionalDamage, ShoterController.Instance.targetDamage, ShoterController.Instance.TargetMonsterTR, () =>
+            {
+                if (100 - Managers.instance.PlayerDataManager.girlAttackChance <= UnityEngine.Random.Range(0, 101))
+                {
+                    MonsterManager.MonsterManagerInstance.DamageToAllMonsters(Managers.instance.PlayerDataManager.girlAD, (total, count) =>
+                    {
+                        ResetBall();
+                        ShoterController.Instance.regionalDamage = 0;
+                        ShoterController.Instance.targetDamage = 0;
+                    }, true);
+                    Managers.instance.UI.BattleUICall.GirlTextAttack("영차!!", Color.blue, Color.white);
+                    //TODO : 소녀 공격 구현
+                }
+                else
+                {
+                    Managers.instance.UI.BattleUICall.GirlTextAttack("아쉬운거죠 뭐", Color.red, Color.white);
+                    ResetBall();
+                    ShoterController.Instance.regionalDamage = 0;
+                    ShoterController.Instance.targetDamage = 0;
+                }
+                if (Managers.instance.PlayerDataManager.RemoveBall(ShoterController.Instance.NowBallStat))
+                {
+                    ShoterController.Instance.SetBallOnNext();
+                }
+
+            }
+            );
+        }));
     }
 }
 

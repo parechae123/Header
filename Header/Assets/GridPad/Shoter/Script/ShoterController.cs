@@ -529,7 +529,7 @@ public class ShoterController : MonoBehaviour
                 break;
 
             case "metal_bulb":
-                /*TargetBall.bulbSkills = new DecoBulbSkill(); */
+                TargetBall.bulbSkills = new metalBulbSkill();
                 break;
             case "torch_bulb":
                 TargetBall.bulbSkills = new TorchBulbSKill();
