@@ -16,7 +16,7 @@ public class MetalBulbFrag : MonoBehaviour
         {
             fragHP = 1;
         }
-        if (fragHP == 1)
+        if (fragHP <= 1)
         {
 
             fragHP--;

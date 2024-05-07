@@ -16,21 +16,33 @@ public class MetalBulbDispenser : MonoBehaviour
             frags[i].fragRB = frags[i].gameObject.GetComponent<Rigidbody2D>();
         }
     }
-    void OnEnable()
+    public void Init(Vector2 ballVel,int fragHP)
     {
+        refDirrection = ballVel;
         angle = Mathf.Atan2(refDirrection.y, refDirrection.x);
-        angle = (angle * Mathf.Rad2Deg)-105f;
+        angle = (angle * Mathf.Rad2Deg) - 105f;
         //º¸Á¤°ª (-90) + (-15)
         for (int i = 0; i < frags.Length; i++)
         {
+            frags[i].gameObject.SetActive(true);
+            frags[i].fragHP = fragHP;
             frags[i].transform.localPosition = Vector3.zero;
-            frags[i].transform.eulerAngles = Vector3.forward* (angle+(15*i));
-            frags[i].fragRB.AddForce(frags[i].transform.up*10,ForceMode2D.Impulse);
+            frags[i].transform.eulerAngles = Vector3.forward * (angle + (15 * i));
+            frags[i].fragRB.velocity = Vector3.zero;
+            frags[i].fragRB.AddForce(frags[i].transform.up * 10, ForceMode2D.Impulse);
         }
     }
+
     // Update is called once per frame
     void Update()
     {
-        
+        if (!frags[0].gameObject.activeSelf && !frags[1].gameObject.activeSelf && !frags[2].gameObject.activeSelf)
+        {
+            if (gameObject.activeSelf)
+            {
+                ShoterController.Instance.targetBall.EndPlayerTurn();
+                gameObject.SetActive(false);
+            }
+        }
     }
 }

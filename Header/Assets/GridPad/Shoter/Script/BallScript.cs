@@ -259,6 +259,7 @@ public class BallScript : MonoBehaviour
     }
     public void ResetBall()
     {
+        FakeBreakOnOff(true);
         Managers.instance.UI.BattleUICall.SetComboNumber(false);
         BulbLight.intensity = 15;
         ShoterController.Instance.SetBall();
@@ -358,6 +359,12 @@ public class BallScript : MonoBehaviour
             }
             );
         }));
+    }
+    public void FakeBreakOnOff(bool isOn)
+    {
+        IMG.enabled = isOn;
+        BallCol.enabled = isOn;
+        BallRB.simulated = isOn;
     }
 }
 

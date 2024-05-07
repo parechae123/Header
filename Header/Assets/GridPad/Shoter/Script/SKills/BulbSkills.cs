@@ -273,26 +273,44 @@ public class metalBulbSkill : BulbSkills
             return OriginBall.ballNowHP;
         }
     }
+    private MetalBulbDispenser fragDispenser;
     private int triggerHP;
+    bool isSkillActivated = false;
     public override void InitializeSetting()
     {
         base.InitializeSetting();
         triggerHP = OriginBall.ballNowHP - 1;
+        isSkillActivated = false;
     }
     public override void StartEventSkills()
     {
+        if (OriginBall == null)
+        {
+            OriginBall = ShoterController.Instance.TargetBall;
+        }
         triggerHP = OriginBall.ballNowHP - 1;
+        isSkillActivated = false;
+        fragDispenser = GameObject.Instantiate(Managers.instance.Resource.Load<GameObject>("MetalBulbObject"),null).GetComponent<MetalBulbDispenser>();
     }
     public override void UpdateSkills()
     {
-        if (MainBulbHP == triggerHP )
+        if (MainBulbHP <= triggerHP && !isSkillActivated)
         {
+            isSkillActivated = true;
 
+            fragDispenser.transform.position = OriginBall.transform.position;
+            fragDispenser.gameObject.SetActive(true);
+            fragDispenser.Init(OriginBall.BallRB.velocity,(int)ShoterController.Instance.NowBallStat.SkillValueTwo);
+            OriginBall.FakeBreakOnOff(false);
         }
     }
     public override void BreakEventSkills()
     {
-
+        if (fragDispenser != null)
+        {
+            GameObject.Destroy(fragDispenser.gameObject);
+        }
+        isSkillActivated = false;
     }
     public override void Reset()
     {
