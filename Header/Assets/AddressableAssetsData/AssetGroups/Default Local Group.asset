@@ -59,26 +59,8 @@ MonoBehaviour:
     m_SerializedLabels:
     - DatatSheet
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: edeb8eb704a0be7408de08a7515d0e21
-    m_Address: coin
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - UI
-    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: a26faf83b90e7b44790e17ce99e0f10f
-    m_Address: coin_panel
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - UI
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 20ec03545b464984dbcdf5fb39b6c29f
-    m_Address: shop_background_in
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - UI
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 7720133530dd14c47a3111948c626a48
-    m_Address: shop_background_out
+    m_Address: coin_pannel
     m_ReadOnly: 0
     m_SerializedLabels:
     - UI
