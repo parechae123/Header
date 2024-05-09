@@ -317,6 +317,54 @@ public class metalBulbSkill : BulbSkills
 
     }
 }
+public class crashBulbSkill : BulbSkills
+{
+    private MetalBulbDispenser fragDispenser;
+    float trigTime;
+    float timer;
+    bool isSkillActivated = false;
+    public override void InitializeSetting()
+    {
+        base.InitializeSetting();
+        isSkillActivated = false;
+    }
+    public override void StartEventSkills()
+    {
+        if (OriginBall == null)
+        {
+            OriginBall = ShoterController.Instance.TargetBall;
+        }
+        trigTime = ShoterController.Instance.shootBallColideTime / 2f;
+        isSkillActivated = false;
+        fragDispenser = GameObject.Instantiate(Managers.instance.Resource.Load<GameObject>("MetalBulbObject"), null).GetComponent<MetalBulbDispenser>();
+        timer = 0;
+    }
+    public override void UpdateSkills()
+    {
+        timer += Time.deltaTime;
+        if (trigTime <= timer && !isSkillActivated)
+        {
+            isSkillActivated = true;
+
+            fragDispenser.transform.position = OriginBall.transform.position;
+            fragDispenser.gameObject.SetActive(true);
+            fragDispenser.Init(OriginBall.BallRB.velocity, (int)ShoterController.Instance.NowBallStat.SkillValueTwo);
+            OriginBall.FakeBreakOnOff(false);
+        }
+    }
+    public override void BreakEventSkills()
+    {
+        if (fragDispenser != null)
+        {
+            GameObject.Destroy(fragDispenser.gameObject);
+        }
+        isSkillActivated = false;
+    }
+    public override void Reset()
+    {
+
+    }
+}
 /*
 public class DefaultBulbSkillForm : BulbSkills
 {

@@ -19,6 +19,7 @@ public class ShoterController : MonoBehaviour
     private int numPoints = 50;
     private float timeInterval = 0.1f;
     private float gravity = -9.8f;
+    public float shootBallColideTime = 0;
     [SerializeField] public Vector2 normalizedRelValue;
     [SerializeField] public UnityEngine.Transform collPointPreview;
     [SerializeField] LayerMask layerBallCollision;
@@ -218,6 +219,7 @@ public class ShoterController : MonoBehaviour
                     RaycastHit2D colInfo = Physics2D.Raycast(firstPos, secondPos - firstPos, nowAndNextDistance, layerBallCollision);
                     if (colInfo)
                     {
+                        if(colInfo.collider != null)shootBallColideTime = time;
                         if(collPointPreview != null)collPointPreview.position = colInfo.point;
                         lineRenderer.SetPosition(i + 1, colInfo.point);
                         float reflectedBallVelocity = NowBallStat.ballBouncienss * (Vector2.Distance(firstPos, secondPos) / timeInterval);
@@ -541,6 +543,10 @@ public class ShoterController : MonoBehaviour
                 break;
             case "aim_bulb":
                 TargetBall.bulbSkills = new AimBulbSkill();
+                TargetBall.bulbSkills.InitializeSetting();
+                break;
+            case "crash_bulb":
+                TargetBall.bulbSkills = new crashBulbSkill();
                 TargetBall.bulbSkills.InitializeSetting();
                 break;
             default:

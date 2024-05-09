@@ -2937,8 +2937,8 @@ MonoBehaviour:
   - torch_bulb
   - nine_bulb
   - shine_bulb
+  - crash_bulb
   shopBalls: []
-  isChallengeShop: 1
 --- !u!4 &1293798079
 Transform:
   m_ObjectHideFlags: 0
