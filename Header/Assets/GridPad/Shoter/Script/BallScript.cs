@@ -95,7 +95,8 @@ public class BallScript : MonoBehaviour
                 {
                     ballCol = transform.AddComponent<CircleCollider2D>();
                 }
-                
+                    ballCol.offset = Vector2.up* 0.09f;
+                    ballCol.radius = 0.51f;
             }
             return ballCol;
         }

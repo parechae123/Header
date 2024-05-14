@@ -90,7 +90,7 @@ MonoBehaviour:
     - InGameSprites
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 61f6f8e945ad40f4698da9781dd9535c
-    m_Address: shine_bulb
+    m_Address: mirror_bulb
     m_ReadOnly: 0
     m_SerializedLabels:
     - InGameSprites

@@ -151,7 +151,7 @@ public class DecoBulbSkill : BulbSkills
         
     }
 }
-public class ShineBulbSkill : BulbSkills
+public class MirrorBulbSkill : BulbSkills
 {
     public Transform CloneBall;
     public override void InitializeSetting()
@@ -263,7 +263,7 @@ public class HPBulbSkill : BulbSkills
 
     }
 }
-public class metalBulbSkill : BulbSkills
+public class MetalBulbSkill : BulbSkills
 {
     
     private int MainBulbHP
@@ -336,7 +336,7 @@ public class crashBulbSkill : BulbSkills
         }
         trigTime = ShoterController.Instance.shootBallColideTime / 2f;
         isSkillActivated = false;
-        fragDispenser = GameObject.Instantiate(Managers.instance.Resource.Load<GameObject>("MetalBulbObject"), null).GetComponent<MetalBulbDispenser>();
+        fragDispenser = GameObject.Instantiate(Managers.instance.Resource.Load<GameObject>("CrashBulbObject"), null).GetComponent<MetalBulbDispenser>();
         timer = 0;
     }
     public override void UpdateSkills()

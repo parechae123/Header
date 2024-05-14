@@ -2938,6 +2938,7 @@ MonoBehaviour:
   - nine_bulb
   - shine_bulb
   - crash_bulb
+  - mirror_bulb
   shopBalls: []
 --- !u!4 &1293798079
 Transform:

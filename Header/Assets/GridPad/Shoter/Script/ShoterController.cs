@@ -531,14 +531,14 @@ public class ShoterController : MonoBehaviour
                 break;
 
             case "metal_bulb":
-                TargetBall.bulbSkills = new metalBulbSkill();
+                TargetBall.bulbSkills = new MetalBulbSkill();
                 break;
             case "torch_bulb":
                 TargetBall.bulbSkills = new TorchBulbSKill();
                 TargetBall.bulbSkills.InitializeSetting();
                 break;
-            case "shine_bulb":
-                TargetBall.bulbSkills = new ShineBulbSkill();
+            case "mirror_bulb":
+                TargetBall.bulbSkills = new MirrorBulbSkill();
                 TargetBall.bulbSkills.InitializeSetting();
                 break;
             case "aim_bulb":
