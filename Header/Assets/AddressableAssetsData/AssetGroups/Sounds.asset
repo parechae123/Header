@@ -127,6 +127,174 @@ MonoBehaviour:
     m_SerializedLabels:
     - Sound
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 50d0aec662abd024ebe460dc49f67f29
+    m_Address: dialog_voice_10017
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Sound
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 9e0ad2dcc3809714e8423c039f066deb
+    m_Address: dialog_voice_10014
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Sound
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: bf8af30d874791845a3518257dcd5746
+    m_Address: dialog_voice_10024
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Sound
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 79134352d7aff104b820c5acd85b9616
+    m_Address: dialog_voice_10036
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Sound
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 1041ed3d48716d84289b70a52820e470
+    m_Address: dialog_voice_10020
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Sound
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 460279e4273c7044786b51ef796e7177
+    m_Address: dialog_voice_10021
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Sound
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 5811d1fd00efd134b968f9cc2c29a365
+    m_Address: dialog_voice_10001
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Sound
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: d64844225429e984bb1cbf489eea04b0
+    m_Address: dialog_voice_10005
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Sound
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 762d3b52fcc0faf439b19b9492d76eb1
+    m_Address: dialog_voice_10008
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Sound
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: df5a7f16fd8799b42806d9ebc0ef33f9
+    m_Address: dialog_voice_10010
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Sound
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 7e1c5f73fcbd80946917246664c9582f
+    m_Address: dialog_voice_10012
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Sound
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: b36dbdeb44955124c81d3097f57fc1d4
+    m_Address: dialog_voice_10029
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Sound
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: bbf360bb7bb32864e9ed328a85bdff1d
+    m_Address: dialog_voice_10034
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Sound
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: c02c346b9b1be6b4788b81f67cb6a1a2
+    m_Address: dialog_voice_10031
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Sound
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: e3ded6e84591a6d43abc54074cafb613
+    m_Address: dialog_voice_10007
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Sound
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 6d230f7281aad8d4fb49a5f6dee35f9c
+    m_Address: dialog_voice_10046
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Sound
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 82702ba55f254194b86cba1412f2dff9
+    m_Address: dialog_voice_10033
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Sound
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: d941af844129720419e7073bd2b195e1
+    m_Address: dialog_voice_10013
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Sound
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: dd7bd257ea510464eac93d7bea666cdc
+    m_Address: dialog_voice_10028
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Sound
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 4fada045ece83d74bbe2fc0c85b53fd5
+    m_Address: dialog_voice_10030
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Sound
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 71bc3b082cbd4ea43a41feeced68ad51
+    m_Address: dialog_voice_10045
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Sound
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 3fbd648544b7ecb42954b884f011113f
+    m_Address: dialog_voice_10022
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Sound
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: a58274233509c26448d961ddfd2e59b5
+    m_Address: dialog_voice_10018
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Sound
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: c24d4dc535302784b9746926965143b0
+    m_Address: dialog_voice_10035
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Sound
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 5cdf6cba17f398c47985755417465e8a
+    m_Address: dialog_voice_10016
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Sound
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 3a9b00b8079b85d4d998ca07ecd063f8
+    m_Address: dialog_voice_10041
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Sound
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 3c74e63464516104bb4e65c957e89d26
+    m_Address: dialog_voice_10042
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Sound
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 9951728995f010a4d9d184f27efc9ad9
+    m_Address: dialog_voice_10032
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Sound
+    FlaggedDuringContentUpdateRestriction: 0
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: 489b40023fd66be419d08d79841125b1, type: 2}
   m_SchemaSet:

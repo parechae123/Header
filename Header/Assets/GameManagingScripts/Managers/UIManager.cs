@@ -573,6 +573,7 @@ public class DialogSystem
             Vector2 charactorIMGSizeCharactorIMG = DialogCharactorIMG.sprite.rect.size / 2f;
             float percent = FullDialogPanel.rect.size.y / FullDialogPanel.rect.size.x;
             int forTimes = ((int)DialogCharactorIMG.sprite.rect.size.y).ToString().Length;
+            
             for (int i = 0; i < forTimes; i++)
             {
                 charactorIMGSizeCharactorIMG = charactorIMGSizeCharactorIMG * 0.1f;
@@ -612,6 +613,9 @@ public class DialogSystem
 
             }
         }
+
+        AudioClip tempAudioClip = Managers.instance.Resource.Load<AudioClip>("dialog_voice_" + dialogData.EventName);
+        if(tempAudioClip != null) Managers.instance.SoundManager.PlayVoice(tempAudioClip);
 
         if (tempVideo != null)
         {

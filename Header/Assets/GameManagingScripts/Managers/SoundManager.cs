@@ -90,6 +90,16 @@ public class SoundManager
         
         SFX.PlayOneShot(sound);
     }
+    public void PlayVoice(AudioClip sound)
+    {
+        SFXLoopCheck = false;
+        if (SFX.clip !=null)
+        {
+            SFX.Stop();
+        }
+        SFX.clip = sound;
+        SFX.Play();
+    }
     public void SetSoundValue(bool isBGM,float value)
     {
         if (isBGM)
