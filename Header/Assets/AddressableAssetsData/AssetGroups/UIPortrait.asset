@@ -71,6 +71,96 @@ MonoBehaviour:
     m_SerializedLabels:
     - UI
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 2308b6b05b7607f418ddbcde6ebc1c7b
+    m_Address: battle_portrait_cotton
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - UI
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 7c516b26384f7994db1a80d8feb3d0a8
+    m_Address: battle_portrait_crash
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - UI
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 4380654216a0d634984052562b255344
+    m_Address: battle_portrait_shine
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - UI
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 8d1e6f003ad3b6043aa99eb7881cd075
+    m_Address: battle_portrait_perfect
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - UI
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 5f5ca823fa0d1cc4482b7374c9a2b0ab
+    m_Address: battle_portrait_aim
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - UI
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 7783f49290d839e4f809d2929678eb77
+    m_Address: battle_portrait_stone
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - UI
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: d966a9ddbfc04dc4eb8d646b4a22544f
+    m_Address: battle_portrait_torch
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - UI
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: f34a30928073645488a87d9953a220e0
+    m_Address: battle_portrait_metal
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - UI
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 1103e68781f275d4382168c7fe426de9
+    m_Address: battle_portrait_mirror
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - UI
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 4113ff98bf68f5d4ea63a962fdde67a0
+    m_Address: battle_portrait_hp
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - UI
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 2e93c2c38424b1b4aa3dc919b4773bb9
+    m_Address: battle_portrait_nine
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - UI
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 25396d497281e924094de9a0cfcf09ca
+    m_Address: battle_portrait_ink
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - UI
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 2511c1d759c4dd549943ccedda87973b
+    m_Address: battle_portrait_gold
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - UI
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: f1b0a9d73ea0dd34e897e9d46b6c7203
+    m_Address: battle_portrait_funny
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - UI
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 1a3eb71af0b7de04c9b30d1b5e824f3d
+    m_Address: battle_portrait_deco
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - UI
+    FlaggedDuringContentUpdateRestriction: 0
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: 489b40023fd66be419d08d79841125b1, type: 2}
   m_SchemaSet:

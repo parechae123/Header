@@ -113,6 +113,12 @@ MonoBehaviour:
     m_SerializedLabels:
     - InGameSprites
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 5855ab00839fdcd42bad7fdd6031e3a0
+    m_Address: crash_bulb
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - InGameSprites
+    FlaggedDuringContentUpdateRestriction: 0
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: 489b40023fd66be419d08d79841125b1, type: 2}
   m_SchemaSet:

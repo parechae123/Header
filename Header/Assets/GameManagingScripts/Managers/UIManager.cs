@@ -758,8 +758,8 @@ public class BattleUI
                 }
                 Vector2 halfSize = (new Vector2(playerPortrait.sprite.rect.width, playerPortrait.sprite.rect.height * parentSizePercent) * getCurrentMag) * 1.5f;
                 Managers.instance.UI.SetUISize(ref tempRect, centerPos - halfSize, centerPos + halfSize);
-
             }
+            
             return playerPortrait;
         }
     }
@@ -2086,6 +2086,9 @@ public class BattleUI
     public void ChangeWeaponUI(string spriteName, string weaponKoreanName)
     {
         WeaponImage.sprite = Managers.instance.Resource.Load<Sprite>(spriteName);
+        string playerPortraitFileName = spriteName.Substring(0, spriteName.IndexOf('_'));
+        Sprite tempPort = Managers.instance.Resource.Load<Sprite>("battle_portrait_" + playerPortraitFileName);
+        PlayerPortrait.sprite = tempPort == null ? Managers.instance.Resource.Load<Sprite>("battle_portrait") :tempPort;
         PlayerWeaponName.text = weaponKoreanName;
         /*        if (isPlayer)
                 {
