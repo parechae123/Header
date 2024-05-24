@@ -19,7 +19,7 @@ public abstract class Interactions
     public abstract void OutIt();
     protected virtual void InteractionKeyUI(bool isOnOFF)
     {
-        Managers.instance.UI.TopViewSceneUIs.KeyInteractionOnOFF(isOnOFF);
+        Managers.instance.UI.topViewSceneUIs.KeyInteractionOnOFF(isOnOFF);
     }
 }
 public class DialogInteraction : Interactions
@@ -31,22 +31,22 @@ public class DialogInteraction : Interactions
     }
     public override void Interaction()
     {
-        if (!Managers.instance.UI.DialogCall.UntillVideoBackground.gameObject.activeSelf)
+        if (!Managers.instance.UI.dialogCall.UntillVideoBackground.gameObject.activeSelf)
         {
-            Managers.instance.UI.TargetUIOnOff(Managers.instance.UI.DialogCall.FullDialogPanel,true,false);
-            Managers.instance.UI.TargetUIOnOff(Managers.instance.UI.DialogCall.UntillVideoBackground.rectTransform, true, false);
-            Managers.instance.UI.DialogCall.SetDialogueData(interactionKeyNumber);
+            Managers.instance.UI.TargetUIOnOff(Managers.instance.UI.dialogCall.FullDialogPanel,true,false);
+            Managers.instance.UI.TargetUIOnOff(Managers.instance.UI.dialogCall.UntillVideoBackground.rectTransform, true, false);
+            Managers.instance.UI.dialogCall.SetDialogueData(interactionKeyNumber);
             InteractionKeyUI(false);
         }
         else
         {
             if (detail.interactionRemoveSelf)
             {
-                Managers.instance.UI.DialogCall.DialogTextChanger(detail.installedInteractionPosition);
+                Managers.instance.UI.dialogCall.DialogTextChanger(detail.installedInteractionPosition);
             }
             else
             {
-                Managers.instance.UI.DialogCall.DialogTextChanger();
+                Managers.instance.UI.dialogCall.DialogTextChanger();
             }
         }
     }
@@ -65,12 +65,12 @@ public class MerchantInteraction : Interactions
     {
         Debug.Log("µé¾î¿È");
         SetShopList();
-        Managers.instance.UI.ShopUICall.ShopUISetting();
+        Managers.instance.UI.shopUICall.ShopUISetting();
         InteractionKeyUI(true);
     }
     public override void Interaction()
     {
-        Managers.instance.UI.ShopUICall.IsShopActivate = Managers.instance.UI.ShopUICall.IsShopActivate == true ? false : true;
+        Managers.instance.UI.shopUICall.IsShopActivate = Managers.instance.UI.shopUICall.IsShopActivate == true ? false : true;
 
     }
 
@@ -100,7 +100,7 @@ public class MerchantInteraction : Interactions
                 Array.Resize<BallStat>(ref shopBalls, i + 1);
                 int tempRandomNumber = UnityEngine.Random.Range(0, tempStatArray.Length);
                 shopBalls[i] = tempStatArray[tempRandomNumber];
-                Managers.instance.UI.ShopUICall.CreateWeaponBuyButtons(tempStatArray[tempRandomNumber],i);
+                Managers.instance.UI.shopUICall.CreateWeaponBuyButtons(tempStatArray[tempRandomNumber],i);
             }
         }
         else
@@ -111,7 +111,7 @@ public class MerchantInteraction : Interactions
                 if (Managers.instance.Resource._weaponDictionary.TryGetValue(sellableBallNames[i], out ExtraBallStat targetStat))
                 {
                     shopBalls[i] = targetStat;
-                    Managers.instance.UI.ShopUICall.CreateWeaponBuyButtons(targetStat, i);
+                    Managers.instance.UI.shopUICall.CreateWeaponBuyButtons(targetStat, i);
                 }
                 else
                 {

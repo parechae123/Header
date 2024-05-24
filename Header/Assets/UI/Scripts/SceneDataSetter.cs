@@ -52,7 +52,7 @@ namespace ChallengeSceneData
             });
             shopUIBTN.onClick.AddListener(() =>
             {
-                Managers.instance.UI.ShopUICall.IsShopActivate = Managers.instance.UI.ShopUICall.IsShopActivate == true ? false : true;
+                Managers.instance.UI.shopUICall.IsShopActivate = Managers.instance.UI.shopUICall.IsShopActivate == true ? false : true;
             });
             if (challengeSceneNames != null)
             {

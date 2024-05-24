@@ -15,27 +15,27 @@ using MonsterDefines;
 using UnityEngine.EventSystems;
 using System.Net.Http;
 
-
+//이하 파스칼케이스로 작성된 변수는 
 public class UIManager
 {
-    public LoadingUI LoadingUIProps = new LoadingUI();
-    public TopViewSceneUI TopViewSceneUIs = new TopViewSceneUI();
-    public DialogSystem DialogCall = new DialogSystem();
-    public BattleUI BattleUICall = new BattleUI();
-    public ShopUI ShopUICall = new ShopUI();
-    public OptionUI OptionUICall = new OptionUI();
+    public LoadingUI loadingUIProps = new LoadingUI();
+    public TopViewSceneUI topViewSceneUIs = new TopViewSceneUI();
+    public DialogSystem dialogCall = new DialogSystem();
+    public BattleUI battleUICall = new BattleUI();
+    public ShopUI shopUICall = new ShopUI();
+    public OptionUI optionUICall = new OptionUI();
 
-    private Stack<Transform> UIStack = new Stack<Transform>();
-    public List<Transform> MoveAbleCheckerList = new List<Transform>();
+    private Stack<Transform> uiStack = new Stack<Transform>();
+    public List<Transform> moveAbleCheckerList = new List<Transform>();
     public void RegistUIStack(Transform target)
     {
-        UIStack.Push(target);
+        uiStack.Push(target);
     }
     public void CloseUIStack()
     {
-        if (UIStack.Count > 0)
+        if (uiStack.Count > 0)
         {
-            UIStack.Pop().gameObject.SetActive(false);
+            uiStack.Pop().gameObject.SetActive(false);
             if (TopViewPlayer.Instance != null)
             {
                 TopViewPlayer.Instance.isMoveAble = MoveAbleChecker();
@@ -43,32 +43,36 @@ public class UIManager
         }
         else
         {
-            TargetUIOnOff(OptionUICall.OptionPannel.rectTransform, true);
+            TargetUIOnOff(optionUICall.OptionPannel.rectTransform, true);
         }
     }
     public void CheckerRegist(Transform tr)
     {
-        MoveAbleCheckerList.Add(tr);
+        moveAbleCheckerList.Add(tr);
     }
     public void ResetUI()
     {
-        UIStack.Clear();
-        ShopUICall.shopWeaponItems = null;
-        MoveAbleCheckerList.Clear();
+        uiStack.Clear();
+        shopUICall.shopWeaponItems = null;
+        moveAbleCheckerList.Clear();
         //        BattleUICall.ResetMonsterQueueIMG();
     }
 
     private bool MoveAbleChecker()
     {
-        for (int i = 0; i < MoveAbleCheckerList.Count; i++)
+        for (int i = 0; i < moveAbleCheckerList.Count; i++)
         {
-            if (MoveAbleCheckerList[i].gameObject.activeSelf)
+            if (moveAbleCheckerList[i].gameObject.activeSelf)
             {
                 return false;
             }
         }
         return true;
     }
+    /// <summary>
+    /// 끄고 킬 수 있는 UI를 등록함
+    /// </summary>
+    /// <param name="target"></param>
     public void TargetUIOnOff(Transform target, bool isTurnOn, bool isPush = true)
     {
         // TODO : 특정 UI 닫기버튼 누를때 연결해주어야 할 함수 끌때 isTurnOn을 false 열때는 true
@@ -81,7 +85,7 @@ public class UIManager
             }
             else
             {
-                UIStack.TryPop(out target);
+                uiStack.TryPop(out target);
             }
             if (TopViewPlayer.Instance != null)
             {
@@ -89,7 +93,10 @@ public class UIManager
             }
         }
     }
-
+    /// <summary>
+    /// 버튼에 사운드 이벤트 트리거 등록
+    /// </summary>
+    /// <param name="target">목표하는 UI오브젝트의 rectTransform</param>
     public void RegistEventTrigger(RectTransform target)
     {
         EventTrigger tempET = target.GetOrAddComponent<EventTrigger>();
@@ -140,14 +147,26 @@ public class UIManager
         tempET.triggers.Add(pointerHover);
     }
 
+    /// <summary>
+    /// Button에 호버시 호출되는 함수
+    /// </summary>
     public void OnMouseHover()
     {
         Managers.instance.SoundManager.SFXPlayOneshot(Managers.instance.Resource.Load<AudioClip>("ButtonMouseOver"), false, true);
     }
+    /// <summary>
+    /// Button 클릭시 호출되는 함수
+    /// </summary>
     public void OnMouseClick()
     {
         Managers.instance.SoundManager.SFXPlayOneshot(Managers.instance.Resource.Load<AudioClip>("ButtonMouseClick"), false, true);
     }
+    /// <summary>
+    /// UI의 크기를 부모의 절대적인 사이즈로 변환합니다.
+    /// </summary>
+    /// <param name="TargetRect">목표 UI의 rectTranceform</param>
+    /// <param name="min"></param>
+    /// <param name="max"></param>
     public void SetUISize(ref RectTransform TargetRect, Vector2 min, Vector2 max)
     {
         TargetRect.anchorMin = min;
@@ -269,7 +288,7 @@ public class TopViewSceneUI
             if (interactionKeyPanel == null)
             {
                 Image UIBackGround = new GameObject { name = "interactionKeyPanel" }.AddComponent<Image>();
-                Canvas tempCanvas = Managers.instance.UI.LoadingUIProps.SceneMainCanvas.GetComponent<Canvas>();
+                Canvas tempCanvas = Managers.instance.UI.loadingUIProps.SceneMainCanvas.GetComponent<Canvas>();
                 interactionKeyPanel = UIBackGround.rectTransform;
                 interactionKeyPanel.SetParent(tempCanvas.transform as RectTransform);
 
@@ -490,7 +509,7 @@ public class DialogSystem
             if (untillVideoBackGround == null)
             {
                 untillVideoBackGround = new GameObject { name = "DialoueUntilVideoPanel" }.AddComponent<RawImage>();
-                untillVideoBackGround.rectTransform.SetParent(Managers.instance.UI.LoadingUIProps.SceneMainCanvas);
+                untillVideoBackGround.rectTransform.SetParent(Managers.instance.UI.loadingUIProps.SceneMainCanvas);
                 untillVideoBackGround.texture = Managers.instance.Resource.Load<Texture>("BackGroundVideoTexture");
                 RectTransform TempRect = untillVideoBackGround.rectTransform;
                 Managers.instance.UI.SetUISize(ref TempRect,Vector2.zero,Vector2.one);
@@ -693,7 +712,7 @@ public class BattleUI
             if (battleSceneUI == null)
             {
                 battleSceneUI = new GameObject("BattleSceneUIFolder").AddComponent<RectTransform>();
-                battleSceneUI.SetParent(Managers.instance.UI.LoadingUIProps.SceneMainCanvas);
+                battleSceneUI.SetParent(Managers.instance.UI.loadingUIProps.SceneMainCanvas);
                 battleSceneUI.anchorMin = Vector2.zero;
                 battleSceneUI.anchorMax = Vector2.one;
                 battleSceneUI.anchoredPosition = Vector2.zero;
@@ -1739,7 +1758,6 @@ public class BattleUI
                 }
                 Vector2 imageSize = new Vector2(PanelSize.x, PanelSize.y * parentPercent) * imageScale;
                 Managers.instance.UI.SetUISize(ref tempRect, centerPos - imageSize, centerPos + imageSize);
-                Debug.Log("ㅁㄴㅇ");
                 NextMonsterIcon.enabled = true;
             }
             return nextMonsterPannel;
@@ -1866,7 +1884,7 @@ public class BattleUI
             if (ballForceSliderParent == null)
             {
                 ballForceSliderParent = new GameObject("BallForceParent").AddComponent<RectTransform>();
-                ballForceSliderParent.SetParent(Managers.instance.UI.LoadingUIProps.SceneMainCanvas);
+                ballForceSliderParent.SetParent(Managers.instance.UI.loadingUIProps.SceneMainCanvas);
                 ballForceSliderParent.anchorMin = new Vector2(0, 0);
                 ballForceSliderParent.anchorMax = new Vector2(1, 1);
                 ballForceSliderParent.sizeDelta = Vector2.zero;
@@ -2047,7 +2065,7 @@ public class BattleUI
         {
             if (Managers.instance.PlayerDataManager.SetPlayerHP.Item2 >= 0)
             {
-                Managers.instance.UI.BattleUICall.ToDialogSceneBTN.enabled = true;
+                Managers.instance.UI.battleUICall.ToDialogSceneBTN.enabled = true;
             }
             ShoterController.Instance.isReadyFire = false;
         }
@@ -2426,7 +2444,7 @@ public class ShopUI
             if (shopPanel == null)
             {
                 shopPanel = new GameObject("ShopPanel").AddComponent<Image>();
-                shopPanel.rectTransform.SetParent(Managers.instance.UI.LoadingUIProps.SceneMainCanvas);
+                shopPanel.rectTransform.SetParent(Managers.instance.UI.loadingUIProps.SceneMainCanvas);
                 shopPanel.rectTransform.anchoredPosition = Vector3.zero;
                 shopPanel.rectTransform.anchorMax = Vector2.one;
                 shopPanel.rectTransform.anchorMin = Vector2.zero;
@@ -2978,7 +2996,7 @@ public class ShopUI
     }
     public void MoneyUpdate(int money)
     {
-        IsShopActivate = Managers.instance.UI.ShopUICall.IsShopActivate == true ? true : false;
+        IsShopActivate = Managers.instance.UI.shopUICall.IsShopActivate == true ? true : false;
         GoldAmountText.text = money.ToString();
     }
     public void ShopUISetting()
@@ -3006,7 +3024,7 @@ public class OptionUI
             {
                 optionPannel = new GameObject("OptionPannel").AddComponent<Image>();
                 RectTransform tempRect = optionPannel.rectTransform;
-                optionPannel.rectTransform.SetParent(Managers.instance.UI.LoadingUIProps.SceneMainCanvas);
+                optionPannel.rectTransform.SetParent(Managers.instance.UI.loadingUIProps.SceneMainCanvas);
                 Sprite tempSprite = Managers.instance.Resource.Load<Sprite>("Option_background");
                 optionPannel.sprite = tempSprite;
                 float GetPercent = 1;
@@ -3015,7 +3033,7 @@ public class OptionUI
                 {
                     GetPercent = GetPercent * 0.1f;
                 }
-                Vector2 size = (new Vector2(tempSprite.rect.width* (Managers.instance.UI.LoadingUIProps.SceneMainCanvas.rect.height/Managers.instance.UI.LoadingUIProps.SceneMainCanvas.rect.width), tempSprite.rect.height) * GetPercent)/2f;
+                Vector2 size = (new Vector2(tempSprite.rect.width* (Managers.instance.UI.loadingUIProps.SceneMainCanvas.rect.height/Managers.instance.UI.loadingUIProps.SceneMainCanvas.rect.width), tempSprite.rect.height) * GetPercent)/2f;
                 Vector2 pos = new Vector2(0.5f,0.5f);
                 Managers.instance.UI.SetUISize(ref tempRect, pos-size , pos + size);
                 ParabolaCheckBox.gameObject.SetActive(true);

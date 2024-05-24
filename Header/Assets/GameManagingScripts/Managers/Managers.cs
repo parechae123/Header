@@ -52,8 +52,8 @@ public class Managers : MonoBehaviour
         UI.ResetUI();
         Pool.Clear();
         Grid.ResetGrids();
-        ui.ShopUICall.Inventory.Clear();
-        ui.BattleUICall.ResetBulbDamageText();
+        ui.shopUICall.Inventory.Clear();
+        ui.battleUICall.ResetBulbDamageText();
     }
     public static void Init()
     {

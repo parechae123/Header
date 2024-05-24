@@ -184,7 +184,7 @@ public class BallScript : MonoBehaviour
     {
         Managers.instance.SoundManager.SFXPlayOneshot(Managers.instance.Resource.Load<AudioClip>("BulbThrowing1"), true, true);
         if(ShoterController.Instance.collPointPreview != null) ShoterController.Instance.collPointPreview.gameObject.SetActive(false);
-        Managers.instance.UI.BattleUICall.WeaponButtonCheck(true);
+        Managers.instance.UI.battleUICall.WeaponButtonCheck(true);
         ShoterController.Instance.isReadyFire = false;
         ShoterController.Instance.lineRenderer.enabled = false;
         BallRB.simulated = true;
@@ -229,7 +229,7 @@ public class BallScript : MonoBehaviour
             tempBounceParticle.transform.position = transform.position;
             tempBounceParticle.Play();
             StartCoroutine(BounceParticleChecker(tempBounceParticle));
-            Managers.instance.UI.BattleUICall.SetBulbDamagedText(ShoterController.Instance.NowBallStat.ballHealth,ballNowHP);
+            Managers.instance.UI.battleUICall.SetBulbDamagedText(ShoterController.Instance.NowBallStat.ballHealth,ballNowHP);
         }
     }
     public void BallToTarget(Vector2 targetPos,float Speed)
@@ -261,7 +261,7 @@ public class BallScript : MonoBehaviour
     public void ResetBall()
     {
         FakeBreakOnOff(true);
-        Managers.instance.UI.BattleUICall.SetComboNumber(false);
+        Managers.instance.UI.battleUICall.SetComboNumber(false);
         BulbLight.intensity = 15;
         ShoterController.Instance.SetBall();
         blinkTimer = 0;
@@ -342,12 +342,12 @@ public class BallScript : MonoBehaviour
                         ShoterController.Instance.regionalDamage = 0;
                         ShoterController.Instance.targetDamage = 0;
                     }, true);
-                    Managers.instance.UI.BattleUICall.GirlTextAttack("영차!!", Color.blue, Color.white);
+                    Managers.instance.UI.battleUICall.GirlTextAttack("영차!!", Color.blue, Color.white);
                     //TODO : 소녀 공격 구현
                 }
                 else
                 {
-                    Managers.instance.UI.BattleUICall.GirlTextAttack("아쉬운거죠 뭐", Color.red, Color.white);
+                    Managers.instance.UI.battleUICall.GirlTextAttack("아쉬운거죠 뭐", Color.red, Color.white);
                     ResetBall();
                     ShoterController.Instance.regionalDamage = 0;
                     ShoterController.Instance.targetDamage = 0;

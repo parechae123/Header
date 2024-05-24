@@ -18,7 +18,7 @@ public class PlayerDataManager
         }
         set 
         {
-            Managers.instance.UI.ShopUICall.MoneyUpdate(value);
+            Managers.instance.UI.shopUICall.MoneyUpdate(value);
             playerMoney = value;
         }
     }
@@ -47,10 +47,10 @@ public class PlayerDataManager
                 playerHPNow = value.Item1;
             }
 
-            if (Managers.instance.UI.BattleUICall.IsInBattleScene)
+            if (Managers.instance.UI.battleUICall.IsInBattleScene)
             {
-                Managers.instance.UI.BattleUICall.SettingPlayerBattleUI();
-                Managers.instance.UI.BattleUICall.HPBarSetting(true, playerHPMax, playerHPNow);
+                Managers.instance.UI.battleUICall.SettingPlayerBattleUI();
+                Managers.instance.UI.battleUICall.HPBarSetting(true, playerHPMax, playerHPNow);
             }
             
         }
@@ -66,27 +66,27 @@ public class PlayerDataManager
         if (playerHPNow <= 0)
         {
             ShoterController.Instance.isReadyFire = false;
-            Managers.instance.UI.BattleUICall.GameOverBTN.enabled = true;
-            Managers.instance.UI.BattleUICall.ToDialogSceneBTN.gameObject.SetActive(false);
+            Managers.instance.UI.battleUICall.GameOverBTN.enabled = true;
+            Managers.instance.UI.battleUICall.ToDialogSceneBTN.gameObject.SetActive(false);
         }
         if (Damage <= 0)
         {
-            Managers.instance.UI.BattleUICall.PlayerHPBarFrontIMG.DOComplete();
-            Managers.instance.UI.BattleUICall.PlayerHPBarFrontIMG.DOColor(Color.green, 0.1f).OnComplete(() =>
+            Managers.instance.UI.battleUICall.PlayerHPBarFrontIMG.DOComplete();
+            Managers.instance.UI.battleUICall.PlayerHPBarFrontIMG.DOColor(Color.green, 0.1f).OnComplete(() =>
             {
-                Managers.instance.UI.BattleUICall.PlayerHPBarFrontIMG.DOColor(Color.white, 0.1f).OnComplete(() =>
+                Managers.instance.UI.battleUICall.PlayerHPBarFrontIMG.DOColor(Color.white, 0.1f).OnComplete(() =>
                 {
-                    Managers.instance.UI.BattleUICall.PlayerHPBarFrontIMG.DOColor(Color.green, 0.1f).OnComplete(() =>
+                    Managers.instance.UI.battleUICall.PlayerHPBarFrontIMG.DOColor(Color.green, 0.1f).OnComplete(() =>
                     {
-                        Managers.instance.UI.BattleUICall.PlayerHPBarFrontIMG.DOColor(Color.white, 0.1f);
+                        Managers.instance.UI.battleUICall.PlayerHPBarFrontIMG.DOColor(Color.white, 0.1f);
                     });
                 });
             });
         }
 
-        if (Managers.instance.UI.BattleUICall.IsInBattleScene)
+        if (Managers.instance.UI.battleUICall.IsInBattleScene)
         {
-            Managers.instance.UI.BattleUICall.SettingPlayerBattleUI();
+            Managers.instance.UI.battleUICall.SettingPlayerBattleUI();
 
         }
     }
@@ -139,7 +139,7 @@ public class PlayerDataManager
 
         if (isCalledItOnShop)
         {
-            Managers.instance.UI.ShopUICall.UpdateInvenBulb(playerOwnBalls);
+            Managers.instance.UI.shopUICall.UpdateInvenBulb(playerOwnBalls);
         }
     }
     public bool RemoveBall(ExtraBallStat ball, bool isCalledItOnShop = false)
@@ -164,13 +164,13 @@ public class PlayerDataManager
         }
         if (isCalledItOnShop)
         {
-            Managers.instance.UI.ShopUICall.UpdateInvenBulb(playerOwnBalls);
+            Managers.instance.UI.shopUICall.UpdateInvenBulb(playerOwnBalls);
         }
         return false;
     }
     public void CheckWeaponNextBeforeButton()
     {
-        Managers.instance.UI.BattleUICall.WeaponButtonCheck(playerOwnBalls.Count > 1 ? false: true);
+        Managers.instance.UI.battleUICall.WeaponButtonCheck(playerOwnBalls.Count > 1 ? false: true);
     }
     public void PlayerBeforeBallPick()
     {
@@ -184,6 +184,9 @@ public class PlayerDataManager
 
         ShoterController.Instance.SetBallOnNext();
     }
+    /// <summary>
+    /// ResetPlayerDatas
+    /// </summary>
     public void ResetPlayer()
     {
         playerOwnBalls.Clear();

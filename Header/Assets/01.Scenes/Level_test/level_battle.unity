@@ -4101,8 +4101,8 @@ MonoBehaviour:
   m_ShadowVolumeIntensityEnabled: 0
   m_ShadowVolumeIntensity: 0.75
   m_LocalBounds:
-    m_Center: {x: -0.04039955, y: -0.51065016, z: 0}
-    m_Extent: {x: 18.5002, y: 3.50005, z: 0}
+    m_Center: {x: -0.03995037, y: -0.50970006, z: 0}
+    m_Extent: {x: 18.499352, y: 3.5002, z: 0}
   m_PointLightInnerAngle: 360
   m_PointLightOuterAngle: 360
   m_PointLightInnerRadius: 0
@@ -4448,9 +4448,17 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 255092130894777051, guid: 138683e0436525a49b1c8322f018a9b5, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 787538671998616087, guid: 138683e0436525a49b1c8322f018a9b5, type: 3}
       propertyPath: m_Name
       value: BattleSceneSet
+      objectReference: {fileID: 0}
+    - target: {fileID: 1293721105724591352, guid: 138683e0436525a49b1c8322f018a9b5, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2514581415889689841, guid: 138683e0436525a49b1c8322f018a9b5, type: 3}
       propertyPath: m_LocalPosition.x
@@ -4460,9 +4468,29 @@ PrefabInstance:
       propertyPath: m_LocalPosition.y
       value: 7.32
       objectReference: {fileID: 0}
+    - target: {fileID: 3581450205008899999, guid: 138683e0436525a49b1c8322f018a9b5, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4185753592887317659, guid: 138683e0436525a49b1c8322f018a9b5, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4656184141943052637, guid: 138683e0436525a49b1c8322f018a9b5, type: 3}
       propertyPath: m_IsActive
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5883216280105144221, guid: 138683e0436525a49b1c8322f018a9b5, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6449516588782339169, guid: 138683e0436525a49b1c8322f018a9b5, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6449516588782339169, guid: 138683e0436525a49b1c8322f018a9b5, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6720493979012511920, guid: 138683e0436525a49b1c8322f018a9b5, type: 3}
       propertyPath: m_LocalPosition.x

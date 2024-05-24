@@ -36,9 +36,9 @@ public class TutorialEventChannel
                 targetTR = GameObject.Find(uiTargetName).transform;
                 //targetTR = Managers.instance.UI.LoadingUIProps.SceneMainCanvas.transform.Find(uiTargetName);
                 targetParent = targetTR.parent;
-                targetTR.SetParent(Managers.instance.UI.BattleUICall.AmbientPanel);
+                targetTR.SetParent(Managers.instance.UI.battleUICall.AmbientPanel);
             }
-            Managers.instance.UI.BattleUICall.AmbientPanel.gameObject.SetActive(true);
+            Managers.instance.UI.battleUICall.AmbientPanel.gameObject.SetActive(true);
 
         }
         else
@@ -48,8 +48,8 @@ public class TutorialEventChannel
 
         if (girlText != string.Empty)
         {
-            Managers.instance.UI.BattleUICall.GirlBulbExplane = girlText;
-            Managers.instance.UI.BattleUICall.GirlParentRT.SetParent(Managers.instance.UI.BattleUICall.AmbientPanel);
+            Managers.instance.UI.battleUICall.GirlBulbExplane = girlText;
+            Managers.instance.UI.battleUICall.GirlParentRT.SetParent(Managers.instance.UI.battleUICall.AmbientPanel);
         }
 
     }
@@ -66,11 +66,11 @@ public class TutorialEventChannel
 
         if (girlText != string.Empty)
         {
-            Managers.instance.UI.BattleUICall.GirlParentRT.SetParent(Managers.instance.UI.BattleUICall.BattleSceneUI);
+            Managers.instance.UI.battleUICall.GirlParentRT.SetParent(Managers.instance.UI.battleUICall.BattleSceneUI);
         }
 
-        Managers.instance.UI.BattleUICall.AmbientPanel.gameObject.SetActive(false);
-        Managers.instance.UI.BattleUICall.AmbientPanel.SetAsLastSibling();
+        Managers.instance.UI.battleUICall.AmbientPanel.gameObject.SetActive(false);
+        Managers.instance.UI.battleUICall.AmbientPanel.SetAsLastSibling();
 
         if (cb != null)
         {

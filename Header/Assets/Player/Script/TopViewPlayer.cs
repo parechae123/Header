@@ -25,7 +25,7 @@ public class TopViewPlayer : MonoBehaviour
     {
         anim = transform.GetChild(0).GetComponent<Animator>();
         playerColliderCenter = GetComponent<Collider2D>().offset;
-        Managers.instance.UI.DialogCall.DialogSetting();
+        Managers.instance.UI.dialogCall.DialogSetting();
         interactionTiles = Managers.instance.Grid.isInteractionAreThere;
     }
 

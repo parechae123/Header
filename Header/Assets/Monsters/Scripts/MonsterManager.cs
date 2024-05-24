@@ -157,14 +157,14 @@ public class MonsterManager : MonoBehaviour
     {
 
         cameraOriginPos = Camera.main.transform.localPosition;
-        Managers.instance.UI.BattleUICall.InstallMonsterHPBar(monsterSlotCount);
+        Managers.instance.UI.battleUICall.InstallMonsterHPBar(monsterSlotCount);
         (float, float) TempDoubleFloat = CarculateMonsterFullHP;
-        Managers.instance.UI.BattleUICall.HPBarSetting(false, TempDoubleFloat.Item1, TempDoubleFloat.Item2);
-        Managers.instance.UI.BattleUICall.HPBarSetting(true, Managers.instance.PlayerDataManager.SetPlayerHP.Item1, Managers.instance.PlayerDataManager.SetPlayerHP.Item2);
+        Managers.instance.UI.battleUICall.HPBarSetting(false, TempDoubleFloat.Item1, TempDoubleFloat.Item2);
+        Managers.instance.UI.battleUICall.HPBarSetting(true, Managers.instance.PlayerDataManager.SetPlayerHP.Item1, Managers.instance.PlayerDataManager.SetPlayerHP.Item2);
         Array.Resize(ref Monsters, MonsterSpawnOrder.Length);
         Array.Resize(ref moveSlots, monsterSlotCount);
         PlayerSprite.color = Color.white;
-        Managers.instance.UI.BattleUICall.HPBarActivate(Managers.instance.PlayerDataManager.SetPlayerHP.Item1, Managers.instance.PlayerDataManager.SetPlayerHP.Item2);
+        Managers.instance.UI.battleUICall.HPBarActivate(Managers.instance.PlayerDataManager.SetPlayerHP.Item1, Managers.instance.PlayerDataManager.SetPlayerHP.Item2);
         float slotByXSize = Vector3.Distance(playerPos, monsterSpawnPos) / monsterSlotCount;
         for (int i = 0; i < moveSlots.Length; i++)
         {
@@ -267,7 +267,7 @@ public class MonsterManager : MonoBehaviour
                             if (Monsters[i].Item2 != null && !Monsters[i].Item1.isMonsterDie)
                             {
                                 Monsters[i].Item1.GetDamage(damage);
-                                Managers.instance.UI.BattleUICall.SetMonsterHPBar(Monsters[i].Item2.transform.position,ReturnMonstersToSlotArray(Monsters[i].Item2.transform), Monsters[i].Item1.monsterHPMax, Monsters[i].Item1.monsterHPNow);
+                                Managers.instance.UI.battleUICall.SetMonsterHPBar(Monsters[i].Item2.transform.position,ReturnMonstersToSlotArray(Monsters[i].Item2.transform), Monsters[i].Item1.monsterHPMax, Monsters[i].Item1.monsterHPNow);
                                 StartCoroutine(DamagedAnim(i, false, () =>
                                 {
                                     count++;
@@ -275,7 +275,7 @@ public class MonsterManager : MonoBehaviour
                                     if (actionTime == 0)
                                     {
                                         BombAttackBulb.gameObject.SetActive(false);
-                                        Managers.instance.UI.BattleUICall.SetTargetUI(ShoterController.Instance.TargetMonsterTR, MonsterManager.MonsterManagerInstance.ReturnMonsterSpriteSize(ShoterController.Instance.TargetMonsterTR));
+                                        Managers.instance.UI.battleUICall.SetTargetUI(ShoterController.Instance.TargetMonsterTR, MonsterManager.MonsterManagerInstance.ReturnMonsterSpriteSize(ShoterController.Instance.TargetMonsterTR));
                                         isDamageDone.Invoke(total, count);
 
                                     }
@@ -296,7 +296,7 @@ public class MonsterManager : MonoBehaviour
                 //소녀가 던지는 로직
                 StartCoroutine(BombMove(GetVectorGirlBomb(),true, () =>
                 {
-                    Managers.instance.UI.BattleUICall.GirlBomb.gameObject.SetActive(false);
+                    Managers.instance.UI.battleUICall.GirlBomb.gameObject.SetActive(false);
                     for (int i = 0; i < Monsters.Length; i++)
                     {
 
@@ -304,7 +304,7 @@ public class MonsterManager : MonoBehaviour
                         if (Monsters[i].Item2 != null && !Monsters[i].Item1.isMonsterDie)
                         {
                             Monsters[i].Item1.GetDamage(damage);
-                            Managers.instance.UI.BattleUICall.SetMonsterHPBar( Monsters[i].Item2.transform.position, ReturnMonstersToSlotArray(Monsters[i].Item2.transform), Monsters[i].Item1.monsterHPMax, Monsters[i].Item1.monsterHPNow);
+                            Managers.instance.UI.battleUICall.SetMonsterHPBar( Monsters[i].Item2.transform.position, ReturnMonstersToSlotArray(Monsters[i].Item2.transform), Monsters[i].Item1.monsterHPMax, Monsters[i].Item1.monsterHPNow);
                             StartCoroutine(DamagedAnim(i, false, () =>
                             {
                                 count++;
@@ -313,7 +313,7 @@ public class MonsterManager : MonoBehaviour
                                 {
 
 
-                                    Managers.instance.UI.BattleUICall.SetTargetUI(ShoterController.Instance.TargetMonsterTR, MonsterManager.MonsterManagerInstance.ReturnMonsterSpriteSize(ShoterController.Instance.TargetMonsterTR));
+                                    Managers.instance.UI.battleUICall.SetTargetUI(ShoterController.Instance.TargetMonsterTR, MonsterManager.MonsterManagerInstance.ReturnMonsterSpriteSize(ShoterController.Instance.TargetMonsterTR));
                                     isDamageDone.Invoke(total, count);
                                 }
                                 actionTime++;
@@ -386,10 +386,10 @@ public class MonsterManager : MonoBehaviour
                 {
                     int tempNun = int.Parse(targetTR.name);
                     Monsters[tempNun].Item1.GetDamage(damage);
-                    Managers.instance.UI.BattleUICall.SetMonsterHPBar(Monsters[tempNun].Item2.transform.position, ReturnMonstersToSlotArray(Monsters[tempNun].Item2.transform), Monsters[tempNun].Item1.monsterHPMax, Monsters[tempNun].Item1.monsterHPNow);
+                    Managers.instance.UI.battleUICall.SetMonsterHPBar(Monsters[tempNun].Item2.transform.position, ReturnMonstersToSlotArray(Monsters[tempNun].Item2.transform), Monsters[tempNun].Item1.monsterHPMax, Monsters[tempNun].Item1.monsterHPNow);
                     AttackBulb.transform.position = playerPos;
                     AttackBulb.gameObject.SetActive(false);
-                    Managers.instance.UI.BattleUICall.SetTargetUI(ShoterController.Instance.TargetMonsterTR, MonsterManager.MonsterManagerInstance.ReturnMonsterSpriteSize(ShoterController.Instance.TargetMonsterTR));
+                    Managers.instance.UI.battleUICall.SetTargetUI(ShoterController.Instance.TargetMonsterTR, MonsterManager.MonsterManagerInstance.ReturnMonsterSpriteSize(ShoterController.Instance.TargetMonsterTR));
                     isDone.Invoke();
                 }));
             }
@@ -442,7 +442,7 @@ public class MonsterManager : MonoBehaviour
                             Debug.Log(moveSlots[i].MonsterTR.name+ Monsters[E].Item1.monsterHPNow);
                             Monsters[E].Item2.gameObject.SetActive(false);
 //                            Managers.instance.UI.BattleUICall.SetMonsterDeadInQueue(E);
-                            Managers.instance.UI.BattleUICall.SetMonsterHPBar(moveSlots[i].slotPosition, i);
+                            Managers.instance.UI.battleUICall.SetMonsterHPBar(moveSlots[i].slotPosition, i);
                             moveSlots[i].MonsterTR = null;
                         }
                     }
@@ -464,12 +464,12 @@ public class MonsterManager : MonoBehaviour
                         moveSlots[i - 1].MonsterTR.DOComplete();
                         moveSlots[i].MonsterTR = null;
                         moveSlots[i - 1].MonsterTR = Monsters[array].Item2.transform;
-                        Managers.instance.UI.BattleUICall.SetMonsterHPBar(moveSlots[i - 1].slotPosition, i - 1, Monsters[array].Item1.monsterHPMax, Monsters[array].Item1.monsterHPNow);
-                        Managers.instance.UI.BattleUICall.SetMonsterHPBar(moveSlots[i].slotPosition, i);
+                        Managers.instance.UI.battleUICall.SetMonsterHPBar(moveSlots[i - 1].slotPosition, i - 1, Monsters[array].Item1.monsterHPMax, Monsters[array].Item1.monsterHPNow);
+                        Managers.instance.UI.battleUICall.SetMonsterHPBar(moveSlots[i].slotPosition, i);
                         moveSlots[i - 1].MonsterTR.DOMove(moveSlots[i - 1].slotPosition, 0.2f).OnComplete(()=> 
                         {
 
-                            Managers.instance.UI.BattleUICall.SetTargetUI(ShoterController.Instance.TargetMonsterTR,ReturnMonsterSpriteSize(ShoterController.Instance.TargetMonsterTR));
+                            Managers.instance.UI.battleUICall.SetTargetUI(ShoterController.Instance.TargetMonsterTR,ReturnMonsterSpriteSize(ShoterController.Instance.TargetMonsterTR));
                             moveSlots[i - 1].MonsterTR.DOKill();
                         });
                     }
@@ -493,20 +493,20 @@ public class MonsterManager : MonoBehaviour
         Monsters[arrayOrder].Item2 = tempComponent;
         Monsters[arrayOrder].Item2.enabled = false;
 
-        if (Managers.instance.UI.BattleUICall.isInFeverMode)
+        if (Managers.instance.UI.battleUICall.isInFeverMode)
         {
             Monsters[arrayOrder].Item2.color = Color.red;
             BerserkModeEffectObject[BerserkModeEffectObject.Length - 1].Play();
             Monsters[arrayOrder].Item1.monsterAD = monsterPrefabs[prefabNum].stat.monsterAD * 2;
         }
         moveSlots[moveSlots.Length - 1].MonsterTR = tempComponent.transform;
-        Managers.instance.UI.BattleUICall.SetUIMonsterImageArray(arrayOrder < MonsterSpawnOrder.Length-1 ? monsterPrefabs[MonsterSpawnOrder[arrayOrder + 1]].prefab.GetComponent<SpriteRenderer>().sprite : null, Monsters[arrayOrder].Item2);
-        Managers.instance.UI.BattleUICall.SetMonsterHPBar(moveSlots[moveSlots.Length - 1].slotPosition, moveSlots.Length - 1, Monsters[arrayOrder].Item1.monsterHPMax, Monsters[arrayOrder].Item1.monsterHPNow);
+        Managers.instance.UI.battleUICall.SetUIMonsterImageArray(arrayOrder < MonsterSpawnOrder.Length-1 ? monsterPrefabs[MonsterSpawnOrder[arrayOrder + 1]].prefab.GetComponent<SpriteRenderer>().sprite : null, Monsters[arrayOrder].Item2);
+        Managers.instance.UI.battleUICall.SetMonsterHPBar(moveSlots[moveSlots.Length - 1].slotPosition, moveSlots.Length - 1, Monsters[arrayOrder].Item1.monsterHPMax, Monsters[arrayOrder].Item1.monsterHPNow);
     }
     IEnumerator DamagedAnim(int index,bool isTargetAttack, Action isDone)
     {
         Color tempColor = Monsters[index].Item2.color;
-        if (Managers.instance.UI.BattleUICall.isInFeverMode)
+        if (Managers.instance.UI.battleUICall.isInFeverMode)
         {
             tempColor = Color.red;
         }
@@ -624,7 +624,7 @@ public class MonsterManager : MonoBehaviour
     {
         Vector3[] vectorArray = new Vector3[0];
         //포문을 통해 계속 리사이징
-        Vector3 startPos = Managers.instance.UI.BattleUICall.GirlPortrait.rectTransform.position;
+        Vector3 startPos = Managers.instance.UI.battleUICall.GirlPortrait.rectTransform.position;
         Vector3 endPos = Camera.main.WorldToScreenPoint(moveSlots[0].slotPosition);
         Vector2 tempNomalVal = startPos+endPos;
         tempNomalVal = tempNomalVal / 30;
@@ -676,13 +676,13 @@ public class MonsterManager : MonoBehaviour
         }
         else
         {
-            Managers.instance.UI.BattleUICall.GirlBomb.gameObject.SetActive(true);
+            Managers.instance.UI.battleUICall.GirlBomb.gameObject.SetActive(true);
             float timeDelay = (movementTime / vectors.Length);
             timeDelay = timeDelay <= 0 ? 0.1f : timeDelay;
             for (int i = 0; i < vectors.Length; i++)
             {
                 yield return new WaitForSeconds(timeDelay);
-                Managers.instance.UI.BattleUICall.GirlBomb.rectTransform.position = vectors[i];
+                Managers.instance.UI.battleUICall.GirlBomb.rectTransform.position = vectors[i];
             }
             ExplosionEffect.transform.position = moveSlots[0].slotPosition + (Vector3.back*4);
             ExplosionSmokeEffect.transform.position = moveSlots[0].slotPosition;
@@ -705,10 +705,10 @@ public class MonsterManager : MonoBehaviour
         playerDamagedParticle.Play();
         for (int i = 0; i < 2; i++)
         {
-            Managers.instance.UI.BattleUICall.PlayerPortrait.color = Color.red;
+            Managers.instance.UI.battleUICall.PlayerPortrait.color = Color.red;
             PlayerSprite.color = Color.red;
             yield return new WaitForSeconds(0.12f);
-            Managers.instance.UI.BattleUICall.PlayerPortrait.color = Color.white;
+            Managers.instance.UI.battleUICall.PlayerPortrait.color = Color.white;
             PlayerSprite.color = Color.white;
             yield return new WaitForSeconds(0.12f);
         }
@@ -722,7 +722,7 @@ public class MonsterManager : MonoBehaviour
     public void SetFeaverMode()
     {
 
-        if (Managers.instance.UI.BattleUICall.isInFeverMode)
+        if (Managers.instance.UI.battleUICall.isInFeverMode)
         {
             for (int i = 0; i < Monsters.Length; i++)
             {

@@ -24,7 +24,7 @@ public class ShopInfo : MonoBehaviour
     
     void Start()
     {
-        Managers.instance.UI.ShopUICall.ShopUISetting();
+        Managers.instance.UI.shopUICall.ShopUISetting();
         CallBallList();
     }
 
@@ -51,7 +51,7 @@ public class ShopInfo : MonoBehaviour
                 int tempRandomNumber = UnityEngine.Random.Range(0, tempStatArray.Length);
                 shopBalls[i] = tempStatArray[tempRandomNumber];
                 if(Managers.instance.PlayerDataManager.isChallengeMode)shopBalls[i].ballPrice = 0;
-                Managers.instance.UI.ShopUICall.CreateWeaponBuyButtons(tempStatArray[tempRandomNumber], i);
+                Managers.instance.UI.shopUICall.CreateWeaponBuyButtons(tempStatArray[tempRandomNumber], i);
             }
         }
         else
@@ -63,7 +63,7 @@ public class ShopInfo : MonoBehaviour
                 {
                     shopBalls[i] = targetStat;
                     if (Managers.instance.PlayerDataManager.isChallengeMode) shopBalls[i].ballPrice = 0;
-                    Managers.instance.UI.ShopUICall.CreateWeaponBuyButtons(targetStat, i);
+                    Managers.instance.UI.shopUICall.CreateWeaponBuyButtons(targetStat, i);
                 }
                 else
                 {
@@ -81,7 +81,7 @@ public class ShopInfo : MonoBehaviour
         }
         if (Input.GetKeyDown(KeyCode.V))
         {
-            Managers.instance.UI.ShopUICall.IsShopActivate = Managers.instance.UI.ShopUICall.IsShopActivate == true ? false : true;
+            Managers.instance.UI.shopUICall.IsShopActivate = Managers.instance.UI.shopUICall.IsShopActivate == true ? false : true;
         }
     }
 }

@@ -50,11 +50,11 @@ public class ShoterController : MonoBehaviour
             }
             if (targetMonsterTR != null)
             {
-                Managers.instance.UI.BattleUICall.SetTargetUI(targetMonsterTR, MonsterManager.MonsterManagerInstance.ReturnMonsterSpriteSize(targetMonsterTR));
+                Managers.instance.UI.battleUICall.SetTargetUI(targetMonsterTR, MonsterManager.MonsterManagerInstance.ReturnMonsterSpriteSize(targetMonsterTR));
             }
             else
             {
-                Managers.instance.UI.BattleUICall.SetTargetUI(null, Vector2.zero);
+                Managers.instance.UI.battleUICall.SetTargetUI(null, Vector2.zero);
             }
 
             return targetMonsterTR; 
@@ -94,11 +94,11 @@ public class ShoterController : MonoBehaviour
                 TargetBall.ballNowHP = value.ballHealth;
                 if (value.amount <= 0)
                 {
-                    Managers.instance.UI.BattleUICall.ChangeWeaponUI(string.Empty, "전구가 없어!!");
+                    Managers.instance.UI.battleUICall.ChangeWeaponUI(string.Empty, "전구가 없어!!");
                 }
                 else
                 {
-                    Managers.instance.UI.BattleUICall.ChangeWeaponUI(value.ballName, value.ballKoreanName);
+                    Managers.instance.UI.battleUICall.ChangeWeaponUI(value.ballName, value.ballKoreanName);
                     SetBulbSkills(value.ballName);
                 }
             }
@@ -106,8 +106,8 @@ public class ShoterController : MonoBehaviour
             {
                 if (Managers.instance.PlayerDataManager.playerOwnBalls.Count<=0)
                 {
-                    Managers.instance.UI.BattleUICall.ChangeWeaponUI(string.Empty, "전구가 없어!!");
-                    Managers.instance.UI.BattleUICall.GameOverBTN.enabled = true;
+                    Managers.instance.UI.battleUICall.ChangeWeaponUI(string.Empty, "전구가 없어!!");
+                    Managers.instance.UI.battleUICall.GameOverBTN.enabled = true;
                     ballStatQueue.Clear();
                 }
                 else
@@ -133,11 +133,11 @@ public class ShoterController : MonoBehaviour
         if (Managers.instance.PlayerDataManager.playerOwnBalls == null || Managers.instance.PlayerDataManager.playerOwnBalls.Count <= 0)
         {
             isReadyFire = false;
-            Managers.instance.UI.BattleUICall.GameOverBTN.enabled = true;
+            Managers.instance.UI.battleUICall.GameOverBTN.enabled = true;
             return;
         }
-        Managers.instance.UI.BattleUICall.SettingPlayerBattleUI();
-        Managers.instance.UI.BattleUICall.RegistListener();
+        Managers.instance.UI.battleUICall.SettingPlayerBattleUI();
+        Managers.instance.UI.battleUICall.RegistListener();
         lineRenderer = transform.AddComponent<LineRenderer>();
         isParabolaOn = Managers.instance.PlayerDataManager.isParabolaTurnOn;
         ParabolaOnOFF(isParabolaOn);
@@ -174,7 +174,7 @@ public class ShoterController : MonoBehaviour
                 Debug.Log(tempGOBJ);
                 if (tempGOBJ.name.Contains("weaponIMG"))
                 {
-                    Managers.instance.UI.BattleUICall.GirlBulbExplane = "'" + NowBallStat.flavorText + " ' " + "라고 하네요";
+                    Managers.instance.UI.battleUICall.GirlBulbExplane = "'" + NowBallStat.flavorText + " ' " + "라고 하네요";
                 }
             }
 
@@ -293,12 +293,12 @@ public class ShoterController : MonoBehaviour
                     lineRenderer.SetPosition(i, transform.position);
                 }
                 fireForce = 0;
-                Managers.instance.UI.BattleUICall.SetBallSliderPos(transform.position, false);
+                Managers.instance.UI.battleUICall.SetBallSliderPos(transform.position, false);
             }
             else if (Input.GetMouseButtonDown(0) && !UnityEngine.EventSystems.EventSystem.current.IsPointerOverGameObject())
             {
                 if(collPointPreview != null)collPointPreview.gameObject.SetActive(true);
-                Managers.instance.UI.BattleUICall.SetBallSliderPos(transform.position, true);
+                Managers.instance.UI.battleUICall.SetBallSliderPos(transform.position, true);
             }
             else if (Input.GetMouseButton(0) && !UnityEngine.EventSystems.EventSystem.current.IsPointerOverGameObject())
             {
@@ -314,7 +314,7 @@ public class ShoterController : MonoBehaviour
                     }
                 }
                 fireForce += (Time.deltaTime * NowBallStat.ballStartForce) * forceDirrection;
-                Managers.instance.UI.BattleUICall.UpdateBallForce( fireForce/ NowBallStat.ballStartForce);
+                Managers.instance.UI.battleUICall.UpdateBallForce( fireForce/ NowBallStat.ballStartForce);
             }
 
             else if (UnityEngine.EventSystems.EventSystem.current.IsPointerOverGameObject())
@@ -322,7 +322,7 @@ public class ShoterController : MonoBehaviour
                 if (fireForce != 0)
                 {
                     fireForce = 0;
-                    Managers.instance.UI.BattleUICall.SetBallSliderPos(transform.position, false);
+                    Managers.instance.UI.battleUICall.SetBallSliderPos(transform.position, false);
                 }
             }
         }
@@ -333,12 +333,12 @@ public class ShoterController : MonoBehaviour
                 if (hit.collider.transform!=null)
                 {
                     targetMonsterTR = hit.collider.transform;
-                    Managers.instance.UI.BattleUICall.SetTargetUI(targetMonsterTR, MonsterManager.MonsterManagerInstance.ReturnMonsterSpriteSize(TargetMonsterTR));
+                    Managers.instance.UI.battleUICall.SetTargetUI(targetMonsterTR, MonsterManager.MonsterManagerInstance.ReturnMonsterSpriteSize(TargetMonsterTR));
                 }
                 fireForce = 0;
-                Managers.instance.UI.BattleUICall.SetBallSliderPos(transform.position, false);
+                Managers.instance.UI.battleUICall.SetBallSliderPos(transform.position, false);
             }
-            else if (Managers.instance.UI.BattleUICall.BallForceSliderParent == null|| Managers.instance.UI.BattleUICall.BallForceSliderParent.gameObject.activeSelf)
+            else if (Managers.instance.UI.battleUICall.BallForceSliderParent == null|| Managers.instance.UI.battleUICall.BallForceSliderParent.gameObject.activeSelf)
             {
                 if (Input.GetMouseButtonUp(0) && !UnityEngine.EventSystems.EventSystem.current.IsPointerOverGameObject() && fireForce != 0)
                 {
@@ -349,7 +349,7 @@ public class ShoterController : MonoBehaviour
                         lineRenderer.SetPosition(i, transform.position);
                     }
                     fireForce = 0;
-                    Managers.instance.UI.BattleUICall.SetBallSliderPos(transform.position, false);
+                    Managers.instance.UI.battleUICall.SetBallSliderPos(transform.position, false);
                 }
                 else if (Input.GetMouseButton(0) && !UnityEngine.EventSystems.EventSystem.current.IsPointerOverGameObject())
                 {
@@ -361,7 +361,7 @@ public class ShoterController : MonoBehaviour
                     {
                         fireForce = NowBallStat.ballStartForce;
                     }
-                    Managers.instance.UI.BattleUICall.UpdateBallForce(fireForce / NowBallStat.ballStartForce);
+                    Managers.instance.UI.battleUICall.UpdateBallForce(fireForce / NowBallStat.ballStartForce);
                 }
             }
         }
@@ -389,7 +389,7 @@ public class ShoterController : MonoBehaviour
             ballStatQueue.Clear();
             NowBallStat = null;
             isReadyFire = false;
-            Managers.instance.UI.BattleUICall.WeaponAnim(true, "Bulb_Empty", "전구가 없어!!", tempName);
+            Managers.instance.UI.battleUICall.WeaponAnim(true, "Bulb_Empty", "전구가 없어!!", tempName);
             TargetBall.ChangeBallSprite("Bulb_Empty");
             return;
         }
@@ -419,7 +419,7 @@ public class ShoterController : MonoBehaviour
 
             NowBallStat = ballStatQueue.Dequeue();
             TargetBall.Ballsetting(SettingValue(NowBallStat.ballBouncienss, NowBallStat.ballFriction), NowBallStat.weight);
-            Managers.instance.UI.BattleUICall.WeaponAnim(true, NowBallStat.ballName, NowBallStat.ballKoreanName , tempName);
+            Managers.instance.UI.battleUICall.WeaponAnim(true, NowBallStat.ballName, NowBallStat.ballKoreanName , tempName);
 
             TargetBall.ChangeBallSprite(NowBallStat.ballName);
         }
@@ -443,7 +443,7 @@ public class ShoterController : MonoBehaviour
 
         NowBallStat = TempBallStat[TempBallStat.Length - 1];
         TargetBall.Ballsetting(SettingValue(NowBallStat.ballBouncienss, NowBallStat.ballFriction), NowBallStat.weight);
-        Managers.instance.UI.BattleUICall.WeaponAnim(false, NowBallStat.ballName, NowBallStat.ballKoreanName, tempName);
+        Managers.instance.UI.battleUICall.WeaponAnim(false, NowBallStat.ballName, NowBallStat.ballKoreanName, tempName);
         TargetBall.ChangeBallSprite(NowBallStat.ballName);
     }
     public void ResetBallQueue(string NowBallName)
@@ -468,7 +468,7 @@ public class ShoterController : MonoBehaviour
 
             Managers.instance.PlayerDataManager.CheckWeaponNextBeforeButton();
             isReadyFire = false;
-            Managers.instance.UI.BattleUICall.GameOverBTN.enabled = true;
+            Managers.instance.UI.battleUICall.GameOverBTN.enabled = true;
             TargetBall.BulbLight.intensity = 0;
             return;
         }

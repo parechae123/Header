@@ -87,7 +87,7 @@ namespace HeaderPadDefines
                     targetIMG.transform.GetComponent<PolygonCollider2D>().enabled = false;
                     targetIMG.sprite = Managers.instance.Resource.Load<Sprite>("HeaderBlock_Destroyed");
                     ShoterController.Instance.targetDamage += 1;
-                    Managers.instance.UI.BattleUICall.SetComboNumber(true);
+                    Managers.instance.UI.battleUICall.SetComboNumber(true);
                     //TODO : 볼 충돌시 갱신되는 모든걸 여기에 넣으면될듯,EX : 데미지
                     break;
                 case BlockStatus.FIlled:
@@ -95,14 +95,14 @@ namespace HeaderPadDefines
                     blockCondition = BlockStatus.Emptied;
                     targetIMG.sprite = Managers.instance.Resource.Load<Sprite>("HeaderBlock_Emptied");
                     ShoterController.Instance.targetDamage += 3;
-                    Managers.instance.UI.BattleUICall.SetComboNumber(true);
+                    Managers.instance.UI.battleUICall.SetComboNumber(true);
                     break;
                 case BlockStatus.FilledCoin:
                     Managers.instance.SoundManager.SFXPlayOneshot(Managers.instance.Resource.Load<AudioClip>("AllBlocks"), true);
                     blockCondition = BlockStatus.Emptied;
                     targetIMG.sprite = Managers.instance.Resource.Load<Sprite>("HeaderBlock_Emptied");
                     Managers.instance.PlayerDataManager.PlayerMoney += 1;
-                    Managers.instance.UI.BattleUICall.SetComboNumber(true);
+                    Managers.instance.UI.battleUICall.SetComboNumber(true);
                     break;
                 case BlockStatus.BoombBlock:
                     if (BlockHP>= 0)
@@ -117,7 +117,7 @@ namespace HeaderPadDefines
                         ShoterController.Instance.regionalDamage += 40;
                         blockCondition = BlockStatus.Emptied;
                         targetIMG.transform.GetComponent<PolygonCollider2D>().enabled = false;
-                        Managers.instance.UI.BattleUICall.SetComboNumber(true);
+                        Managers.instance.UI.battleUICall.SetComboNumber(true);
                         targetIMG.sprite = Managers.instance.Resource.Load<Sprite>("HeaderBlock_Destroyed");
                     }
                     break;
@@ -126,10 +126,10 @@ namespace HeaderPadDefines
                     Managers.instance.Grid.OnReset();
                     blockCondition = BlockStatus.Emptied;
                     targetIMG.sprite = Managers.instance.Resource.Load<Sprite>("HeaderBlock_Emptied");
-                    Managers.instance.UI.BattleUICall.SetComboNumber(true);
+                    Managers.instance.UI.battleUICall.SetComboNumber(true);
                     break;
             }
-            Managers.instance.UI.BattleUICall.GirlBulbExplane = "폭탄 데미지 : " + ShoterController.Instance.regionalDamage + '\n' + "단일 데미지 : " + ShoterController.Instance.targetDamage;
+            Managers.instance.UI.battleUICall.GirlBulbExplane = "폭탄 데미지 : " + ShoterController.Instance.regionalDamage + '\n' + "단일 데미지 : " + ShoterController.Instance.targetDamage;
             if (BE != null)
             {
                 BE();
@@ -258,7 +258,7 @@ namespace MonsterDefines
                 }
                 MonsterHP -= damage;
 
-                Managers.instance.UI.BattleUICall.EnemyHPBarUpdate( -tempDMG);
+                Managers.instance.UI.battleUICall.EnemyHPBarUpdate( -tempDMG);
             }
 
         }
