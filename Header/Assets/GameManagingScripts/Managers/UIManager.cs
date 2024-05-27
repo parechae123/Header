@@ -2429,6 +2429,7 @@ public class ShopUI
 {
     public bool IsShopActivate
     {
+        //상점 UI 판넬이 켜져있는지 확인하는 변수
         get { return ShopPanel.gameObject.activeSelf; }
         set
         {
@@ -2441,6 +2442,7 @@ public class ShopUI
     {
         get
         {
+            //상점 전체판넬
             if (shopPanel == null)
             {
                 shopPanel = new GameObject("ShopPanel").AddComponent<Image>();
@@ -2450,9 +2452,10 @@ public class ShopUI
                 shopPanel.rectTransform.anchorMin = Vector2.zero;
                 shopPanel.rectTransform.sizeDelta = Vector2.zero;
                 shopPanel.sprite = Managers.instance.Resource.Load<Sprite>("shop_background_out");
+                if(shopPanel.sprite == null)shopPanel.enabled = false;
                 shopPanel.rectTransform.SetAsLastSibling();
                 shopPanel.gameObject.SetActive(false);
-                //TODO : ShopPanel이 업로드시 해당 키값 작성 요망
+                //씬에서 start함수에서 생성해주기에 기본 false
             }
             return shopPanel;
         }
@@ -2462,6 +2465,7 @@ public class ShopUI
     {
         get
         {
+            //상점 내부판넬
             if (shopInnerPanel == null)
             {
                 shopInnerPanel = new GameObject("ShopInnerPanel").AddComponent<Image>();
@@ -2471,7 +2475,6 @@ public class ShopUI
                 shopInnerPanel.rectTransform.anchorMin = new Vector2(0.01f, 0.02f);
                 shopInnerPanel.rectTransform.sizeDelta = Vector2.zero;
                 shopInnerPanel.sprite = Managers.instance.Resource.Load<Sprite>("shop_background_in");
-                //TODO : ShopPanel이 업로드시 해당 키값 작성 요망
             }
             return shopInnerPanel;
         }
@@ -2483,13 +2486,13 @@ public class ShopUI
         {
             if (shopPlayerStatusWindowPanel == null)
             {
+                //상점 내 플레이어 상태창
                 shopPlayerStatusWindowPanel = new GameObject("ShopPlayerPanel").AddComponent<RectTransform>();
                 shopPlayerStatusWindowPanel.SetParent(ShopInnerShopPanel.rectTransform);
                 shopPlayerStatusWindowPanel.anchoredPosition = Vector3.zero;
                 shopPlayerStatusWindowPanel.anchorMax = new Vector2(0.322f, 1f);
                 shopPlayerStatusWindowPanel.anchorMin = Vector2.zero;
                 shopPlayerStatusWindowPanel.sizeDelta = Vector2.zero;
-                //TODO : ShopPanel이 업로드시 해당 키값 작성 요망
             }
             return shopPlayerStatusWindowPanel;
         }
@@ -2500,6 +2503,7 @@ public class ShopUI
     {
         get
         {
+            //상인 초상화 판넬
             if (merchantPortrait_Pannel == null)
             {
                 merchantPortrait_Pannel = new GameObject("MerchantPortrait_Pannel").AddComponent<Image>();
@@ -2508,7 +2512,6 @@ public class ShopUI
                 Managers.instance.UI.SetUISize(ref tempRect, new Vector2(0.019f, 0.649f), new Vector2(0.505f, 0.981f));
 
                 merchantPortrait_Pannel.sprite = Managers.instance.Resource.Load<Sprite>("shop_portrait_panel");
-                //TODO : ShopPanel이 업로드시 해당 키값 작성 요망
             }
             return merchantPortrait_Pannel;
         }
@@ -2519,6 +2522,7 @@ public class ShopUI
     {
         get
         {
+            //상인 초상화
             if (merchantPortrait == null)
             {
                 merchantPortrait = new GameObject("MerchantPortrait").AddComponent<Image>();
@@ -2528,7 +2532,6 @@ public class ShopUI
                 Managers.instance.UI.SetUISize(ref tempRect, Vector2.zero+ portraitOutline, Vector2.one-portraitOutline);
                 
                 merchantPortrait.sprite = Managers.instance.Resource.Load<Sprite>("shop_portrait");
-                //TODO : ShopPanel이 업로드시 해당 키값 작성 요망
             }
             return merchantPortrait;
         }
@@ -2538,6 +2541,7 @@ public class ShopUI
     {
         get
         {
+            //상인 대화 텍스트
             if (merchantDialogPanel == null)
             {
                 merchantDialogPanel = new GameObject("merchantDialogPanel").AddComponent<Image>();
@@ -2547,7 +2551,6 @@ public class ShopUI
                 merchantDialogPanel.rectTransform.anchorMin = new Vector2(0.511f, 0.675f);
                 merchantDialogPanel.rectTransform.sizeDelta = Vector2.zero;
                 merchantDialogPanel.sprite = Managers.instance.Resource.Load<Sprite>("shop_chat_panel");
-                //TODO : ShopPanel이 업로드시 해당 키값 작성 요망
             }
             return merchantDialogPanel;
         }
@@ -2557,6 +2560,7 @@ public class ShopUI
     {
         get
         {
+            //Shop내 플레이어 영역 판넬
             if (playerBagPanel == null)
             {
                 playerBagPanel = new GameObject("PlayerBagPanel").AddComponent<RectTransform>();
@@ -2566,7 +2570,7 @@ public class ShopUI
                 playerBagPanel.anchorMax = new Vector2(0.971f, 0.624f);
                 playerBagPanel.anchorMin = new Vector2(0.019f, 0.0252f);
                 playerBagPanel.sizeDelta = Vector2.zero;
-                //TODO : ShopPanel이 업로드시 해당 키값 작성 요망
+
             }
             return playerBagPanel;
         }
@@ -2576,6 +2580,7 @@ public class ShopUI
     {
         get
         {
+            //플레이어 소지금 표시창 백그라운드
             if (playerMoneyPannel == null)
             {
                 playerMoneyPannel = new GameObject("PlayerMoneyPannel").AddComponent<Image>();
@@ -2584,7 +2589,6 @@ public class ShopUI
                 playerMoneyPannel.sprite = Managers.instance.Resource.Load<Sprite>("coin_pannel");
                 float yPercentValue = playerMoneyPannel.sprite.bounds.size.y/ playerMoneyPannel.sprite.bounds.size.x;
                 Managers.instance.UI.SetUISize(ref tempRect, new Vector2(0, 1 - yPercentValue), Vector2.one);
-                //TODO : ShopPanel이 업로드시 해당 키값 작성 요망
             }
             return playerMoneyPannel;
         }
@@ -2594,6 +2598,7 @@ public class ShopUI
     {
         get
         {
+            //플레이어 인벤토리 판넬
             if (playerInventoryPanel == null)
             {
                 playerInventoryPanel = new GameObject("PlayerInventoryPanel").AddComponent<Image>();
@@ -2608,7 +2613,6 @@ public class ShopUI
                 float walletPanelSize = PlayerMoneyPannel.rectTransform.anchorMax.y - PlayerMoneyPannel.rectTransform.anchorMin.y;
                 walletPanelSize = walletPanelSize + (walletPanelSize / 2f);
                 Managers.instance.UI.SetUISize(ref tempRect, Vector2.zero, Vector2.one-(Vector2.up* walletPanelSize));
-                //TODO : ShopPanel이 업로드시 해당 키값 작성 요망
             }
             return playerInventoryPanel;
         }
@@ -2616,10 +2620,12 @@ public class ShopUI
     Button nextBTN;
     Button NextBTN
     {
+        //인벤토리 다음페이지 이동버튼
         get
         {
             if (nextBTN == null)
             {
+                
                 Button tempNextBTN = new GameObject("WeaponNextBTN").AddComponent<Button>();
                 RectTransform NextBTRT = tempNextBTN.transform.AddComponent<RectTransform>();
                 NextBTRT.SetParent(PlayerInventoryPanel.rectTransform);
@@ -2644,6 +2650,7 @@ public class ShopUI
     Button beforeBTN;
     Button BeforeBTN
     {
+        //인벤토리 이전페이지 이동버튼
         get
         {
             if (beforeBTN == null)
@@ -2698,6 +2705,7 @@ public class ShopUI
     private Text goldAmountText;
     public Text GoldAmountText
     {
+        //플레이어 소지금 텍스트
         get
         {
             if (goldAmountText == null)
@@ -2722,6 +2730,7 @@ public class ShopUI
     private (Image, Text)[] inventoryIcons = new (Image, Text)[6];
     public (Image, Text)[] InventoryIcons
     {
+        //소지중인 전구 사진과 갯수
         get
         {
             if (inventoryIcons.Length == 0)
@@ -2793,6 +2802,7 @@ public class ShopUI
     int invenPage;
     int NowPage
     {
+        //페이지를 세팅해주는 변수
         set
         {
             if (value <= 0)
@@ -2817,6 +2827,7 @@ public class ShopUI
     private Image shoppingPanel;
     public Image ShoppingPanel
     {
+        //상점 아이템목록 판넬
         get
         {
             if (shoppingPanel == null)
@@ -2835,6 +2846,7 @@ public class ShopUI
     public Button[] shopWeaponItems;
     public void CreateWeaponBuyButtons(ExtraBallStat stat, int ballArray)
     {
+        //상점 생성 함수로부터 상점 아이템 정보와 배치를 해주는 함수
         if (shopWeaponItems == null)
         {
             shopWeaponItems = new Button[0];
@@ -2916,14 +2928,17 @@ public class ShopUI
     #endregion
     public void InvenBeforeBTN()
     {
+        //인벤 이전페이지로 가는 함수
         NowPage = invenPage - 1;
     }
     public void InvenNextBTN()
     {
+        //인벤 다음페이지로가는 함수
         NowPage = invenPage + 1;
     }
     public void UpdateInvenBulb(List<ExtraBallStat> ballList)
     {
+        //현재 인벤에 존재하는 전구를 업데이트 해주는 함수
         (Sprite, string) tempSet;
         for (int i = 0; i < ballList.Count; i++)
         {
@@ -2966,6 +2981,7 @@ public class ShopUI
     }
     private void SetInvenIMG(int targetPage = -1)
     {
+        //인벤토리 이미지 배열 설정함수
         if (targetPage == -1)
         {
             targetPage = invenPage;
@@ -2996,11 +3012,13 @@ public class ShopUI
     }
     public void MoneyUpdate(int money)
     {
+        //소지금 업데이트 함수
         IsShopActivate = Managers.instance.UI.shopUICall.IsShopActivate == true ? true : false;
         GoldAmountText.text = money.ToString();
     }
     public void ShopUISetting()
     {
+        //Shop UI를 생성해줌
         MerchantPortrait.enabled = true;
         MerchantDialogPanel.enabled = true;
         PlayerInventoryPanel.enabled = true;
