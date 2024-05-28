@@ -4999,6 +4999,22 @@ MonoBehaviour:
     keyNumber: 2
     SceneName: level_battle2
     weaponNameList: []
+  - interactionPosition: {x: 1, y: -5}
+    detail:
+      installedInteractionPosition: {x: 0, y: 10}
+      interactionRemoveSelf: 1
+    interactionTypes: 1
+    keyNumber: 1
+    SceneName: 
+    weaponNameList: []
+  - interactionPosition: {x: 1, y: -5}
+    detail:
+      installedInteractionPosition: {x: 0, y: 10}
+      interactionRemoveSelf: 1
+    interactionTypes: 3
+    keyNumber: 2
+    SceneName: level_battle10
+    weaponNameList: []
 --- !u!1 &1128633436
 GameObject:
   m_ObjectHideFlags: 0
