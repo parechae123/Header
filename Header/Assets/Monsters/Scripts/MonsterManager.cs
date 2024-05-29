@@ -56,7 +56,7 @@ public class MonsterManager : MonoBehaviour
         get
         {
             Transform target = null;
-            for (int i = 0; i < moveSlots.Length; i++)
+            for (int i = moveSlots.Length-1; i >= 0; i--)
             {
                 if (moveSlots[i].MonsterTR != null)
                 {

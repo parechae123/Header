@@ -2104,10 +2104,20 @@ public class BattleUI
     public void ChangeWeaponUI(string spriteName, string weaponKoreanName)
     {
         WeaponImage.sprite = Managers.instance.Resource.Load<Sprite>(spriteName);
-        string playerPortraitFileName = spriteName.Substring(0, spriteName.IndexOf('_'));
-        Sprite tempPort = Managers.instance.Resource.Load<Sprite>("battle_portrait_" + playerPortraitFileName);
-        PlayerPortrait.sprite = tempPort == null ? Managers.instance.Resource.Load<Sprite>("battle_portrait") :tempPort;
-        PlayerWeaponName.text = weaponKoreanName;
+        if (WeaponImage.sprite == null)
+        {
+            PlayerWeaponName.text = weaponKoreanName;
+            WeaponImage.color = Color.clear;
+            return;
+        }
+        else
+        {
+            string playerPortraitFileName = spriteName.Substring(0, spriteName.IndexOf('_'));
+            Sprite tempPort = Managers.instance.Resource.Load<Sprite>("battle_portrait_" + playerPortraitFileName);
+            PlayerPortrait.sprite = tempPort == null ? Managers.instance.Resource.Load<Sprite>("battle_portrait") : tempPort;
+            PlayerWeaponName.text = weaponKoreanName;
+        }
+
         /*        if (isPlayer)
                 {
                     WeaponImage.sprite = Managers.instance.Resource.Load<Sprite>(spriteName);
@@ -2239,7 +2249,7 @@ public class BattleUI
         float ScaleValue = Vector2.Distance(PosMin, PosMax) / Vector2.Distance(BeforeMonsterIMG.rectTransform.rect.min, BeforeMonsterIMG.rectTransform.rect.max);
         NextMonsterIMG.sprite = NextMonsterSprite;
         BeforeMonsterIMG.rectTransform.DOScale(ScaleValue, 1f);
-        if (isInFeverMode)
+        if (isInFeverMode && NextMonsterIMG.color != Color.clear)
         {
             NextMonsterIMG.color = Color.red;
             BeforeMonsterIMG.color = Color.red;

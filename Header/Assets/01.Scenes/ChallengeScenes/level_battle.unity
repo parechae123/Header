@@ -4101,8 +4101,8 @@ MonoBehaviour:
   m_ShadowVolumeIntensityEnabled: 0
   m_ShadowVolumeIntensity: 0.75
   m_LocalBounds:
-    m_Center: {x: -0.040100098, y: -0.5102, z: 0}
-    m_Extent: {x: 18.5004, y: 3.5008001, z: 0}
+    m_Center: {x: -0.039649963, y: -0.5099, z: 0}
+    m_Extent: {x: 18.50025, y: 3.5005999, z: 0}
   m_PointLightInnerAngle: 360
   m_PointLightOuterAngle: 360
   m_PointLightInnerRadius: 0
@@ -4459,6 +4459,10 @@ PrefabInstance:
     - target: {fileID: 2514581415889689841, guid: 138683e0436525a49b1c8322f018a9b5, type: 3}
       propertyPath: m_LocalPosition.y
       value: 7.32
+      objectReference: {fileID: 0}
+    - target: {fileID: 3573091334418124651, guid: 138683e0436525a49b1c8322f018a9b5, type: 3}
+      propertyPath: nextSceneName
+      value: DialogScene1
       objectReference: {fileID: 0}
     - target: {fileID: 6720493979012511920, guid: 138683e0436525a49b1c8322f018a9b5, type: 3}
       propertyPath: m_LocalPosition.x

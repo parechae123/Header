@@ -24,6 +24,9 @@ EditorBuildSettings:
     path: Assets/01.Scenes/DialogScenes/DialogScene1.unity
     guid: 7dd485255dd9e14498a1b8c5fef08eee
   - enabled: 1
+    path: Assets/01.Scenes/DialogScenes/DialogScene2.unity
+    guid: 8fe1e7ed5f9d93d4aa837f3946dabb9a
+  - enabled: 1
     path: Assets/01.Scenes/ChallengeScenes/level_battle.unity
     guid: 58018cae1a29db747b943f1410376310
   - enabled: 1

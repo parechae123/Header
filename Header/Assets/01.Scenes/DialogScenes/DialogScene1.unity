@@ -4999,22 +4999,6 @@ MonoBehaviour:
     keyNumber: 2
     SceneName: level_battle2
     weaponNameList: []
-  - interactionPosition: {x: 1, y: -5}
-    detail:
-      installedInteractionPosition: {x: 0, y: 10}
-      interactionRemoveSelf: 1
-    interactionTypes: 1
-    keyNumber: 1
-    SceneName: 
-    weaponNameList: []
-  - interactionPosition: {x: 1, y: -5}
-    detail:
-      installedInteractionPosition: {x: 0, y: 10}
-      interactionRemoveSelf: 1
-    interactionTypes: 3
-    keyNumber: 2
-    SceneName: level_battle10
-    weaponNameList: []
 --- !u!1 &1128633436
 GameObject:
   m_ObjectHideFlags: 0
@@ -5196,6 +5180,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1566464030}
+  - {fileID: 1611857569}
   m_Father: {fileID: 2143753597}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!50 &1272116828
@@ -6044,12 +6029,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1611857567}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.04, y: -1.1, z: 0}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -0.04, y: 0.51, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 1272116827}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1719293015
 GameObject:
@@ -9954,4 +9939,3 @@ SceneRoots:
   - {fileID: 1558477918}
   - {fileID: 176200289}
   - {fileID: 1376299270}
-  - {fileID: 1611857569}

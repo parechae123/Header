@@ -220,7 +220,7 @@ public class BallScript : MonoBehaviour
         {
 
             ballNowHP--;
-            EndPlayerTurn();
+            EndPlayerTurn(false);
         }
         else
         {
@@ -275,11 +275,17 @@ public class BallScript : MonoBehaviour
         bounceParticleQueue.Enqueue(target);
         Debug.LogError("파티클 현재 " + bounceParticleQueue.Count);
     }
-    public IEnumerator BreakParticleChecker(ParticleSystem target,Action callBack)
+    public IEnumerator BreakParticleChecker(ParticleSystem target,bool isAleardyBroken,Action callBack = null)
     {
         BallRB.velocity = Vector2.zero;
         BallCol.enabled = false;
         BallRB.simulated = false;
+        if (callBack != null && isAleardyBroken)
+        {
+            BallPause();
+            callBack.Invoke();
+            yield break;
+        }
         Sprite[] tempSprites = new Sprite[1];
         string tempNum = "00";
         Managers.instance.SoundManager.SFXPlayOneshot(Managers.instance.Resource.Load<AudioClip>("Bulb_Broken_Sounds1"),true,true);
@@ -324,12 +330,15 @@ public class BallScript : MonoBehaviour
         {
             yield return null;
         }
-        BallPause();
-        callBack.Invoke();
+        if (callBack != null)
+        {
+            BallPause();
+            callBack.Invoke();
+        }
     }
-    public void EndPlayerTurn()
+    public void EndPlayerTurn(bool isAlreadyBroekn)
     {
-        StartCoroutine(BreakParticleChecker(breakParticle, () =>
+        StartCoroutine(BreakParticleChecker(breakParticle,isAlreadyBroekn, () =>
         {
 
             MonsterManager.MonsterManagerInstance.NextTurnFunctions(ShoterController.Instance.regionalDamage, ShoterController.Instance.targetDamage, ShoterController.Instance.TargetMonsterTR, () =>
@@ -354,6 +363,7 @@ public class BallScript : MonoBehaviour
                 }
                 if (Managers.instance.PlayerDataManager.RemoveBall(ShoterController.Instance.NowBallStat))
                 {
+                    ResetBall();
                     ShoterController.Instance.SetBallOnNext();
                 }
 
@@ -365,7 +375,11 @@ public class BallScript : MonoBehaviour
     {
         IMG.enabled = isOn;
         BallCol.enabled = isOn;
-        BallRB.simulated = isOn;
+        BallRB.simulated = !isOn;
+        if (!isOn)
+        {
+            StartCoroutine(BreakParticleChecker(breakParticle,false));
+        }
     }
 }
 

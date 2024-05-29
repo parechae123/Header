@@ -144,6 +144,7 @@ public class PlayerDataManager
     }
     public bool RemoveBall(ExtraBallStat ball, bool isCalledItOnShop = false)
     { 
+
         foreach (ExtraBallStat item in playerOwnBalls)
         {
             if (item.ballName == ball.ballName && item.amount<=1&& !isCalledItOnShop)

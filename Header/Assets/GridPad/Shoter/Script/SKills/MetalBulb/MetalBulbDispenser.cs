@@ -40,7 +40,7 @@ public class MetalBulbDispenser : MonoBehaviour
         {
             if (gameObject.activeSelf)
             {
-                ShoterController.Instance.targetBall.EndPlayerTurn();
+                ShoterController.Instance.targetBall.EndPlayerTurn(true);
                 gameObject.SetActive(false);
             }
         }

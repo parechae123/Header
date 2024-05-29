@@ -29,7 +29,7 @@ public class ShoterController : MonoBehaviour
     public float regionalDamage = 0;
     public float targetDamage = 0;
     private short forceDirrection = 1;
-    private Transform targetMonsterTR = null;
+    [SerializeField]private Transform targetMonsterTR = null;
 
     public Transform TargetMonsterTR
     {
