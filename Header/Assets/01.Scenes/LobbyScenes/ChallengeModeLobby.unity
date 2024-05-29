@@ -4784,22 +4784,26 @@ MonoBehaviour:
   sceneUIBTN: {fileID: 1719904586}
   sceneButtons: []
   challengeSceneNames:
-  - level_battle
+  - level_battle01
+  - level_battle02
+  - level_battle03
+  - level_battle04
+  - level_battle05
+  - level_battle06
+  - level_battle07
+  - level_battle08
+  - level_battle09
   - level_battle10
   - level_battle11
   - level_battle12
   - level_battle13
-  - level_battle14
-  - level_battle15
-  - level_battle16
-  - level_battle2
-  - level_battle3
-  - level_battle4
-  - level_battle5
-  - level_battle6
-  - level_battle7
-  - level_battle8
-  - level_battle9
+  - level_bossbattle
+  - level_battle22
+  - level_battle25
+  - level_battle27
+  - level_battle29
+  - level_battle34
+  - level_money06
   folderPath: Assets/01.Scenes/ChallengeScenes
 --- !u!4 &1841512982
 Transform:
