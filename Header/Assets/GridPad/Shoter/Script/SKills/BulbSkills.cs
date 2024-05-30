@@ -5,6 +5,8 @@ using Unity.VisualScripting;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.U2D;
+using static UnityEditor.ShaderGraph.Internal.KeywordDependentCollection;
+using static UnityEngine.UI.Image;
 
 public abstract class BulbSkills
 {
@@ -363,6 +365,51 @@ public class crashBulbSkill : BulbSkills
     public override void Reset()
     {
 
+    }
+}
+public class InkBulb : BulbSkills
+{
+    public override void InitializeSetting()
+    {
+        base.InitializeSetting();
+    }
+    public override void StartEventSkills()
+    {
+
+    }
+    public override void UpdateSkills()
+    {
+
+
+    }
+    public override void BreakEventSkills()
+    {
+
+    }
+    public override void Reset()
+    {
+
+    }
+    private LinkedList<BlockObjects> GetConeRegion(Vector3 position,float halfAngle,float distance)
+    {
+        LinkedList<BlockObjects> OutputBlocks = new LinkedList<BlockObjects>();
+        foreach (var item in Managers.instance.Grid.BattleGridData)
+        {
+            Vector3 dataPosition = item.Key;
+            Vector3 toData = dataPosition - position;
+
+            // 거리 검사
+            if (toData.magnitude <= distance)
+            {
+                // 각도 검사
+                float angleToData = Vector2.Angle(Vector2.down, toData);
+                if (angleToData <= halfAngle)
+                {
+                    OutputBlocks.AddLast(item.Value);
+                }
+            }
+        }
+        return OutputBlocks;
     }
 }
 /*
