@@ -546,7 +546,11 @@ public class ShoterController : MonoBehaviour
                 TargetBall.bulbSkills.InitializeSetting();
                 break;
             case "crash_bulb":
-                TargetBall.bulbSkills = new crashBulbSkill();
+                TargetBall.bulbSkills = new CrashBulbSkill();
+                TargetBall.bulbSkills.InitializeSetting();
+                break;
+            case "ink_bulb":
+                TargetBall.bulbSkills = new InkBulb();
                 TargetBall.bulbSkills.InitializeSetting();
                 break;
             default:

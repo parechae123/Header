@@ -75,6 +75,8 @@ namespace HeaderPadDefines
         public short BlockHP;
         public delegate void blockEvent();
         public event blockEvent BE;
+        public float originBlockValue;
+        public float blockValue;
         public void OnColideBlock()
         {
             switch (blockCondition)
@@ -86,7 +88,7 @@ namespace HeaderPadDefines
                     blockCondition = BlockStatus.Destroyed;
                     targetIMG.transform.GetComponent<PolygonCollider2D>().enabled = false;
                     targetIMG.sprite = Managers.instance.Resource.Load<Sprite>("HeaderBlock_Destroyed");
-                    ShoterController.Instance.targetDamage += 1;
+                    ShoterController.Instance.targetDamage += blockValue;
                     Managers.instance.UI.battleUICall.SetComboNumber(true);
                     //TODO : 볼 충돌시 갱신되는 모든걸 여기에 넣으면될듯,EX : 데미지
                     break;
@@ -94,14 +96,14 @@ namespace HeaderPadDefines
                     Managers.instance.SoundManager.SFXPlayOneshot(Managers.instance.Resource.Load<AudioClip>("FilledBlock"),true);
                     blockCondition = BlockStatus.Emptied;
                     targetIMG.sprite = Managers.instance.Resource.Load<Sprite>("HeaderBlock_Emptied");
-                    ShoterController.Instance.targetDamage += 3;
+                    ShoterController.Instance.targetDamage += blockValue;
                     Managers.instance.UI.battleUICall.SetComboNumber(true);
                     break;
                 case BlockStatus.FilledCoin:
                     Managers.instance.SoundManager.SFXPlayOneshot(Managers.instance.Resource.Load<AudioClip>("AllBlocks"), true);
                     blockCondition = BlockStatus.Emptied;
                     targetIMG.sprite = Managers.instance.Resource.Load<Sprite>("HeaderBlock_Emptied");
-                    Managers.instance.PlayerDataManager.PlayerMoney += 1;
+                    Managers.instance.PlayerDataManager.PlayerMoney += (int)blockValue;
                     Managers.instance.UI.battleUICall.SetComboNumber(true);
                     break;
                 case BlockStatus.BoombBlock:
@@ -114,7 +116,7 @@ namespace HeaderPadDefines
                     else
                     {
                         Managers.instance.SoundManager.SFXPlayOneshot(Managers.instance.Resource.Load<AudioClip>("AllBlocks"), true);
-                        ShoterController.Instance.regionalDamage += 40;
+                        ShoterController.Instance.regionalDamage += blockValue;
                         blockCondition = BlockStatus.Emptied;
                         targetIMG.transform.GetComponent<PolygonCollider2D>().enabled = false;
                         Managers.instance.UI.battleUICall.SetComboNumber(true);
@@ -137,6 +139,8 @@ namespace HeaderPadDefines
         }
         public void OnResetBlocks()
         {
+            targetIMG.color = Color.white;
+            blockValue = originBlockValue;
             if (SettedBlockCondition != BlockStatus.Destroyed)
             {
                 switch (SettedBlockCondition)
@@ -161,6 +165,12 @@ namespace HeaderPadDefines
                 blockCondition = SettedBlockCondition;
                 targetIMG.transform.GetComponent<PolygonCollider2D>().enabled = true;
             }
+        }
+
+        public void ChangeColor(float minusColorValue)
+        {
+            targetIMG.color = targetIMG.color - new Color(minusColorValue, minusColorValue, minusColorValue, 0);
+            blockValue += originBlockValue;
         }
     }
     [System.Serializable]

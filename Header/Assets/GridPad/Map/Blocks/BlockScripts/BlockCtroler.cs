@@ -22,6 +22,8 @@ public class BlockCtroler : MonoBehaviour
             case "HeaderBlock_BoombBlock":
                 tempBlockData = new HeaderPadDefines.BlockObjects
                 {
+                    originBlockValue = 40,
+                    blockValue = 40,
                     blockCondition = HeaderPadDefines.BlockStatus.BoombBlock,
                     SettedBlockCondition  = HeaderPadDefines.BlockStatus.BoombBlock,
                     BlockHP = 2,
@@ -30,6 +32,8 @@ public class BlockCtroler : MonoBehaviour
             case "HeaderBlock_FilledCoin":
                 tempBlockData = new HeaderPadDefines.BlockObjects
                 {
+                    originBlockValue = 1,
+                    blockValue = 1,
                     blockCondition = HeaderPadDefines.BlockStatus.FilledCoin,
                     SettedBlockCondition = HeaderPadDefines.BlockStatus.FilledCoin
                 };
@@ -37,6 +41,8 @@ public class BlockCtroler : MonoBehaviour
             case "HeaderBlock_FIlled":
                 tempBlockData = new HeaderPadDefines.BlockObjects
                 {
+                    originBlockValue = 3,
+                    blockValue = 3,
                     blockCondition = HeaderPadDefines.BlockStatus.FIlled,
                     SettedBlockCondition = HeaderPadDefines.BlockStatus.FIlled,
                 };
@@ -44,6 +50,8 @@ public class BlockCtroler : MonoBehaviour
             case "HeaderBlock_Emptied":
                 tempBlockData = new HeaderPadDefines.BlockObjects
                 {
+                    originBlockValue = 1,
+                    blockValue = 1,
                     blockCondition = HeaderPadDefines.BlockStatus.Emptied,
                     SettedBlockCondition = HeaderPadDefines.BlockStatus.Emptied,
                 };

@@ -319,7 +319,7 @@ public class MetalBulbSkill : BulbSkills
 
     }
 }
-public class crashBulbSkill : BulbSkills
+public class CrashBulbSkill : BulbSkills
 {
     private MetalBulbDispenser fragDispenser;
     float trigTime;
@@ -384,19 +384,18 @@ public class InkBulb : BulbSkills
     }
     public override void BreakEventSkills()
     {
-
+        GetConeRegion(OriginBall.transform.position,95f,2f);
     }
     public override void Reset()
     {
 
     }
-    private LinkedList<BlockObjects> GetConeRegion(Vector3 position,float halfAngle,float distance)
+    private void GetConeRegion(Vector2 position,float halfAngle,float distance)
     {
-        LinkedList<BlockObjects> OutputBlocks = new LinkedList<BlockObjects>();
-        foreach (var item in Managers.instance.Grid.BattleGridData)
+        foreach (KeyValuePair<Vector2,BlockObjects> item in Managers.instance.Grid.BattleGridData)
         {
-            Vector3 dataPosition = item.Key;
-            Vector3 toData = dataPosition - position;
+            Vector2 dataPosition = item.Key;
+            Vector2 toData = dataPosition - position;
 
             // 거리 검사
             if (toData.magnitude <= distance)
@@ -405,11 +404,10 @@ public class InkBulb : BulbSkills
                 float angleToData = Vector2.Angle(Vector2.down, toData);
                 if (angleToData <= halfAngle)
                 {
-                    OutputBlocks.AddLast(item.Value);
+                    item.Value.ChangeColor(122.5f);
                 }
             }
         }
-        return OutputBlocks;
     }
 }
 /*

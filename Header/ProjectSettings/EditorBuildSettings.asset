@@ -27,31 +27,31 @@ EditorBuildSettings:
     path: Assets/01.Scenes/DialogScenes/DialogScene2.unity
     guid: 8fe1e7ed5f9d93d4aa837f3946dabb9a
   - enabled: 1
-    path: Assets/01.Scenes/ChallengeScenes/level_battle.unity
+    path: Assets/01.Scenes/ChallengeScenes/level_battle01.unity
     guid: 58018cae1a29db747b943f1410376310
   - enabled: 1
-    path: Assets/01.Scenes/ChallengeScenes/level_battle2.unity
+    path: Assets/01.Scenes/ChallengeScenes/level_battle02.unity
     guid: 5fba4d8205bb4d94394b745d77916ee0
   - enabled: 1
-    path: Assets/01.Scenes/ChallengeScenes/level_battle3.unity
+    path: Assets/01.Scenes/ChallengeScenes/level_battle03.unity
     guid: da84b8b56e4085a4f964003270f01b79
   - enabled: 1
-    path: Assets/01.Scenes/ChallengeScenes/level_battle4.unity
+    path: Assets/01.Scenes/ChallengeScenes/level_battle04.unity
     guid: 33f1bf58d9f6e6147b0c2ac56cb94bcc
   - enabled: 1
-    path: Assets/01.Scenes/ChallengeScenes/level_battle5.unity
+    path: Assets/01.Scenes/ChallengeScenes/level_battle05.unity
     guid: ef96a5db384fcc34db4988588692f0fd
   - enabled: 1
-    path: Assets/01.Scenes/ChallengeScenes/level_battle6.unity
+    path: Assets/01.Scenes/ChallengeScenes/level_battle06.unity
     guid: dede3d86ed70de24d9ca13030fd8ea51
   - enabled: 1
-    path: Assets/01.Scenes/ChallengeScenes/level_battle7.unity
+    path: Assets/01.Scenes/ChallengeScenes/level_battle07.unity
     guid: 9402c8fb621a635498be9593fa493f26
   - enabled: 1
-    path: Assets/01.Scenes/ChallengeScenes/level_battle8.unity
+    path: Assets/01.Scenes/ChallengeScenes/level_battle08.unity
     guid: 41e4bb0df14ebb64f8c286b302de6ee0
   - enabled: 1
-    path: Assets/01.Scenes/ChallengeScenes/level_battle9.unity
+    path: Assets/01.Scenes/ChallengeScenes/level_battle09.unity
     guid: fc958e20bfc4a8e4a9a27f0245cfc778
   - enabled: 1
     path: Assets/01.Scenes/ChallengeScenes/level_battle10.unity
