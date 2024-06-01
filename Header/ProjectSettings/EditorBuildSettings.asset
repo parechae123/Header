@@ -72,6 +72,120 @@ EditorBuildSettings:
     path: Assets/01.Scenes/ChallengeScenes/level_battle15.unity
     guid: 602e303dec542d141bcb94651f9d6e60
   - enabled: 1
+    path: Assets/01.Scenes/ChallengeScenes/level_battle17.unity
+    guid: fedfbb42ebb3b324da68ca0c6ce815cd
+  - enabled: 1
+    path: Assets/01.Scenes/ChallengeScenes/level_battle18.unity
+    guid: 24114bc423d0dc24f99e6a5395b95a60
+  - enabled: 1
+    path: Assets/01.Scenes/ChallengeScenes/level_battle19.unity
+    guid: 9e4ad1d343a74e846bd52c3c810a5c25
+  - enabled: 1
+    path: Assets/01.Scenes/ChallengeScenes/level_battle20.unity
+    guid: f13d6d7b9625e50489504a8990366db8
+  - enabled: 1
+    path: Assets/01.Scenes/ChallengeScenes/level_battle21.unity
+    guid: 0d2d75590cd4a61468a5f8d1228659cd
+  - enabled: 1
+    path: Assets/01.Scenes/ChallengeScenes/level_battle22.unity
+    guid: 4147d98520993854e988ec4847d87f65
+  - enabled: 1
+    path: Assets/01.Scenes/ChallengeScenes/level_battle23.unity
+    guid: 6b15541e68c4bfd4ab37d039bdf51dd2
+  - enabled: 1
+    path: Assets/01.Scenes/ChallengeScenes/level_battle24.unity
+    guid: 4b5d0010c4701514684cfab231a5cdc6
+  - enabled: 1
+    path: Assets/01.Scenes/ChallengeScenes/level_battle25.unity
+    guid: 91574bf4e8f1a50468521a0b89044afe
+  - enabled: 1
+    path: Assets/01.Scenes/ChallengeScenes/level_battle26.unity
+    guid: e8bbfb6c286cd2f4293da20419af610a
+  - enabled: 1
+    path: Assets/01.Scenes/ChallengeScenes/level_battle27.unity
+    guid: 1ee26439515391a4b9713b97aea0ea09
+  - enabled: 1
+    path: Assets/01.Scenes/ChallengeScenes/level_battle28.unity
+    guid: dba241a0812f7b548b3500277737b728
+  - enabled: 1
+    path: Assets/01.Scenes/ChallengeScenes/level_battle29.unity
+    guid: 1a26d790410651d4591db9814715f059
+  - enabled: 1
+    path: Assets/01.Scenes/ChallengeScenes/level_battle30.unity
+    guid: 87c14af5e0db4e645ad3783cbe415ca2
+  - enabled: 1
+    path: Assets/01.Scenes/ChallengeScenes/level_battle31.unity
+    guid: bce7dac4e47ac9c41a2a88d4e3c5ac4f
+  - enabled: 1
+    path: Assets/01.Scenes/ChallengeScenes/level_battle32.unity
+    guid: 0604edfa83c8e9a44b75c2cd1ae152a8
+  - enabled: 1
+    path: Assets/01.Scenes/ChallengeScenes/level_battle33.unity
+    guid: f26bedd98afa602479f9ad38cd102338
+  - enabled: 1
+    path: Assets/01.Scenes/ChallengeScenes/level_battle34.unity
+    guid: 368620d525d056347828ac620fa5dc14
+  - enabled: 1
+    path: Assets/01.Scenes/ChallengeScenes/level_battle35.unity
+    guid: a9aff624ff84d944c862fb43acc7b43a
+  - enabled: 1
+    path: Assets/01.Scenes/ChallengeScenes/level_battle36.unity
+    guid: ad9e1e8681ff03845990dffb5fc951e0
+  - enabled: 1
+    path: Assets/01.Scenes/ChallengeScenes/level_battle37.unity
+    guid: aac2916774acd574bb6ba4a9b6203541
+  - enabled: 1
+    path: Assets/01.Scenes/ChallengeScenes/level_battle38.unity
+    guid: 6e62b16fd31c9374cb51bb46140624e7
+  - enabled: 1
+    path: Assets/01.Scenes/ChallengeScenes/level_battle39.unity
+    guid: ea23539c5e8a52a448de2a6e0c3bc57d
+  - enabled: 1
+    path: Assets/01.Scenes/ChallengeScenes/level_boss-stage-teach.unity
+    guid: 9e882dd40bc23c54faaf9524b9ea53e1
+  - enabled: 1
+    path: Assets/01.Scenes/ChallengeScenes/level_bossbattle.unity
+    guid: 1d4fb0779932f6544bcc034e53e4f5e6
+  - enabled: 1
+    path: Assets/01.Scenes/ChallengeScenes/level_money01.unity
+    guid: 48663b1385acd5e449a9bbd4b5449e83
+  - enabled: 1
+    path: Assets/01.Scenes/ChallengeScenes/level_money02.unity
+    guid: 9ec572b37f7df524fb24243d12ebb33b
+  - enabled: 1
+    path: Assets/01.Scenes/ChallengeScenes/level_money03.unity
+    guid: 3fe3a2ff38b0bd04c967e004a0e323b7
+  - enabled: 1
+    path: Assets/01.Scenes/ChallengeScenes/level_money04.unity
+    guid: 6120183b30ed6534e9c722cb9c71b617
+  - enabled: 1
+    path: Assets/01.Scenes/ChallengeScenes/level_money05.unity
+    guid: 5865f5063b79c3d4b9d7e6762e587351
+  - enabled: 1
+    path: Assets/01.Scenes/ChallengeScenes/level_money06.unity
+    guid: 30c36d39ddbe9ed4db6dcde1d8f6be8d
+  - enabled: 1
+    path: Assets/01.Scenes/ChallengeScenes/level_money07.unity
+    guid: de129ac97995ccb4883e57d514f0dfe6
+  - enabled: 1
+    path: Assets/01.Scenes/ChallengeScenes/level_money08.unity
+    guid: a3a4fc8da1bd59e448091163650ea231
+  - enabled: 1
+    path: Assets/01.Scenes/ChallengeScenes/level_money09.unity
+    guid: 31c18b531d52b3f45a8f1a6bda222e74
+  - enabled: 1
+    path: Assets/01.Scenes/ChallengeScenes/level_money10.unity
+    guid: fd8f05abe3d3ce44a8789e33e2f26cf7
+  - enabled: 1
+    path: Assets/01.Scenes/ChallengeScenes/level_money11.unity
+    guid: 3455c26930443db4dab3dd4140c6ab4c
+  - enabled: 1
+    path: Assets/01.Scenes/ChallengeScenes/level_money12.unity
+    guid: 73791764139825e41b9fe1d6aa52697d
+  - enabled: 1
+    path: Assets/01.Scenes/ChallengeScenes/level_money13.unity
+    guid: 6953bac3725b2ed4bb6b7370d5efbba4
+  - enabled: 1
     path: Assets/01.Scenes/ChallengeScenes/level_battle16.unity
     guid: 2aa2999d14c628746a2cd1515ca7f686
   m_configObjects:

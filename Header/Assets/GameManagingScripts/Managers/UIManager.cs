@@ -246,9 +246,10 @@ public class LoadingUI
                     tempLoadingSlider.maxValue = 100;
                     RectTransform tempSliderTR = tempLoadingSlider.transform as RectTransform;
 
-                    tempLoadingSlider.AddComponent<Image>().color = Color.grey;
+                    Image emptyLoadingBarIMG = tempLoadingSlider.AddComponent<Image>();
+                    emptyLoadingBarIMG.sprite = Managers.instance.Resource.Load<Sprite>("loading_bar_empty");
                     Image tempIMG = new GameObject("Handle").AddComponent<Image>();
-                    tempIMG.color = Color.green;
+                    tempIMG.sprite = Managers.instance.Resource.Load<Sprite>("loading_bar_full");
                     tempLoadingSlider.fillRect = tempIMG.rectTransform;
 
                     // Slider의 부모-자식 관계 설정  
@@ -268,9 +269,10 @@ public class LoadingUI
                     tempSliderTR.sizeDelta = Vector2.zero;
                     tempSliderTR.anchoredPosition = Vector2.zero;
                     tempLoadingSlider.interactable = false;
+                    loadingSlider = tempLoadingSlider;
+                    //슬라이드바 연동 오류로 껏다 켜줘야함
                     tempLoadingSlider.enabled = false;
                     tempLoadingSlider.enabled = true;
-                    loadingSlider = tempLoadingSlider;
                     Debug.Log("로딩바 세팅 끝");
                 }
             }
