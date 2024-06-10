@@ -5108,6 +5108,7 @@ MonoBehaviour:
   sceneUIBTN: {fileID: 1719904586}
   sceneBeforeBTN: {fileID: 805911651}
   sceneAfterBTN: {fileID: 1491266488}
+  scenePage: 0
   maxPage: 0
   sceneButtons: []
   challengeSceneNames:
@@ -5150,6 +5151,13 @@ MonoBehaviour:
   - level_battle37
   - level_battle38
   - level_battle39
+  - level_battle40
+  - level_battle41
+  - level_battle42
+  - level_battle43
+  - level_battle44
+  - level_battle45
+  - level_battle46
   - level_boss-stage-teach
   - level_bossbattle
   - level_money01
@@ -5165,6 +5173,9 @@ MonoBehaviour:
   - level_money11
   - level_money12
   - level_money13
+  - level_money14
+  - level_money15
+  - level_test_Scene
   folderPath: Assets/01.Scenes/ChallengeScenes
 --- !u!4 &1841512982
 Transform:
