@@ -101,12 +101,6 @@ MonoBehaviour:
     m_SerializedLabels:
     - InGameSprites
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: d60ea0d33cc34b54f8c55404dadb7338
-    m_Address: TargetImg
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - UI
-    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: d4fdc107f9ea3834bada334782236d12
     m_Address: GridiculousMax
     m_ReadOnly: 0
@@ -193,6 +187,12 @@ MonoBehaviour:
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: cc838d0690381c24da16c80fcddb52a6
     m_Address: Stage_button
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - UI
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: d63dd5a19de27d44d9290d30ffb04092
+    m_Address: TargetImg
     m_ReadOnly: 0
     m_SerializedLabels:
     - UI

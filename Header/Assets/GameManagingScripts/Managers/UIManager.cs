@@ -1141,7 +1141,7 @@ public class BattleUI
                 Managers.instance.UI.SetUISize(ref rectTemp, Vector2.zero, Vector2.one);
                 girlText.raycastTarget = false;
                 girlText.font = Managers.instance.Resource.Load<Font>("InGameFont");
-                girlText.alignment = TextAnchor.MiddleCenter;
+                girlText.alignment = TextAnchor.LowerCenter;
                 girlText.color = Color.black;
                 girlText.resizeTextForBestFit = true;
             }
@@ -1360,7 +1360,7 @@ public class BattleUI
                 monsterTarget = new GameObject("MonsterTargetUI").AddComponent<Image>();
                 monsterTarget.rectTransform.SetParent(BattleSceneUI);
                 monsterTarget.sprite = Managers.instance.Resource.Load<Sprite>("TargetImg");
-                monsterTarget.color = Color.red;
+                monsterTarget.color = Color.white;
                 monsterTarget.raycastTarget = false;
             }
             return monsterTarget;
@@ -2171,17 +2171,34 @@ public class BattleUI
         EnemyWeaponNamePannel.enabled = true;
         EnemyWeaponName.text = "무기이름";
     }
+    /// <summary>
+    /// 단일공격 타겟 표시하는 UI를 설정하는 함수
+    /// </summary>
+    /// <param name="targetTR">타겟 트랜스폼 크기</param>
+    /// <param name="SpriteSize">몬스터 이미지 크기</param>
     public void SetTargetUI(Transform targetTR, Vector2 SpriteSize)
     {
         if (targetTR != null)
         {
-            Vector2 spriteSizeInCanvasMax = Camera.main.WorldToScreenPoint(targetTR.position + (Vector3)SpriteSize);
-            Vector2 spriteSizeInCanvasMin = Camera.main.WorldToScreenPoint(targetTR.position - (Vector3)SpriteSize);
-            MonsterTarget.rectTransform.anchorMin = new Vector2(spriteSizeInCanvasMin.x / Screen.width, spriteSizeInCanvasMin.y / Screen.height);
-            MonsterTarget.rectTransform.anchorMax = new Vector2(spriteSizeInCanvasMax.x / Screen.width, spriteSizeInCanvasMax.y / Screen.height);
+            Vector2 targetUICenter = new Vector2(Camera.main.WorldToScreenPoint(targetTR.position).x, Camera.main.WorldToScreenPoint(targetTR.position + (Vector3)SpriteSize).y);
+            targetUICenter.x = targetUICenter.x / Screen.width;
+            RectTransform tempHPBarRT = monsterPriavteHPBar[0].transform as RectTransform;
+            float HPBarYSize = tempHPBarRT.anchorMax.y - tempHPBarRT.anchorMin.y;
+            Vector2 imageSize = new Vector2(MonsterTarget.sprite.textureRect.width/ Screen.width, MonsterTarget.sprite.textureRect.height / Screen.height)/2f;
+            targetUICenter.y = (targetUICenter.y / Screen.height)+ HPBarYSize+imageSize.y;
+            MonsterTarget.rectTransform.anchorMin = targetUICenter-imageSize;
+            MonsterTarget.rectTransform.anchorMax = targetUICenter+imageSize;
             MonsterTarget.rectTransform.anchoredPosition = Vector2.zero;
             MonsterTarget.rectTransform.sizeDelta = Vector2.zero;
             MonsterTarget.gameObject.SetActive(targetTR.gameObject.activeSelf);
+            /*            Vector2 spriteSizeInCanvasMax = Camera.main.WorldToScreenPoint(targetTR.position + (Vector3)SpriteSize);
+                        Vector2 spriteSizeInCanvasMin = Camera.main.WorldToScreenPoint(targetTR.position - (Vector3)SpriteSize);
+
+                        MonsterTarget.rectTransform.anchorMin = new Vector2(spriteSizeInCanvasMin.x / Screen.width, spriteSizeInCanvasMin.y / Screen.height);
+                        MonsterTarget.rectTransform.anchorMax = new Vector2(spriteSizeInCanvasMax.x / Screen.width, spriteSizeInCanvasMax.y / Screen.height);
+                        MonsterTarget.rectTransform.anchoredPosition = Vector2.zero;
+                        MonsterTarget.rectTransform.sizeDelta = Vector2.zero;
+                        MonsterTarget.gameObject.SetActive(targetTR.gameObject.activeSelf);*/
         }
         else
         {
