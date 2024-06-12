@@ -1216,7 +1216,7 @@ public class BattleUI
             if (ambientPanel == null)
             {
                 Image parentBackGround = new GameObject("GameOverParentBackground").AddComponent<Image>();
-                parentBackGround.color = new Color32(0, 0, 0, 200);
+                parentBackGround.color = new Color32(255, 255, 255, 235);
                 RectTransform parentBackGroundRect = parentBackGround.rectTransform;
                 parentBackGroundRect.SetParent(BattleSceneUI);
                 Managers.instance.UI.SetUISize(ref parentBackGroundRect, Vector2.zero, Vector2.one);
@@ -1237,33 +1237,30 @@ public class BattleUI
             {
 
                 sceneBTNParet = new GameObject("GameOverParent").AddComponent<RectTransform>();
-                sceneBTNParet.gameObject.AddComponent<Image>().sprite = Managers.instance.Resource.Load<Sprite>("shop_bag_panel");
 
                 sceneBTNParet.SetParent(AmbientPanel);
-                Managers.instance.UI.SetUISize(ref sceneBTNParet, new Vector2(0.3f, 0.4f), new Vector2(0.7f, 0.6f));
+                Managers.instance.UI.SetUISize(ref sceneBTNParet, new Vector2(0.3f, 0.1624313f), new Vector2(0.7f, 0.3624313f));
             }
             return sceneBTNParet;
         }
     }
-    private Text gameOverText;
     public string GameOverText
     {
         set
         {
-            if (gameOverText == null)
+            
+            if (value == "You DIed" && ToDialogSceneBTN.interactable)
             {
-                gameOverText = new GameObject("WarningText").AddComponent<Text>();
-                RectTransform warningTextRect = gameOverText.rectTransform;
-                gameOverText.rectTransform.SetParent(SceneBTNParet);
-                SceneBTNParet.parent.gameObject.SetActive(true);
-                Managers.instance.UI.SetUISize(ref warningTextRect, new Vector2(0, 1), new Vector2(1, 2));
-                gameOverText.raycastTarget = false;
-                gameOverText.color = Color.white;
-                gameOverText.fontSize = 102;
-                gameOverText.alignment = TextAnchor.MiddleCenter;
-                gameOverText.font = Managers.instance.Resource.Load<Font>("InGameFont");
+                AmbientPanel.GetComponent<Image>().sprite = Managers.instance.Resource.Load<Sprite>("Dead_Screen_background");
+                GameOverBTN.interactable = true;
+                ToDialogSceneBTN.interactable = false;
             }
-            gameOverText.text = value;
+            else if(value == "Clear!" && GameOverBTN.interactable)
+            {
+                AmbientPanel.GetComponent<Image>().sprite = Managers.instance.Resource.Load<Sprite>("Clear_Screen_background");
+                ToDialogSceneBTN.interactable = true;
+                GameOverBTN.interactable = false;
+            }
         }
     }
     private Button gameOverBTN;
@@ -1279,12 +1276,19 @@ public class BattleUI
                 BTNRect.SetParent(SceneBTNParet);
                 SceneBTNParet.parent.gameObject.SetActive(true);
                 Image btnImage = BTNRect.gameObject.AddComponent<Image>();
-                btnImage.sprite = Managers.instance.Resource.Load<Sprite>("shop_portrait_panel");
+                btnImage.sprite = Managers.instance.Resource.Load<Sprite>("button");
                 gameOverBTN.targetGraphic = btnImage;
-                BTNRect.anchorMax = Vector2.one;
-                BTNRect.anchorMin = new Vector2(0.5f, 0);
-                BTNRect.anchoredPosition = Vector2.zero;
-                BTNRect.sizeDelta = Vector2.zero;
+                Vector2 mainPos = new Vector2(0.25f, 0.5f);
+
+                float heiPerWid = SceneBTNParet.rect.size.x / SceneBTNParet.rect.size.y;
+                Vector2 tempVec = btnImage.sprite.rect.size;
+                tempVec.y = tempVec.y * heiPerWid;
+
+                for (int i = 0; i < ((int)btnImage.sprite.rect.size.x).ToString().Length; i++)
+                {
+                    tempVec = tempVec * 0.1f;
+                }
+                Managers.instance.UI.SetUISize(ref BTNRect,mainPos - tempVec,mainPos + tempVec);
                 Text tempText = new GameObject("GameOverText").AddComponent<Text>();
                 tempText.rectTransform.SetParent(BTNRect);
                 tempText.rectTransform.anchorMax = Vector2.one;
@@ -1299,8 +1303,9 @@ public class BattleUI
                 gameOverBTN.onClick.AddListener(() => { Managers.instance.OnBTNChangeScene("MainTitle"); });
                 Managers.instance.UI.RegistEventTrigger(BTNRect);
                 GameOverText = "You DIed";
-                gameOverText.color = Color.red;
+
             }
+
             return gameOverBTN;
         }
     }
@@ -1317,12 +1322,19 @@ public class BattleUI
                 RectTransform BTNRect = toDialogSceneBTN.AddComponent<RectTransform>();
                 BTNRect.SetParent(SceneBTNParet);
                 Image btnImage = BTNRect.gameObject.AddComponent<Image>();
-                btnImage.sprite = Managers.instance.Resource.Load<Sprite>("shop_portrait_panel");
+                btnImage.sprite = Managers.instance.Resource.Load<Sprite>("button");
                 toDialogSceneBTN.targetGraphic = btnImage;
-                BTNRect.anchorMax = new Vector2(0.5f, 1);
-                BTNRect.anchorMin = Vector2.zero;
-                BTNRect.anchoredPosition = Vector2.zero;
-                BTNRect.sizeDelta = Vector2.zero;
+                Vector2 mainPos = new Vector2(0.75f, 0.5f);
+
+                float heiPerWid = SceneBTNParet.rect.size.x / SceneBTNParet.rect.size.y;
+                Vector2 tempVec = btnImage.sprite.rect.size;
+                tempVec.y = tempVec.y * heiPerWid;
+
+                for (int i = 0; i < ((int)btnImage.sprite.rect.size.x).ToString().Length; i++)
+                {
+                    tempVec = tempVec * 0.1f;
+                }
+                Managers.instance.UI.SetUISize(ref BTNRect, mainPos - tempVec, mainPos + tempVec);
                 Text tempText = new GameObject("ToDialogScene").AddComponent<Text>();
                 tempText.rectTransform.SetParent(BTNRect);
                 tempText.rectTransform.anchorMax = Vector2.one;
