@@ -83,7 +83,7 @@ public class MonsterManager : MonoBehaviour
 
     }
     private SpriteRenderer playerSprite;
-    private SpriteRenderer PlayerSprite
+    public SpriteRenderer PlayerSprite
     {
         get 
         { 

@@ -132,6 +132,7 @@ public class ShoterController : MonoBehaviour
     {
         collPointPreview = GameObject.Find("CollTestBall").transform;
         collPointPreview.gameObject.SetActive(false);
+        collPointPreview.GetComponent<SpriteRenderer>().color = Color.clear;
         if (Managers.instance.PlayerDataManager.playerOwnBalls == null || Managers.instance.PlayerDataManager.playerOwnBalls.Count <= 0)
         {
             isReadyFire = false;

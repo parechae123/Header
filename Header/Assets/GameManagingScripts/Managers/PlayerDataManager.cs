@@ -82,6 +82,21 @@ public class PlayerDataManager
                     });
                 });
             });
+            MonsterManager.MonsterManagerInstance.PlayerSprite.DOComplete();
+            MonsterManager.MonsterManagerInstance.PlayerSprite.DOColor(Color.green, 0.1f).OnComplete(() =>
+            {
+                MonsterManager.MonsterManagerInstance.PlayerSprite.DOColor(Color.white, 0.1f).OnComplete(() =>
+                {
+                    MonsterManager.MonsterManagerInstance.PlayerSprite.DOColor(Color.green, 0.1f).OnComplete(() =>
+                    {
+                        MonsterManager.MonsterManagerInstance.PlayerSprite.DOColor(Color.white, 0.1f).OnComplete(() =>
+                        {
+
+                        });
+                    });
+                });
+            });
+
         }
 
         if (Managers.instance.UI.battleUICall.IsInBattleScene)

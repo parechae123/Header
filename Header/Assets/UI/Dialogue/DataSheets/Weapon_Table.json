@@ -141,7 +141,7 @@
   "skillValueTwo": 0,
   "flavorText": "조준경을 연상케하는 전구이다. 던지고자 하는 곳으로 정확하게 날라갈 것 같다.",
   "ballPrice": 30,
-  "ballHealth": 5
+  "ballHealth": 1
  },
  {
   "ballName": "gold_bulb",
